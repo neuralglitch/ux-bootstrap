@@ -1,0 +1,44 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Capture content blocks #}
+  {% set slot_header %}{% block header %}{% endblock %}{% endset %}
+  {% set slot_body %}{% block content %}{% endblock %}{% endset %}
+  {% set slot_footer %}{% block footer %}{% endblock %}{% endset %}
+
+  {# Check if blocks have content #}
+  {% set has_custom_header = slot_header is not empty %}
+  {% set has_body_content = slot_body is not empty %}
+  {% set has_footer = slot_footer is not empty %}
+
+  <div id="{{ o.id }}" class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+
+    {# Header #}
+    {% if has_custom_header %}
+      {{ slot_header | raw }}
+    {% elseif o.title or o.showCloseButton %}
+      <div class="{{ o.headerClasses }}">
+        {% if o.title %}
+          <h5 class="offcanvas-title" id="{{ o.id }}Label">{{ o.title }}</h5>
+        {% endif %}
+        {% if o.showCloseButton %}
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Body #}
+    <div class="{{ o.bodyClasses }}">
+      {{ slot_body | raw }}
+    </div>
+
+    {# Footer (optional) #}
+    {% if has_footer %}
+      {{ slot_footer | raw }}
+    {% endif %}
+
+  </div>
+
+{%- endapply %}
+

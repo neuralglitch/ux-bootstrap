@@ -1,0 +1,182 @@
+{# Skeleton Component Examples #}
+
+{# Basic Skeleton Lines #}
+<h3>Basic Skeleton Lines</h3>
+<twig:bs:skeleton />
+<twig:bs:skeleton class="mt-2" />
+<twig:bs:skeleton width="75%" class="mt-2" />
+
+{# Skeleton Widths #}
+<h3 class="mt-5">Skeleton Widths</h3>
+<twig:bs:skeleton width="100%" class="mb-2" />
+<twig:bs:skeleton width="75%" class="mb-2" />
+<twig:bs:skeleton width="50%" class="mb-2" />
+<twig:bs:skeleton width="25%" />
+
+{# Skeleton Heights #}
+<h3 class="mt-5">Skeleton Heights</h3>
+<twig:bs:skeleton height="20px" class="mb-2" />
+<twig:bs:skeleton height="30px" class="mb-2" />
+<twig:bs:skeleton height="40px" class="mb-2" />
+<twig:bs:skeleton height="50px" />
+
+{# Skeleton Shapes #}
+<h3 class="mt-5">Skeleton Shapes</h3>
+<div class="d-flex align-items-center gap-3">
+    <twig:bs:skeleton type="circle" width="40px" height="40px" />
+    <twig:bs:skeleton type="circle" width="60px" height="60px" />
+    <twig:bs:skeleton type="circle" width="80px" height="80px" />
+</div>
+
+{# Skeleton Card #}
+<h3 class="mt-5">Skeleton Card (Loading State)</h3>
+<twig:bs:card style="width: 18rem;">
+    <twig:bs:skeleton width="100%" height="180px" class="card-img-top" />
+    <div class="card-body">
+        <twig:bs:skeleton width="60%" height="24px" class="mb-2" />
+        <twig:bs:skeleton width="100%" class="mb-2" />
+        <twig:bs:skeleton width="100%" class="mb-2" />
+        <twig:bs:skeleton width="80%" class="mb-3" />
+        <twig:bs:skeleton width="100px" height="38px" />
+    </div>
+</twig:bs:card>
+
+{# Skeleton List #}
+<h3 class="mt-5">Skeleton List Items</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:skeleton type="circle" width="40px" height="40px" class="me-3" />
+        <div class="flex-grow-1">
+            <twig:bs:skeleton width="30%" height="16px" class="mb-2" />
+            <twig:bs:skeleton width="50%" height="14px" />
+        </div>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:skeleton type="circle" width="40px" height="40px" class="me-3" />
+        <div class="flex-grow-1">
+            <twig:bs:skeleton width="35%" height="16px" class="mb-2" />
+            <twig:bs:skeleton width="60%" height="14px" />
+        </div>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:skeleton type="circle" width="40px" height="40px" class="me-3" />
+        <div class="flex-grow-1">
+            <twig:bs:skeleton width="40%" height="16px" class="mb-2" />
+            <twig:bs:skeleton width="55%" height="14px" />
+        </div>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Skeleton Table #}
+<h3 class="mt-5">Skeleton Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><twig:bs:skeleton width="80%" /></td>
+            <td><twig:bs:skeleton width="90%" /></td>
+            <td><twig:bs:skeleton width="60px" /></td>
+            <td><twig:bs:skeleton width="100px" /></td>
+        </tr>
+        <tr>
+            <td><twig:bs:skeleton width="75%" /></td>
+            <td><twig:bs:skeleton width="85%" /></td>
+            <td><twig:bs:skeleton width="60px" /></td>
+            <td><twig:bs:skeleton width="100px" /></td>
+        </tr>
+        <tr>
+            <td><twig:bs:skeleton width="85%" /></td>
+            <td><twig:bs:skeleton width="95%" /></td>
+            <td><twig:bs:skeleton width="60px" /></td>
+            <td><twig:bs:skeleton width="100px" /></td>
+        </tr>
+    </tbody>
+</table>
+
+{# Skeleton Profile Card #}
+<h3 class="mt-5">Skeleton Profile Card</h3>
+<twig:bs:card style="width: 20rem;">
+    <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+            <twig:bs:skeleton type="circle" width="60px" height="60px" class="me-3" />
+            <div class="flex-grow-1">
+                <twig:bs:skeleton width="70%" height="20px" class="mb-2" />
+                <twig:bs:skeleton width="50%" height="16px" />
+            </div>
+        </div>
+        <twig:bs:skeleton width="100%" class="mb-2" />
+        <twig:bs:skeleton width="100%" class="mb-2" />
+        <twig:bs:skeleton width="80%" class="mb-3" />
+        <div class="d-flex gap-2">
+            <twig:bs:skeleton width="100%" height="38px" />
+            <twig:bs:skeleton width="100%" height="38px" />
+        </div>
+    </div>
+</twig:bs:card>
+
+{# Skeleton Grid #}
+<h3 class="mt-5">Skeleton Grid</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:card>
+            <twig:bs:skeleton width="100%" height="200px" class="card-img-top" />
+            <div class="card-body">
+                <twig:bs:skeleton width="70%" height="20px" class="mb-2" />
+                <twig:bs:skeleton width="100%" class="mb-2" />
+                <twig:bs:skeleton width="90%" />
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card>
+            <twig:bs:skeleton width="100%" height="200px" class="card-img-top" />
+            <div class="card-body">
+                <twig:bs:skeleton width="60%" height="20px" class="mb-2" />
+                <twig:bs:skeleton width="100%" class="mb-2" />
+                <twig:bs:skeleton width="85%" />
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card>
+            <twig:bs:skeleton width="100%" height="200px" class="card-img-top" />
+            <div class="card-body">
+                <twig:bs:skeleton width="75%" height="20px" class="mb-2" />
+                <twig:bs:skeleton width="100%" class="mb-2" />
+                <twig:bs:skeleton width="95%" />
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# Animated Skeleton #}
+<h3 class="mt-5">Animated Skeleton (Wave Effect)</h3>
+<div class="placeholder-wave">
+    <twig:bs:skeleton width="100%" class="mb-2" />
+    <twig:bs:skeleton width="75%" class="mb-2" />
+    <twig:bs:skeleton width="50%" />
+</div>
+
+{# Skeleton Blog Post #}
+<h3 class="mt-5">Skeleton Blog Post</h3>
+<article>
+    <twig:bs:skeleton width="100%" height="300px" class="mb-3" />
+    <twig:bs:skeleton width="70%" height="32px" class="mb-3" />
+    <div class="d-flex align-items-center mb-3">
+        <twig:bs:skeleton type="circle" width="32px" height="32px" class="me-2" />
+        <twig:bs:skeleton width="150px" height="14px" />
+    </div>
+    <twig:bs:skeleton width="100%" class="mb-2" />
+    <twig:bs:skeleton width="100%" class="mb-2" />
+    <twig:bs:skeleton width="100%" class="mb-2" />
+    <twig:bs:skeleton width="90%" class="mb-2" />
+    <twig:bs:skeleton width="95%" />
+</article>
+

@@ -1,0 +1,424 @@
+{# Notification Center Component Examples #}
+
+{# ========================================
+   Example 1: Dropdown Variant (Default)
+   ======================================== #}
+<h2>Dropdown Notification Center</h2>
+
+<twig:bs:notification-center
+    variant="dropdown"
+    :unreadCount="3"
+    badgeVariant="danger"
+    viewAllHref="/notifications">
+  <twig:block name="content">
+    {# Unread notification with avatar #}
+    <a href="/posts/123" 
+       class="dropdown-item notification-unread" 
+       data-notification-id="1">
+      <div class="d-flex align-items-start">
+        <img src="https://i.pravatar.cc/40?img=1" 
+             alt="John Doe" 
+             class="rounded-circle me-3" 
+             width="40" 
+             height="40">
+        <div class="flex-grow-1">
+          <p class="mb-1"><strong>John Doe</strong> commented on your post</p>
+          <small class="text-muted">5 minutes ago</small>
+        </div>
+        <button type="button" 
+                class="btn btn-sm btn-link text-danger ms-2 p-0"
+                data-action="click->bs-notification-center#deleteNotification"
+                title="Delete">
+          ✕
+        </button>
+      </div>
+    </a>
+    
+    {# Unread notification with icon #}
+    <a href="/messages/456" 
+       class="dropdown-item notification-unread" 
+       data-notification-id="2">
+      <div class="d-flex align-items-start">
+        <span class="me-3 fs-4">💬</span>
+        <div class="flex-grow-1">
+          <p class="mb-1"><strong>Sarah Smith</strong> sent you a message</p>
+          <small class="text-muted">15 minutes ago</small>
+        </div>
+      </div>
+    </a>
+    
+    {# Unread notification - system #}
+    <a href="/settings/security" 
+       class="dropdown-item notification-unread" 
+       data-notification-id="3">
+      <div class="d-flex align-items-start">
+        <span class="badge bg-warning rounded-circle me-3" style="width: 40px; height: 40px; line-height: 40px;">
+          ⚠️
+        </span>
+        <div class="flex-grow-1">
+          <p class="mb-1">Security alert: New login from Chrome on Windows</p>
+          <small class="text-muted">1 hour ago</small>
+        </div>
+      </div>
+    </a>
+    
+    <div class="dropdown-divider"></div>
+    
+    {# Read notifications #}
+    <a href="/profile/updated" 
+       class="dropdown-item notification-read" 
+       data-notification-id="4">
+      <div class="d-flex align-items-start">
+        <span class="badge bg-success rounded-circle me-3" style="width: 40px; height: 40px; line-height: 40px;">
+          ✓
+        </span>
+        <div class="flex-grow-1">
+          <p class="mb-1">Your profile was updated successfully</p>
+          <small class="text-muted">2 hours ago</small>
+        </div>
+      </div>
+    </a>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 2: Offcanvas Variant
+   ======================================== #}
+<h2 class="mt-5">Offcanvas Notification Center</h2>
+
+<twig:bs:notification-center
+    variant="offcanvas"
+    offcanvasPlacement="end"
+    title="Recent Notifications"
+    triggerVariant="primary"
+    :unreadCount="5"
+    viewAllHref="/notifications">
+  <twig:block name="content">
+    <div class="list-group list-group-flush">
+      <div class="list-group-item notification-unread" data-notification-id="off-1">
+        <div class="d-flex">
+          <img src="https://i.pravatar.cc/48?img=5" 
+               alt="User" 
+               class="rounded-circle me-3" 
+               width="48" 
+               height="48">
+          <div class="flex-grow-1">
+            <p class="mb-1"><strong>Emma Wilson</strong> started following you</p>
+            <small class="text-muted">Just now</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item notification-unread" data-notification-id="off-2">
+        <div class="d-flex">
+          <span class="me-3 fs-3">❤️</span>
+          <div class="flex-grow-1">
+            <p class="mb-1"><strong>Mike Johnson</strong> liked your photo</p>
+            <small class="text-muted">10 minutes ago</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item notification-read" data-notification-id="off-3">
+        <div class="d-flex">
+          <span class="me-3 fs-3">🎉</span>
+          <div class="flex-grow-1">
+            <p class="mb-1">Welcome to our platform!</p>
+            <small class="text-muted">1 day ago</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 3: Modal Variant - Inbox Style
+   ======================================== #}
+<h2 class="mt-5">Modal Inbox-Style Messages</h2>
+
+<twig:bs:notification-center
+    variant="modal"
+    modalSize="lg"
+    :modalScrollable="true"
+    title="Messages"
+    triggerIcon="✉️"
+    triggerVariant="secondary"
+    :unreadCount="2">
+  <twig:block name="content">
+    <div class="list-group list-group-flush">
+      <a href="/messages/1" 
+         class="list-group-item list-group-item-action notification-unread" 
+         data-notification-id="msg-1">
+        <div class="d-flex w-100 align-items-start">
+          <img src="https://i.pravatar.cc/48?img=10" 
+               alt="Alice Smith" 
+               class="rounded-circle me-3" 
+               width="48" 
+               height="48">
+          <div class="flex-grow-1">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">Alice Smith</h6>
+              <small class="text-muted">10 min ago</small>
+            </div>
+            <p class="mb-1">Hey! Are you available for a quick call about the project?</p>
+            <small class="text-primary">📧 Unread</small>
+          </div>
+        </div>
+      </a>
+      
+      <a href="/messages/2" 
+         class="list-group-item list-group-item-action notification-unread" 
+         data-notification-id="msg-2">
+        <div class="d-flex w-100 align-items-start">
+          <img src="https://i.pravatar.cc/48?img=11" 
+               alt="Bob Johnson" 
+               class="rounded-circle me-3" 
+               width="48" 
+               height="48">
+          <div class="flex-grow-1">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">Bob Johnson</h6>
+              <small class="text-muted">1 hour ago</small>
+            </div>
+            <p class="mb-1">I've sent you the files you requested. Let me know if you need anything else!</p>
+            <small class="text-primary">📧 Unread</small>
+          </div>
+        </div>
+      </a>
+      
+      <a href="/messages/3" 
+         class="list-group-item list-group-item-action notification-read" 
+         data-notification-id="msg-3">
+        <div class="d-flex w-100 align-items-start">
+          <img src="https://i.pravatar.cc/48?img=12" 
+               alt="Carol White" 
+               class="rounded-circle me-3" 
+               width="48" 
+               height="48">
+          <div class="flex-grow-1">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1 text-muted">Carol White</h6>
+              <small class="text-muted">2 hours ago</small>
+            </div>
+            <p class="mb-1 text-muted">Thanks for your help earlier! Really appreciate it.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 4: Inline Variant - Activity Feed
+   ======================================== #}
+<h2 class="mt-5">Inline Activity Feed</h2>
+
+<twig:bs:notification-center
+    variant="inline"
+    title="Recent Activity"
+    :showBadge="false"
+    viewAllHref="/activity"
+    class="border rounded">
+  <twig:block name="content">
+    <div class="list-group list-group-flush">
+      <div class="list-group-item" data-notification-id="act-1">
+        <div class="d-flex">
+          <span class="me-3 fs-4">👤</span>
+          <div class="flex-grow-1">
+            <p class="mb-0"><strong>Sarah Connor</strong> started following you</p>
+            <small class="text-muted">15 minutes ago</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item" data-notification-id="act-2">
+        <div class="d-flex">
+          <span class="me-3 fs-4">❤️</span>
+          <div class="flex-grow-1">
+            <p class="mb-0"><strong>Mike Ross</strong> liked your photo <em>"Sunset at the beach"</em></p>
+            <small class="text-muted">1 hour ago</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item" data-notification-id="act-3">
+        <div class="d-flex">
+          <span class="me-3 fs-4">💬</span>
+          <div class="flex-grow-1">
+            <p class="mb-0"><strong>Emma Watson</strong> mentioned you in a comment</p>
+            <small class="text-muted">3 hours ago</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item" data-notification-id="act-4">
+        <div class="d-flex">
+          <span class="me-3 fs-4">🎂</span>
+          <div class="flex-grow-1">
+            <p class="mb-0"><strong>John Doe's</strong> birthday is today</p>
+            <small class="text-muted">5 hours ago</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="list-group-item" data-notification-id="act-5">
+        <div class="d-flex">
+          <span class="me-3 fs-4">🏆</span>
+          <div class="flex-grow-1">
+            <p class="mb-0">You earned the <strong>"Active Member"</strong> badge</p>
+            <small class="text-muted">Yesterday</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 5: Grouped Notifications
+   ======================================== #}
+<h2 class="mt-5">Grouped Notifications</h2>
+
+<twig:bs:notification-center
+    variant="dropdown"
+    :grouped="true"
+    :unreadCount="4">
+  <twig:block name="content">
+    {# Today Group #}
+    <div class="dropdown-header fw-bold">Today</div>
+    
+    <a href="#" class="dropdown-item notification-unread" data-notification-id="grp-1">
+      <div class="d-flex">
+        <span class="me-2">🔔</span>
+        <div class="flex-grow-1">
+          <p class="mb-0">New feature released</p>
+          <small class="text-muted">2 hours ago</small>
+        </div>
+      </div>
+    </a>
+    
+    <a href="#" class="dropdown-item notification-unread" data-notification-id="grp-2">
+      <div class="d-flex">
+        <span class="me-2">📝</span>
+        <div class="flex-grow-1">
+          <p class="mb-0">Your draft was auto-saved</p>
+          <small class="text-muted">4 hours ago</small>
+        </div>
+      </div>
+    </a>
+    
+    {# Yesterday Group #}
+    <div class="dropdown-divider"></div>
+    <div class="dropdown-header fw-bold">Yesterday</div>
+    
+    <a href="#" class="dropdown-item notification-read" data-notification-id="grp-3">
+      <div class="d-flex">
+        <span class="me-2">✅</span>
+        <div class="flex-grow-1">
+          <p class="mb-0">Task completed successfully</p>
+          <small class="text-muted">Yesterday at 3:00 PM</small>
+        </div>
+      </div>
+    </a>
+    
+    {# This Week Group #}
+    <div class="dropdown-divider"></div>
+    <div class="dropdown-header fw-bold">This Week</div>
+    
+    <a href="#" class="dropdown-item notification-read" data-notification-id="grp-4">
+      <div class="d-flex">
+        <span class="me-2">🎁</span>
+        <div class="flex-grow-1">
+          <p class="mb-0">You received a gift</p>
+          <small class="text-muted">3 days ago</small>
+        </div>
+      </div>
+    </a>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 6: With Auto-Refresh (API Integration)
+   ======================================== #}
+<h2 class="mt-5">Auto-Refresh from API</h2>
+
+<twig:bs:notification-center
+    variant="dropdown"
+    :autoRefresh="true"
+    :autoRefreshInterval="60000"
+    fetchUrl="/api/notifications"
+    :unreadCount="0">
+  <twig:block name="content">
+    {# Initial content - will be replaced by API #}
+    <div class="dropdown-item-text text-center text-muted">
+      Loading notifications...
+    </div>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 7: Popover Variant with Actions
+   ======================================== #}
+<h2 class="mt-5">Popover with Actions</h2>
+
+<twig:bs:notification-center
+    variant="popover"
+    triggerVariant="outline-primary"
+    :showActions="true"
+    :unreadCount="2">
+  <twig:block name="content">
+    <div class="dropdown-item notification-unread d-flex" data-notification-id="pop-1">
+      <div class="flex-grow-1">
+        <p class="mb-1"><strong>New update available</strong></p>
+        <p class="mb-1 small">Version 2.0 is ready to install</p>
+        <small class="text-muted">30 minutes ago</small>
+      </div>
+      <div class="ms-2">
+        <button type="button" 
+                class="btn btn-sm btn-outline-primary"
+                data-action="click->bs-notification-center#markAsRead">
+          Mark read
+        </button>
+      </div>
+    </div>
+    
+    <div class="dropdown-divider"></div>
+    
+    <div class="dropdown-item notification-unread d-flex" data-notification-id="pop-2">
+      <div class="flex-grow-1">
+        <p class="mb-1"><strong>Maintenance scheduled</strong></p>
+        <p class="mb-1 small">System will be down for 2 hours</p>
+        <small class="text-muted">1 hour ago</small>
+      </div>
+      <div class="ms-2">
+        <button type="button" 
+                class="btn btn-sm btn-link text-danger"
+                data-action="click->bs-notification-center#deleteNotification">
+          ✕
+        </button>
+      </div>
+    </div>
+  </twig:block>
+</twig:bs:notification-center>
+
+{# ========================================
+   Example 8: Custom Trigger with Text
+   ======================================== #}
+<h2 class="mt-5">Custom Trigger with Text</h2>
+
+<twig:bs:notification-center
+    variant="dropdown"
+    triggerVariant="primary"
+    triggerLabel="Notifications"
+    triggerIcon="🔔"
+    :triggerIconOnly="false"
+    :unreadCount="7"
+    badgeVariant="danger">
+  <twig:block name="content">
+    <a href="#" class="dropdown-item notification-unread" data-notification-id="cust-1">
+      <p class="mb-0">You have 7 unread notifications</p>
+    </a>
+  </twig:block>
+</twig:bs:notification-center>
+

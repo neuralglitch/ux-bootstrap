@@ -1,0 +1,151 @@
+{# Avatar Component Examples #}
+
+{# Basic Avatar with Image #}
+<h3>Basic Avatar with Image</h3>
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=1" alt="User Avatar" />
+
+{# Avatar Sizes #}
+<h3 class="mt-5">Avatar Sizes</h3>
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=2" size="sm" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=3" size="md" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=4" size="lg" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=5" size="xl" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=6" size="xxl" />
+
+{# Avatar with Initials Fallback #}
+<h3 class="mt-5">Avatar with Initials Fallback</h3>
+<twig:bs:avatar name="John Doe" class="me-2" />
+<twig:bs:avatar name="Jane Smith" class="me-2" />
+<twig:bs:avatar name="Alice Johnson" class="me-2" />
+<twig:bs:avatar name="Bob Wilson" />
+
+{# Avatar with Icon Fallback #}
+<h3 class="mt-5">Avatar with Icon Fallback</h3>
+<twig:bs:avatar icon="bi bi-person-fill" class="me-2" />
+<twig:bs:avatar icon="bi bi-people-fill" class="me-2" />
+<twig:bs:avatar icon="bi bi-building" />
+
+{# Rounded Variants #}
+<h3 class="mt-5">Rounded Variants</h3>
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=7" :rounded="true" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=8" :rounded="false" class="me-2" />
+<twig:bs:avatar src="https://i.pravatar.cc/150?img=9" shape="square" />
+
+{# Avatar with Status Badge #}
+<h3 class="mt-5">Avatar with Status Badge</h3>
+<div class="position-relative d-inline-block me-3">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=10" />
+    <span class="position-absolute bottom-0 end-0 translate-middle-x p-1 bg-success border border-light rounded-circle">
+        <span class="visually-hidden">Online</span>
+    </span>
+</div>
+<div class="position-relative d-inline-block me-3">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=11" />
+    <span class="position-absolute bottom-0 end-0 translate-middle-x p-1 bg-warning border border-light rounded-circle">
+        <span class="visually-hidden">Away</span>
+    </span>
+</div>
+<div class="position-relative d-inline-block me-3">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=12" />
+    <span class="position-absolute bottom-0 end-0 translate-middle-x p-1 bg-danger border border-light rounded-circle">
+        <span class="visually-hidden">Busy</span>
+    </span>
+</div>
+<div class="position-relative d-inline-block">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=13" />
+    <span class="position-absolute bottom-0 end-0 translate-middle-x p-1 bg-secondary border border-light rounded-circle">
+        <span class="visually-hidden">Offline</span>
+    </span>
+</div>
+
+{# Avatar Group #}
+<h3 class="mt-5">Avatar Group</h3>
+<div class="avatar-group d-flex">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=14" class="border border-white" style="margin-left: -10px; z-index: 4;" />
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=15" class="border border-white" style="margin-left: -10px; z-index: 3;" />
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=16" class="border border-white" style="margin-left: -10px; z-index: 2;" />
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=17" class="border border-white" style="margin-left: -10px; z-index: 1;" />
+    <div class="avatar-more d-flex align-items-center justify-content-center bg-secondary text-white rounded-circle border border-white" style="width: 40px; height: 40px; margin-left: -10px; font-size: 0.875rem;">
+        +5
+    </div>
+</div>
+
+{# Avatar with Text #}
+<h3 class="mt-5">Avatar with Text</h3>
+<div class="d-flex align-items-center mb-3">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=18" class="me-3" />
+    <div>
+        <h6 class="mb-0">John Doe</h6>
+        <small class="text-muted">Product Manager</small>
+    </div>
+</div>
+<div class="d-flex align-items-center mb-3">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=19" size="sm" class="me-2" />
+    <div>
+        <small class="fw-bold">Jane Smith</small>
+        <br>
+        <small class="text-muted">Designer</small>
+    </div>
+</div>
+<div class="d-flex align-items-center">
+    <twig:bs:avatar src="https://i.pravatar.cc/150?img=20" size="lg" class="me-3" />
+    <div>
+        <h5 class="mb-1">Bob Wilson</h5>
+        <p class="text-muted mb-0">Senior Developer</p>
+        <small class="text-muted">bob.wilson@example.com</small>
+    </div>
+</div>
+
+{# Avatar Colors #}
+<h3 class="mt-5">Avatar with Background Colors</h3>
+<twig:bs:avatar name="Primary" class="bg-primary text-white me-2" />
+<twig:bs:avatar name="Secondary" class="bg-secondary text-white me-2" />
+<twig:bs:avatar name="Success" class="bg-success text-white me-2" />
+<twig:bs:avatar name="Danger" class="bg-danger text-white me-2" />
+<twig:bs:avatar name="Warning" class="bg-warning text-dark me-2" />
+<twig:bs:avatar name="Info" class="bg-info text-white" />
+
+{# Avatar in List #}
+<h3 class="mt-5">Avatar in List</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:avatar src="https://i.pravatar.cc/150?img=21" size="sm" class="me-3" />
+        <div class="flex-grow-1">
+            <div class="fw-bold">Alice Johnson</div>
+            <small class="text-muted">alice@example.com</small>
+        </div>
+        <twig:bs:badge variant="success">Active</twig:bs:badge>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:avatar src="https://i.pravatar.cc/150?img=22" size="sm" class="me-3" />
+        <div class="flex-grow-1">
+            <div class="fw-bold">Bob Smith</div>
+            <small class="text-muted">bob@example.com</small>
+        </div>
+        <twig:bs:badge variant="secondary">Offline</twig:bs:badge>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex align-items-center">
+        <twig:bs:avatar src="https://i.pravatar.cc/150?img=23" size="sm" class="me-3" />
+        <div class="flex-grow-1">
+            <div class="fw-bold">Carol Williams</div>
+            <small class="text-muted">carol@example.com</small>
+        </div>
+        <twig:bs:badge variant="warning">Away</twig:bs:badge>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Avatar in Card #}
+<h3 class="mt-5">Avatar in Profile Card</h3>
+<twig:bs:card style="width: 18rem;">
+    <div class="card-body text-center">
+        <twig:bs:avatar src="https://i.pravatar.cc/150?img=24" size="xl" class="mb-3" />
+        <h5 class="card-title">David Anderson</h5>
+        <p class="text-muted">Senior Software Engineer</p>
+        <p class="card-text">Passionate about creating amazing user experiences and clean code.</p>
+        <div class="d-grid gap-2">
+            <twig:bs:button variant="primary">View Profile</twig:bs:button>
+            <twig:bs:button variant="outline-secondary">Send Message</twig:bs:button>
+        </div>
+    </div>
+</twig:bs:card>
+

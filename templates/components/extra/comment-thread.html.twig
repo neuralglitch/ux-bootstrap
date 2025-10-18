@@ -1,0 +1,184 @@
+{% apply spaceless -%}
+  {% set o = this.options() %}
+
+  {# Recursive macro for rendering comments and replies #}
+  {% macro render_comment(comment, depth, options, component) %}
+    {% set is_author = component.isAuthor(comment) %}
+    {% set can_reply = component.canReply(depth) %}
+    {% set comment_id = 'comment-' ~ (comment.id ?? random()) %}
+
+    <div class="comment-item {% if is_author %}comment-author{% endif %} {% if depth > 0 %}comment-reply{% endif %}"
+         data-comment-id="{{ comment.id ?? '' }}"
+         data-depth="{{ depth }}">
+
+      {# Thread line connector for nested comments #}
+      {% if depth > 0 and options.showThreadLines %}
+        <div class="comment-thread-line"></div>
+      {% endif %}
+
+      <div class="comment-content-wrapper">
+        {# Avatar #}
+        <div class="comment-avatar">
+          {% if comment.avatar is defined %}
+            <img src="{{ comment.avatar }}" alt="{{ comment.author }}" class="rounded-circle {{ component.getAvatarSizeClass() }}">
+          {% else %}
+            <div class="avatar-placeholder rounded-circle {{ component.getAvatarSizeClass() }} bg-secondary text-white d-flex align-items-center justify-content-center">
+              {{ (comment.author ?? 'U')|slice(0, 1)|upper }}
+            </div>
+          {% endif %}
+        </div>
+
+        {# Comment body #}
+        <div class="comment-body">
+          {# Header: author, timestamp, badges #}
+          <div class="comment-header d-flex align-items-center gap-2 mb-1">
+            <strong class="comment-author">{{ comment.author ?? 'Anonymous' }}</strong>
+            
+            {% if is_author %}
+              <span class="badge bg-primary text-white badge-sm">Author</span>
+            {% endif %}
+            
+            {% if comment.badges is defined and comment.badges %}
+              {% for badge in comment.badges %}
+                <span class="badge {{ badge.class ?? 'bg-secondary' }} badge-sm">{{ badge.label }}</span>
+              {% endfor %}
+            {% endif %}
+            
+            <span class="comment-timestamp text-muted small">
+              {{ component.formatDate(comment.timestamp ?? 'now') }}
+            </span>
+
+            {% if comment.edited is defined and comment.edited %}
+              <span class="comment-edited text-muted small fst-italic">(edited)</span>
+            {% endif %}
+          </div>
+
+          {# Comment text #}
+          <div class="comment-text">
+            {{ comment.content|raw }}
+          </div>
+
+          {# Actions bar #}
+          <div class="comment-actions mt-2 d-flex align-items-center gap-3">
+            {% if options.showLike %}
+              <button type="button" 
+                      class="btn btn-link btn-sm text-decoration-none p-0 comment-action-like"
+                      data-action="like"
+                      data-comment-id="{{ comment.id ?? '' }}">
+                <i class="bi bi-heart"></i>
+                {% if comment.likes is defined and comment.likes > 0 %}
+                  <span class="comment-likes-count">{{ comment.likes }}</span>
+                {% endif %}
+              </button>
+            {% endif %}
+
+            {% if options.showReply and can_reply %}
+              {% if options.collapsible %}
+                <button type="button" 
+                        class="btn btn-link btn-sm text-decoration-none p-0 comment-action-reply"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ comment_id }}-reply"
+                        aria-expanded="false"
+                        aria-controls="{{ comment_id }}-reply">
+                  <i class="bi bi-reply"></i> Reply
+                </button>
+              {% else %}
+                <button type="button" 
+                        class="btn btn-link btn-sm text-decoration-none p-0 comment-action-reply"
+                        data-action="reply"
+                        data-comment-id="{{ comment.id ?? '' }}">
+                  <i class="bi bi-reply"></i> Reply
+                </button>
+              {% endif %}
+            {% endif %}
+
+            {% if options.showEdit and comment.can_edit is defined and comment.can_edit %}
+              <button type="button" 
+                      class="btn btn-link btn-sm text-decoration-none p-0 comment-action-edit"
+                      data-action="edit"
+                      data-comment-id="{{ comment.id ?? '' }}">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+            {% endif %}
+
+            {% if options.showDelete and comment.can_delete is defined and comment.can_delete %}
+              <button type="button" 
+                      class="btn btn-link btn-sm text-decoration-none p-0 text-danger comment-action-delete"
+                      data-action="delete"
+                      data-comment-id="{{ comment.id ?? '' }}">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            {% endif %}
+
+            {# Custom actions slot #}
+            {% if comment.custom_actions is defined and comment.custom_actions %}
+              {{ comment.custom_actions|raw }}
+            {% endif %}
+          </div>
+
+          {# Reply form (collapsible) #}
+          {% if options.showReply and can_reply and options.collapsible %}
+            <div class="collapse mt-3" id="{{ comment_id }}-reply">
+              <div class="comment-reply-form">
+                <textarea class="form-control form-control-sm" 
+                          rows="2" 
+                          placeholder="Write a reply..."></textarea>
+                <div class="d-flex gap-2 mt-2">
+                  <button type="button" class="btn btn-primary btn-sm">Post Reply</button>
+                  <button type="button" 
+                          class="btn btn-secondary btn-sm"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#{{ comment_id }}-reply">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Render nested replies #}
+      {% if comment.replies is defined and comment.replies|length > 0 %}
+        <div class="comment-replies {% if options.collapsible and options.defaultCollapsed %}collapse{% endif %}"
+             id="{{ comment_id }}-replies">
+          {% for reply in comment.replies %}
+            {{ _self.render_comment(reply, depth + 1, options, component) }}
+          {% endfor %}
+        </div>
+
+        {# Collapse/expand toggle for replies #}
+        {% if options.collapsible and comment.replies|length > 0 %}
+          <button type="button" 
+                  class="btn btn-link btn-sm text-decoration-none ps-5 comment-toggle-replies"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#{{ comment_id }}-replies"
+                  aria-expanded="{{ not options.defaultCollapsed }}"
+                  aria-controls="{{ comment_id }}-replies">
+            <i class="bi bi-chevron-down"></i>
+            <span class="toggle-text-show">Show {{ comment.replies|length }} {{ comment.replies|length == 1 ? 'reply' : 'replies' }}</span>
+            <span class="toggle-text-hide d-none">Hide {{ comment.replies|length }} {{ comment.replies|length == 1 ? 'reply' : 'replies' }}</span>
+          </button>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endmacro %}
+
+  {# Main container #}
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {% import _self as macros %}
+
+    {% if o.comments|length > 0 %}
+      {% for comment in o.comments %}
+        {{ macros.render_comment(comment, 0, o, this) }}
+      {% endfor %}
+    {% else %}
+      <div class="comment-thread-empty text-center text-muted py-5">
+        <i class="bi bi-chat-dots fs-1 d-block mb-3"></i>
+        <p class="mb-0">No comments yet. Be the first to comment!</p>
+      </div>
+    {% endif %}
+  </div>
+
+{%- endapply %}
+

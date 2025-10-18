@@ -1,0 +1,132 @@
+{# SearchBar Component Examples #}
+
+{# Basic SearchBar #}
+<h3>Basic SearchBar</h3>
+<twig:bs:searchbar
+    placeholder="Search..."
+    searchUrl="/search"
+/>
+
+{# SearchBar Sizes #}
+<h3 class="mt-5">SearchBar Sizes</h3>
+<twig:bs:searchbar size="sm" placeholder="Small search..." searchUrl="/search" class="mb-3" />
+<twig:bs:searchbar placeholder="Default search..." searchUrl="/search" class="mb-3" />
+<twig:bs:searchbar size="lg" placeholder="Large search..." searchUrl="/search" />
+
+{# SearchBar with Custom Settings #}
+<h3 class="mt-5">SearchBar with Custom Settings</h3>
+<twig:bs:searchbar
+    placeholder="Search documentation..."
+    searchUrl="/docs/search"
+    :minChars="3"
+    :debounce="500"
+    name="docs_query"
+/>
+
+{# SearchBar without Clear Button #}
+<h3 class="mt-5">SearchBar without Clear Button</h3>
+<twig:bs:searchbar
+    placeholder="Search..."
+    searchUrl="/search"
+    :showClear="false"
+/>
+
+{# SearchBar with Autofocus #}
+<h3 class="mt-5">SearchBar with Autofocus</h3>
+<twig:bs:searchbar
+    placeholder="Start typing to search..."
+    searchUrl="/search"
+    :autofocus="true"
+/>
+
+{# SearchBar in Navbar #}
+<h3 class="mt-5">SearchBar in Navbar</h3>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Brand</a>
+        <div class="d-flex ms-auto">
+            <twig:bs:searchbar
+                placeholder="Search..."
+                searchUrl="/search"
+                size="sm"
+            />
+        </div>
+    </div>
+</nav>
+
+{# SearchBar with Icon #}
+<h3 class="mt-5">SearchBar with Custom Icon</h3>
+<div class="input-group">
+    <span class="input-group-text"><i class="bi bi-search"></i></span>
+    <twig:bs:searchbar
+        placeholder="Search products..."
+        searchUrl="/products/search"
+        class="border-start-0"
+    />
+</div>
+
+{# Full-Width SearchBar #}
+<h3 class="mt-5">Full-Width SearchBar</h3>
+<twig:bs:searchbar
+    placeholder="Search across all content..."
+    searchUrl="/search/all"
+    class="w-100"
+/>
+
+{# SearchBar in Card #}
+<h3 class="mt-5">SearchBar in Card</h3>
+<twig:bs:card>
+    <div class="card-body">
+        <h5 class="card-title">Find What You Need</h5>
+        <p class="card-text">Search through thousands of articles and resources.</p>
+        <twig:bs:searchbar
+            placeholder="Search articles..."
+            searchUrl="/articles/search"
+            :minChars="2"
+        />
+    </div>
+</twig:bs:card>
+
+{# Multiple SearchBars #}
+<h3 class="mt-5">Different Search Contexts</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <label class="form-label">Search Users</label>
+        <twig:bs:searchbar
+            placeholder="Find users..."
+            searchUrl="/users/search"
+        />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Search Products</label>
+        <twig:bs:searchbar
+            placeholder="Find products..."
+            searchUrl="/products/search"
+        />
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Search Orders</label>
+        <twig:bs:searchbar
+            placeholder="Find orders..."
+            searchUrl="/orders/search"
+        />
+    </div>
+</div>
+
+{# SearchBar with Results Dropdown #}
+<h3 class="mt-5">SearchBar with Live Results</h3>
+<div class="position-relative">
+    <twig:bs:searchbar
+        placeholder="Search for anything..."
+        searchUrl="/search"
+        :minChars="2"
+        :debounce="300"
+    />
+    <div class="dropdown-menu show position-absolute w-100 mt-1" style="display: none;" id="searchResults">
+        <a class="dropdown-item" href="#">Result 1</a>
+        <a class="dropdown-item" href="#">Result 2</a>
+        <a class="dropdown-item" href="#">Result 3</a>
+    </div>
+</div>
+<p class="text-muted mt-2"><small>Start typing to see live results...</small></p>
+

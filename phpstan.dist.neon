@@ -1,0 +1,11 @@
+parameters:
+    level: 6
+    paths:
+        - config/
+        - src/
+        - tests/
+    tmpDir: var/cache/phpstan
+    ignoreErrors:
+        # Ignore type assertions in tests that PHPStan already knows
+        - identifier: staticMethod.alreadyNarrowedType
+        - identifier: method.alreadyNarrowedType

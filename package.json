@@ -1,0 +1,20 @@
+{
+  "name": "@neuralglitch/ux-bootstrap",
+  "version": "1.0.0",
+  "description": "Reusable Bootstrap 5.3 Twig Components & Stimulus Controllers for Symfony",
+  "type": "module",
+  "main": "assets/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neuralglitch/ux-bootstrap"
+  },
+  "keywords": [
+    "symfony",
+    "bootstrap",
+    "twig-components",
+    "stimulus",
+    "ui"
+  ],
+  "author": "neuralglit.ch",
+  "license": "MIT"
+}

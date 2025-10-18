@@ -1,0 +1,323 @@
+{# templates/components/extra/stepper.html.twig #}
+{# Bootstrap 5.3 Stepper Component for Multi-Step Processes #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Custom content block (optional) #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  {# Progress bar (optional) #}
+  {% if o.showProgressBar and not has_custom_content %}
+    <div class="stepper__progress mb-3">
+      <div class="progress" style="height: 4px;">
+        <div class="progress-bar bg-{{ o.activeVariant }}" 
+             role="progressbar" 
+             style="width: {{ o.progressPercentage }}%"
+             aria-valuenow="{{ o.progressPercentage }}"
+             aria-valuemin="0" 
+             aria-valuemax="100"></div>
+      </div>
+    </div>
+  {% endif %}
+
+  {# Custom content or auto-generated steps #}
+  {% if has_custom_content %}
+    {{ slot_content|raw }}
+  {% else %}
+    <div class="stepper__steps">
+      {% for step in o.steps %}
+        {% set isFirst = loop.first %}
+        {% set isLast = loop.last %}
+        {% set stepClasses = [
+          'stepper__step',
+          'stepper__step--' ~ step.state,
+        ]|join(' ') %}
+
+        <div class="{{ stepClasses }}">
+          {# Connector line (not for first step in horizontal, not for last in vertical) #}
+          {% if not isFirst %}
+            <div class="stepper__connector stepper__connector--{{ step.state }}">
+              <div class="stepper__line"></div>
+            </div>
+          {% endif %}
+
+          {# Step marker/indicator #}
+          <div class="stepper__marker">
+            {% if step.clickable and step.href %}
+              <a href="{{ step.href }}" 
+                 class="stepper__marker-content stepper__marker-content--clickable badge rounded-circle bg-{{ step.variant }}"
+                 aria-current="{{ step.state == 'active' ? 'step' : 'false' }}">
+                {{ block('step_marker_inner') }}
+              </a>
+            {% else %}
+              <div class="stepper__marker-content badge rounded-circle bg-{{ step.variant }}"
+                   aria-current="{{ step.state == 'active' ? 'step' : 'false' }}">
+                {{ block('step_marker_inner') }}
+              </div>
+            {% endif %}
+          </div>
+
+          {# Step content (label and description) #}
+          {% if o.showLabels or o.showDescriptions %}
+            <div class="stepper__content">
+              {% if o.showLabels %}
+                <div class="stepper__label fw-{{ step.state == 'active' ? 'bold' : 'normal' }}">
+                  {% if step.clickable and step.href %}
+                    <a href="{{ step.href }}" class="text-decoration-none text-{{ step.variant }}">
+                      {{ step.label }}
+                    </a>
+                  {% else %}
+                    {{ step.label }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              
+              {% if o.showDescriptions and step.description %}
+                <div class="stepper__description text-muted small">
+                  {{ step.description }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        {# Define step marker inner content block #}
+        {% block step_marker_inner %}
+          {% if o.style == 'icon' and step.icon %}
+            {{ step.icon|raw }}
+          {% elseif step.state == 'completed' and o.completedIcon %}
+            {{ o.completedIcon|raw }}
+          {% elseif step.state == 'active' and o.activeIcon %}
+            {{ o.activeIcon|raw }}
+          {% elseif step.state == 'pending' and o.pendingIcon %}
+            {{ o.pendingIcon|raw }}
+          {% else %}
+            {{ step.number }}
+          {% endif %}
+        {% endblock %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{%- endapply %}
+
+{# Inline CSS for stepper component #}
+{% if not has_custom_content %}
+<style>
+.stepper {
+  width: 100%;
+}
+
+/* Horizontal layout (default) */
+.stepper--horizontal .stepper__steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stepper--horizontal .stepper__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.stepper--horizontal .stepper__connector {
+  position: absolute;
+  top: 1.25rem;
+  left: -50%;
+  right: 50%;
+  height: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.stepper--horizontal .stepper__line {
+  width: 100%;
+  height: 2px;
+  background: var(--bs-secondary-bg);
+}
+
+.stepper--horizontal .stepper__step--completed .stepper__connector .stepper__line {
+  background: var(--bs-success);
+}
+
+.stepper--horizontal .stepper__step--active .stepper__connector .stepper__line {
+  background: linear-gradient(to right, var(--bs-success) 0%, var(--bs-secondary-bg) 100%);
+}
+
+.stepper--horizontal .stepper__marker {
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.stepper--horizontal .stepper__content {
+  max-width: 150px;
+}
+
+/* Vertical layout */
+.stepper--vertical .stepper__steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepper--vertical .stepper__step {
+  display: flex;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.stepper--vertical .stepper__step:last-child {
+  padding-bottom: 0;
+}
+
+.stepper--vertical .stepper__connector {
+  position: absolute;
+  top: 2.5rem;
+  left: 1.25rem;
+  bottom: -0.5rem;
+  width: 2px;
+  display: flex;
+  justify-content: center;
+}
+
+.stepper--vertical .stepper__line {
+  width: 2px;
+  height: 100%;
+  background: var(--bs-secondary-bg);
+}
+
+.stepper--vertical .stepper__step--completed .stepper__connector .stepper__line {
+  background: var(--bs-success);
+}
+
+.stepper--vertical .stepper__marker {
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.stepper--vertical .stepper__content {
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+/* Marker styles */
+.stepper__marker-content {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.stepper__marker-content--clickable {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.stepper__marker-content--clickable:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+/* Size variants */
+.stepper--sm .stepper__marker-content {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+}
+
+.stepper--lg .stepper__marker-content {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.125rem;
+}
+
+/* Responsive behavior */
+@media (max-width: 767.98px) {
+  .stepper--responsive.stepper--horizontal .stepper__steps {
+    flex-direction: column;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__step {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: 2rem;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__step:last-child {
+    padding-bottom: 0;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__connector {
+    top: 2.5rem;
+    left: 1.25rem;
+    bottom: -0.5rem;
+    width: 2px;
+    height: auto;
+    right: auto;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__line {
+    width: 2px;
+    height: 100%;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__marker {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+
+  .stepper--responsive.stepper--horizontal .stepper__content {
+    max-width: none;
+    flex: 1;
+    padding-top: 0.25rem;
+  }
+}
+
+/* Minimal style */
+.stepper--minimal .stepper__marker-content {
+  background: transparent !important;
+  border: 2px solid currentColor;
+  color: var(--bs-secondary);
+}
+
+.stepper--minimal .stepper__step--completed .stepper__marker-content {
+  color: var(--bs-success);
+  border-color: var(--bs-success);
+}
+
+.stepper--minimal .stepper__step--active .stepper__marker-content {
+  color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  background: var(--bs-primary) !important;
+  color: white;
+}
+
+/* Progress style */
+.stepper--progress .stepper__line {
+  height: 4px;
+}
+
+.stepper--progress .stepper__connector {
+  top: 1.125rem;
+}
+
+/* Accessibility */
+.stepper__step[aria-current="step"] {
+  font-weight: 600;
+}
+</style>
+{% endif %}
+

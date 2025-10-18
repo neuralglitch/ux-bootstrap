@@ -1,0 +1,106 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slots for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set slot_header %}{% block header %}{% endblock %}{% endset %}
+  {% set slot_body %}{% block body %}{% endblock %}{% endset %}
+  {% set slot_footer %}{% block footer %}{% endblock %}{% endset %}
+  {% set slot_img %}{% block img %}{% endblock %}{% endset %}
+
+  {# Detect simple content usage: if content block has data but no other blocks #}
+  {% set has_simple_content = slot_content is not empty %}
+  {% set has_named_blocks = slot_header is not empty or slot_body is not empty or slot_footer is not empty %}
+  
+  {# If simple content is used without named blocks, map it to body #}
+  {% if has_simple_content and not has_named_blocks %}
+    {% set slot_body = slot_content %}
+  {% endif %}
+
+  {# Check which slots have content #}
+  {% set has_header = slot_header is not empty or o.header %}
+  {% set has_body = slot_body is not empty or o.title or o.subtitle or o.text %}
+  {% set has_footer = slot_footer is not empty or o.footer %}
+  {% set has_img = slot_img is not empty or o.img %}
+
+  <div class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    
+    {# Image on top #}
+    {% if has_img and o.imgPosition == 'top' %}
+      {% if slot_img is not empty %}
+        {{ slot_img|raw }}
+      {% elseif o.img %}
+        <img src="{{ o.img }}" class="card-img-top" alt="{{ o.imgAlt }}">
+      {% endif %}
+    {% endif %}
+
+    {# Image overlay container #}
+    {% if has_img and o.imgPosition == 'overlay' %}
+      {% if slot_img is not empty %}
+        {{ slot_img|raw }}
+      {% elseif o.img %}
+        <img src="{{ o.img }}" class="card-img" alt="{{ o.imgAlt }}">
+      {% endif %}
+      <div class="card-img-overlay">
+    {% endif %}
+
+    {# Header #}
+    {% if has_header %}
+      <div class="card-header">
+        {% if slot_header is not empty %}
+          {{ slot_header|raw }}
+        {% else %}
+          {{ o.header }}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Body #}
+    {% if has_body %}
+      <div class="card-body">
+        {% if slot_body is not empty %}
+          {{ slot_body|raw }}
+        {% else %}
+          {% if o.title %}
+            <h5 class="card-title">{{ o.title }}</h5>
+          {% endif %}
+          {% if o.subtitle %}
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{ o.subtitle }}</h6>
+          {% endif %}
+          {% if o.text %}
+            <p class="card-text">{{ o.text }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Footer #}
+    {% if has_footer %}
+      <div class="card-footer">
+        {% if slot_footer is not empty %}
+          {{ slot_footer|raw }}
+        {% else %}
+          {{ o.footer }}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Close image overlay container #}
+    {% if has_img and o.imgPosition == 'overlay' %}
+      </div>
+    {% endif %}
+
+    {# Image on bottom #}
+    {% if has_img and o.imgPosition == 'bottom' %}
+      {% if slot_img is not empty %}
+        {{ slot_img|raw }}
+      {% elseif o.img %}
+        <img src="{{ o.img }}" class="card-img-bottom" alt="{{ o.imgAlt }}">
+      {% endif %}
+    {% endif %}
+
+  </div>
+
+{%- endapply %}
+

@@ -1,0 +1,109 @@
+{# Button Group Component Examples #}
+
+{# Basic Button Group #}
+<h3>Basic Button Group</h3>
+<twig:bs:button-group>
+    <twig:bs:button variant="primary">Left</twig:bs:button>
+    <twig:bs:button variant="primary">Middle</twig:bs:button>
+    <twig:bs:button variant="primary">Right</twig:bs:button>
+</twig:bs:button-group>
+
+{# Button Toolbar #}
+<h3 class="mt-5">Button Toolbar</h3>
+<div class="btn-toolbar" role="toolbar">
+    <twig:bs:button-group class="me-2">
+        <twig:bs:button variant="secondary">1</twig:bs:button>
+        <twig:bs:button variant="secondary">2</twig:bs:button>
+        <twig:bs:button variant="secondary">3</twig:bs:button>
+        <twig:bs:button variant="secondary">4</twig:bs:button>
+    </twig:bs:button-group>
+    <twig:bs:button-group class="me-2">
+        <twig:bs:button variant="secondary">5</twig:bs:button>
+        <twig:bs:button variant="secondary">6</twig:bs:button>
+        <twig:bs:button variant="secondary">7</twig:bs:button>
+    </twig:bs:button-group>
+    <twig:bs:button-group>
+        <twig:bs:button variant="secondary">8</twig:bs:button>
+    </twig:bs:button-group>
+</div>
+
+{# Vertical Button Group #}
+<h3 class="mt-5">Vertical Button Group</h3>
+<twig:bs:button-group :vertical="true">
+    <twig:bs:button variant="primary">Button 1</twig:bs:button>
+    <twig:bs:button variant="primary">Button 2</twig:bs:button>
+    <twig:bs:button variant="primary">Button 3</twig:bs:button>
+    <twig:bs:button variant="primary">Button 4</twig:bs:button>
+</twig:bs:button-group>
+
+{# Button Group with Icons #}
+<h3 class="mt-5">Button Group with Icons</h3>
+<twig:bs:button-group>
+    <twig:bs:button variant="primary" icon="bi bi-align-left" label="" />
+    <twig:bs:button variant="primary" icon="bi bi-align-center" label="" />
+    <twig:bs:button variant="primary" icon="bi bi-align-right" label="" />
+    <twig:bs:button variant="primary" icon="bi bi-justify" label="" />
+</twig:bs:button-group>
+
+{# Button Group Sizes #}
+<h3 class="mt-5">Button Group Sizes</h3>
+<twig:bs:button-group size="lg" class="mb-2">
+    <twig:bs:button variant="primary" size="lg">Large</twig:bs:button>
+    <twig:bs:button variant="primary" size="lg">Button</twig:bs:button>
+    <twig:bs:button variant="primary" size="lg">Group</twig:bs:button>
+</twig:bs:button-group>
+<br>
+<twig:bs:button-group class="mb-2">
+    <twig:bs:button variant="secondary">Default</twig:bs:button>
+    <twig:bs:button variant="secondary">Button</twig:bs:button>
+    <twig:bs:button variant="secondary">Group</twig:bs:button>
+</twig:bs:button-group>
+<br>
+<twig:bs:button-group size="sm">
+    <twig:bs:button variant="success" size="sm">Small</twig:bs:button>
+    <twig:bs:button variant="success" size="sm">Button</twig:bs:button>
+    <twig:bs:button variant="success" size="sm">Group</twig:bs:button>
+</twig:bs:button-group>
+
+{# Mixed Button Styles #}
+<h3 class="mt-5">Mixed Button Styles</h3>
+<twig:bs:button-group>
+    <twig:bs:button variant="danger">Delete</twig:bs:button>
+    <twig:bs:button variant="warning">Archive</twig:bs:button>
+    <twig:bs:button variant="success">Approve</twig:bs:button>
+</twig:bs:button-group>
+
+{# Outline Button Group #}
+<h3 class="mt-5">Outline Button Group</h3>
+<twig:bs:button-group>
+    <twig:bs:button variant="primary" :outline="true">Left</twig:bs:button>
+    <twig:bs:button variant="primary" :outline="true">Middle</twig:bs:button>
+    <twig:bs:button variant="primary" :outline="true">Right</twig:bs:button>
+</twig:bs:button-group>
+
+{# Radio Button Group #}
+<h3 class="mt-5">Radio Button Group</h3>
+<twig:bs:button-group>
+    <twig:bs:button variant="outline-primary" :active="true">Active</twig:bs:button>
+    <twig:bs:button variant="outline-primary">Radio</twig:bs:button>
+    <twig:bs:button variant="outline-primary">Radio</twig:bs:button>
+</twig:bs:button-group>
+
+{# Editor Toolbar Example #}
+<h3 class="mt-5">Editor Toolbar Example</h3>
+<div class="btn-toolbar">
+    <twig:bs:button-group class="me-2">
+        <twig:bs:button variant="outline-secondary" icon="bi bi-type-bold" label="" />
+        <twig:bs:button variant="outline-secondary" icon="bi bi-type-italic" label="" />
+        <twig:bs:button variant="outline-secondary" icon="bi bi-type-underline" label="" />
+    </twig:bs:button-group>
+    <twig:bs:button-group class="me-2">
+        <twig:bs:button variant="outline-secondary" icon="bi bi-list-ul" label="" />
+        <twig:bs:button variant="outline-secondary" icon="bi bi-list-ol" label="" />
+    </twig:bs:button-group>
+    <twig:bs:button-group>
+        <twig:bs:button variant="outline-secondary" icon="bi bi-link-45deg" label="" />
+        <twig:bs:button variant="outline-secondary" icon="bi bi-image" label="" />
+    </twig:bs:button-group>
+</div>
+

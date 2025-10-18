@@ -1,0 +1,17 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content priority: Slot > Empty #}
+  {% set has_content = slot_content is not empty %}
+  {% set content = has_content ? slot_content : '&nbsp;' %}
+
+  <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {{- content|raw -}}
+  </{{ o.tag }}>
+
+{%- endapply %}
+

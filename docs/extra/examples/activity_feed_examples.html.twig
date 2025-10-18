@@ -1,0 +1,184 @@
+{# ActivityFeed Component Examples #}
+
+{# Example 1: Social Media Feed #}
+<section class="mb-5">
+    <h2>Social Media Feed</h2>
+    <twig:bs:activity-feed maxHeight="500px">
+        <twig:bs:activity-feed-item
+            avatar="https://i.pravatar.cc/150?img=1"
+            title="Sarah Johnson posted a new article"
+            description="Check out my latest blog post about web development best practices"
+            timestamp="5 minutes ago"
+            :unread="true"
+            actionLabel="Read More"
+            actionHref="/posts/123"
+        />
+        
+        <twig:bs:activity-feed-item
+            avatar="https://i.pravatar.cc/150?img=2"
+            title="Mike Chen liked your comment"
+            timestamp="1 hour ago"
+        />
+        
+        <twig:bs:activity-feed-item
+            avatar="https://i.pravatar.cc/150?img=3"
+            title="Emma Wilson started following you"
+            timestamp="3 hours ago"
+        />
+    </twig:bs:activity-feed>
+</section>
+
+{# Example 2: Audit Log #}
+<section class="mb-5">
+    <h2>System Audit Log</h2>
+    <twig:bs:activity-feed mode="compact" border="end">
+        <twig:bs:activity-feed-item
+            icon="bi-shield-check"
+            iconVariant="success"
+            title="Security update applied"
+            description="System security patches installed successfully"
+            timestamp="2024-01-15 10:30 AM"
+            :metadata="['User: System', 'Level: Critical']"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-person-x"
+            iconVariant="warning"
+            title="User access revoked"
+            description="john.doe@example.com"
+            timestamp="2024-01-15 09:15 AM"
+            :metadata="['Admin: Jane Smith', 'Reason: Account suspended']"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-key"
+            iconVariant="info"
+            title="API key generated"
+            description="New API key created for production environment"
+            timestamp="2024-01-15 08:00 AM"
+            :metadata="['User: admin@example.com']"
+        />
+    </twig:bs:activity-feed>
+</section>
+
+{# Example 3: Team Activity #}
+<section class="mb-5">
+    <h2>Team Activity Feed</h2>
+    <twig:bs:activity-feed>
+        <twig:bs:activity-feed-item
+            icon="bi-git"
+            iconVariant="primary"
+            title="Code pushed to main branch"
+            description="feat: Add new authentication system"
+            timestamp="15 minutes ago"
+            :metadata="['Author: Mike Chen', 'Commits: 3']"
+            actionLabel="View Changes"
+            actionHref="/commits/abc123"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-check-circle"
+            iconVariant="success"
+            title="Pull request merged"
+            description="Feature/dark-mode-support"
+            timestamp="1 hour ago"
+            :metadata="['Reviewer: Sarah Johnson']"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-bug"
+            iconVariant="danger"
+            title="Issue reported"
+            description="Login form validation error"
+            timestamp="2 hours ago"
+            :metadata="['Reporter: Emma Wilson', 'Priority: High']"
+            :highlighted="true"
+        />
+    </twig:bs:activity-feed>
+</section>
+
+{# Example 4: Notifications with Unread Indicators #}
+<section class="mb-5">
+    <h2>Notifications</h2>
+    <twig:bs:activity-feed maxHeight="400px">
+        <twig:bs:activity-feed-item
+            icon="bi-chat-left"
+            iconVariant="primary"
+            title="New comment on your post"
+            description="Sarah Johnson: This is amazing!"
+            timestamp="2 minutes ago"
+            href="/posts/123#comment-456"
+            :unread="true"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-heart-fill"
+            iconVariant="danger"
+            title="Someone liked your photo"
+            timestamp="10 minutes ago"
+            href="/photos/789"
+            :unread="true"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-share"
+            iconVariant="info"
+            title="Your post was shared"
+            timestamp="1 hour ago"
+            href="/posts/123"
+        />
+    </twig:bs:activity-feed>
+</section>
+
+{# Example 5: System Events (Minimal) #}
+<section class="mb-5">
+    <h2>System Events</h2>
+    <twig:bs:activity-feed :showIcons="false" border="null">
+        <twig:bs:activity-feed-item
+            title="Scheduled maintenance"
+            description="System will be unavailable from 2:00 AM to 4:00 AM UTC"
+            timestamp="In 2 hours"
+            :highlighted="true"
+        />
+        
+        <twig:bs:activity-feed-item
+            title="Backup completed"
+            description="Daily backup finished successfully (125 GB)"
+            timestamp="6 hours ago"
+        />
+        
+        <twig:bs:activity-feed-item
+            title="Database optimization"
+            description="Query performance improved by 35%"
+            timestamp="Yesterday"
+        />
+    </twig:bs:activity-feed>
+</section>
+
+{# Example 6: Compact Mode #}
+<section class="mb-5">
+    <h2>Compact Notifications</h2>
+    <twig:bs:activity-feed mode="compact" maxHeight="300px">
+        <twig:bs:activity-feed-item
+            icon="bi-bell"
+            iconVariant="info"
+            title="New notification"
+            timestamp="1m ago"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-envelope"
+            iconVariant="primary"
+            title="New message"
+            timestamp="5m ago"
+        />
+        
+        <twig:bs:activity-feed-item
+            icon="bi-star"
+            iconVariant="warning"
+            title="New favorite"
+            timestamp="10m ago"
+        />
+    </twig:bs:activity-feed>
+</section>
+

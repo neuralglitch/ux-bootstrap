@@ -1,0 +1,17 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for item content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content priority: Slot > Label prop #}
+  {% set has_content = slot_content is not empty %}
+  {% set content = has_content ? slot_content : (o.label ?? '') %}
+
+  <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {{ content|raw }}
+  </{{ o.tag }}>
+
+{%- endapply %}
+

@@ -1,0 +1,283 @@
+{# Comparison Table Component - Usage Examples #}
+
+{# Example 1: Basic Pricing Comparison #}
+<twig:bs:comparison-table
+  title="Compare Our Plans"
+  description="Choose the plan that fits your needs"
+  :columns="[
+    {title: 'Free', price: '$0', period: 'forever'},
+    {title: 'Starter', price: '$19', period: 'month'},
+    {title: 'Professional', price: '$49', period: 'month', badge: 'Popular', badge_variant: 'primary'},
+    {title: 'Enterprise', price: '$99', period: 'month'}
+  ]"
+  :features="[
+    {feature: 'Users', values: ['1', '5', '25', 'Unlimited']},
+    {feature: 'Storage', values: ['10GB', '50GB', '500GB', '5TB']},
+    {feature: 'Projects', values: ['3', '10', '100', 'Unlimited']},
+    {feature: 'API Access', values: [false, true, true, true]},
+    {feature: 'Advanced Analytics', values: [false, false, true, true]},
+    {feature: 'Priority Support', values: [false, false, true, true]},
+    {feature: 'Custom Integrations', values: [false, false, false, true]},
+    {feature: 'SLA Guarantee', values: [false, false, false, true]}
+  ]"
+  :highlightColumn="2"
+  class="mb-5" />
+
+{# Example 2: Striped Variant with CTAs #}
+<twig:bs:comparison-table
+  variant="striped"
+  title="Feature Comparison"
+  :columns="[
+    {
+      title: 'Basic',
+      price: '$9',
+      period: 'month',
+      cta_label: 'Start Free Trial',
+      cta_href: '/signup/basic',
+      cta_variant: 'outline-primary'
+    },
+    {
+      title: 'Pro',
+      price: '$29',
+      period: 'month',
+      badge: 'Recommended',
+      badge_variant: 'success',
+      cta_label: 'Get Started',
+      cta_href: '/signup/pro',
+      cta_variant: 'success'
+    },
+    {
+      title: 'Business',
+      price: '$79',
+      period: 'month',
+      cta_label: 'Contact Sales',
+      cta_href: '/contact',
+      cta_variant: 'outline-primary'
+    }
+  ]"
+  :features="[
+    {feature: 'Monthly Reports', values: ['Basic', 'Advanced', 'Custom']},
+    {feature: 'Data Retention', values: ['30 days', '1 year', 'Unlimited']},
+    {feature: 'Team Collaboration', values: [true, true, true]},
+    {feature: 'White Label', values: [false, false, true]},
+    {feature: 'Dedicated Support', values: [false, true, true]}
+  ]"
+  :highlightColumn="1"
+  :sticky="true"
+  class="mb-5" />
+
+{# Example 3: Bordered Variant #}
+<twig:bs:comparison-table
+  variant="bordered"
+  title="Product Comparison"
+  :centered="true"
+  :hover="true"
+  :columns="[
+    {title: 'Lite', variant: 'info'},
+    {title: 'Standard', variant: 'primary'},
+    {title: 'Premium', variant: 'success'}
+  ]"
+  :features="[
+    {feature: 'Speed', values: ['Fast', 'Faster', 'Fastest']},
+    {feature: 'Bandwidth', values: ['100Mbps', '1Gbps', '10Gbps']},
+    {feature: 'Uptime SLA', values: ['99%', '99.9%', '99.99%']},
+    {feature: 'Backup Frequency', values: ['Weekly', 'Daily', 'Hourly']}
+  ]"
+  class="mb-5" />
+
+{# Example 4: Cards Variant (Mobile-Friendly) #}
+<twig:bs:comparison-table
+  variant="cards"
+  title="Choose Your Subscription"
+  :columns="[
+    {
+      title: 'Monthly',
+      price: '$29',
+      period: 'month',
+      variant: 'primary',
+      cta_label: 'Subscribe',
+      cta_href: '/subscribe/monthly',
+      cta_variant: 'primary'
+    },
+    {
+      title: 'Yearly',
+      price: '$290',
+      period: 'year',
+      badge: 'Save 17%',
+      badge_variant: 'success',
+      variant: 'success',
+      cta_label: 'Subscribe',
+      cta_href: '/subscribe/yearly',
+      cta_variant: 'success'
+    },
+    {
+      title: 'Lifetime',
+      price: '$999',
+      period: 'one-time',
+      variant: 'warning',
+      cta_label: 'Buy Now',
+      cta_href: '/buy/lifetime',
+      cta_variant: 'warning'
+    }
+  ]"
+  :features="[
+    {feature: 'All Features', values: [true, true, true]},
+    {feature: 'Updates', values: ['1 year', 'Lifetime', 'Lifetime']},
+    {feature: 'Support', values: ['Email', 'Priority', 'Premium']},
+    {feature: 'Cancel Anytime', values: [true, true, false]}
+  ]"
+  class="mb-5" />
+
+{# Example 5: Horizontal Variant #}
+<twig:bs:comparison-table
+  variant="horizontal"
+  title="Service Tiers"
+  :columns="[
+    {title: 'Bronze', price: '$49', period: 'month'},
+    {title: 'Silver', price: '$99', period: 'month'},
+    {title: 'Gold', price: '$199', period: 'month', badge: 'Best Value'}
+  ]"
+  :features="[
+    {feature: 'Locations', values: ['1', '3', '10']},
+    {feature: 'API Calls', values: ['10K', '100K', '1M']},
+    {feature: 'Webhooks', values: ['5', '25', 'Unlimited']},
+    {feature: 'Custom Domain', values: [false, true, true]}
+  ]"
+  :highlightColumn="2"
+  class="mb-5" />
+
+{# Example 6: Custom Checkmarks #}
+<twig:bs:comparison-table
+  variant="default"
+  title="Software Features"
+  :showCheckmarks="true"
+  checkIcon="✔️"
+  uncheckIcon="➖"
+  emptyText="—"
+  :columns="[
+    {title: 'Community'},
+    {title: 'Professional'},
+    {title: 'Enterprise'}
+  ]"
+  :features="[
+    {feature: 'Core Features', values: [true, true, true]},
+    {feature: 'Advanced Security', values: [false, true, true]},
+    {feature: 'SSO Integration', values: [false, false, true]},
+    {feature: 'Audit Logs', values: [false, true, true]},
+    {feature: 'Custom Branding', values: [false, false, true]},
+    {feature: 'Dedicated IP', values: [false, false, true]}
+  ]"
+  class="mb-5" />
+
+{# Example 7: Software vs Service Comparison #}
+<twig:bs:comparison-table
+  variant="bordered"
+  title="Self-Hosted vs Cloud"
+  description="Find the right deployment option for your team"
+  :columns="[
+    {
+      title: 'Self-Hosted',
+      cta_label: 'Download',
+      cta_href: '/download',
+      cta_variant: 'outline-primary'
+    },
+    {
+      title: 'Cloud Managed',
+      badge: 'Popular',
+      badge_variant: 'primary',
+      cta_label: 'Start Trial',
+      cta_href: '/signup',
+      cta_variant: 'primary'
+    }
+  ]"
+  :features="[
+    {feature: 'Setup Time', values: ['1-2 hours', '< 5 minutes']},
+    {feature: 'Server Management', values: ['You manage', 'We manage']},
+    {feature: 'Scalability', values: ['Manual', 'Automatic']},
+    {feature: 'Updates', values: ['Manual', 'Automatic']},
+    {feature: 'Backups', values: ['Your responsibility', 'Included']},
+    {feature: 'Data Location', values: ['Your servers', 'Cloud (EU/US)']},
+    {feature: 'Monthly Cost', values: ['Server costs only', 'Starting at $29']},
+    {feature: 'Support', values: ['Community', '24/7 Premium']}
+  ]"
+  :highlightColumn="1"
+  :responsive="true"
+  :sticky="true"
+  class="mb-5" />
+
+{# Example 8: With Feature Descriptions #}
+<twig:bs:comparison-table
+  variant="striped"
+  title="Detailed Feature Breakdown"
+  :columns="[
+    {title: 'Starter', price: '$15'},
+    {title: 'Growth', price: '$45'},
+    {title: 'Scale', price: '$125'}
+  ]"
+  :features="[
+    {
+      feature: 'Team Members',
+      description: 'Number of users who can access the platform',
+      values: ['3', '10', '50']
+    },
+    {
+      feature: 'File Storage',
+      description: 'Total storage space for all team files',
+      values: ['25GB', '100GB', '1TB']
+    },
+    {
+      feature: 'Video Conferencing',
+      description: 'Maximum participants per meeting',
+      values: ['10', '50', '250']
+    },
+    {
+      feature: 'Recording Hours',
+      description: 'Hours of meeting recordings per month',
+      values: ['5', '50', '500']
+    }
+  ]"
+  class="mb-5" />
+
+{# Example 9: No Hover, Left-Aligned #}
+<twig:bs:comparison-table
+  variant="default"
+  :centered="false"
+  :hover="false"
+  :columns="[
+    {title: 'Feature', values: []},
+    {title: 'Competitor A'},
+    {title: 'Competitor B'},
+    {title: 'Our Solution', badge: 'Best'}
+  ]"
+  :features="[
+    {feature: 'Price', values: ['$99', '$149', '$79']},
+    {feature: 'Ease of Use', values: ['Medium', 'Hard', 'Easy']},
+    {feature: 'Mobile App', values: [true, false, true]},
+    {feature: 'Customer Support', values: ['Email', 'Email', '24/7 Chat']},
+    {feature: 'Free Trial', values: [false, true, true]}
+  ]"
+  :highlightColumn="3"
+  class="mb-5" />
+
+{# Example 10: Full Container Width #}
+<twig:bs:comparison-table
+  variant="default"
+  container="container-fluid"
+  title="Enterprise Features"
+  :columns="[
+    {title: 'Standard', price: '$999', period: 'month'},
+    {title: 'Plus', price: '$1,999', period: 'month'},
+    {title: 'Ultimate', price: '$4,999', period: 'month', badge: 'Most Popular'}
+  ]"
+  :features="[
+    {feature: 'Concurrent Users', values: ['100', '500', 'Unlimited']},
+    {feature: 'Database Size', values: ['500GB', '2TB', '10TB']},
+    {feature: 'API Rate Limit', values: ['10K/hour', '100K/hour', 'No limit']},
+    {feature: 'Regions', values: ['Single', 'Multi', 'Global']},
+    {feature: 'Compliance', values: ['SOC 2', 'SOC 2, HIPAA', 'All certifications']},
+    {feature: 'Onboarding', values: ['Self-service', 'Assisted', 'Dedicated team']}
+  ]"
+  :highlightColumn="2"
+  :sticky="true"
+  class="mb-5" />
+

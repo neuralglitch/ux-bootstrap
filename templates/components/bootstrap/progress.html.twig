@@ -1,0 +1,21 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom label content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Label priority: Slot > Computed label #}
+  {% set has_content = slot_content is not empty %}
+  {% set label_content = has_content ? slot_content : (o.label ?? '') %}
+
+  <div class="{{ o.wrapperClasses }}" {{ this.renderHtmlAttributes(o.wrapperAttrs) | raw }}>
+    <div class="{{ o.barClasses }}" style="width: {{ o.percentage }}%">
+      {%- if label_content -%}
+        {{ label_content|raw }}
+      {%- endif -%}
+    </div>
+  </div>
+
+{%- endapply %}
+

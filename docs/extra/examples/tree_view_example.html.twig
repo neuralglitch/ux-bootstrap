@@ -1,0 +1,327 @@
+{# Tree View Component Examples #}
+
+{# Example 1: Simple File Browser #}
+<section class="mb-5">
+    <h2>File Browser</h2>
+    <p class="text-muted">Basic hierarchical file structure</p>
+    
+    {% set files = [
+        {
+            id: 'documents',
+            label: 'Documents',
+            expanded: true,
+            children: [
+                { id: 'resume', label: 'Resume.pdf', icon: 'bi-file-pdf' },
+                { id: 'cover', label: 'Cover Letter.docx', icon: 'bi-file-word' }
+            ]
+        },
+        {
+            id: 'images',
+            label: 'Images',
+            children: [
+                { id: 'photo1', label: 'Photo.jpg', icon: 'bi-file-image' },
+                { id: 'photo2', label: 'Screenshot.png', icon: 'bi-file-image' }
+            ]
+        },
+        { id: 'readme', label: 'README.md', icon: 'bi-file-text' }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view :items="files" />
+    </div>
+</section>
+
+{# Example 2: Selectable Category Tree #}
+<section class="mb-5">
+    <h2>Category Tree with Selection</h2>
+    <p class="text-muted">Multi-select categories with badges</p>
+    
+    {% set categories = [
+        {
+            id: 'electronics',
+            label: 'Electronics',
+            expanded: true,
+            children: [
+                { id: 'phones', label: 'Phones', badge: '12' },
+                { id: 'laptops', label: 'Laptops', badge: '8' },
+                {
+                    id: 'accessories',
+                    label: 'Accessories',
+                    children: [
+                        { id: 'chargers', label: 'Chargers', badge: '5' },
+                        { id: 'cases', label: 'Cases', badge: '15' }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'clothing',
+            label: 'Clothing',
+            children: [
+                { id: 'mens', label: "Men's", badge: '45' },
+                { id: 'womens', label: "Women's", badge: '67' }
+            ]
+        }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="categories"
+            :selectable="true"
+            :multi-select="true"
+            :show-lines="true" />
+    </div>
+</section>
+
+{# Example 3: Organization Structure #}
+<section class="mb-5">
+    <h2>Organization Chart</h2>
+    <p class="text-muted">Company hierarchy with custom icons</p>
+    
+    {% set organization = [
+        {
+            id: 'ceo',
+            label: 'CEO - John Smith',
+            icon: 'bi-person-badge-fill',
+            expanded: true,
+            children: [
+                {
+                    id: 'cto',
+                    label: 'CTO - Jane Doe',
+                    icon: 'bi-person-fill',
+                    expanded: true,
+                    children: [
+                        { id: 'dev1', label: 'Senior Developer', icon: 'bi-code-slash' },
+                        { id: 'dev2', label: 'Junior Developer', icon: 'bi-code-slash' },
+                        { id: 'designer', label: 'UI Designer', icon: 'bi-palette' }
+                    ]
+                },
+                {
+                    id: 'cfo',
+                    label: 'CFO - Bob Johnson',
+                    icon: 'bi-person-fill',
+                    children: [
+                        { id: 'acc1', label: 'Senior Accountant', icon: 'bi-calculator' },
+                        { id: 'acc2', label: 'Junior Accountant', icon: 'bi-calculator' }
+                    ]
+                },
+                {
+                    id: 'cmo',
+                    label: 'CMO - Alice Brown',
+                    icon: 'bi-person-fill',
+                    children: [
+                        { id: 'marketing1', label: 'Marketing Manager', icon: 'bi-megaphone' },
+                        { id: 'marketing2', label: 'Social Media', icon: 'bi-chat-dots' }
+                    ]
+                }
+            ]
+        }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="organization"
+            :show-icons="true"
+            :show-lines="true"
+            :expand-all="false" />
+    </div>
+</section>
+
+{# Example 4: Menu Editor #}
+<section class="mb-5">
+    <h2>Menu Editor</h2>
+    <p class="text-muted">Website navigation structure</p>
+    
+    {% set menu = [
+        {
+            id: 'home',
+            label: 'Home',
+            icon: 'bi-house'
+        },
+        {
+            id: 'products',
+            label: 'Products',
+            icon: 'bi-box',
+            expanded: true,
+            children: [
+                { id: 'prod-new', label: 'New Arrivals', icon: 'bi-star' },
+                { id: 'prod-sale', label: 'Sale', icon: 'bi-tag', badge: 'Hot' },
+                {
+                    id: 'prod-cat',
+                    label: 'Categories',
+                    icon: 'bi-grid',
+                    children: [
+                        { id: 'cat-electronics', label: 'Electronics' },
+                        { id: 'cat-clothing', label: 'Clothing' },
+                        { id: 'cat-home', label: 'Home & Garden' }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 'about',
+            label: 'About Us',
+            icon: 'bi-info-circle',
+            children: [
+                { id: 'team', label: 'Our Team', icon: 'bi-people' },
+                { id: 'history', label: 'Company History', icon: 'bi-clock-history' },
+                { id: 'careers', label: 'Careers', icon: 'bi-briefcase', badge: 'Hiring' }
+            ]
+        },
+        {
+            id: 'contact',
+            label: 'Contact',
+            icon: 'bi-envelope'
+        }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="menu"
+            :show-icons="true"
+            :hoverable="true"
+            on-item-click="handleMenuClick" />
+    </div>
+</section>
+
+{# Example 5: Compact Mode #}
+<section class="mb-5">
+    <h2>Compact Mode</h2>
+    <p class="text-muted">Dense layout with less padding</p>
+    
+    {% set compactData = [
+        {
+            id: 'src',
+            label: 'src',
+            expanded: true,
+            children: [
+                { id: 'components', label: 'components', children: [
+                    { id: 'button', label: 'Button.tsx' },
+                    { id: 'input', label: 'Input.tsx' }
+                ]},
+                { id: 'utils', label: 'utils', children: [
+                    { id: 'helpers', label: 'helpers.ts' }
+                ]},
+                { id: 'index', label: 'index.ts' }
+            ]
+        },
+        {
+            id: 'tests',
+            label: 'tests',
+            children: [
+                { id: 'unit', label: 'unit' },
+                { id: 'integration', label: 'integration' }
+            ]
+        },
+        { id: 'readme', label: 'README.md' },
+        { id: 'package', label: 'package.json' }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="compactData"
+            :compact="true"
+            :show-icons="true" />
+    </div>
+</section>
+
+{# Example 6: With Connecting Lines #}
+<section class="mb-5">
+    <h2>With Connecting Lines</h2>
+    <p class="text-muted">Visual hierarchy with connecting lines</p>
+    
+    {% set linesData = [
+        {
+            id: 'root',
+            label: 'Root',
+            expanded: true,
+            children: [
+                {
+                    id: 'branch1',
+                    label: 'Branch 1',
+                    expanded: true,
+                    children: [
+                        { id: 'leaf1', label: 'Leaf 1' },
+                        { id: 'leaf2', label: 'Leaf 2' }
+                    ]
+                },
+                {
+                    id: 'branch2',
+                    label: 'Branch 2',
+                    children: [
+                        { id: 'leaf3', label: 'Leaf 3' },
+                        {
+                            id: 'subbranch',
+                            label: 'Sub Branch',
+                            children: [
+                                { id: 'leaf4', label: 'Leaf 4' }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="linesData"
+            :show-lines="true"
+            :show-icons="false" />
+    </div>
+</section>
+
+{# Example 7: Selection with Pre-selected Items #}
+<section class="mb-5">
+    <h2>Pre-selected Items</h2>
+    <p class="text-muted">Tree with initially selected nodes</p>
+    
+    {% set selectData = [
+        { id: 'item1', label: 'Item 1' },
+        { id: 'item2', label: 'Item 2' },
+        { id: 'item3', label: 'Item 3' },
+        {
+            id: 'item4',
+            label: 'Item 4',
+            children: [
+                { id: 'item4-1', label: 'Item 4.1' },
+                { id: 'item4-2', label: 'Item 4.2' }
+            ]
+        }
+    ] %}
+    
+    <div class="border rounded p-3">
+        <twig:bs:tree-view
+            :items="selectData"
+            :selectable="true"
+            :multi-select="true"
+            :selected-ids="['item1', 'item4-1']"
+            on-selection-change="handleSelectionChange" />
+    </div>
+    
+    <div id="selection-output" class="mt-3 alert alert-info" style="display:none;">
+        <strong>Selected:</strong> <span id="selected-list"></span>
+    </div>
+</section>
+
+<script>
+// Example callback handlers
+function handleMenuClick(data) {
+    console.log('Menu item clicked:', data.item);
+    alert('Clicked: ' + data.item.label);
+}
+
+function handleSelectionChange(data) {
+    console.log('Selection changed:', data);
+    const output = document.getElementById('selection-output');
+    const list = document.getElementById('selected-list');
+    
+    if (data.selectedItems.length > 0) {
+        output.style.display = 'block';
+        list.textContent = data.selectedItems.map(item => item.label).join(', ');
+    } else {
+        output.style.display = 'none';
+    }
+}
+</script>
+

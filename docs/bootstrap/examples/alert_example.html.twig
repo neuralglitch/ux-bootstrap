@@ -1,0 +1,68 @@
+{# Alert Component Examples #}
+
+{# Basic Alerts - All Variants #}
+<h3>Basic Alerts - All Variants</h3>
+<twig:bs:alert variant="primary">A simple primary alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="secondary">A simple secondary alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="success">A simple success alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="danger">A simple danger alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="warning">A simple warning alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="info">A simple info alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="light">A simple light alert—check it out!</twig:bs:alert>
+<twig:bs:alert variant="dark">A simple dark alert—check it out!</twig:bs:alert>
+
+{# Dismissible Alerts #}
+<h3 class="mt-5">Dismissible Alerts</h3>
+<twig:bs:alert variant="success" :dismissible="true">
+    <strong>Success!</strong> Your changes have been saved.
+</twig:bs:alert>
+<twig:bs:alert variant="warning" :dismissible="true">
+    <strong>Warning!</strong> You have unsaved changes.
+</twig:bs:alert>
+<twig:bs:alert variant="danger" :dismissible="true">
+    <strong>Error!</strong> Something went wrong. Please try again.
+</twig:bs:alert>
+
+{# Auto-hide Alerts #}
+<h3 class="mt-5">Auto-hide Alerts</h3>
+<twig:bs:alert variant="info" :autoHide="true" :delay="3000">
+    This alert will auto-hide after 3 seconds.
+</twig:bs:alert>
+<twig:bs:alert variant="success" :autoHide="true" :delay="5000" :dismissible="true">
+    This alert will auto-hide after 5 seconds, but you can dismiss it manually too.
+</twig:bs:alert>
+
+{# Alerts with Icons #}
+<h3 class="mt-5">Alerts with Icons</h3>
+<twig:bs:alert variant="success" icon="bi bi-check-circle-fill">
+    <strong>Success!</strong> Your operation completed successfully.
+</twig:bs:alert>
+<twig:bs:alert variant="warning" icon="bi bi-exclamation-triangle-fill">
+    <strong>Warning!</strong> Please review the following information.
+</twig:bs:alert>
+<twig:bs:alert variant="danger" icon="bi bi-x-circle-fill">
+    <strong>Error!</strong> An error occurred during processing.
+</twig:bs:alert>
+<twig:bs:alert variant="info" icon="bi bi-info-circle-fill">
+    <strong>Info!</strong> Here's some helpful information for you.
+</twig:bs:alert>
+
+{# Rich Content Alerts #}
+<h3 class="mt-5">Alerts with Rich Content</h3>
+<twig:bs:alert variant="success" :dismissible="true">
+    <h4 class="alert-heading">Well done!</h4>
+    <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+    <hr>
+    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+</twig:bs:alert>
+
+<twig:bs:alert variant="warning" :dismissible="true">
+    <h4 class="alert-heading">Heads up!</h4>
+    <p>This is a warning alert with additional context. You might want to pay attention to this information before proceeding.</p>
+    <ul class="mb-0">
+        <li>First important point to consider</li>
+        <li>Second thing you should know</li>
+        <li>Third critical detail</li>
+    </ul>
+</twig:bs:alert>
+

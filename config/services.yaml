@@ -1,0 +1,32 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Config service
+    NeuralGlitch\UxBootstrap\Service\Bootstrap\Config:
+        arguments:
+            $config: '%neuralglitch.ux_bootstrap%'
+
+    # Auto-register services
+    NeuralGlitch\UxBootstrap\Service\:
+        resource: '../src/Service/'
+    
+    # Services that need explicit configuration
+    NeuralGlitch\UxBootstrap\Service\Search\SearchService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    # Auto-register commands
+    NeuralGlitch\UxBootstrap\Command\:
+        resource: '../src/Command/'
+        tags: ['console.command']
+
+    # Auto-register all Bootstrap components
+    NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\:
+        resource: '../src/Twig/Components/Bootstrap/'
+        exclude: '../src/Twig/Components/Bootstrap/Traits'
+
+    # Auto-register all Extra components
+    NeuralGlitch\UxBootstrap\Twig\Components\Extra\:
+        resource: '../src/Twig/Components/Extra/'

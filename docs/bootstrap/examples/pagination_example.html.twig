@@ -1,0 +1,91 @@
+{# Basic Pagination Example #}
+<twig:bs:pagination ariaLabel="Page navigation example">
+  <twig:bs:pagination-item href="#">Previous</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#" :active="true">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">Next</twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# With Icons #}
+<twig:bs:pagination ariaLabel="Search results pages">
+  <twig:bs:pagination-item href="#" ariaLabel="Previous">
+    <span aria-hidden="true">&laquo;</span>
+  </twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#" :active="true">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#" ariaLabel="Next">
+    <span aria-hidden="true">&raquo;</span>
+  </twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# Large Size #}
+<twig:bs:pagination size="lg">
+  <twig:bs:pagination-item href="#" :active="true">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# Small Size #}
+<twig:bs:pagination size="sm">
+  <twig:bs:pagination-item href="#" :active="true">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# Centered #}
+<twig:bs:pagination alignment="center">
+  <twig:bs:pagination-item :disabled="true">Previous</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">Next</twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# End Aligned #}
+<twig:bs:pagination alignment="end">
+  <twig:bs:pagination-item :disabled="true">Previous</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">1</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">2</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">3</twig:bs:pagination-item>
+  <twig:bs:pagination-item href="#">Next</twig:bs:pagination-item>
+</twig:bs:pagination>
+
+{# Dynamic Example (Symfony) #}
+{% set currentPage = 2 %}
+{% set totalPages = 5 %}
+
+<twig:bs:pagination ariaLabel="Product catalog pages">
+  {# Previous button #}
+  {% if currentPage > 1 %}
+    <twig:bs:pagination-item 
+      href="{{ path('products', {page: currentPage - 1}) }}"
+      ariaLabel="Previous">
+      &laquo;
+    </twig:bs:pagination-item>
+  {% else %}
+    <twig:bs:pagination-item :disabled="true">&laquo;</twig:bs:pagination-item>
+  {% endif %}
+
+  {# Page numbers #}
+  {% for page in 1..totalPages %}
+    <twig:bs:pagination-item 
+      href="{{ path('products', {page: page}) }}"
+      :active="{{ page == currentPage }}">
+      {{ page }}
+    </twig:bs:pagination-item>
+  {% endfor %}
+
+  {# Next button #}
+  {% if currentPage < totalPages %}
+    <twig:bs:pagination-item 
+      href="{{ path('products', {page: currentPage + 1}) }}"
+      ariaLabel="Next">
+      &raquo;
+    </twig:bs:pagination-item>
+  {% else %}
+    <twig:bs:pagination-item :disabled="true">&raquo;</twig:bs:pagination-item>
+  {% endif %}
+</twig:bs:pagination>
+

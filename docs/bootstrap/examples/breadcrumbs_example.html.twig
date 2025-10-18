@@ -1,0 +1,76 @@
+{# Breadcrumbs Component Examples #}
+
+{# Basic Breadcrumbs #}
+<h3>Basic Breadcrumbs</h3>
+<twig:bs:breadcrumbs :items="[
+    {label: 'Home', href: '/'},
+    {label: 'Library', href: '/library'},
+    {label: 'Data'}
+]" />
+
+{# Breadcrumbs with Icons #}
+<h3 class="mt-5">Breadcrumbs with Icons</h3>
+<twig:bs:breadcrumbs :items="[
+    {label: 'Home', href: '/', icon: 'bi bi-house-fill'},
+    {label: 'Products', href: '/products', icon: 'bi bi-box'},
+    {label: 'Electronics', href: '/products/electronics', icon: 'bi bi-laptop'},
+    {label: 'Laptop'}
+]" />
+
+{# Custom Divider #}
+<h3 class="mt-5">Custom Divider</h3>
+<twig:bs:breadcrumbs 
+    divider=">"
+    :items="[
+        {label: 'Home', href: '/'},
+        {label: 'Settings', href: '/settings'},
+        {label: 'Profile'}
+    ]" 
+/>
+
+{# Collapsible Breadcrumbs #}
+<h3 class="mt-5">Collapsible Breadcrumbs (Long Paths)</h3>
+<twig:bs:breadcrumbs 
+    :collapse="true"
+    :maxItems="3"
+    :items="[
+        {label: 'Home', href: '/'},
+        {label: 'Documentation', href: '/docs'},
+        {label: 'Components', href: '/docs/components'},
+        {label: 'Bootstrap', href: '/docs/components/bootstrap'},
+        {label: 'Navigation', href: '/docs/components/bootstrap/nav'},
+        {label: 'Breadcrumbs'}
+    ]" 
+/>
+
+{# Dashboard Breadcrumbs #}
+<h3 class="mt-5">Dashboard Navigation</h3>
+<twig:bs:breadcrumbs :items="[
+    {label: 'Dashboard', href: '/dashboard', icon: 'bi bi-speedometer2'},
+    {label: 'Analytics', href: '/dashboard/analytics', icon: 'bi bi-graph-up'},
+    {label: 'Reports', href: '/dashboard/analytics/reports', icon: 'bi bi-file-earmark-text'},
+    {label: 'Monthly Summary'}
+]" />
+
+{# E-commerce Breadcrumbs #}
+<h3 class="mt-5">E-commerce Navigation</h3>
+<twig:bs:breadcrumbs :items="[
+    {label: 'Home', href: '/', icon: 'bi bi-house'},
+    {label: 'Men', href: '/men'},
+    {label: 'Clothing', href: '/men/clothing'},
+    {label: 'T-Shirts', href: '/men/clothing/tshirts'},
+    {label: 'Cotton Crew Neck T-Shirt'}
+]" />
+
+{# Custom Classes #}
+<h3 class="mt-5">Custom Styled Breadcrumbs</h3>
+<twig:bs:breadcrumbs 
+    class="bg-light p-3 rounded"
+    :items="[
+        {label: 'Home', href: '/'},
+        {label: 'Blog', href: '/blog'},
+        {label: '2024', href: '/blog/2024'},
+        {label: 'How to Use Breadcrumbs'}
+    ]" 
+/>
+

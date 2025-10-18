@@ -1,0 +1,64 @@
+{% apply spaceless -%}
+  {% set o = this.options() %}
+
+  {# Custom content block #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_custom_content = slot_content is not empty %}
+
+  <div class="{{ o.containerClasses }}">
+    <div class="{{ o.wrapperClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+
+      {# Icon or Image #}
+      {% if o.imageSrc %}
+        <div class="empty-state-media mb-4">
+          <img src="{{ o.imageSrc }}" alt="{{ o.imageAlt ?? o.title }}" class="{{ o.imageClasses }}">
+        </div>
+      {% elseif o.icon %}
+        <div class="{{ o.iconClasses }}">
+          <i class="{{ o.icon }}"></i>
+        </div>
+      {% endif %}
+
+      {# Title #}
+      {% if o.title %}
+        <h3 class="{{ o.titleClasses }}">{{ o.title }}</h3>
+      {% endif %}
+
+      {# Description #}
+      {% if o.description %}
+        <p class="{{ o.descriptionClasses }}">{{ o.description }}</p>
+      {% endif %}
+
+      {# Custom content slot #}
+      {% if has_custom_content %}
+        <div class="empty-state-content mb-4">
+          {{ slot_content|raw }}
+        </div>
+      {% endif %}
+
+      {# Call-to-Action Buttons #}
+      {% if o.ctaLabel or o.secondaryCtaLabel %}
+        <div class="empty-state-actions d-flex gap-2 justify-content-center flex-wrap">
+          {% if o.ctaLabel %}
+            <twig:bs:button
+                :label="o.ctaLabel"
+                :href="o.ctaHref"
+                :variant="o.ctaVariant"
+                :size="o.ctaSize"
+            />
+          {% endif %}
+          {% if o.secondaryCtaLabel %}
+            <twig:bs:button
+                :label="o.secondaryCtaLabel"
+                :href="o.secondaryCtaHref"
+                :variant="o.secondaryCtaVariant"
+                :size="o.secondaryCtaSize"
+            />
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{%- endapply %}
+

@@ -1,0 +1,427 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cookie Banner Examples{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Cookie Banner Examples</h1>
+    <p class="lead mb-5">
+        Comprehensive examples of the Cookie Banner component for GDPR/CCPA compliance.
+    </p>
+
+    {# Example 1: Default Bottom Banner #}
+    <section class="mb-5">
+        <h3>Default Bottom Banner</h3>
+        <p>Simple cookie banner at the bottom with default styling.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                cookieName="demo_consent_1"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner /&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 2: Top Fixed Banner #}
+    <section class="mb-5">
+        <h3>Top Fixed Banner</h3>
+        <p>Fixed banner at the top of the page.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <twig:bs:cookie-banner 
+                position="top-fixed"
+                cookieName="demo_consent_2"
+            />
+            <p class="pt-5">Page content here...</p>
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    position="top-fixed"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 3: Bottom Fixed Banner (Most Common) #}
+    <section class="mb-5">
+        <h3>Bottom Fixed Banner (Most Common)</h3>
+        <p>Fixed banner at the bottom - the most common implementation.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                position="bottom-fixed"
+                cookieName="demo_consent_3"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    position="bottom-fixed"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 4: With Privacy Links #}
+    <section class="mb-5">
+        <h3>With Privacy & Cookie Policy Links</h3>
+        <p>Banner with links to privacy and cookie policies.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                privacyUrl="/privacy"
+                cookiePolicyUrl="/cookies"
+                cookieName="demo_consent_4"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    privacyUrl="/privacy"
+    cookiePolicyUrl="/cookies"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 5: With All Three Buttons #}
+    <section class="mb-5">
+        <h3>With Accept, Reject & Customize Buttons</h3>
+        <p>Full GDPR-compliant banner with all button options.</p>
+        <div class="border p-3 position-relative" style="min-height: 250px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                :showReject="true"
+                :showCustomize="true"
+                cookieName="demo_consent_5"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    :showReject="true"
+    :showCustomize="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 6: With Backdrop #}
+    <section class="mb-5">
+        <h3>With Backdrop Overlay</h3>
+        <p>Banner with a semi-transparent backdrop to draw attention.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                :backdrop="true"
+                cookieName="demo_consent_6"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    :backdrop="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 7: Dark Variant #}
+    <section class="mb-5">
+        <h3>Dark Variant</h3>
+        <p>Banner with dark background styling.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                variant="dark"
+                cookieName="demo_consent_7"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    variant="dark"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 8: Custom Text #}
+    <section class="mb-5">
+        <h3>Custom Text & Messages</h3>
+        <p>Fully customized text and button labels.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                title="Cookie Notice"
+                message="This website uses cookies to improve your browsing experience and analyze site traffic."
+                acceptText="Accept All"
+                rejectText="Decline"
+                customizeText="Cookie Settings"
+                :showReject="true"
+                :showCustomize="true"
+                cookieName="demo_consent_8"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    title="Cookie Notice"
+    message="This website uses cookies to improve your browsing experience..."
+    acceptText="Accept All"
+    rejectText="Decline"
+    customizeText="Cookie Settings"
+    :showReject="true"
+    :showCustomize="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 9: Custom Button Variants #}
+    <section class="mb-5">
+        <h3>Custom Button Variants</h3>
+        <p>Different Bootstrap variants for buttons.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                acceptVariant="success"
+                rejectVariant="danger"
+                customizeVariant="outline-info"
+                :showReject="true"
+                :showCustomize="true"
+                cookieName="demo_consent_9"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    acceptVariant="success"
+    rejectVariant="danger"
+    customizeVariant="outline-info"
+    :showReject="true"
+    :showCustomize="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 10: Dismissible Banner #}
+    <section class="mb-5">
+        <h3>Dismissible Banner</h3>
+        <p>Banner with a close button to dismiss without choosing.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                :dismissible="true"
+                cookieName="demo_consent_10"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    :dismissible="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 11: Simple Accept-Only #}
+    <section class="mb-5">
+        <h3>Simple Accept-Only Banner</h3>
+        <p>Minimal banner with only an accept button (informational use).</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                title="We use cookies"
+                message="By continuing to use this site, you agree to our use of cookies."
+                :showReject="false"
+                acceptText="Got it"
+                cookieName="demo_consent_11"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    title="We use cookies"
+    message="By continuing to use this site, you agree to our use of cookies."
+    :showReject="false"
+    acceptText="Got it"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 12: GDPR-Compliant Banner #}
+    <section class="mb-5">
+        <h3>GDPR-Compliant Banner (Complete)</h3>
+        <p>Full implementation with all compliance features.</p>
+        <div class="border p-3 position-relative" style="min-height: 250px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                position="bottom-fixed"
+                title="Your Privacy Matters"
+                message="We use cookies and similar technologies to help personalize content, tailor and measure ads, and provide a better experience. By clicking accept, you agree to this."
+                privacyUrl="/privacy-policy"
+                privacyLinkText="Privacy Policy"
+                cookiePolicyUrl="/cookie-policy"
+                cookiePolicyLinkText="Cookie Policy"
+                acceptText="Accept All Cookies"
+                rejectText="Reject All"
+                customizeText="Customize Preferences"
+                :showReject="true"
+                :showCustomize="true"
+                variant="light"
+                :backdrop="true"
+                cookieName="demo_consent_12"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    position="bottom-fixed"
+    title="Your Privacy Matters"
+    message="We use cookies and similar technologies..."
+    privacyUrl="/privacy-policy"
+    privacyLinkText="Privacy Policy"
+    cookiePolicyUrl="/cookie-policy"
+    cookiePolicyLinkText="Cookie Policy"
+    acceptText="Accept All Cookies"
+    rejectText="Reject All"
+    customizeText="Customize Preferences"
+    :showReject="true"
+    :showCustomize="true"
+    variant="light"
+    :backdrop="true"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# Example 13: With Custom Classes #}
+    <section class="mb-5">
+        <h3>With Custom Styling</h3>
+        <p>Banner with custom CSS classes and attributes.</p>
+        <div class="border p-3 position-relative" style="min-height: 200px;">
+            <p>Page content here...</p>
+            
+            <twig:bs:cookie-banner 
+                class="border-top border-primary border-3"
+                :attr="{
+                    'data-analytics': 'cookie-banner',
+                    'role': 'dialog',
+                    'aria-label': 'Cookie Consent Banner'
+                }"
+                cookieName="demo_consent_13"
+            />
+        </div>
+        <details class="mt-3">
+            <summary>Show code</summary>
+            <pre><code>&lt;twig:bs:cookie-banner 
+    class="border-top border-primary border-3"
+    :attr="{
+        'data-analytics': 'cookie-banner',
+        'role': 'dialog',
+        'aria-label': 'Cookie Consent Banner'
+    }"
+/&gt;</code></pre>
+        </details>
+    </section>
+
+    {# JavaScript Integration Example #}
+    <section class="mb-5">
+        <h3>JavaScript Integration</h3>
+        <p>Listen to consent events and integrate with analytics.</p>
+        <div class="border p-3">
+            <pre><code class="language-javascript">// Listen for consent events
+document.addEventListener('bs-cookie-banner:accepted', (event) => {
+    console.log('✅ User accepted cookies');
+    // Enable Google Analytics
+    gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+    });
+});
+
+document.addEventListener('bs-cookie-banner:rejected', (event) => {
+    console.log('❌ User rejected cookies');
+    // Disable tracking
+    gtag('consent', 'update', {
+        'analytics_storage': 'denied'
+    });
+});
+
+document.addEventListener('bs-cookie-banner:customize', (event) => {
+    console.log('⚙️ User wants to customize');
+    // Open your custom preferences modal
+    const modal = new bootstrap.Modal('#cookiePreferencesModal');
+    modal.show();
+});
+
+document.addEventListener('bs-cookie-banner:dismissed', (event) => {
+    console.log('👋 User dismissed banner');
+});</code></pre>
+        </div>
+    </section>
+
+    {# Browser Console Demo #}
+    <section class="mb-5">
+        <h3>Testing & Storage</h3>
+        <div class="alert alert-info">
+            <h5>Testing Consent Storage</h5>
+            <p class="mb-2">The component stores consent in both localStorage and cookies. To test:</p>
+            <ol class="mb-0">
+                <li>Open browser DevTools (F12)</li>
+                <li>Go to Application/Storage tab</li>
+                <li>Check localStorage and Cookies</li>
+                <li>Look for <code>cookie_consent</code> (or custom name)</li>
+                <li>Delete the entry to see the banner again</li>
+            </ol>
+            <p class="mt-3 mb-0"><strong>Console Commands:</strong></p>
+            <pre class="mt-2"><code>// Check consent
+localStorage.getItem('cookie_consent')
+
+// Clear consent (banner will show again)
+localStorage.removeItem('cookie_consent')
+
+// Check all cookies
+document.cookie</code></pre>
+        </div>
+    </section>
+
+</div>
+
+{# Clear all demo consents button #}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 2000;">
+    <button class="btn btn-danger btn-sm" onclick="clearAllDemoConsents()">
+        Clear All Demo Consents
+    </button>
+</div>
+
+<script>
+function clearAllDemoConsents() {
+    // Clear all demo consent entries
+    for (let i = 1; i <= 13; i++) {
+        const key = `demo_consent_${i}`;
+        localStorage.removeItem(key);
+        
+        // Clear cookie
+        document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    
+    // Reload page to show all banners
+    location.reload();
+}
+
+// Add console logging for demo
+['accepted', 'rejected', 'customize', 'dismissed', 'shown', 'hidden'].forEach(event => {
+    document.addEventListener(`bs-cookie-banner:${event}`, (e) => {
+        console.log(`🍪 Cookie Banner Event: ${event}`, e.detail);
+    });
+});
+</script>
+
+{% endblock %}
+

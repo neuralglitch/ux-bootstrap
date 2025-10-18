@@ -1,0 +1,21 @@
+{# templates/components/extra/timeline.html.twig #}
+{# Timeline component for displaying chronological events, activities, and milestones #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Check if custom content is provided #}
+{% set has_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  {% if has_content %}
+    {{ slot_content|raw }}
+  {% endif %}
+</div>
+
+{%- endapply %}
+

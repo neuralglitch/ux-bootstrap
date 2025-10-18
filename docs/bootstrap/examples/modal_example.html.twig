@@ -1,0 +1,135 @@
+{# Modal Component Examples #}
+
+{# Basic Modal #}
+<h3>Basic Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalBasic">
+    Launch Basic Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalBasic" title="Modal Title">
+    <p>Modal body text goes here.</p>
+</twig:bs:modal>
+
+{# Modal with Footer #}
+<h3 class="mt-5">Modal with Footer</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalFooter">
+    Launch Modal with Footer
+</twig:bs:button>
+
+<twig:bs:modal id="modalFooter" title="Modal with Footer">
+    {% block content %}
+        <p>This modal has a custom footer with action buttons.</p>
+    {% endblock %}
+    {% block footer %}
+        <twig:bs:button variant="secondary" data-bs-dismiss="modal">Close</twig:bs:button>
+        <twig:bs:button variant="primary">Save Changes</twig:bs:button>
+    {% endblock %}
+</twig:bs:modal>
+
+{# Vertically Centered Modal #}
+<h3 class="mt-5">Vertically Centered Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalCentered">
+    Launch Centered Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalCentered" title="Centered Modal" :centered="true">
+    <p>This modal is vertically centered.</p>
+</twig:bs:modal>
+
+{# Scrollable Modal #}
+<h3 class="mt-5">Scrollable Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalScrollable">
+    Launch Scrollable Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalScrollable" title="Scrollable Modal" :scrollable="true">
+    <p>This is a long content modal that scrolls independently.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae fermentum nunc.</p>
+    <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
+    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.</p>
+</twig:bs:modal>
+
+{# Modal Sizes #}
+<h3 class="mt-5">Modal Sizes</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalSmall" class="me-2">
+    Small Modal
+</twig:bs:button>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalLarge" class="me-2">
+    Large Modal
+</twig:bs:button>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalXL">
+    Extra Large Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalSmall" title="Small Modal" size="sm">
+    <p>This is a small modal.</p>
+</twig:bs:modal>
+
+<twig:bs:modal id="modalLarge" title="Large Modal" size="lg">
+    <p>This is a large modal with more space for content.</p>
+</twig:bs:modal>
+
+<twig:bs:modal id="modalXL" title="Extra Large Modal" size="xl">
+    <p>This is an extra large modal with even more space.</p>
+</twig:bs:modal>
+
+{# Fullscreen Modal #}
+<h3 class="mt-5">Fullscreen Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalFullscreen">
+    Launch Fullscreen Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalFullscreen" title="Fullscreen Modal" :fullscreen="true">
+    <p>This modal takes up the entire viewport.</p>
+</twig:bs:modal>
+
+{# Static Backdrop Modal #}
+<h3 class="mt-5">Static Backdrop Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalStatic">
+    Launch Static Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalStatic" title="Static Backdrop" :staticBackdrop="true">
+    <p>This modal won't close when clicking outside of it. Try it!</p>
+</twig:bs:modal>
+
+{# Modal without Animation #}
+<h3 class="mt-5">Modal without Animation</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalNoFade">
+    Launch No-Fade Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalNoFade" title="No Animation" :fade="false">
+    <p>This modal appears instantly without fade animation.</p>
+</twig:bs:modal>
+
+{# Form Modal #}
+<h3 class="mt-5">Form Modal</h3>
+<twig:bs:button variant="primary" data-bs-toggle="modal" data-bs-target="#modalForm">
+    Open Form Modal
+</twig:bs:button>
+
+<twig:bs:modal id="modalForm" title="Contact Form">
+    {% block content %}
+        <form>
+            <div class="mb-3">
+                <label for="recipientName" class="form-label">Recipient Name</label>
+                <input type="text" class="form-control" id="recipientName">
+            </div>
+            <div class="mb-3">
+                <label for="messageText" class="form-label">Message</label>
+                <textarea class="form-control" id="messageText" rows="3"></textarea>
+            </div>
+        </form>
+    {% endblock %}
+    {% block footer %}
+        <twig:bs:button variant="secondary" data-bs-dismiss="modal">Cancel</twig:bs:button>
+        <twig:bs:button variant="primary">Send Message</twig:bs:button>
+    {% endblock %}
+</twig:bs:modal>
+

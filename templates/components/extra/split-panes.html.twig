@@ -1,0 +1,35 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Capture pane contents #}
+  {% set first_pane %}{% block first %}{% endblock %}{% endset %}
+  {% set second_pane %}{% block second %}{% endblock %}{% endset %}
+
+  <div class="{{ o.containerClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {# First pane #}
+    <div class="split-pane split-pane-first" data-bs-split-panes-target="firstPane">
+      {{ first_pane|raw }}
+    </div>
+
+    {# Divider #}
+    <div 
+      class="split-divider {{ o.isHorizontal ? 'split-divider-vertical' : 'split-divider-horizontal' }}"
+      data-bs-split-panes-target="divider"
+      data-action="mousedown->bs-split-panes#startResize touchstart->bs-split-panes#startResize"
+      role="separator"
+      aria-orientation="{{ o.isHorizontal ? 'vertical' : 'horizontal' }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      tabindex="0">
+      <div class="split-divider-handle"></div>
+    </div>
+
+    {# Second pane #}
+    <div class="split-pane split-pane-second" data-bs-split-panes-target="secondPane">
+      {{ second_pane|raw }}
+    </div>
+  </div>
+
+{%- endapply %}
+

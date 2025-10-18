@@ -1,0 +1,126 @@
+{# Navbar Component Examples #}
+
+{# Basic Navbar #}
+<h3>Basic Navbar</h3>
+<twig:bs:navbar brand="Brand">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:navbar>
+
+{# Navbar with Brand Logo #}
+<h3 class="mt-5">Navbar with Brand Logo</h3>
+<twig:bs:navbar brand="MyApp" brandHref="/" brandImage="https://via.placeholder.com/30x30">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">About</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Contact</twig:bs:nav-item>
+</twig:bs:navbar>
+
+{# Color Schemes #}
+<h3 class="mt-5">Navbar Color Schemes</h3>
+<twig:bs:navbar brand="Dark Navbar" variant="dark" class="bg-dark mb-3">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+</twig:bs:navbar>
+
+<twig:bs:navbar brand="Primary Navbar" class="bg-primary mb-3" variant="dark">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+</twig:bs:navbar>
+
+<twig:bs:navbar brand="Light Navbar" class="bg-light">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+</twig:bs:navbar>
+
+{# Responsive Navbar #}
+<h3 class="mt-5">Responsive Navbar</h3>
+<twig:bs:navbar brand="Responsive Brand" :expand="'lg'">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">About</twig:bs:nav-item>
+</twig:bs:navbar>
+
+{# Navbar with Search Form #}
+<h3 class="mt-5">Navbar with Search Form</h3>
+<twig:bs:navbar brand="Brand" class="bg-light">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    {% block content %}
+        <form class="d-flex ms-auto" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <twig:bs:button variant="outline-success">Search</twig:bs:button>
+        </form>
+    {% endblock %}
+</twig:bs:navbar>
+
+{# Navbar with Dropdown #}
+<h3 class="mt-5">Navbar with Dropdown</h3>
+<twig:bs:navbar brand="Brand">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dropdown</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else</a></li>
+        </ul>
+    </li>
+</twig:bs:navbar>
+
+{# Fixed Top Navbar #}
+<h3 class="mt-5">Fixed Top Navbar</h3>
+<twig:bs:navbar brand="Fixed Top" :fixed="'top'" class="bg-dark" variant="dark">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+</twig:bs:navbar>
+<div class="alert alert-info mt-5">
+    <strong>Note:</strong> Fixed top navbars stick to the top of the viewport. Scroll to see the effect.
+</div>
+
+{# Sticky Top Navbar #}
+<h3 class="mt-5">Sticky Top Navbar</h3>
+<twig:bs:navbar brand="Sticky Top" :sticky="'top'" class="bg-primary" variant="dark">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+</twig:bs:navbar>
+<div class="alert alert-info mt-3">
+    <strong>Note:</strong> Sticky top navbars scroll with the page until they reach the top, then stay fixed.
+</div>
+
+{# Navbar with Icons #}
+<h3 class="mt-5">Navbar with Icons</h3>
+<twig:bs:navbar brand="Brand" class="bg-light">
+    <twig:bs:nav-item href="#" :active="true">
+        <i class="bi bi-house-fill me-1"></i>Home
+    </twig:bs:nav-item>
+    <twig:bs:nav-item href="#">
+        <i class="bi bi-grid me-1"></i>Products
+    </twig:bs:nav-item>
+    <twig:bs:nav-item href="#">
+        <i class="bi bi-info-circle me-1"></i>About
+    </twig:bs:nav-item>
+    {% block content %}
+        <div class="d-flex ms-auto">
+            <twig:bs:button variant="outline-primary" icon="bi bi-cart" label="" class="me-2" />
+            <twig:bs:button variant="outline-secondary" icon="bi bi-person" label="" />
+        </div>
+    {% endblock %}
+</twig:bs:navbar>
+
+{# Offcanvas Navbar #}
+<h3 class="mt-5">Offcanvas Navbar</h3>
+<twig:bs:navbar brand="Offcanvas Navbar" :expand="'lg'" :offcanvas="true">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Features</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Pricing</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">About</twig:bs:nav-item>
+</twig:bs:navbar>
+

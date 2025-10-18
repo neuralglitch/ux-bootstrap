@@ -1,0 +1,190 @@
+{# templates/components/extra/comparison-table.html.twig #}
+{# Comparison Table Component for feature comparisons #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+    {# Title and Description #}
+    {% if o.title or o.description %}
+      <div class="text-center mb-4">
+        {% if o.title %}
+          <h2 class="mb-3">{{ o.title }}</h2>
+        {% endif %}
+        {% if o.description %}
+          <p class="lead text-muted">{{ o.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Custom content or default table #}
+    {% if has_custom_content %}
+      {{ slot_content|raw }}
+    {% else %}
+      {# Cards variant (mobile-friendly) #}
+      {% if o.variant == 'cards' %}
+        <div class="row g-4">
+          {% for column in o.columns %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card h-100 {% if loop.index0 == o.highlightColumn %}border-primary border-2 shadow{% endif %}">
+                <div class="card-header text-center {% if column.variant %}bg-{{ column.variant }} text-white{% endif %}">
+                  <h4 class="mb-0">{{ column.title ?? 'Plan ' ~ loop.index }}</h4>
+                  {% if column.badge %}
+                    <span class="badge bg-{{ column.badge_variant ?? 'warning' }} mt-2">{{ column.badge }}</span>
+                  {% endif %}
+                </div>
+                <div class="card-body">
+                  {% if column.price %}
+                    <div class="text-center mb-4">
+                      <h3 class="display-5">{{ column.price }}</h3>
+                      {% if column.period %}
+                        <p class="text-muted">{{ column.period }}</p>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                  <ul class="list-unstyled">
+                    {% for feature in o.features %}
+                      <li class="mb-2">
+                        <strong>{{ feature.feature }}:</strong> 
+                        {% set value = feature.values[loop.parent.index0] ?? o.emptyText %}
+                        {% if o.showCheckmarks and (value == true or value == 'true' or value == '✓') %}
+                          <span class="text-success">{{ o.checkIcon }}</span>
+                        {% elseif o.showCheckmarks and (value == false or value == 'false' or value == '✗') %}
+                          <span class="text-danger">{{ o.uncheckIcon }}</span>
+                        {% else %}
+                          {{ value }}
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  {% if column.cta_label and column.cta_href %}
+                    <a href="{{ column.cta_href }}" class="btn btn-{{ column.cta_variant ?? 'primary' }} w-100">{{ column.cta_label }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+      {# Horizontal variant (features as columns, products as rows) #}
+      {% elseif o.variant == 'horizontal' %}
+        <div class="{% if o.responsive %}table-responsive{% endif %}">
+          <table class="{{ o.tableClasses }}">
+            <thead {% if o.sticky %}class="sticky-top bg-body"{% endif %}>
+              <tr>
+                <th scope="col">Plan</th>
+                {% for feature in o.features %}
+                  <th scope="col">{{ feature.feature }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for column in o.columns %}
+                <tr {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
+                  <th scope="row">
+                    <div>
+                      {{ column.title ?? 'Plan ' ~ loop.index }}
+                      {% if column.badge %}
+                        <span class="badge bg-{{ column.badge_variant ?? 'warning' }} ms-2">{{ column.badge }}</span>
+                      {% endif %}
+                    </div>
+                    {% if column.price %}
+                      <div class="small text-muted">{{ column.price }}{% if column.period %}/{{ column.period }}{% endif %}</div>
+                    {% endif %}
+                  </th>
+                  {% for feature in o.features %}
+                    <td>
+                      {% set value = feature.values[loop.parent.index0] ?? o.emptyText %}
+                      {% if o.showCheckmarks and (value == true or value == 'true' or value == '✓') %}
+                        <span class="text-success">{{ o.checkIcon }}</span>
+                      {% elseif o.showCheckmarks and (value == false or value == 'false' or value == '✗') %}
+                        <span class="text-danger">{{ o.uncheckIcon }}</span>
+                      {% else %}
+                        {{ value }}
+                      {% endif %}
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      {# Default, bordered, and striped variants (vertical table) #}
+      {% else %}
+        <div class="{% if o.responsive %}table-responsive{% endif %}">
+          <table class="{{ o.tableClasses }}">
+            <thead {% if o.sticky %}class="sticky-top bg-body"{% endif %}>
+              <tr>
+                <th scope="col">Feature</th>
+                {% for column in o.columns %}
+                  <th scope="col" {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
+                    <div class="d-flex flex-column align-items-center">
+                      {{ column.title ?? 'Plan ' ~ loop.index }}
+                      {% if column.badge %}
+                        <span class="badge bg-{{ column.badge_variant ?? 'warning' }} mt-2">{{ column.badge }}</span>
+                      {% endif %}
+                      {% if column.price %}
+                        <div class="h4 mb-0 mt-2">{{ column.price }}</div>
+                        {% if column.period %}
+                          <small class="text-muted">per {{ column.period }}</small>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for feature in o.features %}
+                <tr>
+                  <th scope="row">
+                    {{ feature.feature }}
+                    {% if feature.description %}
+                      <br><small class="text-muted fw-normal">{{ feature.description }}</small>
+                    {% endif %}
+                  </th>
+                  {% for value in feature.values %}
+                    <td {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
+                      {% set val = value ?? o.emptyText %}
+                      {% if o.showCheckmarks and (val == true or val == 'true' or val == '✓') %}
+                        <span class="text-success fs-5">{{ o.checkIcon }}</span>
+                      {% elseif o.showCheckmarks and (val == false or val == 'false' or val == '✗') %}
+                        <span class="text-danger">{{ o.uncheckIcon }}</span>
+                      {% else %}
+                        {{ val }}
+                      {% endif %}
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+
+              {# CTA row at bottom #}
+              {% if o.columns|filter(c => c.cta_label ?? false)|length > 0 %}
+                <tr>
+                  <td></td>
+                  {% for column in o.columns %}
+                    <td {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
+                      {% if column.cta_label and column.cta_href %}
+                        <a href="{{ column.cta_href }}" class="btn btn-{{ column.cta_variant ?? 'primary' }} w-100">{{ column.cta_label }}</a>
+                      {% endif %}
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{%- endapply %}
+

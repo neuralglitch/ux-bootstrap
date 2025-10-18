@@ -1,0 +1,120 @@
+{# Dropdown Component Examples #}
+
+{# Basic Dropdown #}
+<h3>Basic Dropdown</h3>
+<twig:bs:dropdown label="Dropdown Button">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+    <twig:bs:dropdown-item href="#" label="Something else here" />
+</twig:bs:dropdown>
+
+{# Dropdown Variants #}
+<h3 class="mt-5">Dropdown Variants</h3>
+<twig:bs:dropdown label="Primary" variant="primary" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Success" variant="success" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Danger" variant="danger">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+
+{# Split Button Dropdown #}
+<h3 class="mt-5">Split Button Dropdown</h3>
+<twig:bs:dropdown label="Split Button" variant="primary" :split="true">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+    <twig:bs:dropdown-item href="#" label="Something else here" />
+    <twig:bs:dropdown-divider />
+    <twig:bs:dropdown-item href="#" label="Separated link" />
+</twig:bs:dropdown>
+
+{# Dropdown Sizes #}
+<h3 class="mt-5">Dropdown Sizes</h3>
+<twig:bs:dropdown label="Large Dropdown" size="lg" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Default Dropdown" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Small Dropdown" size="sm">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+
+{# Dropdown Directions #}
+<h3 class="mt-5">Dropdown Directions</h3>
+<twig:bs:dropdown label="Dropup" direction="up" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Dropend" direction="end" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Dropstart" direction="start">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+</twig:bs:dropdown>
+
+{# Dropdown with Headers and Dividers #}
+<h3 class="mt-5">Dropdown with Headers and Dividers</h3>
+<twig:bs:dropdown label="Menu">
+    <twig:bs:dropdown-header label="Dropdown header" />
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+    <twig:bs:dropdown-divider />
+    <twig:bs:dropdown-header label="Another header" />
+    <twig:bs:dropdown-item href="#" label="Something else here" />
+</twig:bs:dropdown>
+
+{# Dropdown with Icons #}
+<h3 class="mt-5">Dropdown with Icons</h3>
+<twig:bs:dropdown label="Options" variant="primary">
+    <twig:bs:dropdown-item href="#" label="Profile" icon="bi bi-person" />
+    <twig:bs:dropdown-item href="#" label="Settings" icon="bi bi-gear" />
+    <twig:bs:dropdown-item href="#" label="Messages" icon="bi bi-envelope" />
+    <twig:bs:dropdown-divider />
+    <twig:bs:dropdown-item href="#" label="Logout" icon="bi bi-box-arrow-right" />
+</twig:bs:dropdown>
+
+{# Active and Disabled Items #}
+<h3 class="mt-5">Active and Disabled Items</h3>
+<twig:bs:dropdown label="Menu">
+    <twig:bs:dropdown-item href="#" label="Regular link" />
+    <twig:bs:dropdown-item href="#" label="Active link" :active="true" />
+    <twig:bs:dropdown-item href="#" label="Disabled link" :disabled="true" />
+    <twig:bs:dropdown-item href="#" label="Another link" />
+</twig:bs:dropdown>
+
+{# Dark Dropdown #}
+<h3 class="mt-5">Dark Dropdown</h3>
+<twig:bs:dropdown label="Dark Dropdown" :dark="true">
+    <twig:bs:dropdown-item href="#" label="Action" />
+    <twig:bs:dropdown-item href="#" label="Another action" />
+    <twig:bs:dropdown-item href="#" label="Something else here" />
+    <twig:bs:dropdown-divider />
+    <twig:bs:dropdown-item href="#" label="Separated link" />
+</twig:bs:dropdown>
+
+{# Auto Close Behavior #}
+<h3 class="mt-5">Auto Close Behavior</h3>
+<twig:bs:dropdown label="Auto Close Inside" autoClose="inside" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Auto Close Outside" autoClose="outside" class="me-2">
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+</twig:bs:dropdown>
+<twig:bs:dropdown label="Manual Close" :autoClose="false">
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+    <twig:bs:dropdown-item href="#" label="Menu Item" />
+</twig:bs:dropdown>
+

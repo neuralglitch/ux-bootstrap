@@ -1,0 +1,183 @@
+{# Empty State Component Examples #}
+
+{# Basic Empty State #}
+<h3>Basic Empty State</h3>
+<twig:bs:empty-state 
+    title="No items found"
+    description="There are no items to display at the moment."
+/>
+
+{# Empty State with Icon #}
+<h3 class="mt-5">Empty State with Icon</h3>
+<twig:bs:empty-state 
+    icon="bi bi-inbox"
+    title="Your inbox is empty"
+    description="You have no new messages. When you receive messages, they will appear here."
+/>
+
+{# Empty State with Action Button #}
+<h3 class="mt-5">Empty State with Action Button</h3>
+<twig:bs:empty-state 
+    icon="bi bi-file-earmark-plus"
+    title="No documents yet"
+    description="Get started by creating your first document."
+    actionLabel="Create Document"
+    actionHref="/documents/new"
+/>
+
+{# Empty State with Image #}
+<h3 class="mt-5">Empty State with Image</h3>
+<twig:bs:empty-state 
+    image="https://via.placeholder.com/300x200/e9ecef/6c757d?text=No+Results"
+    title="No results found"
+    description="We couldn't find any results matching your search criteria. Try adjusting your filters."
+    actionLabel="Clear Filters"
+    actionHref="#"
+/>
+
+{# Empty State Variants #}
+<h3 class="mt-5">Empty State Variants</h3>
+
+<h5>Info Variant</h5>
+<twig:bs:empty-state 
+    variant="info"
+    icon="bi bi-info-circle"
+    title="Information"
+    description="This feature is currently being developed and will be available soon."
+/>
+
+<h5 class="mt-4">Warning Variant</h5>
+<twig:bs:empty-state 
+    variant="warning"
+    icon="bi bi-exclamation-triangle"
+    title="Access Required"
+    description="You need special permissions to view this content. Please contact an administrator."
+/>
+
+<h5 class="mt-4">Error Variant</h5>
+<twig:bs:empty-state 
+    variant="danger"
+    icon="bi bi-x-circle"
+    title="Something went wrong"
+    description="We encountered an error while loading your data. Please try again later."
+    actionLabel="Retry"
+    actionHref="#"
+/>
+
+{# Empty State in Card #}
+<h3 class="mt-5">Empty State in Card</h3>
+<twig:bs:card>
+    <div class="card-body">
+        <twig:bs:empty-state 
+            icon="bi bi-chat-dots"
+            title="No messages"
+            description="Start a conversation by sending your first message."
+            actionLabel="New Message"
+            actionHref="#"
+        />
+    </div>
+</twig:bs:card>
+
+{# Empty Search Results #}
+<h3 class="mt-5">Empty Search Results</h3>
+<twig:bs:empty-state 
+    icon="bi bi-search"
+    title="No results for 'example query'"
+    description="Try searching with different keywords or check your spelling."
+    actionLabel="Clear Search"
+    actionHref="#"
+/>
+
+{# Empty Shopping Cart #}
+<h3 class="mt-5">Empty Shopping Cart</h3>
+<twig:bs:empty-state 
+    icon="bi bi-cart-x"
+    title="Your cart is empty"
+    description="Looks like you haven't added any items to your cart yet. Browse our products and find something you like!"
+    actionLabel="Start Shopping"
+    actionHref="/products"
+/>
+
+{# No Notifications #}
+<h3 class="mt-5">No Notifications</h3>
+<twig:bs:empty-state 
+    icon="bi bi-bell-slash"
+    title="No notifications"
+    description="You're all caught up! You'll see new notifications here when they arrive."
+    :size="'sm'"
+/>
+
+{# Empty List with Multiple Actions #}
+<h3 class="mt-5">Empty State with Multiple Actions</h3>
+<div class="text-center py-5">
+    <i class="bi bi-people display-1 text-muted mb-3"></i>
+    <h3>No team members yet</h3>
+    <p class="text-muted mb-4">Invite team members to collaborate on your projects.</p>
+    <div class="d-flex gap-2 justify-content-center">
+        <twig:bs:button variant="primary" iconStart="bi bi-person-plus">
+            Invite Member
+        </twig:bs:button>
+        <twig:bs:button variant="outline-secondary" iconStart="bi bi-upload">
+            Import CSV
+        </twig:bs:button>
+    </div>
+</div>
+
+{# Empty Table State #}
+<h3 class="mt-5">Empty Table State</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="4">
+                <twig:bs:empty-state 
+                    icon="bi bi-table"
+                    title="No data available"
+                    description="No records found in the database."
+                    :size="'sm'"
+                />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{# 404 Page Empty State #}
+<h3 class="mt-5">404 Page Not Found</h3>
+<div class="text-center py-5">
+    <h1 class="display-1 text-muted">404</h1>
+    <twig:bs:empty-state 
+        icon="bi bi-signpost-2"
+        title="Page not found"
+        description="The page you're looking for doesn't exist or has been moved."
+        actionLabel="Go Home"
+        actionHref="/"
+    />
+</div>
+
+{# Connection Error Empty State #}
+<h3 class="mt-5">Connection Error</h3>
+<twig:bs:empty-state 
+    icon="bi bi-wifi-off"
+    variant="warning"
+    title="No internet connection"
+    description="Please check your internet connection and try again."
+    actionLabel="Retry"
+    actionHref="#"
+/>
+
+{# Empty Favorites #}
+<h3 class="mt-5">Empty Favorites</h3>
+<twig:bs:empty-state 
+    icon="bi bi-star"
+    title="No favorites yet"
+    description="Items you mark as favorite will appear here for quick access."
+    :size="'sm'"
+/>
+

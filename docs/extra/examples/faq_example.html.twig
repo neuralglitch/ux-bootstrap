@@ -1,0 +1,207 @@
+{# FAQ Component Examples #}
+
+{# Example 1: Accordion FAQ (Default) #}
+<twig:bs:faq
+    variant="accordion"
+    title="Frequently Asked Questions"
+    lead="Find answers to common questions about our service"
+    :flush="true"
+    :items="[
+        {
+            question: 'How do I get started?',
+            answer: '<p>Getting started is easy! Simply <a href=\"/signup\">create an account</a> and follow the setup wizard.</p>'
+        },
+        {
+            question: 'What payment methods do you accept?',
+            answer: '<p>We accept all major credit cards, PayPal, and bank transfers.</p>'
+        },
+        {
+            question: 'Can I cancel my subscription?',
+            answer: '<p>Yes, you can cancel anytime from your account settings. No questions asked.</p>'
+        },
+        {
+            question: 'Do you offer refunds?',
+            answer: '<p>We offer a 30-day money-back guarantee on all plans.</p>'
+        }
+    ]"
+    class="mb-5"
+/>
+
+{# Example 2: Simple FAQ List #}
+<twig:bs:faq
+    variant="simple"
+    title="Quick Answers"
+    :items="[
+        {
+            question: 'What are your business hours?',
+            answer: 'Monday to Friday, 9 AM - 6 PM EST'
+        },
+        {
+            question: 'Where are you located?',
+            answer: 'Our headquarters are in San Francisco, CA'
+        },
+        {
+            question: 'How can I contact support?',
+            answer: 'Email us at <a href=\"mailto:support@example.com\">support@example.com</a>'
+        }
+    ]"
+    class="mb-5"
+/>
+
+{# Example 3: Card-based FAQ #}
+<twig:bs:faq
+    variant="card"
+    title="Product FAQ"
+    lead="Everything you need to know about our product"
+    :items="[
+        {
+            question: 'What features are included?',
+            answer: '<ul><li>Feature 1</li><li>Feature 2</li><li>Feature 3</li></ul>'
+        },
+        {
+            question: 'Is there a mobile app?',
+            answer: 'Yes! Our mobile app is available for iOS and Android.'
+        },
+        {
+            question: 'Can I integrate with other tools?',
+            answer: 'We offer integrations with over 100 popular tools and services.'
+        }
+    ]"
+    class="mb-5"
+/>
+
+{# Example 4: Bordered FAQ #}
+<twig:bs:faq
+    variant="bordered"
+    title="Support FAQ"
+    :items="[
+        {
+            question: 'How do I reset my password?',
+            answer: 'Click on \"Forgot Password\" on the login page and follow the instructions.'
+        },
+        {
+            question: 'Can I change my email address?',
+            answer: 'Yes, you can update your email in account settings.'
+        }
+    ]"
+    class="mb-5"
+/>
+
+{# Example 5: Accordion with Always Open #}
+<twig:bs:faq
+    variant="accordion"
+    title="Technical FAQ"
+    :alwaysOpen="true"
+    :items="[
+        {
+            question: 'What is the API rate limit?',
+            answer: '1000 requests per hour for free tier, unlimited for premium.'
+        },
+        {
+            question: 'Do you support webhooks?',
+            answer: 'Yes, webhooks are available on Pro and Enterprise plans.'
+        },
+        {
+            question: 'What is your SLA?',
+            answer: 'We guarantee 99.9% uptime with 24/7 monitoring.'
+        }
+    ]"
+    class="mb-5"
+/>
+
+{# Example 6: Controller Usage #}
+{# In your controller:
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class SupportController extends AbstractController
+{
+    public function faq(): Response
+    {
+        $faqItems = [
+            [
+                'question' => 'How do I upgrade my plan?',
+                'answer' => '<p>Go to your account settings and click on "Upgrade Plan".</p>',
+            ],
+            [
+                'question' => 'What happens after my trial ends?',
+                'answer' => '<p>Your account will be downgraded to the free tier unless you upgrade.</p>',
+            ],
+        ];
+
+        return $this->render('support/faq.html.twig', [
+            'faqItems' => $faqItems,
+        ]);
+    }
+}
+#}
+
+{# Then in your template: #}
+<twig:bs:faq
+    variant="accordion"
+    title="Support FAQ"
+    :items="faqItems"
+    :flush="true"
+/>
+
+{# Example 7: Custom Content (Advanced) #}
+<twig:bs:faq variant="accordion" :flush="true">
+    {% block content %}
+        <div class="accordion" id="customFaq">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#custom1">
+                        How do I customize the FAQ?
+                    </button>
+                </h3>
+                <div id="custom1" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        You can provide custom content using the content block for full control over the markup.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#custom2">
+                        Can I add images?
+                    </button>
+                </h3>
+                <div id="custom2" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <p>Yes! You can include any HTML in the answer:</p>
+                        <img src="/path/to/image.jpg" class="img-fluid" alt="Example">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</twig:bs:faq>
+
+{# Example 8: Multiple FAQ Sections #}
+<div class="container my-5">
+    <twig:bs:faq
+        variant="accordion"
+        title="General Questions"
+        :flush="true"
+        :items="generalFaqItems"
+        class="mb-4"
+    />
+    
+    <twig:bs:faq
+        variant="accordion"
+        title="Billing Questions"
+        :flush="true"
+        :items="billingFaqItems"
+        class="mb-4"
+    />
+    
+    <twig:bs:faq
+        variant="accordion"
+        title="Technical Questions"
+        :flush="true"
+        :items="technicalFaqItems"
+    />
+</div>
+

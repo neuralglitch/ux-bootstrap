@@ -1,0 +1,10 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <span class="visually-hidden">{{ o.label }}</span>
+  </div>
+
+{%- endapply %}
+

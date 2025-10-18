@@ -1,0 +1,52 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slots: content / label / icon_start / icon_end #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set slot_label %}{% block label %}{% endblock %}{% endset %}
+  {% set slot_icon_start %}{% block icon_start %}{% endblock %}{% endset %}
+  {% set slot_icon_end %}{% block icon_end %}{% endblock %}{% endset %}
+
+  {# Content priority: Content block > Label block > Prop #}
+  {% set has_content = slot_content is not empty %}
+  {% set has_label = slot_label is not empty %}
+  {% set label_html = has_content ? slot_content : (has_label ? slot_label : (o.label ?? '')) %}
+  
+  {# Icons: Slot > Prop (auto-render icon from prop if provided) #}
+  {% if slot_icon_start is not empty %}
+    {% set icon_start_html = slot_icon_start %}
+  {% elseif o.iconStart %}
+    {% set icon_start_html %}<twig:ux:icon name="{{ o.iconStart }}" width="{{ o.iconSize }}" height="{{ o.iconSize }}" />{% endset %}
+  {% else %}
+    {% set icon_start_html = '' %}
+  {% endif %}
+  
+  {% if slot_icon_end is not empty %}
+    {% set icon_end_html = slot_icon_end %}
+  {% elseif o.iconEnd %}
+    {% set icon_end_html %}<twig:ux:icon name="{{ o.iconEnd }}" width="{{ o.iconSize }}" height="{{ o.iconSize }}" />{% endset %}
+  {% else %}
+    {% set icon_end_html = '' %}
+  {% endif %}
+
+  {% if o.tag == 'a' %}
+    <a href="{{ o.disabled ? 'javascript:void(0)' : o.href }}"
+       role="button"
+       class="{{ o.classes }}"
+      {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      {%- if icon_start_html %}<span class="{{ o.iconStartClasses }}">{{ icon_start_html|raw }}</span>{% endif -%}
+      {%- if not o.iconOnly and label_html %}<span>{{ label_html|raw }}</span>{% endif -%}
+      {%- if icon_end_html %}<span class="{{ o.iconEndClasses }}">{{ icon_end_html|raw }}</span>{% endif -%}
+    </a>
+  {% else %}
+    <button type="{{ o.type }}"
+            class="{{ o.classes }}"
+      {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      {%- if icon_start_html %}<span class="{{ o.iconStartClasses }}">{{ icon_start_html|raw }}</span>{% endif -%}
+      {%- if not o.iconOnly and label_html %}<span>{{ label_html|raw }}</span>{% endif -%}
+      {%- if icon_end_html %}<span class="{{ o.iconEndClasses }}">{{ icon_end_html|raw }}</span>{% endif -%}
+    </button>
+  {% endif %}
+
+{%- endapply %}

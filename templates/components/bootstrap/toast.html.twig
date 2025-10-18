@@ -1,0 +1,43 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slots: header, body, default content #}
+  {% set slot_header %}{% block header %}{% endblock %}{% endset %}
+  {% set slot_body %}{% block body %}{% endblock %}{% endset %}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content priority: Slot > Prop #}
+  {% set has_header = slot_header is not empty %}
+  {% set has_body = slot_body is not empty %}
+  {% set has_content = slot_content is not empty %}
+  
+  {% set header_html = has_header ? slot_header : (o.title ?? '') %}
+  {% set body_html = has_body ? slot_body : (has_content ? slot_content : (o.message ?? '')) %}
+
+  <div class="{{ o.classes }} align-items-center text-bg-{{ variant }}" 
+       role="alert" 
+       aria-live="assertive" 
+       aria-atomic="true"
+       data-bs-autohide="{{ o.autohide ? 'true' : 'false' }}"
+       data-bs-delay="{{ o.delay }}"
+       data-controller="bs-toast"
+       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="d-flex">
+      {% if o.body %}
+        <div class="toast-body">
+          {% if o.header and header_html %}
+            <strong class="me-auto">{{ header_html|raw }}</strong>
+          {% endif %}
+          {{ body_html|raw }}
+        </div>
+      {% endif %}
+      <button type="button" 
+              class="btn-close btn-close-white me-2 m-auto" 
+              data-bs-dismiss="toast" 
+              aria-label="Close">
+      </button>
+    </div>
+  </div>
+
+{%- endapply %}

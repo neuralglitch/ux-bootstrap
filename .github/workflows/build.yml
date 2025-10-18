@@ -1,0 +1,96 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-styles:
+    name: Build CSS
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, xml, ctype, iconv, intl
+          coverage: none
+          tools: composer:v2
+      
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-build-
+      
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-interaction --no-progress
+      
+      - name: Create .env for build
+        run: |
+          cat > .env << 'EOF'
+          APP_ENV=dev
+          APP_DEBUG=1
+          APP_SECRET=build-secret
+          DEFAULT_URI=http://localhost
+          EOF
+      
+      - name: Build CSS
+        run: composer build-styles
+      
+      - name: Verify CSS file exists
+        run: |
+          if [ ! -f "src/Resources/public/ux_bootstrap.css" ]; then
+            echo "❌ Build failed: CSS file not created"
+            exit 1
+          fi
+          echo "✅ CSS file created successfully"
+      
+      - name: Check CSS size
+        run: |
+          SIZE=$(du -k src/Resources/public/ux_bootstrap.css | cut -f1)
+          echo "📊 CSS size: ${SIZE}KB"
+          
+          if [ "$SIZE" -gt 100 ]; then
+            echo "⚠️ WARNING: CSS is larger than expected (${SIZE}KB)"
+            echo "Expected: ~30KB (component enhancements only)"
+            echo "This might mean Bootstrap CSS is being included."
+            exit 1
+          fi
+          
+          echo "✅ Size check passed (${SIZE}KB)"
+      
+      - name: Verify no Bootstrap leak
+        run: |
+          if grep -q "^\.btn {" src/Resources/public/ux_bootstrap.css; then
+            echo "❌ ERROR: Bootstrap base styles detected in bundle CSS"
+            exit 1
+          fi
+          
+          if ! grep -q "search-container" src/Resources/public/ux_bootstrap.css; then
+            echo "❌ ERROR: Bundle styles not found in CSS"
+            exit 1
+          fi
+          
+          echo "✅ CSS contains only component enhancements (no Bootstrap base styles)"
+      
+      - name: Check for uncommitted CSS changes
+        run: |
+          git diff --exit-code src/Resources/public/ux_bootstrap.css || {
+            echo "⚠️ WARNING: CSS file has uncommitted changes"
+            echo "Run 'composer build-styles' and commit the result"
+            exit 1
+          }
+          echo "✅ CSS file is up to date"
+

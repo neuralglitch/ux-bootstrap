@@ -1,0 +1,204 @@
+{# Toast Component Examples #}
+
+{# Basic Toast #}
+<h3>Basic Toast</h3>
+<twig:bs:button variant="primary" onclick="document.getElementById('toastBasic').classList.add('show')">
+    Show Basic Toast
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastBasic" title="Bootstrap" time="just now">
+        Hello, this is a basic toast message!
+    </twig:bs:toast>
+</div>
+
+{# Toast Variants #}
+<h3 class="mt-5">Toast Variants</h3>
+<twig:bs:button variant="success" onclick="document.getElementById('toastSuccess').classList.add('show')" class="me-2">
+    Success Toast
+</twig:bs:button>
+<twig:bs:button variant="warning" onclick="document.getElementById('toastWarning').classList.add('show')" class="me-2">
+    Warning Toast
+</twig:bs:button>
+<twig:bs:button variant="danger" onclick="document.getElementById('toastDanger').classList.add('show')">
+    Error Toast
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+    <twig:bs:toast id="toastSuccess" title="Success" variant="success" time="now">
+        Your changes have been saved successfully!
+    </twig:bs:toast>
+    
+    <twig:bs:toast id="toastWarning" title="Warning" variant="warning" time="2 mins ago">
+        Please review the following information.
+    </twig:bs:toast>
+    
+    <twig:bs:toast id="toastDanger" title="Error" variant="danger" time="just now">
+        An error occurred. Please try again.
+    </twig:bs:toast>
+</div>
+
+{# Toast with Icon #}
+<h3 class="mt-5">Toast with Icon</h3>
+<twig:bs:button variant="primary" onclick="document.getElementById('toastIcon').classList.add('show')">
+    Show Toast with Icon
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastIcon" title="Notification" icon="bi bi-bell-fill" time="1 min ago">
+        You have a new notification!
+    </twig:bs:toast>
+</div>
+
+{# Auto-hiding Toast #}
+<h3 class="mt-5">Auto-hiding Toast</h3>
+<twig:bs:button variant="primary" onclick="document.getElementById('toastAuto').classList.add('show')">
+    Show Auto-hide Toast (3s)
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastAuto" title="Auto-hide" time="now" :autoHide="true" :delay="3000">
+        This toast will automatically hide after 3 seconds.
+    </twig:bs:toast>
+</div>
+
+{# Toast without Close Button #}
+<h3 class="mt-5">Toast without Close Button</h3>
+<twig:bs:button variant="primary" onclick="document.getElementById('toastNoClose').classList.add('show')">
+    Show Toast (No Close)
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastNoClose" title="Info" time="now" :dismissible="false">
+        This toast doesn't have a close button.
+    </twig:bs:toast>
+</div>
+
+{# Toast Stacking #}
+<h3 class="mt-5">Toast Stacking</h3>
+<twig:bs:button variant="primary" onclick="
+    document.getElementById('toastStack1').classList.add('show');
+    document.getElementById('toastStack2').classList.add('show');
+    document.getElementById('toastStack3').classList.add('show');
+">
+    Show Multiple Toasts
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastStack1" title="First Toast" time="now" variant="primary">
+        This is the first toast in the stack.
+    </twig:bs:toast>
+    <twig:bs:toast id="toastStack2" title="Second Toast" time="now" variant="success">
+        This is the second toast in the stack.
+    </twig:bs:toast>
+    <twig:bs:toast id="toastStack3" title="Third Toast" time="now" variant="info">
+        This is the third toast in the stack.
+    </twig:bs:toast>
+</div>
+
+{# Toast Positions #}
+<h3 class="mt-5">Toast Positions</h3>
+<div class="row">
+    <div class="col-md-6 mb-2">
+        <twig:bs:button variant="primary" class="w-100" onclick="document.getElementById('toastTopStart').classList.add('show')">
+            Top Start
+        </twig:bs:button>
+    </div>
+    <div class="col-md-6 mb-2">
+        <twig:bs:button variant="primary" class="w-100" onclick="document.getElementById('toastTopEnd').classList.add('show')">
+            Top End
+        </twig:bs:button>
+    </div>
+    <div class="col-md-6 mb-2">
+        <twig:bs:button variant="primary" class="w-100" onclick="document.getElementById('toastBottomStart').classList.add('show')">
+            Bottom Start
+        </twig:bs:button>
+    </div>
+    <div class="col-md-6 mb-2">
+        <twig:bs:button variant="primary" class="w-100" onclick="document.getElementById('toastBottomEnd').classList.add('show')">
+            Bottom End
+        </twig:bs:button>
+    </div>
+</div>
+
+<div class="toast-container position-fixed top-0 start-0 p-3">
+    <twig:bs:toast id="toastTopStart" title="Top Start" time="now">
+        Toast positioned at top start.
+    </twig:bs:toast>
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <twig:bs:toast id="toastTopEnd" title="Top End" time="now">
+        Toast positioned at top end.
+    </twig:bs:toast>
+</div>
+
+<div class="toast-container position-fixed bottom-0 start-0 p-3">
+    <twig:bs:toast id="toastBottomStart" title="Bottom Start" time="now">
+        Toast positioned at bottom start.
+    </twig:bs:toast>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <twig:bs:toast id="toastBottomEnd" title="Bottom End" time="now">
+        Toast positioned at bottom end.
+    </twig:bs:toast>
+</div>
+
+{# Rich Content Toast #}
+<h3 class="mt-5">Toast with Rich Content</h3>
+<twig:bs:button variant="primary" onclick="document.getElementById('toastRich').classList.add('show')">
+    Show Rich Content Toast
+</twig:bs:button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="toastRich" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bi bi-envelope-fill text-primary me-2"></i>
+            <strong class="me-auto">New Message</strong>
+            <small>2 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <strong>John Doe:</strong> Hey! I just sent you the project files.<br>
+            <div class="mt-2 pt-2 border-top">
+                <twig:bs:button size="sm" variant="primary" class="me-2">Reply</twig:bs:button>
+                <twig:bs:button size="sm" variant="outline-secondary">Close</twig:bs:button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Notification Toasts #}
+<h3 class="mt-5">Notification Types</h3>
+<twig:bs:button variant="success" onclick="document.getElementById('toastSaved').classList.add('show')" class="me-2">
+    Saved
+</twig:bs:button>
+<twig:bs:button variant="info" onclick="document.getElementById('toastUploaded').classList.add('show')" class="me-2">
+    Uploaded
+</twig:bs:button>
+<twig:bs:button variant="warning" onclick="document.getElementById('toastUpdate').classList.add('show')" class="me-2">
+    Update Available
+</twig:bs:button>
+<twig:bs:button variant="danger" onclick="document.getElementById('toastError').classList.add('show')">
+    Error
+</twig:bs:button>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <twig:bs:toast id="toastSaved" title="Saved" variant="success" icon="bi bi-check-circle-fill" time="now" :autoHide="true" :delay="3000">
+        Your changes have been saved successfully!
+    </twig:bs:toast>
+    
+    <twig:bs:toast id="toastUploaded" title="Upload Complete" variant="info" icon="bi bi-cloud-upload-fill" time="now" :autoHide="true" :delay="3000">
+        File uploaded successfully!
+    </twig:bs:toast>
+    
+    <twig:bs:toast id="toastUpdate" title="Update Available" variant="warning" icon="bi bi-exclamation-triangle-fill" time="now">
+        A new version is available. Please update.
+    </twig:bs:toast>
+    
+    <twig:bs:toast id="toastError" title="Error" variant="danger" icon="bi bi-x-circle-fill" time="now">
+        Failed to process your request. Please try again.
+    </twig:bs:toast>
+</div>
+

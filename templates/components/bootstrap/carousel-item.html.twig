@@ -1,0 +1,39 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+
+  {# Optional caption block #}
+  {% set caption_content %}{% block caption %}{% endblock %}{% endset %}
+  {% set has_caption_block = caption_content is not empty %}
+
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {% if o.imgSrc %}
+      <img src="{{ o.imgSrc }}" class="{{ o.imgClass }}" alt="{{ o.imgAlt ?? '' }}">
+    {% endif %}
+    
+    {% if has_content %}
+      {{ slot_content|raw }}
+    {% endif %}
+
+    {% if has_caption_block or o.captionTitle or o.captionText %}
+      <div class="carousel-caption d-none d-md-block">
+        {% if has_caption_block %}
+          {{ caption_content|raw }}
+        {% else %}
+          {% if o.captionTitle %}
+            <h5>{{ o.captionTitle }}</h5>
+          {% endif %}
+          {% if o.captionText %}
+            <p>{{ o.captionText }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+{%- endapply %}
+

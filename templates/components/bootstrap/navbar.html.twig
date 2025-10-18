@@ -1,0 +1,322 @@
+{% apply spaceless -%}
+{% set o = this.options() %}
+
+{# Brand rendering macro (reusable across variants) #}
+{% macro render_brand(o) %}
+          {% if o.brandIcon %}
+            <twig:ux:icon name="{{ o.brandIcon }}" width="{{ o.brandIconWidth }}" height="{{ o.brandIconHeight }}" class="d-inline-block align-text-top" />
+          {% elseif o.brandImg %}
+            <img src="{{ o.brandImg }}" alt="{{ o.brandImgAlt }}" width="{{ o.brandImgWidth }}" height="{{ o.brandImgHeight }}" class="d-inline-block align-text-top">
+          {% endif %}
+          {% if o.brand %}
+            {{ o.brand }}
+          {% endif %}
+{% endmacro %}
+
+{# Toggler rendering macro #}
+{% macro render_toggler(o, toggle_type = 'collapse', toggler_icon_block = null) %}
+  {% if toggle_type == 'offcanvas' %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#{{ o.collapseId }}" aria-controls="{{ o.collapseId }}" aria-label="{{ o.togglerLabel }}">
+      {% if toggler_icon_block %}
+        {{ toggler_icon_block|raw }}
+      {% elseif o.togglerIcon %}
+        <twig:ux:icon name="{{ o.togglerIcon }}" width="{{ o.togglerIconWidth }}" height="{{ o.togglerIconHeight }}" />
+      {% else %}
+        <span class="navbar-toggler-icon"></span>
+      {% endif %}
+    </button>
+  {% elseif toggle_type == 'fullscreen' %}
+    <button class="navbar-toggler" 
+            type="button" 
+            data-action="click->bs-navbar-fullscreen#toggle"
+            aria-controls="{{ o.collapseId }}" 
+            aria-expanded="false" 
+            aria-label="{{ o.togglerLabel }}">
+      {% if toggler_icon_block %}
+        {{ toggler_icon_block|raw }}
+      {% elseif o.togglerIcon %}
+        <twig:ux:icon name="{{ o.togglerIcon }}" width="{{ o.togglerIconWidth }}" height="{{ o.togglerIconHeight }}" />
+      {% else %}
+        <span class="navbar-toggler-icon"></span>
+      {% endif %}
+    </button>
+  {% else %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#{{ o.collapseId }}" aria-controls="{{ o.collapseId }}" aria-expanded="false" aria-label="{{ o.togglerLabel }}">
+      {% if toggler_icon_block %}
+        {{ toggler_icon_block|raw }}
+      {% elseif o.togglerIcon %}
+        <twig:ux:icon name="{{ o.togglerIcon }}" width="{{ o.togglerIconWidth }}" height="{{ o.togglerIconHeight }}" />
+      {% else %}
+        <span class="navbar-toggler-icon"></span>
+      {% endif %}
+    </button>
+  {% endif %}
+{% endmacro %}
+
+{# ========================================= #}
+{# SIDEBAR VARIANT #}
+{# ========================================= #}
+{% if o.collapseType == 'sidebar' %}
+  <div class="navbar-sidebar-wrapper" style="--sidebar-width: {{ o.sidebarWidth }};">
+    <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }} style="width: {{ o.sidebarWidth }};">
+      <div class="navbar-sidebar-content">
+        {# Brand #}
+        <div class="navbar-sidebar-brand p-3">
+          <a class="navbar-brand" href="{{ o.brandHref }}">
+            {{ _self.render_brand(o) }}
+          </a>
+        </div>
+        
+        {# Navigation #}
+        <div class="navbar-sidebar-nav">
+          {{ block('nav') }}
+        </div>
+        
+        {# End section #}
+        <div class="navbar-sidebar-end mt-auto">
+          {{ block('end') }}
+        </div>
+      </div>
+    </nav>
+    
+    {# Mobile toggler for sidebar #}
+    {% if o.sidebarCollapsible %}
+      <button class="navbar-sidebar-toggler d-{{ o.expand }}-none btn btn-link" 
+              type="button" 
+              data-bs-toggle="offcanvas" 
+              data-bs-target="#sidebarOffcanvas"
+              aria-controls="sidebarOffcanvas"
+              aria-label="{{ o.togglerLabel }}">
+        {% if o.togglerIcon %}
+          <twig:ux:icon name="{{ o.togglerIcon }}" width="{{ o.togglerIconWidth }}" height="{{ o.togglerIconHeight }}" />
+        {% else %}
+          <twig:ux:icon name="bi:list" width="1.5em" height="1.5em" />
+        {% endif %}
+      </button>
+      
+      {# Mobile offcanvas #}
+      <div class="offcanvas offcanvas-{{ o.sidebarPosition }}" 
+           tabindex="-1" 
+           id="sidebarOffcanvas" 
+           aria-labelledby="sidebarOffcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">{{ o.brand }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          {{ block('nav') }}
+          {{ block('end') }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+{# ========================================= #}
+{# DOUBLE ROW VARIANT #}
+{# ========================================= #}
+{% elseif o.collapseType == 'double' %}
+  <div class="navbar-double-wrapper">
+    {# Top Row #}
+    <div class="navbar-top-row{% if o.topRowBg %} bg-{{ o.topRowBg }}{% endif %}">
+      <div class="{{ o.container }}">
+        <div class="d-flex justify-content-between align-items-center py-2">
+          <div class="navbar-top-left">
+            {{ block('top_row_left') }}
+          </div>
+          <div class="navbar-top-right">
+            {{ block('top_row_right') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {# Main Navbar #}
+    <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      <div class="{{ o.container }}">
+        {# Brand #}
+        <a class="navbar-brand" href="{{ o.brandHref }}">
+          {{ _self.render_brand(o) }}
+        </a>
+        
+        {# Toggler #}
+        {% if o.showToggler %}
+          {{ _self.render_toggler(o, 'collapse', block('toggler_icon')) }}
+        {% endif %}
+        
+        {# Collapsible content #}
+        <div class="collapse navbar-collapse" id="{{ o.collapseId }}">
+          {{ block('nav') }}
+          {{ block('end') }}
+        </div>
+      </div>
+    </nav>
+  </div>
+
+{# ========================================= #}
+{# CENTERED SPLIT VARIANT #}
+{# ========================================= #}
+{% elseif o.collapseType == 'centered-split' %}
+  <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.container }}">
+      {# Desktop: Left Navigation #}
+      <div class="navbar-nav-left d-none d-{{ o.expand }}-flex">
+        {{ block('nav_left') }}
+      </div>
+      
+      {# Centered Brand #}
+      <a class="navbar-brand" href="{{ o.brandHref }}">
+        {{ _self.render_brand(o) }}
+      </a>
+      
+      {# Desktop: Right Navigation #}
+      <div class="navbar-nav-right d-none d-{{ o.expand }}-flex">
+        {{ block('nav_right') }}
+      </div>
+      
+      {# Toggler for mobile #}
+      <button class="navbar-toggler d-{{ o.expand }}-none" type="button" data-bs-toggle="collapse" data-bs-target="#{{ o.collapseId }}" aria-controls="{{ o.collapseId }}" aria-expanded="false" aria-label="{{ o.togglerLabel }}">
+        {% if block('toggler_icon') is defined and block('toggler_icon') is not empty %}
+          {{ block('toggler_icon') }}
+        {% elseif o.togglerIcon %}
+          <twig:ux:icon name="{{ o.togglerIcon }}" width="{{ o.togglerIconWidth }}" height="{{ o.togglerIconHeight }}" />
+        {% else %}
+          <span class="navbar-toggler-icon"></span>
+        {% endif %}
+      </button>
+      
+      {# Mobile collapsed content (includes both nav_left and nav_right) #}
+      <div class="collapse navbar-collapse navbar-collapse-mobile" id="{{ o.collapseId }}">
+        {{ block('nav_left') }}
+        {{ block('nav_right') }}
+        {{ block('end') }}
+      </div>
+    </div>
+  </nav>
+
+{# ========================================= #}
+{# OFFCANVAS VARIANT #}
+{# ========================================= #}
+{% elseif o.collapseType == 'offcanvas' %}
+  <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.container }}">
+      {# Brand #}
+      <a class="navbar-brand" href="{{ o.brandHref }}">
+        {{ _self.render_brand(o) }}
+      </a>
+      
+      {# Offcanvas Toggler #}
+      {% if o.showToggler %}
+        {{ _self.render_toggler(o, 'offcanvas', block('toggler_icon')) }}
+      {% endif %}
+      
+      {# Offcanvas #}
+      <div class="offcanvas offcanvas-{{ o.offcanvasPlacement }}{% if not o.offcanvasBackdrop %} offcanvas-no-backdrop{% endif %}" 
+           tabindex="-1" 
+           id="{{ o.collapseId }}"
+           aria-labelledby="{{ o.collapseId }}Label"
+           {% if not o.offcanvasBackdrop %}data-bs-backdrop="false"{% endif %}
+           {% if o.offcanvasScroll %}data-bs-scroll="true"{% endif %}>
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="{{ o.collapseId }}Label">{{ o.offcanvasTitle }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          {{ block('nav') }}
+          {{ block('end') }}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+{# ========================================= #}
+{# FULLSCREEN OVERLAY VARIANT #}
+{# ========================================= #}
+{% elseif o.collapseType == 'fullscreen' %}
+  <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.container }}">
+      {# Brand #}
+      <a class="navbar-brand" href="{{ o.brandHref }}">
+        {{ _self.render_brand(o) }}
+      </a>
+      
+      {# Fullscreen Toggler #}
+      {% if o.showToggler %}
+        {{ _self.render_toggler(o, 'fullscreen', block('toggler_icon')) }}
+      {% endif %}
+      
+      {# Fullscreen Overlay #}
+      <div class="navbar-fullscreen-overlay" 
+           id="{{ o.collapseId }}"
+           data-bs-navbar-fullscreen-target="overlay"
+           {% if o.fullscreenBg != 'var(--bs-body-bg)' %}style="background: {{ o.fullscreenBg }};"{% endif %}>
+        <div class="navbar-fullscreen-content{% if o.fullscreenCentered %} navbar-fullscreen-centered{% endif %}">
+          {# Close button #}
+          <button class="navbar-fullscreen-close btn-close" 
+                  type="button" 
+                  data-action="click->bs-navbar-fullscreen#close"
+                  aria-label="Close"></button>
+          
+          {# Navigation content #}
+          <div class="navbar-fullscreen-nav">
+            {{ block('nav') }}
+            {{ block('end') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+{# ========================================= #}
+{# MEGA MENU VARIANT (Standard collapse with mega menu support) #}
+{# ========================================= #}
+{% elseif o.collapseType == 'mega-menu' %}
+  <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.container }}" style="--mega-menu-columns: {{ o.megaMenuColumns }};">
+      {# Brand #}
+      <a class="navbar-brand" href="{{ o.brandHref }}">
+        {{ _self.render_brand(o) }}
+      </a>
+      
+      {# Toggler #}
+      {% if o.showToggler %}
+        {{ _self.render_toggler(o, 'collapse', block('toggler_icon')) }}
+      {% endif %}
+      
+      {# Collapsible content with mega menu support #}
+      <div class="collapse navbar-collapse" id="{{ o.collapseId }}">
+        {{ block('nav') }}
+        {{ block('end') }}
+      </div>
+    </div>
+  </nav>
+
+{# ========================================= #}
+{# STANDARD COLLAPSE (Default) #}
+{# ========================================= #}
+{% else %}
+  <nav class="{{ o.classes }}"{{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.container }}">
+      {# Brand #}
+      <a class="navbar-brand" href="{{ o.brandHref }}">
+        {% block brand %}{{ _self.render_brand(o) }}{% endblock %}
+      </a>
+
+      {# Toggler Button #}
+      {% if o.showToggler %}
+        {% block toggler %}{{ _self.render_toggler(o, 'collapse', block('toggler_icon')) }}{% endblock %}
+      {% endif %}
+
+      {# Collapsible content #}
+      <div class="collapse navbar-collapse" id="{{ o.collapseId }}">
+        {% block nav %}{% endblock %}
+        {% block end %}{% endblock %}
+      </div>
+    </div>
+  </nav>
+{% endif %}
+
+{# Define blocks that are ONLY used in standard/double/mega variants #}
+{# Note: nav_left, nav_right, top_row_left, top_row_right are NOT defined here #}
+{# They are only referenced with {{ block('name') }} which renders them if passed #}
+{% block toggler_icon %}{% endblock %}
+{%- endapply %}

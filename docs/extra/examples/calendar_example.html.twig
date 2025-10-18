@@ -1,0 +1,362 @@
+{# Calendar Component Examples #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendar Component Examples{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Calendar Component Examples</h1>
+    <p class="lead">Event calendar (not datepicker) with multiple views and interactive features.</p>
+
+    {# Example 1: Basic Month View #}
+    <section class="mb-5">
+        <h2>1. Basic Month View</h2>
+        <p>Default calendar with month view and navigation.</p>
+        
+        <twig:bs:calendar />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 2: Calendar with Events #}
+    <section class="mb-5">
+        <h2>2. Calendar with Events</h2>
+        <p>Display events on the calendar.</p>
+        
+        {% set sampleEvents = [
+            {
+                id: '1',
+                title: 'Team Standup',
+                start: 'now'|date_modify('+2 days')|date('Y-m-d') ~ 'T09:00:00',
+                end: 'now'|date_modify('+2 days')|date('Y-m-d') ~ 'T09:30:00',
+                color: 'primary',
+                description: 'Daily team sync-up meeting'
+            },
+            {
+                id: '2',
+                title: 'Project Review',
+                start: 'now'|date_modify('+5 days')|date('Y-m-d') ~ 'T14:00:00',
+                end: 'now'|date_modify('+5 days')|date('Y-m-d') ~ 'T15:30:00',
+                color: 'success',
+                description: 'Q1 project status review'
+            },
+            {
+                id: '3',
+                title: 'Client Presentation',
+                start: 'now'|date_modify('+7 days')|date('Y-m-d') ~ 'T10:00:00',
+                end: 'now'|date_modify('+7 days')|date('Y-m-d') ~ 'T11:00:00',
+                color: 'warning',
+                description: 'Product demo for key stakeholder'
+            },
+            {
+                id: '4',
+                title: 'Deadline: Sprint 12',
+                start: 'now'|date_modify('+10 days')|date('Y-m-d'),
+                color: 'danger',
+                description: 'Sprint delivery deadline',
+                allDay: true
+            },
+            {
+                id: '5',
+                title: 'Team Lunch',
+                start: 'now'|date_modify('+3 days')|date('Y-m-d') ~ 'T12:00:00',
+                end: 'now'|date_modify('+3 days')|date('Y-m-d') ~ 'T13:00:00',
+                color: 'info',
+                description: 'Monthly team lunch outing'
+            },
+            {
+                id: '6',
+                title: '1-on-1 Meeting',
+                start: 'now'|date_modify('+4 days')|date('Y-m-d') ~ 'T15:00:00',
+                end: 'now'|date_modify('+4 days')|date('Y-m-d') ~ 'T15:30:00',
+                color: 'secondary',
+                description: 'Performance review discussion'
+            }
+        ] %}
+        
+        <twig:bs:calendar 
+            :events="sampleEvents"
+            :showWeekNumbers="true"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 3: Week View #}
+    <section class="mb-5">
+        <h2>3. Week View with Time Grid</h2>
+        <p>Week view showing time slots and hourly schedule.</p>
+        
+        <twig:bs:calendar
+            view="week"
+            :events="sampleEvents"
+            timeFormat="12h"
+            slotMinTime="08:00:00"
+            slotMaxTime="18:00:00"
+            height="600px"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 4: Day View #}
+    <section class="mb-5">
+        <h2>4. Day View</h2>
+        <p>Detailed view of a single day's events.</p>
+        
+        <twig:bs:calendar
+            view="day"
+            :events="sampleEvents"
+            :initialDate="'now'|date_modify('+3 days')|date('Y-m-d')"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 5: List View #}
+    <section class="mb-5">
+        <h2>5. List View</h2>
+        <p>List of all events in the current month.</p>
+        
+        <twig:bs:calendar
+            view="list"
+            :events="sampleEvents"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 6: Business Calendar (Monday Start) #}
+    <section class="mb-5">
+        <h2>6. Business Calendar (Monday Start, No Weekends)</h2>
+        <p>Calendar configured for business use with Monday as first day and weekends hidden.</p>
+        
+        {% set businessHours = {
+            daysOfWeek: [1, 2, 3, 4, 5],
+            startTime: '09:00',
+            endTime: '17:00'
+        } %}
+        
+        <twig:bs:calendar
+            view="week"
+            :firstDayOfWeek="1"
+            :showWeekends="false"
+            :hiddenDays="[0, 6]"
+            :businessHours="businessHours"
+            :events="sampleEvents"
+            slotMinTime="08:00:00"
+            slotMaxTime="19:00:00"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 7: With Click Handlers #}
+    <section class="mb-5">
+        <h2>7. Calendar with Click Handlers</h2>
+        <p>Click on events or dates to navigate to detail pages.</p>
+        
+        <twig:bs:calendar
+            :events="sampleEvents"
+            eventClickUrl="/events/{id}/view"
+            dateClickUrl="/events/new?date={date}"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 8: Compact Calendar #}
+    <section class="mb-5">
+        <h2>8. Compact Calendar (Minimal UI)</h2>
+        <p>Simplified calendar without navigation or view switcher.</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <twig:bs:calendar
+                    :events="sampleEvents"
+                    :showNavigation="false"
+                    :showViewSwitcher="false"
+                    height="400px"
+                    class="shadow-sm rounded"
+                />
+            </div>
+            <div class="col-md-6">
+                <twig:bs:calendar
+                    view="list"
+                    :events="sampleEvents"
+                    :showNavigation="false"
+                    :showViewSwitcher="false"
+                    height="400px"
+                    class="shadow-sm rounded"
+                />
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 9: Custom Styled Calendar #}
+    <section class="mb-5">
+        <h2>9. Custom Styled Calendar</h2>
+        <p>Calendar with custom classes and attributes.</p>
+        
+        <twig:bs:calendar
+            :events="sampleEvents"
+            class="border-primary shadow-lg rounded"
+            :attr="{
+                'data-theme': 'custom',
+                'aria-label': 'Company Events Calendar'
+            }"
+        />
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 10: Async Event Loading #}
+    <section class="mb-5">
+        <h2>10. Async Event Loading</h2>
+        <p>Load events dynamically from server endpoint.</p>
+        
+        <twig:bs:calendar
+            eventUrl="/api/calendar/events"
+            :loadEventsAsync="true"
+            view="month"
+        />
+        
+        <div class="alert alert-info mt-3">
+            <strong>Note:</strong> This example requires a backend endpoint at <code>/api/calendar/events</code>
+            that returns events in JSON format.
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    {# Example 11: Multi-Language Calendar #}
+    <section class="mb-5">
+        <h2>11. Multi-Language Calendar</h2>
+        <p>Calendars in different locales.</p>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>English (US)</h5>
+                <twig:bs:calendar
+                    locale="en"
+                    :firstDayOfWeek="0"
+                    :events="sampleEvents"
+                    :showViewSwitcher="false"
+                />
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>German (Monday start)</h5>
+                <twig:bs:calendar
+                    locale="de"
+                    :firstDayOfWeek="1"
+                    :events="sampleEvents"
+                    :showViewSwitcher="false"
+                />
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>French (Monday start)</h5>
+                <twig:bs:calendar
+                    locale="fr"
+                    :firstDayOfWeek="1"
+                    :events="sampleEvents"
+                    :showViewSwitcher="false"
+                />
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    {# JavaScript API Example #}
+    <section class="mb-5">
+        <h2>12. JavaScript API Integration</h2>
+        <p>Listen for calendar events via JavaScript.</p>
+        
+        <div id="calendar-with-js" data-controller="bs-calendar" data-bs-calendar-view-value="month">
+            <twig:bs:calendar
+                :events="sampleEvents"
+                :attr="{'id': 'interactive-calendar'}"
+            />
+        </div>
+        
+        <div class="mt-3">
+            <button class="btn btn-primary" onclick="goToPrevious()">← Previous</button>
+            <button class="btn btn-primary" onclick="goToToday()">Today</button>
+            <button class="btn btn-primary" onclick="goToNext()">Next →</button>
+            <button class="btn btn-secondary" onclick="switchToWeek()">Week View</button>
+            <button class="btn btn-secondary" onclick="switchToMonth()">Month View</button>
+        </div>
+        
+        <div class="alert alert-secondary mt-3" id="event-log">
+            <strong>Event Log:</strong> <span id="log-content">No events yet</span>
+        </div>
+    </section>
+
+</div>
+
+<script>
+// Example: Listen for calendar events
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.querySelector('#interactive-calendar');
+    
+    if (calendarEl) {
+        // Listen for date clicks
+        calendarEl.addEventListener('bs-calendar:date-click', function(event) {
+            console.log('Date clicked:', event.detail);
+            document.getElementById('log-content').textContent = 
+                'Date clicked: ' + event.detail.date;
+        });
+        
+        // Listen for event clicks
+        calendarEl.addEventListener('bs-calendar:event-click', function(event) {
+            console.log('Event clicked:', event.detail);
+            document.getElementById('log-content').textContent = 
+                'Event clicked: ' + event.detail.event.title;
+        });
+    }
+});
+
+// Example: Control calendar programmatically
+function goToPrevious() {
+    const controller = getCalendarController();
+    if (controller) controller.previousPeriod();
+}
+
+function goToToday() {
+    const controller = getCalendarController();
+    if (controller) controller.goToToday();
+}
+
+function goToNext() {
+    const controller = getCalendarController();
+    if (controller) controller.nextPeriod();
+}
+
+function switchToWeek() {
+    const controller = getCalendarController();
+    if (controller) {
+        controller.viewValue = 'week';
+        controller.render();
+    }
+}
+
+function switchToMonth() {
+    const controller = getCalendarController();
+    if (controller) {
+        controller.viewValue = 'month';
+        controller.render();
+    }
+}
+
+function getCalendarController() {
+    const el = document.querySelector('[data-controller="bs-calendar"]');
+    if (!el || !window.Stimulus) return null;
+    return window.Stimulus.getControllerForElementAndIdentifier(el, 'bs-calendar');
+}
+</script>
+
+{% endblock %}
+

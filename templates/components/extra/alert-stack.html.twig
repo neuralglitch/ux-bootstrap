@@ -1,0 +1,54 @@
+{# templates/components/extra/alert-stack.html.twig #}
+{# Alert Stack component for flash messages, bulk notifications, and toast management #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot (for custom alert layouts) #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" 
+     style="z-index: {{ o.zIndex }}; gap: {{ o.gap }}rem;"
+     {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  
+  {% if has_custom_content %}
+    {# Custom content provided #}
+    {{ slot_content|raw }}
+  {% else %}
+    {# Render alerts from array #}
+    {% for alert in o.alerts %}
+      {% set alert_classes = [
+        'alert',
+        'alert-' ~ alert.variant,
+        alert.dismissible ? 'alert-dismissible' : null,
+        o.fade ? 'fade show' : null,
+      ]|filter(v => v is not null)|join(' ') %}
+      
+      <div class="{{ alert_classes }}"
+           role="alert"
+           id="{{ alert.id }}"
+           data-bs-alert-stack-target="alert"
+           {% if alert.autoHide %}
+           data-bs-alert-auto-hide="true"
+           data-bs-alert-auto-hide-delay="{{ alert.autoHideDelay }}"
+           {% endif %}
+           data-controller="bs-alert">
+        
+        {{ alert.message|raw }}
+        
+        {% if alert.dismissible %}
+          <button type="button" 
+                  class="btn-close" 
+                  data-bs-dismiss="alert" 
+                  aria-label="Close">
+          </button>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{%- endapply %}
+

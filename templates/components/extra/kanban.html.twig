@@ -1,0 +1,38 @@
+{# templates/components/extra/kanban.html.twig #}
+{# Bootstrap 5.3 Kanban Board Component (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Wrapper element (card or div) #}
+{% set wrapper_tag = o.card_wrapper ? 'div' : 'div' %}
+{% set wrapper_classes = o.card_wrapper ? 'card' : '' %}
+
+<{{ wrapper_tag }}{% if wrapper_classes %} class="{{ wrapper_classes }}"{% endif %}>
+  {% if o.card_wrapper %}
+    <div class="card-body p-0">
+  {% endif %}
+  
+  <div class="{{ o.container }}">
+    <div 
+      class="{{ o.classes }} d-flex gap-{{ o.gap }} {% if o.variant == 'horizontal' %}flex-row overflow-x-auto{% else %}flex-column{% endif %}"
+      {{ this.renderHtmlAttributes(o.attrs) | raw }}
+      {% if o.height %}style="height: {{ o.height }};"{% endif %}>
+      
+      {# Columns content #}
+      {{ slot_content|raw }}
+      
+    </div>
+  </div>
+  
+  {% if o.card_wrapper %}
+    </div>
+  {% endif %}
+</{{ wrapper_tag }}>
+
+{%- endapply %}
+

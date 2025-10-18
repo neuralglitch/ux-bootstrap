@@ -1,0 +1,85 @@
+{# templates/components/extra/kanban-column.html.twig #}
+{# Bootstrap 5.3 Kanban Column Component (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture cards content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+<div class="{{ o.classes }} flex-shrink-0" {{ this.renderHtmlAttributes(o.attrs) | raw }} style="min-width: 300px; max-width: 400px;">
+  
+  {# Column Header #}
+  <div class="kanban-column-header d-flex align-items-center justify-content-between p-3 {% if o.variant %}bg-{{ o.variant }} bg-opacity-10{% endif %} rounded-top">
+    <div class="d-flex align-items-center gap-2 flex-grow-1">
+      {% if o.icon %}
+        <span class="kanban-column-icon">{{ o.icon|raw }}</span>
+      {% endif %}
+      
+      <div class="flex-grow-1">
+        <h5 class="mb-0 kanban-column-title {% if o.variant %}text-{{ o.variant }}{% endif %}">
+          {{ o.title }}
+          {% if o.show_count %}
+            <span class="badge bg-secondary ms-2" data-kanban-count>0</span>
+          {% endif %}
+        </h5>
+        
+        {% if o.description %}
+          <small class="text-muted d-block">{{ o.description }}</small>
+        {% endif %}
+        
+        {% if o.limit %}
+          <small class="text-muted">
+            <span data-kanban-count>0</span> / {{ o.limit }}
+          </small>
+        {% endif %}
+      </div>
+    </div>
+    
+    {% if o.collapsible %}
+      <button 
+        class="btn btn-sm btn-link text-decoration-none p-0" 
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#{{ o.attrs.id }}-body"
+        aria-expanded="{% if not o.collapsed %}true{% else %}false{% endif %}"
+        aria-controls="{{ o.attrs.id }}-body">
+        <span class="kanban-column-toggle">{% if o.collapsed %}▼{% else %}▲{% endif %}</span>
+      </button>
+    {% endif %}
+  </div>
+  
+  {# Column Body (Cards Container) #}
+  <div 
+    id="{{ o.attrs.id }}-body"
+    class="kanban-column-body p-3 {% if o.collapsible %}collapse{% if not o.collapsed %} show{% endif %}{% endif %}"
+    data-kanban-drop-zone
+    style="min-height: 100px; max-height: 70vh; overflow-y: auto;">
+    
+    <div class="d-flex flex-column gap-2">
+      {{ slot_content|raw }}
+    </div>
+    
+    {# Empty state placeholder #}
+    <div class="kanban-column-empty text-center text-muted py-4 d-none" data-kanban-empty>
+      <small>Drop cards here</small>
+    </div>
+  </div>
+  
+  {# Column Footer (Add Button) #}
+  {% if o.show_add_button %}
+    <div class="kanban-column-footer p-2 border-top">
+      <button 
+        class="btn btn-sm btn-link text-decoration-none w-100 text-start" 
+        type="button"
+        data-action="kanban#addCard">
+        <span class="me-1">+</span> {{ o.add_button_label }}
+      </button>
+    </div>
+  {% endif %}
+  
+</div>
+
+{%- endapply %}
+

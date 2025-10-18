@@ -1,0 +1,178 @@
+{# Rating Component Examples #}
+
+{# Basic Rating Display #}
+<h3>Basic Rating Display</h3>
+<twig:bs:rating :value="4.5" :max="5" />
+
+{# Different Rating Values #}
+<h3 class="mt-5">Different Rating Values</h3>
+<p><twig:bs:rating :value="1" :max="5" /> 1 out of 5 stars</p>
+<p><twig:bs:rating :value="2.5" :max="5" /> 2.5 out of 5 stars</p>
+<p><twig:bs:rating :value="3" :max="5" /> 3 out of 5 stars</p>
+<p><twig:bs:rating :value="4" :max="5" /> 4 out of 5 stars</p>
+<p><twig:bs:rating :value="5" :max="5" /> 5 out of 5 stars</p>
+
+{# Rating Sizes #}
+<h3 class="mt-5">Rating Sizes</h3>
+<p>Small: <twig:bs:rating :value="4" size="sm" /></p>
+<p>Default: <twig:bs:rating :value="4" /></p>
+<p>Large: <twig:bs:rating :value="4" size="lg" /></p>
+<p>Extra Large: <twig:bs:rating :value="4" size="xl" /></p>
+
+{# Rating with Count #}
+<h3 class="mt-5">Rating with Review Count</h3>
+<twig:bs:rating :value="4.3" :count="1234" />
+
+{# Interactive Rating #}
+<h3 class="mt-5">Interactive Rating</h3>
+<twig:bs:rating :value="0" :max="5" :interactive="true" />
+<p class="text-muted mt-2">Click on stars to rate</p>
+
+{# Rating Colors #}
+<h3 class="mt-5">Rating Colors</h3>
+<p>Default (Warning): <twig:bs:rating :value="4" /></p>
+<p>Success: <twig:bs:rating :value="4" color="success" /></p>
+<p>Info: <twig:bs:rating :value="4" color="info" /></p>
+<p>Danger: <twig:bs:rating :value="4" color="danger" /></p>
+
+{# Product Rating #}
+<h3 class="mt-5">Product Rating Card</h3>
+<twig:bs:card style="max-width: 300px;">
+    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Product">
+    <div class="card-body">
+        <h5 class="card-title">Premium Headphones</h5>
+        <div class="d-flex align-items-center mb-2">
+            <twig:bs:rating :value="4.5" />
+            <span class="text-muted ms-2">(234 reviews)</span>
+        </div>
+        <p class="card-text">High-quality wireless headphones with noise cancellation.</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="text-primary mb-0">$299</h4>
+            <twig:bs:button variant="primary">Add to Cart</twig:bs:button>
+        </div>
+    </div>
+</twig:bs:card>
+
+{# Review List with Ratings #}
+<h3 class="mt-5">Reviews with Ratings</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item>
+        <div class="d-flex w-100 justify-content-between mb-2">
+            <h6 class="mb-1">Excellent product!</h6>
+            <twig:bs:rating :value="5" size="sm" />
+        </div>
+        <p class="mb-1">This is exactly what I was looking for. Highly recommended!</p>
+        <small class="text-muted">- John Doe, 2 days ago</small>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item>
+        <div class="d-flex w-100 justify-content-between mb-2">
+            <h6 class="mb-1">Good but could be better</h6>
+            <twig:bs:rating :value="4" size="sm" />
+        </div>
+        <p class="mb-1">Overall good quality but the price is a bit high.</p>
+        <small class="text-muted">- Jane Smith, 1 week ago</small>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item>
+        <div class="d-flex w-100 justify-content-between mb-2">
+            <h6 class="mb-1">Decent purchase</h6>
+            <twig:bs:rating :value="3.5" size="sm" />
+        </div>
+        <p class="mb-1">It works as expected. Nothing special but gets the job done.</p>
+        <small class="text-muted">- Bob Wilson, 2 weeks ago</small>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Rating Breakdown #}
+<h3 class="mt-5">Rating Breakdown</h3>
+<twig:bs:card>
+    <div class="card-body">
+        <h5 class="card-title">Customer Reviews</h5>
+        <div class="d-flex align-items-center mb-3">
+            <div class="me-3">
+                <div class="display-4">4.2</div>
+                <twig:bs:rating :value="4.2" />
+                <div class="text-muted">1,234 reviews</div>
+            </div>
+        </div>
+        <div class="rating-breakdown">
+            <div class="d-flex align-items-center mb-2">
+                <span class="me-2">5</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <twig:bs:progress :value="70" class="flex-grow-1 me-2" variant="warning" />
+                <span class="text-muted">70%</span>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+                <span class="me-2">4</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <twig:bs:progress :value="20" class="flex-grow-1 me-2" variant="warning" />
+                <span class="text-muted">20%</span>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+                <span class="me-2">3</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <twig:bs:progress :value="5" class="flex-grow-1 me-2" variant="warning" />
+                <span class="text-muted">5%</span>
+            </div>
+            <div class="d-flex align-items-center mb-2">
+                <span class="me-2">2</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <twig:bs:progress :value="3" class="flex-grow-1 me-2" variant="warning" />
+                <span class="text-muted">3%</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="me-2">1</span>
+                <i class="bi bi-star-fill text-warning me-2"></i>
+                <twig:bs:progress :value="2" class="flex-grow-1 me-2" variant="warning" />
+                <span class="text-muted">2%</span>
+            </div>
+        </div>
+    </div>
+</twig:bs:card>
+
+{# Half-Star Ratings #}
+<h3 class="mt-5">Half-Star Precision</h3>
+<p><twig:bs:rating :value="3.1" /> 3.1 stars</p>
+<p><twig:bs:rating :value="3.3" /> 3.3 stars</p>
+<p><twig:bs:rating :value="3.5" /> 3.5 stars</p>
+<p><twig:bs:rating :value="3.7" /> 3.7 stars</p>
+<p><twig:bs:rating :value="3.9" /> 3.9 stars</p>
+
+{# Rating in Table #}
+<h3 class="mt-5">Product Comparison Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Rating</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Product A</td>
+            <td><twig:bs:rating :value="4.5" size="sm" :count="234" /></td>
+            <td>$29.99</td>
+            <td><twig:bs:badge variant="success">In Stock</twig:bs:badge></td>
+        </tr>
+        <tr>
+            <td>Product B</td>
+            <td><twig:bs:rating :value="4.2" size="sm" :count="156" /></td>
+            <td>$39.99</td>
+            <td><twig:bs:badge variant="success">In Stock</twig:bs:badge></td>
+        </tr>
+        <tr>
+            <td>Product C</td>
+            <td><twig:bs:rating :value="3.8" size="sm" :count="89" /></td>
+            <td>$24.99</td>
+            <td><twig:bs:badge variant="warning">Low Stock</twig:bs:badge></td>
+        </tr>
+        <tr>
+            <td>Product D</td>
+            <td><twig:bs:rating :value="4.9" size="sm" :count="512" /></td>
+            <td>$49.99</td>
+            <td><twig:bs:badge variant="danger">Out of Stock</twig:bs:badge></td>
+        </tr>
+    </tbody>
+</table>
+

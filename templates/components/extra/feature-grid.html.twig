@@ -1,0 +1,97 @@
+{# templates/components/extra/feature-grid.html.twig #}
+{# Feature Grid Component - Landing page features with icons and descriptions #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+    
+    {# Optional heading section #}
+    {% if o.heading or o.subheading %}
+      <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-{{ o.headingAlign }}">
+          {% if o.heading %}
+            <{{ o.headingTag }} class="display-6 fw-bold mb-3">{{ o.heading }}</{{ o.headingTag }}>
+          {% endif %}
+          {% if o.subheading %}
+            <p class="lead text-muted">{{ o.subheading }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Features grid or custom content #}
+    {% if has_custom_content %}
+      {# Allow full customization via content block #}
+      <div class="row g-{{ o.gap }}">
+        {{ slot_content|raw }}
+      </div>
+    {% else %}
+      {# Default feature grid rendering #}
+      <div class="row g-{{ o.gap }} {% if o.centered %}text-center{% endif %}">
+        {% for feature in o.features %}
+          <div class="{{ o.colClass }}">
+            {% set featureVariant = feature.variant ?? 'primary' %}
+            {% set iconSize = o.variant == 'icon-lg' ? '3rem' : '2rem' %}
+            
+            {# Icon wrapper with different styles based on variant #}
+            <div class="feature-item {% if o.align == 'center' or o.centered %}text-center{% endif %} h-100">
+              
+              {# Icon display based on variant #}
+              {% if feature.icon is defined %}
+                {% if o.variant == 'icon-box' %}
+                  <div class="feature-icon bg-{{ featureVariant }} bg-gradient text-white rounded-3 p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
+                    {{ feature.icon|raw }}
+                  </div>
+                {% elseif o.variant == 'icon-colored' %}
+                  <div class="feature-icon text-{{ featureVariant }} mb-3" style="font-size: {{ iconSize }};">
+                    {{ feature.icon|raw }}
+                  </div>
+                {% elseif o.variant == 'bordered' %}
+                  <div class="feature-icon border border-2 border-{{ featureVariant }} rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
+                    <span class="text-{{ featureVariant }}">{{ feature.icon|raw }}</span>
+                  </div>
+                {% elseif o.variant == 'shadow' %}
+                  <div class="feature-icon bg-light rounded-circle shadow-sm p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
+                    <span class="text-{{ featureVariant }}">{{ feature.icon|raw }}</span>
+                  </div>
+                {% else %}
+                  {# Default variant #}
+                  <div class="feature-icon text-{{ featureVariant }} mb-3" style="font-size: {{ iconSize }};">
+                    {{ feature.icon|raw }}
+                  </div>
+                {% endif %}
+              {% endif %}
+              
+              {# Title #}
+              {% if feature.title is defined %}
+                <h3 class="h5 fw-bold mb-2">{{ feature.title }}</h3>
+              {% endif %}
+              
+              {# Description #}
+              {% if feature.description is defined %}
+                <p class="text-muted mb-0">{{ feature.description }}</p>
+              {% endif %}
+              
+              {# Optional link #}
+              {% if feature.link is defined and feature.linkText is defined %}
+                <a href="{{ feature.link }}" class="text-{{ featureVariant }} text-decoration-none mt-2 d-inline-block">
+                  {{ feature.linkText }} →
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{%- endapply %}
+

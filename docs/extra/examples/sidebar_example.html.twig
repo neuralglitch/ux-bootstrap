@@ -1,0 +1,147 @@
+{# Sidebar Component Examples #}
+
+{# Basic Sidebar #}
+<h3>Basic Sidebar</h3>
+<twig:bs:sidebar title="Menu">
+    <nav class="nav flex-column">
+        <a class="nav-link active" href="#"><i class="bi bi-house-fill me-2"></i>Dashboard</a>
+        <a class="nav-link" href="#"><i class="bi bi-file-text me-2"></i>Documents</a>
+        <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+        <a class="nav-link" href="#"><i class="bi bi-person me-2"></i>Profile</a>
+    </nav>
+</twig:bs:sidebar>
+
+{# Collapsible Sidebar #}
+<h3 class="mt-5">Collapsible Sidebar</h3>
+<twig:bs:sidebar title="Navigation" :collapsible="true">
+    <twig:bs:nav :vertical="true">
+        <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+        <twig:bs:nav-item href="#">About</twig:bs:nav-item>
+        <twig:bs:nav-item href="#">Services</twig:bs:nav-item>
+        <twig:bs:nav-item href="#">Contact</twig:bs:nav-item>
+    </twig:bs:nav>
+</twig:bs:sidebar>
+
+{# Sidebar with Sections #}
+<h3 class="mt-5">Sidebar with Sections</h3>
+<twig:bs:sidebar title="Admin Panel">
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">Main</h6>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a class="nav-link" href="#"><i class="bi bi-graph-up me-2"></i>Analytics</a>
+        </nav>
+    </div>
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">Content</h6>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#"><i class="bi bi-file-text me-2"></i>Posts</a>
+            <a class="nav-link" href="#"><i class="bi bi-images me-2"></i>Media</a>
+            <a class="nav-link" href="#"><i class="bi bi-chat-dots me-2"></i>Comments</a>
+        </nav>
+    </div>
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted">Settings</h6>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i>Configuration</a>
+            <a class="nav-link" href="#"><i class="bi bi-people me-2"></i>Users</a>
+        </nav>
+    </div>
+</twig:bs:sidebar>
+
+{# Fixed Sidebar Layout #}
+<h3 class="mt-5">Fixed Sidebar Layout Example</h3>
+<div class="d-flex" style="height: 400px;">
+    <div class="bg-light border-end" style="width: 250px;">
+        <twig:bs:sidebar title="App Menu" class="h-100">
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-house-fill me-2"></i>Home
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-grid me-2"></i>Projects
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-kanban me-2"></i>Tasks
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-calendar3 me-2"></i>Calendar
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-chat-dots me-2"></i>Messages
+                </a>
+                <hr>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i>Settings
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                </a>
+            </nav>
+        </twig:bs:sidebar>
+    </div>
+    <div class="flex-grow-1 p-4">
+        <h4>Main Content Area</h4>
+        <p>This is the main content area. The sidebar is fixed on the left.</p>
+    </div>
+</div>
+
+{# Sidebar with Badge Indicators #}
+<h3 class="mt-5">Sidebar with Notifications</h3>
+<twig:bs:sidebar title="Menu">
+    <nav class="nav flex-column">
+        <a class="nav-link active d-flex justify-content-between align-items-center" href="#">
+            <span><i class="bi bi-house-fill me-2"></i>Dashboard</span>
+        </a>
+        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+            <span><i class="bi bi-envelope me-2"></i>Messages</span>
+            <twig:bs:badge variant="danger" :pill="true">5</twig:bs:badge>
+        </a>
+        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+            <span><i class="bi bi-bell me-2"></i>Notifications</span>
+            <twig:bs:badge variant="primary" :pill="true">12</twig:bs:badge>
+        </a>
+        <a class="nav-link d-flex justify-content-between align-items-center" href="#">
+            <span><i class="bi bi-cart me-2"></i>Cart</span>
+            <twig:bs:badge variant="success" :pill="true">3</twig:bs:badge>
+        </a>
+        <a class="nav-link" href="#">
+            <i class="bi bi-gear me-2"></i>Settings
+        </a>
+    </nav>
+</twig:bs:sidebar>
+
+{# Dark Sidebar #}
+<h3 class="mt-5">Dark Theme Sidebar</h3>
+<twig:bs:sidebar title="Dashboard" class="bg-dark text-white">
+    <nav class="nav flex-column">
+        <a class="nav-link text-white active bg-primary" href="#">
+            <i class="bi bi-house-fill me-2"></i>Home
+        </a>
+        <a class="nav-link text-white-50" href="#">
+            <i class="bi bi-grid me-2"></i>Projects
+        </a>
+        <a class="nav-link text-white-50" href="#">
+            <i class="bi bi-people me-2"></i>Team
+        </a>
+        <a class="nav-link text-white-50" href="#">
+            <i class="bi bi-graph-up me-2"></i>Reports
+        </a>
+    </nav>
+</twig:bs:sidebar>
+
+{# Responsive Sidebar #}
+<h3 class="mt-5">Responsive Sidebar (Mobile)</h3>
+<p class="text-muted">On mobile devices, the sidebar can collapse to a hamburger menu.</p>
+<button class="btn btn-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#responsiveSidebar">
+    <i class="bi bi-list"></i> Toggle Sidebar
+</button>
+<twig:bs:offcanvas id="responsiveSidebar" title="Navigation" placement="start">
+    <nav class="nav flex-column">
+        <a class="nav-link active" href="#">Dashboard</a>
+        <a class="nav-link" href="#">Projects</a>
+        <a class="nav-link" href="#">Team</a>
+        <a class="nav-link" href="#">Settings</a>
+    </nav>
+</twig:bs:offcanvas>
+

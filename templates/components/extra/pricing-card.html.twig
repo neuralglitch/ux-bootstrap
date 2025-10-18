@@ -1,0 +1,90 @@
+{# templates/components/extra/pricing-card.html.twig #}
+{# Pricing Card Component for subscription plans and pricing pages #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot for features #}
+{% set slot_features %}{% block features %}{% endblock %}{% endset %}
+{% set has_custom_features = slot_features is not empty and slot_features|trim != '' %}
+
+{# Capture custom content slot for additional content #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  {# Card Header with optional badge #}
+  <div class="card-header py-3">
+    {% if o.badge %}
+      <div class="mb-2">
+        <span class="badge text-bg-{{ o.badgeVariant }}">{{ o.badge }}</span>
+      </div>
+    {% endif %}
+    <h4 class="my-0 fw-normal">{{ o.planName }}</h4>
+  </div>
+  
+  {# Card Body #}
+  <div class="card-body d-flex flex-column">
+    {# Pricing Section #}
+    <h1 class="card-title pricing-card-title mb-3">
+      <small class="text-body-secondary fw-light fs-5">{{ o.currency }}</small>{{ o.price }}
+      {% if o.showPeriod %}
+        <small class="text-body-secondary fw-light fs-5">/{{ o.period }}</small>
+      {% endif %}
+    </h1>
+    
+    {# Plan Description #}
+    {% if o.planDescription %}
+      <p class="mb-4 text-muted">{{ o.planDescription }}</p>
+    {% endif %}
+    
+    {# Features List #}
+    {% if has_custom_features %}
+      {# Custom features from block #}
+      {{ slot_features|raw }}
+    {% elseif o.features is not empty %}
+      {# Default features list #}
+      <ul class="list-unstyled mt-3 mb-4">
+        {% for feature in o.features %}
+          <li class="mb-2">
+            {% if o.showCheckmarks %}
+              <svg class="bi text-success me-2" width="16" height="16" fill="currentColor">
+                <use xlink:href="#check-circle-fill"/>
+              </svg>
+            {% endif %}
+            {{ feature }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
+    {# Custom Content #}
+    {% if has_custom_content %}
+      {{ slot_content|raw }}
+    {% endif %}
+    
+    {# CTA Button - pushed to bottom with mt-auto #}
+    <div class="mt-auto">
+      {% if o.ctaHref %}
+        <a href="{{ o.ctaHref }}" class="{{ o.btnClasses }}">
+          {{ o.ctaLabel }}
+        </a>
+      {% else %}
+        <button type="button" class="{{ o.btnClasses }}">
+          {{ o.ctaLabel }}
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{# SVG Icons for checkmarks #}
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+</svg>
+
+{%- endapply %}
+

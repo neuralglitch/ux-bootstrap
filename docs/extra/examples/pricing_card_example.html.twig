@@ -1,0 +1,303 @@
+{# Pricing Card Component Examples #}
+
+{# Basic Pricing Cards #}
+<h3>Basic Pricing Cards</h3>
+<div class="row g-4">
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Basic"
+            price="$9"
+            period="month"
+            :features="[
+                'Up to 10 users',
+                '5GB storage',
+                'Email support',
+                'Basic analytics'
+            ]"
+            buttonLabel="Get Started"
+            buttonHref="/signup/basic"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Pro"
+            price="$29"
+            period="month"
+            :featured="true"
+            :features="[
+                'Up to 100 users',
+                '50GB storage',
+                'Priority support',
+                'Advanced analytics',
+                'Custom integrations'
+            ]"
+            buttonLabel="Start Free Trial"
+            buttonHref="/signup/pro"
+            buttonVariant="primary"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Enterprise"
+            price="$99"
+            period="month"
+            :features="[
+                'Unlimited users',
+                'Unlimited storage',
+                '24/7 phone support',
+                'Enterprise analytics',
+                'Custom integrations',
+                'Dedicated account manager'
+            ]"
+            buttonLabel="Contact Sales"
+            buttonHref="/contact"
+        />
+    </div>
+</div>
+
+{# Annual Pricing #}
+<h3 class="mt-5">Annual Pricing</h3>
+<div class="row g-4">
+    <div class="col-md-6">
+        <twig:bs:pricing-card
+            title="Starter"
+            price="$99"
+            period="year"
+            :features="[
+                'All Basic features',
+                '20% savings',
+                'Annual billing'
+            ]"
+            buttonLabel="Subscribe"
+            buttonHref="/subscribe/starter"
+        />
+    </div>
+    <div class="col-md-6">
+        <twig:bs:pricing-card
+            title="Business"
+            price="$299"
+            period="year"
+            :featured="true"
+            :features="[
+                'All Pro features',
+                '25% savings',
+                'Annual billing',
+                'Free training session'
+            ]"
+            buttonLabel="Subscribe"
+            buttonHref="/subscribe/business"
+            buttonVariant="primary"
+        />
+    </div>
+</div>
+
+{# Free Plan #}
+<h3 class="mt-5">Free Plan Included</h3>
+<div class="row g-4">
+    <div class="col-md-3">
+        <twig:bs:pricing-card
+            title="Free"
+            price="$0"
+            period="forever"
+            :features="[
+                '1 user',
+                '1GB storage',
+                'Community support',
+                'Basic features'
+            ]"
+            buttonLabel="Sign Up"
+            buttonHref="/signup/free"
+            buttonVariant="outline-primary"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:pricing-card
+            title="Starter"
+            price="$15"
+            period="month"
+            :features="[
+                '5 users',
+                '10GB storage',
+                'Email support',
+                'All basic features'
+            ]"
+            buttonLabel="Get Started"
+            buttonHref="/signup/starter"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:pricing-card
+            title="Professional"
+            price="$49"
+            period="month"
+            :featured="true"
+            :features="[
+                '25 users',
+                '100GB storage',
+                'Priority support',
+                'All pro features',
+                'API access'
+            ]"
+            buttonLabel="Start Trial"
+            buttonHref="/trial/pro"
+            buttonVariant="primary"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:pricing-card
+            title="Enterprise"
+            price="Custom"
+            :features="[
+                'Unlimited users',
+                'Unlimited storage',
+                'Dedicated support',
+                'All features',
+                'SLA guarantee',
+                'Custom solutions'
+            ]"
+            buttonLabel="Contact Us"
+            buttonHref="/contact"
+        />
+    </div>
+</div>
+
+{# Pricing with Badge #}
+<h3 class="mt-5">Pricing with Badges</h3>
+<div class="row g-4">
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Basic"
+            badge="Popular"
+            badgeVariant="success"
+            price="$19"
+            period="month"
+            :features="[
+                'Core features',
+                'Email support',
+                'Regular updates'
+            ]"
+            buttonLabel="Choose Plan"
+            buttonHref="/pricing/basic"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Pro"
+            badge="Best Value"
+            badgeVariant="primary"
+            price="$49"
+            period="month"
+            :featured="true"
+            :features="[
+                'All Basic features',
+                'Priority support',
+                'Advanced features',
+                'Beta access'
+            ]"
+            buttonLabel="Choose Plan"
+            buttonHref="/pricing/pro"
+            buttonVariant="primary"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:pricing-card
+            title="Enterprise"
+            badge="New"
+            badgeVariant="info"
+            price="$149"
+            period="month"
+            :features="[
+                'All Pro features',
+                '24/7 support',
+                'Custom features',
+                'Dedicated team'
+            ]"
+            buttonLabel="Choose Plan"
+            buttonHref="/pricing/enterprise"
+        />
+    </div>
+</div>
+
+{# Comparison Pricing #}
+<h3 class="mt-5">Detailed Pricing Comparison</h3>
+<div class="row g-4">
+    <div class="col-lg-4">
+        <twig:bs:pricing-card
+            title="Standard"
+            price="$25"
+            period="month"
+            :features="[
+                '✓ 10 projects',
+                '✓ 50GB storage',
+                '✓ Email support',
+                '✓ Basic analytics',
+                '✗ API access',
+                '✗ Custom domain',
+                '✗ Priority support'
+            ]"
+            buttonLabel="Get Started"
+            buttonHref="/signup/standard"
+        />
+    </div>
+    <div class="col-lg-4">
+        <twig:bs:pricing-card
+            title="Premium"
+            price="$75"
+            period="month"
+            :featured="true"
+            badge="Recommended"
+            badgeVariant="success"
+            :features="[
+                '✓ Unlimited projects',
+                '✓ 500GB storage',
+                '✓ Priority email support',
+                '✓ Advanced analytics',
+                '✓ Full API access',
+                '✓ Custom domain',
+                '✗ Phone support'
+            ]"
+            buttonLabel="Start Free Trial"
+            buttonHref="/trial/premium"
+            buttonVariant="primary"
+        />
+    </div>
+    <div class="col-lg-4">
+        <twig:bs:pricing-card
+            title="Ultimate"
+            price="$199"
+            period="month"
+            :features="[
+                '✓ Unlimited everything',
+                '✓ Unlimited storage',
+                '✓ 24/7 phone support',
+                '✓ Enterprise analytics',
+                '✓ Full API access',
+                '✓ Multiple custom domains',
+                '✓ Dedicated support team'
+            ]"
+            buttonLabel="Contact Sales"
+            buttonHref="/contact/sales"
+        />
+    </div>
+</div>
+
+{# Custom Pricing #}
+<h3 class="mt-5">Custom Enterprise Pricing</h3>
+<twig:bs:pricing-card
+    title="Custom Enterprise Plan"
+    description="Tailored solution for large organizations with specific needs."
+    price="Let's talk"
+    :features="[
+        'Custom user limits',
+        'Custom storage',
+        'Dedicated infrastructure',
+        'Custom integrations',
+        'Service level agreement',
+        'On-premise deployment option',
+        'Training and onboarding'
+    ]"
+    buttonLabel="Schedule a Call"
+    buttonHref="/schedule"
+    buttonVariant="primary"
+/>
+

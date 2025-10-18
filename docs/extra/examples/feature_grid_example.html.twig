@@ -1,0 +1,260 @@
+{# Feature Grid Component - Usage Examples #}
+
+{# Example 1: Basic Feature Grid #}
+<twig:bs:feature-grid
+  heading="Why Choose Our Platform"
+  subheading="Everything you need to build amazing products"
+  :features="[
+    {
+      icon: '<i class=\"bi bi-lightning-charge\"></i>',
+      title: 'Lightning Fast',
+      description: 'Optimized for performance with sub-second load times',
+      variant: 'warning'
+    },
+    {
+      icon: '<i class=\"bi bi-shield-check\"></i>',
+      title: 'Enterprise Security',
+      description: 'Bank-level encryption and SOC 2 compliance',
+      variant: 'success'
+    },
+    {
+      icon: '<i class=\"bi bi-puzzle\"></i>',
+      title: 'Easy Integration',
+      description: 'Connect with your existing tools in minutes',
+      variant: 'primary'
+    }
+  ]" />
+
+{# Example 2: Icon Box Variant with 4 Columns #}
+<twig:bs:feature-grid
+  heading="Premium Features"
+  :columns="4"
+  variant="icon-box"
+  gap="5"
+  :features="[
+    {
+      icon: '🚀',
+      title: 'Quick Start',
+      description: 'Deploy in minutes, not hours',
+      variant: 'primary'
+    },
+    {
+      icon: '📊',
+      title: 'Analytics',
+      description: 'Comprehensive reporting dashboard',
+      variant: 'info'
+    },
+    {
+      icon: '🔒',
+      title: 'Secure',
+      description: 'Enterprise-grade encryption',
+      variant: 'danger'
+    },
+    {
+      icon: '🎨',
+      title: 'Customizable',
+      description: 'Match your brand perfectly',
+      variant: 'success'
+    }
+  ]" />
+
+{# Example 3: Bordered Variant with Links #}
+<twig:bs:feature-grid
+  heading="Core Capabilities"
+  variant="bordered"
+  :centered="true"
+  :features="[
+    {
+      icon: '<i class=\"bi bi-graph-up-arrow\"></i>',
+      title: 'Advanced Analytics',
+      description: 'Track every metric that matters',
+      variant: 'primary',
+      link: '/features/analytics',
+      linkText: 'Learn more'
+    },
+    {
+      icon: '<i class=\"bi bi-people\"></i>',
+      title: 'Team Collaboration',
+      description: 'Work together seamlessly',
+      variant: 'success',
+      link: '/features/collaboration',
+      linkText: 'Learn more'
+    },
+    {
+      icon: '<i class=\"bi bi-gear\"></i>',
+      title: 'Automation',
+      description: 'Save time with smart workflows',
+      variant: 'info',
+      link: '/features/automation',
+      linkText: 'Learn more'
+    }
+  ]" />
+
+{# Example 4: Shadow Variant with 2 Columns #}
+<twig:bs:feature-grid
+  heading="What You Get"
+  :columns="2"
+  variant="shadow"
+  gap="4"
+  container="container-fluid"
+  :features="[
+    {
+      icon: '<i class=\"bi bi-cpu\"></i>',
+      title: 'High Performance',
+      description: 'Powered by cutting-edge technology for maximum speed and efficiency',
+      variant: 'primary'
+    },
+    {
+      icon: '<i class=\"bi bi-headset\"></i>',
+      title: '24/7 Support',
+      description: 'Expert support team available around the clock to help you succeed',
+      variant: 'success'
+    }
+  ]" />
+
+{# Example 5: Custom Content (Advanced) #}
+<twig:bs:feature-grid heading="Flexible Customization">
+  {% block content %}
+    <div class="col-md-4">
+      <div class="feature-item text-center">
+        <div class="feature-icon bg-primary bg-gradient text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+          <i class="bi bi-star-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Custom Feature 1</h3>
+        <p class="text-muted mb-3">Create your own custom HTML structure with complete control</p>
+        <a href="/custom" class="btn btn-outline-primary btn-sm">Explore</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-item text-center">
+        <div class="feature-icon bg-success bg-gradient text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+          <i class="bi bi-heart-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Custom Feature 2</h3>
+        <p class="text-muted mb-3">Add buttons, badges, or any other content you need</p>
+        <a href="/custom-2" class="btn btn-outline-success btn-sm">View More</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-item text-center">
+        <div class="feature-icon bg-info bg-gradient text-white rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: 4rem; height: 4rem;">
+          <i class="bi bi-lightning-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Custom Feature 3</h3>
+        <p class="text-muted mb-3">Mix and match with Bootstrap components</p>
+        <a href="/custom-3" class="btn btn-outline-info btn-sm">Discover</a>
+      </div>
+    </div>
+  {% endblock %}
+</twig:bs:feature-grid>
+
+{# Example 6: Icon-Colored Variant with 6 Columns #}
+<twig:bs:feature-grid
+  heading="Technologies We Support"
+  variant="icon-colored"
+  :columns="6"
+  gap="3"
+  :features="[
+    {
+      icon: '<i class=\"bi bi-filetype-php\"></i>',
+      title: 'PHP',
+      variant: 'primary'
+    },
+    {
+      icon: '<i class=\"bi bi-filetype-js\"></i>',
+      title: 'JavaScript',
+      variant: 'warning'
+    },
+    {
+      icon: '<i class=\"bi bi-filetype-py\"></i>',
+      title: 'Python',
+      variant: 'info'
+    },
+    {
+      icon: '<i class=\"bi bi-git\"></i>',
+      title: 'Git',
+      variant: 'danger'
+    },
+    {
+      icon: '<i class=\"bi bi-database\"></i>',
+      title: 'Database',
+      variant: 'success'
+    },
+    {
+      icon: '<i class=\"bi bi-cloud\"></i>',
+      title: 'Cloud',
+      variant: 'secondary'
+    }
+  ]" />
+
+{# Example 7: Large Icons with Minimal Text #}
+<twig:bs:feature-grid
+  variant="icon-lg"
+  :centered="true"
+  :features="[
+    {
+      icon: '⚡',
+      title: 'Fast',
+      description: 'Lightning quick',
+      variant: 'warning'
+    },
+    {
+      icon: '🔐',
+      title: 'Secure',
+      description: 'Bank-level security',
+      variant: 'danger'
+    },
+    {
+      icon: '♾️',
+      title: 'Scalable',
+      description: 'Grows with you',
+      variant: 'primary'
+    }
+  ]" />
+
+{# Example 8: Real-World SaaS Feature Grid #}
+<twig:bs:feature-grid
+  heading="Everything You Need to Succeed"
+  subheading="All the tools and features to power your business growth"
+  :columns="3"
+  variant="icon-box"
+  gap="4"
+  :features="[
+    {
+      icon: '<i class=\"bi bi-shield-lock\"></i>',
+      title: 'Enterprise Security',
+      description: 'SOC 2 Type II certified with end-to-end encryption, SSO, and advanced access controls',
+      variant: 'success'
+    },
+    {
+      icon: '<i class=\"bi bi-speedometer2\"></i>',
+      title: 'Real-Time Performance',
+      description: 'Lightning-fast response times with 99.99% uptime SLA and global CDN',
+      variant: 'primary'
+    },
+    {
+      icon: '<i class=\"bi bi-graph-up\"></i>',
+      title: 'Advanced Analytics',
+      description: 'Comprehensive dashboards with custom reports, data export, and API access',
+      variant: 'info'
+    },
+    {
+      icon: '<i class=\"bi bi-people\"></i>',
+      title: 'Team Collaboration',
+      description: 'Built-in workspace, comments, mentions, and real-time notifications',
+      variant: 'warning'
+    },
+    {
+      icon: '<i class=\"bi bi-plugin\"></i>',
+      title: 'Integrations',
+      description: 'Connect with 100+ apps including Slack, Salesforce, and custom webhooks',
+      variant: 'danger'
+    },
+    {
+      icon: '<i class=\"bi bi-headset\"></i>',
+      title: '24/7 Support',
+      description: 'Dedicated support team, priority help desk, and comprehensive documentation',
+      variant: 'dark'
+    }
+  ]" />
+

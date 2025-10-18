@@ -1,0 +1,250 @@
+{# Split Panes Component - Example Usage #}
+
+{# Example 1: Basic Horizontal Split (Code Editor) #}
+<div style="height: 600px;">
+    <twig:bs:split-panes 
+        orientation="horizontal"
+        :initialSize="'40%'"
+        :persistent="true"
+        id="code-editor">
+        
+        <twig:block name="first">
+            <div class="h-100 p-3 bg-dark text-white font-monospace">
+                <h5 class="mb-3">editor.js</h5>
+                <pre class="mb-0"><code>function hello() {
+    console.log('Hello World');
+    return true;
+}</code></pre>
+            </div>
+        </twig:block>
+        
+        <twig:block name="second">
+            <div class="h-100 p-3">
+                <h5 class="mb-3">Preview</h5>
+                <div class="alert alert-success">
+                    ✓ Code compiled successfully
+                </div>
+                <div id="output">
+                    <p>Output: Hello World</p>
+                </div>
+            </div>
+        </twig:block>
+    </twig:bs:split-panes>
+</div>
+
+{# Example 2: Email Client Layout #}
+<div class="mt-5" style="height: 600px;">
+    <twig:bs:split-panes 
+        orientation="horizontal"
+        :initialSize="'350px'"
+        :minSize="'250px'"
+        :maxSize="'600px'"
+        :persistent="true"
+        id="email-client">
+        
+        <twig:block name="first">
+            <div class="h-100 border-end">
+                <div class="p-3 border-bottom bg-light">
+                    <h5 class="mb-0">Inbox (12)</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <strong>John Doe</strong>
+                            <small>10:30 AM</small>
+                        </div>
+                        <small class="text-muted">Project Update - Q4</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <strong>Jane Smith</strong>
+                            <small>Yesterday</small>
+                        </div>
+                        <small>Meeting Notes</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <strong>Team</strong>
+                            <small>2 days ago</small>
+                        </div>
+                        <small class="text-muted">Weekly Standup</small>
+                    </a>
+                </div>
+            </div>
+        </twig:block>
+        
+        <twig:block name="second">
+            <div class="h-100 p-4 overflow-auto">
+                <h4 class="mb-3">Meeting Notes</h4>
+                <p class="text-muted mb-4">
+                    <strong>From:</strong> Jane Smith &lt;jane@example.com&gt;<br>
+                    <strong>Date:</strong> October 15, 2025, 2:30 PM<br>
+                    <strong>To:</strong> Team
+                </p>
+                <hr>
+                <p>Hi everyone,</p>
+                <p>Here are the key points from today's meeting:</p>
+                <ul>
+                    <li>Project timeline updated</li>
+                    <li>New features approved</li>
+                    <li>Sprint planning completed</li>
+                </ul>
+                <p>Best regards,<br>Jane</p>
+            </div>
+        </twig:block>
+    </twig:bs:split-panes>
+</div>
+
+{# Example 3: Documentation with Collapsible TOC #}
+<div class="mt-5" style="height: 600px;">
+    <twig:bs:split-panes 
+        orientation="horizontal"
+        :initialSize="'280px'"
+        :minSize="'200px'"
+        :maxSize="'500px'"
+        :collapsible="true"
+        :snapThreshold="100"
+        :persistent="true"
+        id="docs-layout">
+        
+        <twig:block name="first">
+            <div class="h-100 p-3 bg-light border-end">
+                <h5 class="mb-3">Documentation</h5>
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="#getting-started">Getting Started</a>
+                    <a class="nav-link ps-4" href="#installation">Installation</a>
+                    <a class="nav-link ps-4" href="#quick-start">Quick Start</a>
+                    <a class="nav-link" href="#components">Components</a>
+                    <a class="nav-link ps-4" href="#buttons">Buttons</a>
+                    <a class="nav-link ps-4" href="#forms">Forms</a>
+                    <a class="nav-link ps-4" href="#modals">Modals</a>
+                    <a class="nav-link" href="#api">API Reference</a>
+                    <a class="nav-link ps-4" href="#methods">Methods</a>
+                    <a class="nav-link ps-4" href="#events">Events</a>
+                </nav>
+            </div>
+        </twig:block>
+        
+        <twig:block name="second">
+            <div class="h-100 p-4 overflow-auto">
+                <h1 class="mb-4">Getting Started</h1>
+                
+                <h2 id="installation" class="mt-4">Installation</h2>
+                <p>To get started with our framework, install it via npm:</p>
+                <pre class="bg-dark text-white p-3 rounded"><code>npm install @example/framework</code></pre>
+                
+                <h2 id="quick-start" class="mt-4">Quick Start</h2>
+                <p>Here's a simple example to get you up and running:</p>
+                <pre class="bg-dark text-white p-3 rounded"><code>import { App } from '@example/framework';
+
+const app = new App();
+app.init();</code></pre>
+                
+                <h2 class="mt-4">Next Steps</h2>
+                <p>Now that you have the framework installed, explore our components...</p>
+            </div>
+        </twig:block>
+    </twig:bs:split-panes>
+</div>
+
+{# Example 4: Vertical Split (Console) #}
+<div class="mt-5" style="height: 600px;">
+    <twig:bs:split-panes 
+        orientation="vertical"
+        :initialSize="'60%'"
+        :minSize="'30%'"
+        :maxSize="'80%'"
+        :persistent="true"
+        id="console-split">
+        
+        <twig:block name="first">
+            <div class="h-100 p-3">
+                <h5 class="mb-3">Code Editor</h5>
+                <textarea class="form-control font-monospace" rows="15" style="resize: none;">// Your code here
+function calculateTotal(items) {
+    return items.reduce((sum, item) => sum + item.price, 0);
+}
+
+const items = [
+    { name: 'Product 1', price: 29.99 },
+    { name: 'Product 2', price: 49.99 }
+];
+
+console.log('Total:', calculateTotal(items));</textarea>
+                <div class="mt-3">
+                    <button class="btn btn-primary">Run Code</button>
+                </div>
+            </div>
+        </twig:block>
+        
+        <twig:block name="second">
+            <div class="h-100 p-3 bg-dark text-white font-monospace overflow-auto">
+                <h6 class="mb-3">Console Output</h6>
+                <pre class="mb-0"><code>$ Running script...
+Total: 79.98
+✓ Execution completed in 0.042s</code></pre>
+            </div>
+        </twig:block>
+    </twig:bs:split-panes>
+</div>
+
+{# Example 5: Three Panes (Nested) #}
+<div class="mt-5" style="height: 600px;">
+    <twig:bs:split-panes 
+        orientation="horizontal"
+        :initialSize="'250px'"
+        :persistent="true"
+        id="three-pane-outer">
+        
+        <twig:block name="first">
+            <div class="h-100 p-3 bg-light border-end">
+                <h5>Sidebar</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none">Dashboard</a></li>
+                    <li><a href="#" class="text-decoration-none">Projects</a></li>
+                    <li><a href="#" class="text-decoration-none">Tasks</a></li>
+                    <li><a href="#" class="text-decoration-none">Settings</a></li>
+                </ul>
+            </div>
+        </twig:block>
+        
+        <twig:block name="second">
+            {# Nested vertical split #}
+            <twig:bs:split-panes 
+                orientation="vertical"
+                :initialSize="'70%'"
+                :persistent="true"
+                id="three-pane-inner">
+                
+                <twig:block name="first">
+                    <div class="h-100 p-3">
+                        <h5>Main Content</h5>
+                        <p>This is the main content area.</p>
+                    </div>
+                </twig:block>
+                
+                <twig:block name="second">
+                    <div class="h-100 p-3 border-top bg-light">
+                        <h6>Properties Panel</h6>
+                        <p class="small text-muted">Additional information and settings</p>
+                    </div>
+                </twig:block>
+            </twig:bs:split-panes>
+        </twig:block>
+    </twig:bs:split-panes>
+</div>
+
+{# Example 6: Keyboard Navigation Demo #}
+<div class="mt-5 mb-5">
+    <div class="alert alert-info">
+        <h5 class="alert-heading">⌨️ Keyboard Navigation</h5>
+        <p class="mb-2">Click on a divider and use these keyboard shortcuts:</p>
+        <ul class="mb-0">
+            <li><kbd>←</kbd> / <kbd>→</kbd> (horizontal) or <kbd>↑</kbd> / <kbd>↓</kbd> (vertical): Adjust by 5%</li>
+            <li><kbd>Home</kbd>: Collapse first pane</li>
+            <li><kbd>End</kbd>: Collapse second pane</li>
+            <li><kbd>Tab</kbd>: Focus divider</li>
+        </ul>
+    </div>
+</div>
+

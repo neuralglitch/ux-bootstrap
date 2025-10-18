@@ -1,0 +1,54 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+  {% set customStyle = this.getCustomSizeStyle() %}
+
+  {# Content block for custom inner content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+
+  {# Wrapper element (div or a) #}
+  {% set wrapperTag = o.href ? 'a' : 'div' %}
+  {% set wrapperAttrs = o.href ? o.linkAttrs : {} %}
+  
+  <{{ wrapperTag }} 
+    class="{{ o.wrapperClasses }}" 
+    {% if customStyle %}style="{{ customStyle }}"{% endif %}
+    {{ this.renderHtmlAttributes(wrapperAttrs | merge(o.attrs)) | raw }}>
+    
+    {# Image or Initials #}
+    {% if o.src %}
+      <img 
+        src="{{ o.src }}" 
+        alt="{{ o.alt }}" 
+        class="{{ o.imageClasses }}"
+        {% if customStyle %}style="{{ customStyle }}"{% endif %}>
+    {% elseif has_content %}
+      {# Custom content block #}
+      <div class="{{ o.initialsClasses }}"
+           {% if customStyle %}style="{{ customStyle }}"{% endif %}>
+        {{ slot_content|raw }}
+      </div>
+    {% elseif o.initials %}
+      {# Fallback initials #}
+      <div class="{{ o.initialsClasses }}"
+           {% if customStyle %}style="{{ customStyle }}"{% endif %}>
+        <span>{{ o.initials }}</span>
+      </div>
+    {% else %}
+      {# Empty placeholder #}
+      <div class="{{ o.initialsClasses }}"
+           {% if customStyle %}style="{{ customStyle }}"{% endif %}>
+        <span>?</span>
+      </div>
+    {% endif %}
+    
+    {# Status indicator #}
+    {% if o.hasStatus %}
+      <span class="{{ o.statusClasses }}" aria-label="{{ this.status }}"></span>
+    {% endif %}
+    
+  </{{ wrapperTag }}>
+
+{%- endapply %}
+

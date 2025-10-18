@@ -1,0 +1,55 @@
+{# Accordion Component Examples #}
+
+{# Basic Accordion #}
+<h3>Basic Accordion</h3>
+<twig:bs:accordion id="accordionBasic">
+    <twig:bs:accordion-item header="Accordion Item #1" :expanded="true">
+        This is the first item's accordion body. It is shown by default with the expanded prop set to true.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Accordion Item #2">
+        This is the second item's accordion body. It is hidden by default.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Accordion Item #3">
+        This is the third item's accordion body. It is also hidden by default.
+    </twig:bs:accordion-item>
+</twig:bs:accordion>
+
+{# Flush Accordion #}
+<h3 class="mt-5">Flush Accordion</h3>
+<twig:bs:accordion id="accordionFlush" :flush="true">
+    <twig:bs:accordion-item header="Flush Item #1">
+        Placeholder content for this accordion, which is intended to demonstrate the flush class.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Flush Item #2">
+        This is the second item's accordion body. Flush accordions have no borders or rounded corners.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Flush Item #3">
+        This is the third item's accordion body. Perfect for sidebars or contained layouts.
+    </twig:bs:accordion-item>
+</twig:bs:accordion>
+
+{# Always Open Accordion #}
+<h3 class="mt-5">Always Open Accordion</h3>
+<twig:bs:accordion id="accordionAlwaysOpen" :alwaysOpen="true">
+    <twig:bs:accordion-item header="First Item" :expanded="true">
+        This accordion allows multiple items to be open at the same time.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Second Item" :expanded="true">
+        Both this item and the first item are open simultaneously.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Third Item">
+        You can expand this one too without closing the others!
+    </twig:bs:accordion-item>
+</twig:bs:accordion>
+
+{# Custom Classes #}
+<h3 class="mt-5">Accordion with Custom Classes</h3>
+<twig:bs:accordion id="accordionCustom" class="shadow">
+    <twig:bs:accordion-item header="Custom Styled Item" class="border-primary">
+        This accordion has custom classes applied for additional styling.
+    </twig:bs:accordion-item>
+    <twig:bs:accordion-item header="Another Custom Item" class="border-success">
+        You can customize the appearance of individual items.
+    </twig:bs:accordion-item>
+</twig:bs:accordion>
+

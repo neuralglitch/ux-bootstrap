@@ -1,0 +1,8 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  <li><hr class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}></li>
+
+{%- endapply %}
+

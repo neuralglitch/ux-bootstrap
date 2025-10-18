@@ -1,0 +1,153 @@
+{# templates/components/extra/cta.html.twig #}
+{# Call-to-Action Block Component (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+{# Alignment classes #}
+{% set align_class = o.alignment == 'center' ? 'text-center' : (o.alignment == 'end' ? 'text-end' : 'text-start') %}
+
+{# Button wrapper alignment classes #}
+{% set btn_wrapper_class = o.alignment == 'center' ? 'justify-content-center' : (o.alignment == 'end' ? 'justify-content-end' : 'justify-content-start') %}
+
+<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+
+    {# ------------------ VARIANT: CENTERED ------------------ #}
+    {% if o.variant == 'centered' %}
+      <div class="{{ align_class }}">
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          {% if o.icon %}
+            <div class="mb-3">
+              <span class="fs-1">{{ o.icon|raw }}</span>
+            </div>
+          {% endif %}
+          <h2 class="display-6 fw-bold mb-3">{{ o.title }}</h2>
+          {% if o.description %}
+            <p class="lead mb-4">{{ o.description }}</p>
+          {% endif %}
+          <div class="d-flex gap-2 {{ btn_wrapper_class }}">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaOutline ? 'outline-' : '' }}{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaOutline ? 'outline-' : '' }}{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+    {# ------------------ VARIANT: SPLIT ------------------ #}
+    {% elseif o.variant == 'split' %}
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            {% if o.icon %}
+              <span class="fs-1 mb-3 d-block">{{ o.icon|raw }}</span>
+            {% endif %}
+            <h2 class="display-6 fw-bold mb-3">{{ o.title }}</h2>
+            {% if o.description %}
+              <p class="lead mb-0">{{ o.description }}</p>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="d-flex gap-2 {{ btn_wrapper_class }}">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaOutline ? 'outline-' : '' }}{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaOutline ? 'outline-' : '' }}{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    {# ------------------ VARIANT: BORDERED ------------------ #}
+    {% elseif o.variant == 'bordered' %}
+      <div class="border rounded-3 p-4 p-md-5 {{ align_class }}">
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          {% if o.icon %}
+            <div class="mb-3">
+              <span class="fs-1">{{ o.icon|raw }}</span>
+            </div>
+          {% endif %}
+          <h2 class="display-6 fw-bold mb-3">{{ o.title }}</h2>
+          {% if o.description %}
+            <p class="lead mb-4">{{ o.description }}</p>
+          {% endif %}
+          <div class="d-flex gap-2 {{ btn_wrapper_class }}">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaOutline ? 'outline-' : '' }}{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaOutline ? 'outline-' : '' }}{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+    {# ------------------ VARIANT: BACKGROUND ------------------ #}
+    {% elseif o.variant == 'background' %}
+      <div class="p-4 p-md-5 {{ align_class }}">
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          {% if o.icon %}
+            <div class="mb-3">
+              <span class="fs-1">{{ o.icon|raw }}</span>
+            </div>
+          {% endif %}
+          <h2 class="display-6 fw-bold mb-3">{{ o.title }}</h2>
+          {% if o.description %}
+            <p class="lead mb-4">{{ o.description }}</p>
+          {% endif %}
+          <div class="d-flex gap-2 {{ btn_wrapper_class }}">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaOutline ? 'outline-' : '' }}{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaOutline ? 'outline-' : '' }}{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+    {# ------------------ VARIANT: MINIMAL ------------------ #}
+    {% elseif o.variant == 'minimal' %}
+      <div class="{{ align_class }}">
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          <h2 class="h4 fw-bold mb-3">{{ o.title }}</h2>
+          {% if o.description %}
+            <p class="mb-3">{{ o.description }}</p>
+          {% endif %}
+          <div class="d-flex gap-2 {{ btn_wrapper_class }}">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaOutline ? 'outline-' : '' }}{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaOutline ? 'outline-' : '' }}{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{%- endapply %}
+

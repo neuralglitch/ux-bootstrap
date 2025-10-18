@@ -1,0 +1,81 @@
+{% apply spaceless -%}
+
+{% set hasChildren = item.children is defined and item.children is not empty %}
+{% set isExpanded = item.expanded ?? false %}
+{% set isSelected = item.id is defined and item.id in options.selectedIds %}
+{% set itemIcon = item.icon ?? (hasChildren ? (isExpanded ? options.folderOpenIcon : options.folderIcon) : options.defaultIcon) %}
+{% set indent = level * 1.5 %}
+
+<li 
+    class="tree-view-item{% if isSelected %} selected{% endif %}"
+    role="treeitem"
+    aria-expanded="{{ hasChildren ? (isExpanded ? 'true' : 'false') : null }}"
+    {% if item.id is defined %}data-item-id="{{ item.id }}"{% endif %}
+    {% if hasChildren %}data-has-children="true"{% endif %}
+    data-bs-tree-view-target="item"
+    style="--tree-indent: {{ indent }}rem;">
+    
+    <div class="tree-view-item-content" data-action="click->bs-tree-view#handleItemClick">
+        {# Expand/collapse button for nodes with children #}
+        {% if hasChildren and options.showExpandIcons %}
+            <button 
+                type="button"
+                class="tree-view-toggle btn btn-link btn-sm p-0"
+                data-action="click->bs-tree-view#toggleNode:stop"
+                aria-label="{{ isExpanded ? 'Collapse' : 'Expand' }}">
+                <i class="bi {{ isExpanded ? options.collapseIcon : options.expandIcon }}"></i>
+            </button>
+        {% else %}
+            <span class="tree-view-spacer"></span>
+        {% endif %}
+
+        {# Icon #}
+        {% if options.showIcons %}
+            <span class="tree-view-icon">
+                <i class="bi {{ itemIcon }}"></i>
+            </span>
+        {% endif %}
+
+        {# Selection checkbox #}
+        {% if options.selectable %}
+            <span class="tree-view-checkbox">
+                <input 
+                    type="checkbox" 
+                    class="form-check-input"
+                    {% if isSelected %}checked{% endif %}
+                    {% if item.id is defined %}value="{{ item.id }}"{% endif %}
+                    data-action="change->bs-tree-view#handleSelectionChange:stop"
+                    aria-label="Select {{ item.label }}">
+            </span>
+        {% endif %}
+
+        {# Label #}
+        <span class="tree-view-label">
+            {{ item.label }}
+        </span>
+
+        {# Badge (optional) #}
+        {% if item.badge is defined %}
+            <span class="badge bg-secondary ms-2">{{ item.badge }}</span>
+        {% endif %}
+    </div>
+
+    {# Children (recursive) #}
+    {% if hasChildren %}
+        <ul 
+            class="tree-view-list tree-view-children{{ isExpanded ? '' : ' collapse' }}"
+            role="group"
+            data-bs-tree-view-target="children">
+            {% for child in item.children %}
+                {{ include('components/extra/tree-view-item.html.twig', {
+                    item: child,
+                    level: level + 1,
+                    options: options
+                }) }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>
+
+{%- endapply %}
+

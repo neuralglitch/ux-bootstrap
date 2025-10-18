@@ -1,0 +1,134 @@
+// Color Picker Styles
+
+.color-picker {
+  // Base component styles
+  
+  &-presets {
+    // Preset colors grid
+  }
+
+  &-swatch {
+    // Preset color swatches
+    width: 100%;
+    aspect-ratio: 1;
+    border: 2px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    
+    &:hover:not(:disabled) {
+      border-color: var(--bs-primary);
+      transform: scale(1.05);
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &.active {
+      border-color: var(--bs-primary);
+      border-width: 3px;
+      box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.15);
+    }
+
+    svg {
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+      color: white;
+      
+      // Adjust color for light backgrounds
+      [style*="background-color: #F"], 
+      [style*="background-color: #E"],
+      [style*="background-color: #FFF"],
+      [style*="background-color: #fff"] & {
+        color: var(--bs-dark);
+      }
+    }
+
+    // Size variants
+    &-sm {
+      aspect-ratio: 1;
+      min-height: 2rem;
+    }
+
+    &-lg {
+      aspect-ratio: 1;
+      min-height: 4rem;
+    }
+  }
+
+  &-input-wrapper {
+    // Input field wrapper
+  }
+
+  &-input {
+    // Text input styles
+    font-family: var(--bs-font-monospace);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  // Size variants
+  &-sm {
+    .color-picker-swatch:not(.color-picker-swatch-lg):not(.color-picker-swatch-sm) {
+      min-height: 2rem;
+    }
+  }
+
+  &-lg {
+    .color-picker-swatch:not(.color-picker-swatch-lg):not(.color-picker-swatch-sm) {
+      min-height: 4rem;
+    }
+  }
+}
+
+// Native color input styling
+.form-control-color {
+  width: 3rem;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.25rem;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: calc(var(--bs-border-radius) - 2px);
+  }
+  
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: calc(var(--bs-border-radius) - 2px);
+  }
+}
+
+// Input group adjustments
+.input-group {
+  &-inline {
+    width: auto;
+  }
+}
+
+// Dark mode adjustments
+[data-bs-theme="dark"] {
+  .color-picker-swatch {
+    svg {
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+    }
+  }
+}
+

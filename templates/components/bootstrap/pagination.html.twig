@@ -1,0 +1,15 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for pagination items #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  <nav aria-label="{{ o.ariaLabel }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <ul class="{{ o.classes }}">
+      {{ slot_content|raw }}
+    </ul>
+  </nav>
+
+{%- endapply %}
+

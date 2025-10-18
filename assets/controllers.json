@@ -1,0 +1,120 @@
+{
+    "controllers": {
+        "bs-alert": {
+            "main": "controllers/bs_alert_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-alert-stack": {
+            "main": "controllers/bs_alert_stack_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-breadcrumbs": {
+            "main": "controllers/bs_breadcrumbs_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-calendar": {
+            "main": "controllers/bs_calendar_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-code-block": {
+            "main": "controllers/bs_code_block_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-color-picker": {
+            "main": "controllers/bs_color_picker_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-command-palette": {
+            "main": "controllers/bs_command_palette_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-cookie-banner": {
+            "main": "controllers/bs_cookie_banner_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-dropdown-multi": {
+            "main": "controllers/bs_dropdown_multi_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-kanban": {
+            "main": "controllers/bs_kanban_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-lightbox": {
+            "main": "controllers/bs_lightbox_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-link": {
+            "main": "controllers/bs_link_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-navbar-fullscreen": {
+            "main": "controllers/bs_navbar_fullscreen_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-navbar-mega-menu": {
+            "main": "controllers/bs_navbar_mega_menu_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-navbar-sticky": {
+            "main": "controllers/bs_navbar_sticky_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-notification-center": {
+            "main": "controllers/bs_notification_center_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-search": {
+            "main": "controllers/bs_search_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-sidebar": {
+            "main": "controllers/bs_sidebar_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-split-panes": {
+            "main": "controllers/bs_split_panes_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-theme": {
+            "main": "controllers/bs_theme_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-toast": {
+            "main": "controllers/bs_toast_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-tour": {
+            "main": "controllers/bs_tour_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-tree-view": {
+            "main": "controllers/bs_tree_view_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        }
+    },
+    "entrypoints": []
+}

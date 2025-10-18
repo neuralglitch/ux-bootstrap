@@ -1,0 +1,100 @@
+{# templates/components/extra/faq.html.twig #}
+{# Parametrisierbare FAQ-Komponente (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot (for custom FAQ content) #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  {# Optional header section #}
+  {% if o.title or o.lead %}
+    <div class="mb-4">
+      {% if o.title %}
+        <h2 class="mb-3">{{ o.title }}</h2>
+      {% endif %}
+      {% if o.lead %}
+        <p class="lead text-body-secondary">{{ o.lead }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# Custom content takes precedence #}
+  {% if has_custom_content %}
+    {{ slot_content|raw }}
+  {% else %}
+    {# ------------------ VARIANT: ACCORDION ------------------ #}
+    {% if o.variant == 'accordion' %}
+      <div class="accordion{{ o.flush ? ' accordion-flush' : '' }}" id="{{ o.accordionId }}">
+        {% for item in o.items %}
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button 
+                class="accordion-button{{ loop.first ? '' : ' collapsed' }}" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#{{ item.id }}" 
+                aria-expanded="{{ loop.first ? 'true' : 'false' }}" 
+                aria-controls="{{ item.id }}">
+                {{ item.question }}
+              </button>
+            </h3>
+            <div 
+              id="{{ item.id }}" 
+              class="accordion-collapse collapse{{ loop.first ? ' show' : '' }}" 
+              {% if not o.alwaysOpen %}data-bs-parent="#{{ o.accordionId }}"{% endif %}>
+              <div class="accordion-body">
+                {{ item.answer|raw }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {# ------------------ VARIANT: SIMPLE ------------------ #}
+    {% elseif o.variant == 'simple' %}
+      <div class="faq-simple">
+        {% for item in o.items %}
+          <div class="mb-4">
+            <h4 class="mb-2">{{ item.question }}</h4>
+            <div class="text-body-secondary">{{ item.answer|raw }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {# ------------------ VARIANT: CARD ------------------ #}
+    {% elseif o.variant == 'card' %}
+      <div class="row g-3">
+        {% for item in o.items %}
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="mb-0">{{ item.question }}</h4>
+              </div>
+              <div class="card-body">
+                {{ item.answer|raw }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    {# ------------------ VARIANT: BORDERED ------------------ #}
+    {% elseif o.variant == 'bordered' %}
+      <div class="list-group">
+        {% for item in o.items %}
+          <div class="list-group-item">
+            <h5 class="mb-2">{{ item.question }}</h5>
+            <div class="text-body-secondary">{{ item.answer|raw }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+{%- endapply %}
+

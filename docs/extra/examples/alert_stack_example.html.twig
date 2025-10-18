@@ -1,0 +1,258 @@
+{# Alert Stack Usage Examples #}
+
+{# ========================================
+   Example 1: Basic Flash Messages
+   ======================================== #}
+
+{% set flashAlerts = [] %}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        {% set flashAlerts = flashAlerts|merge([{
+            message: message,
+            variant: label,
+            dismissible: true
+        }]) %}
+    {% endfor %}
+{% endfor %}
+
+{% if flashAlerts|length > 0 %}
+    <twig:bs:alert-stack 
+        :alerts="flashAlerts"
+        position="top-end"
+        :autoHide="true"
+        :autoHideDelay="5000" />
+{% endif %}
+
+{# ========================================
+   Example 2: Simple String Alerts
+   ======================================== #}
+
+<twig:bs:alert-stack 
+    :alerts="[
+        'Your changes have been saved!',
+        'Email verification sent.',
+        'Profile updated successfully.'
+    ]"
+    position="top-end"
+    :autoHide="true" />
+
+{# ========================================
+   Example 3: Custom Positioned Alerts
+   ======================================== #}
+
+{# Bottom-right toast-style notifications #}
+<twig:bs:alert-stack 
+    position="bottom-end"
+    :alerts="[
+        {message: 'Message sent!', variant: 'success', autoHide: true, autoHideDelay: 2000},
+        {message: 'File uploaded.', variant: 'info', autoHide: true, autoHideDelay: 2000}
+    ]" />
+
+{# ========================================
+   Example 4: Mixed Alert Variants
+   ======================================== #}
+
+{% set notifications = [
+    {message: 'Success! Operation completed.', variant: 'success'},
+    {message: 'Warning: Your session will expire soon.', variant: 'warning'},
+    {message: 'Error: Unable to connect to server.', variant: 'danger'},
+    {message: 'Info: New features available.', variant: 'info'}
+] %}
+
+<twig:bs:alert-stack 
+    :alerts="notifications"
+    position="top-center"
+    :maxAlerts="3"
+    :dismissible="true" />
+
+{# ========================================
+   Example 5: Bulk Operation Results
+   ======================================== #}
+
+{% set bulkResults = [
+    {message: '✓ Successfully processed 45 items', variant: 'success'},
+    {message: '⏭️ Skipped 3 items (already processed)', variant: 'info'},
+    {message: '✗ Failed to process 2 items', variant: 'danger'}
+] %}
+
+<twig:bs:alert-stack 
+    :alerts="bulkResults"
+    position="top-end"
+    :dismissible="true"
+    :fade="true" />
+
+{# ========================================
+   Example 6: Form Validation Errors
+   ======================================== #}
+
+{% set errors = [] %}
+{% if form is defined %}
+    {% for error in form.vars.errors %}
+        {% set errors = errors|merge([{
+            message: error.message,
+            variant: 'danger',
+            dismissible: true
+        }]) %}
+    {% endfor %}
+{% endif %}
+
+{% if errors|length > 0 %}
+    <twig:bs:alert-stack 
+        :alerts="errors"
+        position="top-center"
+        :dismissible="true"
+        defaultVariant="danger" />
+{% endif %}
+
+{# ========================================
+   Example 7: HTML Content in Alerts
+   ======================================== #}
+
+{% set richAlerts = [
+    {
+        message: '<strong>Success!</strong> Your profile has been <a href="/profile" class="alert-link">updated</a>.',
+        variant: 'success',
+        dismissible: true
+    },
+    {
+        message: '<strong>Notice:</strong> Please <a href="/verify" class="alert-link">verify your email</a> to access all features.',
+        variant: 'warning',
+        dismissible: true
+    }
+] %}
+
+<twig:bs:alert-stack :alerts="richAlerts" />
+
+{# ========================================
+   Example 8: Auto-hide with Different Delays
+   ======================================== #}
+
+<twig:bs:alert-stack 
+    :alerts="[
+        {message: 'Quick notification (2s)', variant: 'info', autoHide: true, autoHideDelay: 2000},
+        {message: 'Medium notification (5s)', variant: 'success', autoHide: true, autoHideDelay: 5000},
+        {message: 'Stay visible until dismissed', variant: 'danger', autoHide: false}
+    ]"
+    position="bottom-start" />
+
+{# ========================================
+   Example 9: Symfony Controller Integration
+   ======================================== #}
+
+{# In your controller:
+   
+   $this->addFlash('success', 'Your profile has been updated!');
+   $this->addFlash('warning', 'Some fields need attention.');
+   $this->addFlash('info', 'Don\'t forget to verify your email.');
+   
+   return $this->redirectToRoute('profile');
+#}
+
+{# In your template: #}
+<twig:bs:alert-stack 
+    :alerts="app.flashes('success')|map(m => {message: m, variant: 'success', autoHide: true})"
+    position="top-end" />
+
+<twig:bs:alert-stack 
+    :alerts="app.flashes('warning')|map(m => {message: m, variant: 'warning'})"
+    position="top-end" />
+
+{# ========================================
+   Example 10: Maximum Alerts Limit
+   ======================================== #}
+
+{# Only show first 3 alerts #}
+<twig:bs:alert-stack 
+    :alerts="manyNotifications"
+    :maxAlerts="3"
+    position="bottom-end"
+    :autoHide="true" />
+
+{# ========================================
+   Example 11: Custom Styling
+   ======================================== #}
+
+<twig:bs:alert-stack 
+    :alerts="notifications"
+    :zIndex="2000"
+    :gap="1.0"
+    class="custom-stack shadow-lg"
+    :attr="{
+        'data-analytics': 'notification-stack'
+    }" />
+
+{# ========================================
+   Example 12: All Position Options
+   ======================================== #}
+
+{# Top positions #}
+<twig:bs:alert-stack position="top-start" :alerts="alerts" />   {# Top-left #}
+<twig:bs:alert-stack position="top-center" :alerts="alerts" />  {# Top-center #}
+<twig:bs:alert-stack position="top-end" :alerts="alerts" />     {# Top-right #}
+
+{# Bottom positions #}
+<twig:bs:alert-stack position="bottom-start" :alerts="alerts" />{# Bottom-left #}
+<twig:bs:alert-stack position="bottom-center" :alerts="alerts" />{# Bottom-center #}
+<twig:bs:alert-stack position="bottom-end" :alerts="alerts" />  {# Bottom-right #}
+
+{# ========================================
+   Example 13: Dynamic JavaScript Integration
+   ======================================== #}
+
+{# Empty stack that will be populated via JavaScript #}
+<twig:bs:alert-stack 
+    :alerts="[]"
+    position="top-end"
+    :autoHide="true"
+    :autoHideDelay="3000"
+    id="dynamic-alert-stack" />
+
+{# JavaScript to add alerts dynamically:
+   
+   <script>
+   document.addEventListener('DOMContentLoaded', () => {
+       const stackElement = document.getElementById('dynamic-alert-stack');
+       const controller = application.getControllerForElementAndIdentifier(
+           stackElement, 
+           'bs-alert-stack'
+       );
+       
+       // Add alert on button click
+       document.querySelector('#notify-btn').addEventListener('click', () => {
+           controller.addAlert({
+               message: 'New notification!',
+               variant: 'info',
+               autoHide: true,
+               autoHideDelay: 3000
+           });
+       });
+   });
+   </script>
+#}
+
+{# ========================================
+   Example 14: Multi-step Process Feedback
+   ======================================== #}
+
+{% set processSteps = [
+    {message: '✓ Step 1: Profile information saved', variant: 'success'},
+    {message: '✓ Step 2: Payment processed', variant: 'success'},
+    {message: '⏳ Step 3: Email confirmation pending...', variant: 'warning'}
+] %}
+
+<twig:bs:alert-stack 
+    :alerts="processSteps"
+    position="top-center"
+    :maxAlerts="3"
+    :dismissible="false" />
+
+{# ========================================
+   Example 15: Conditional Auto-hide
+   ======================================== #}
+
+<twig:bs:alert-stack 
+    :alerts="notifications"
+    :autoHide="notifications|length < 3"   {# Only auto-hide if 2 or fewer alerts #}
+    :autoHideDelay="4000"
+    position="bottom-end" />
+

@@ -1,0 +1,187 @@
+{# Placeholder Component Examples #}
+
+{# Basic Placeholders #}
+<h3>Basic Placeholders</h3>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="6" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="7" />
+    <twig:bs:placeholder cols="4" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="4" />
+    <twig:bs:placeholder cols="6" />
+    <twig:bs:placeholder cols="8" />
+</p>
+
+{# Placeholder Widths #}
+<h3 class="mt-5">Placeholder Widths</h3>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="10" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="8" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="6" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="4" />
+</p>
+
+{# Placeholder Colors #}
+<h3 class="mt-5">Placeholder Colors</h3>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="primary" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="secondary" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="success" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="danger" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="warning" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="info" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="light" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" variant="dark" />
+</p>
+
+{# Placeholder Sizes #}
+<h3 class="mt-5">Placeholder Sizes</h3>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" size="lg" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" size="sm" />
+</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" size="xs" />
+</p>
+
+{# Animated Placeholders #}
+<h3 class="mt-5">Animated Placeholders</h3>
+<p>Glow animation:</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" :glow="true" />
+</p>
+
+<p class="mt-3">Wave animation:</p>
+<p aria-hidden="true">
+    <twig:bs:placeholder cols="12" :wave="true" />
+</p>
+
+{# Card with Placeholders #}
+<h3 class="mt-5">Card with Placeholders (Loading State)</h3>
+<div class="row g-3">
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h5 class="card-title">Loaded Content</h5>
+                <p class="card-text">This card shows actual content that has finished loading.</p>
+                <twig:bs:button variant="primary">Go somewhere</twig:bs:button>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                    <twig:bs:placeholder cols="6" />
+                </h5>
+                <p class="card-text placeholder-glow" aria-hidden="true">
+                    <twig:bs:placeholder cols="7" />
+                    <twig:bs:placeholder cols="4" />
+                    <twig:bs:placeholder cols="4" />
+                    <twig:bs:placeholder cols="6" />
+                    <twig:bs:placeholder cols="8" />
+                </p>
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6"></a>
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# List with Placeholders #}
+<h3 class="mt-5">List with Placeholders</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item class="placeholder-glow">
+        <twig:bs:placeholder cols="8" />
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="placeholder-wave">
+        <twig:bs:placeholder cols="6" />
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="placeholder-glow">
+        <twig:bs:placeholder cols="10" />
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="placeholder-wave">
+        <twig:bs:placeholder cols="7" />
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Table with Placeholders #}
+<h3 class="mt-5">Table with Placeholders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="placeholder-glow">
+            <td><twig:bs:placeholder cols="8" /></td>
+            <td><twig:bs:placeholder cols="10" /></td>
+            <td><twig:bs:placeholder cols="6" /></td>
+        </tr>
+        <tr class="placeholder-wave">
+            <td><twig:bs:placeholder cols="7" /></td>
+            <td><twig:bs:placeholder cols="9" /></td>
+            <td><twig:bs:placeholder cols="5" /></td>
+        </tr>
+        <tr class="placeholder-glow">
+            <td><twig:bs:placeholder cols="9" /></td>
+            <td><twig:bs:placeholder cols="11" /></td>
+            <td><twig:bs:placeholder cols="4" /></td>
+        </tr>
+    </tbody>
+</table>
+
+{# Profile Card with Placeholders #}
+<h3 class="mt-5">Profile Card with Placeholders</h3>
+<twig:bs:card style="width: 18rem;">
+    <div class="card-body placeholder-glow">
+        <div class="d-flex align-items-center mb-3">
+            <span class="placeholder rounded-circle bg-secondary" style="width: 60px; height: 60px;"></span>
+            <div class="ms-3 flex-grow-1">
+                <twig:bs:placeholder cols="8" />
+                <twig:bs:placeholder cols="6" size="sm" />
+            </div>
+        </div>
+        <twig:bs:placeholder cols="12" />
+        <twig:bs:placeholder cols="10" />
+        <twig:bs:placeholder cols="11" />
+        <div class="mt-3">
+            <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-5 me-2"></a>
+            <a href="#" tabindex="-1" class="btn btn-secondary disabled placeholder col-5"></a>
+        </div>
+    </div>
+</twig:bs:card>
+

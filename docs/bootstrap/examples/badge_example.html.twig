@@ -1,0 +1,70 @@
+{# Badge Component Examples #}
+
+{# Basic Badges - All Variants #}
+<h3>Basic Badges - All Variants</h3>
+<twig:bs:badge variant="primary">Primary</twig:bs:badge>
+<twig:bs:badge variant="secondary">Secondary</twig:bs:badge>
+<twig:bs:badge variant="success">Success</twig:bs:badge>
+<twig:bs:badge variant="danger">Danger</twig:bs:badge>
+<twig:bs:badge variant="warning">Warning</twig:bs:badge>
+<twig:bs:badge variant="info">Info</twig:bs:badge>
+<twig:bs:badge variant="light">Light</twig:bs:badge>
+<twig:bs:badge variant="dark">Dark</twig:bs:badge>
+
+{# Pill Badges #}
+<h3 class="mt-5">Pill Badges</h3>
+<twig:bs:badge variant="primary" :pill="true">Primary</twig:bs:badge>
+<twig:bs:badge variant="secondary" :pill="true">Secondary</twig:bs:badge>
+<twig:bs:badge variant="success" :pill="true">Success</twig:bs:badge>
+<twig:bs:badge variant="danger" :pill="true">Danger</twig:bs:badge>
+<twig:bs:badge variant="warning" :pill="true">Warning</twig:bs:badge>
+<twig:bs:badge variant="info" :pill="true">Info</twig:bs:badge>
+
+{# Badges in Headings #}
+<h3 class="mt-5">Badges in Headings</h3>
+<h1>Example heading <twig:bs:badge variant="secondary">New</twig:bs:badge></h1>
+<h2>Example heading <twig:bs:badge variant="success">v2.0</twig:bs:badge></h2>
+<h3>Example heading <twig:bs:badge variant="primary">Featured</twig:bs:badge></h3>
+<h4>Example heading <twig:bs:badge variant="warning">Beta</twig:bs:badge></h4>
+<h5>Example heading <twig:bs:badge variant="info">Updated</twig:bs:badge></h5>
+<h6>Example heading <twig:bs:badge variant="danger">Sale</twig:bs:badge></h6>
+
+{# Badges in Buttons #}
+<h3 class="mt-5">Badges in Buttons</h3>
+<twig:bs:button variant="primary">
+    Notifications <twig:bs:badge variant="light">4</twig:bs:badge>
+</twig:bs:button>
+<twig:bs:button variant="secondary">
+    Messages <twig:bs:badge variant="danger" :pill="true">9+</twig:bs:badge>
+</twig:bs:button>
+<twig:bs:button variant="success">
+    Cart <twig:bs:badge variant="light">12</twig:bs:badge>
+</twig:bs:button>
+
+{# Counter Badges #}
+<h3 class="mt-5">Counter Badges</h3>
+<p>
+    Inbox <twig:bs:badge variant="primary" :pill="true">14</twig:bs:badge>
+</p>
+<p>
+    Unread <twig:bs:badge variant="danger" :pill="true">99+</twig:bs:badge>
+</p>
+<p>
+    Starred <twig:bs:badge variant="warning" :pill="true">7</twig:bs:badge>
+</p>
+
+{# Status Badges #}
+<h3 class="mt-5">Status Badges</h3>
+<p>
+    Order Status: <twig:bs:badge variant="success">Completed</twig:bs:badge>
+</p>
+<p>
+    Payment Status: <twig:bs:badge variant="warning">Pending</twig:bs:badge>
+</p>
+<p>
+    Delivery Status: <twig:bs:badge variant="info">In Transit</twig:bs:badge>
+</p>
+<p>
+    Account Status: <twig:bs:badge variant="danger">Suspended</twig:bs:badge>
+</p>
+

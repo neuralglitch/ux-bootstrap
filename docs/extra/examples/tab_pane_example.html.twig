@@ -1,0 +1,458 @@
+{# 
+  Tab Pane Component - Complete Examples
+  
+  This file demonstrates various uses of the bs:tab-pane component
+  for different scenarios: settings pages, dashboards, product details,
+  and multi-section forms.
+#}
+
+{# Example 1: Settings Page with Tab Navigation #}
+<div class="container my-4">
+  <h2>User Settings</h2>
+  
+  {# Tab Navigation #}
+  <ul class="nav nav-tabs mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" 
+              data-bs-target="#tab-profile" type="button" role="tab" 
+              aria-controls="tab-profile" aria-selected="true">
+        Profile
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="security-tab" data-bs-toggle="tab" 
+              data-bs-target="#tab-security" type="button" role="tab" 
+              aria-controls="tab-security" aria-selected="false">
+        Security
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" 
+              data-bs-target="#tab-notifications" type="button" role="tab" 
+              aria-controls="tab-notifications" aria-selected="false">
+        Notifications
+      </button>
+    </li>
+  </ul>
+
+  {# Tab Content using bs:tab-pane #}
+  <div class="tab-content border p-3">
+    <twig:bs:tab-pane title="Profile" :active="true">
+      <h3>Profile Information</h3>
+      <form>
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" value="John Doe">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" value="john@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="bio" class="form-label">Bio</label>
+          <textarea class="form-control" id="bio" rows="3">Software developer</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </twig:bs:tab-pane>
+
+    <twig:bs:tab-pane title="Security">
+      <h3>Security Settings</h3>
+      <form>
+        <div class="mb-3">
+          <label for="currentPassword" class="form-label">Current Password</label>
+          <input type="password" class="form-control" id="currentPassword">
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="newPassword">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Password</button>
+      </form>
+      
+      <hr class="my-4">
+      
+      <h4>Two-Factor Authentication</h4>
+      <p>Secure your account with 2FA</p>
+      <button class="btn btn-outline-primary">Enable 2FA</button>
+    </twig:bs:tab-pane>
+
+    <twig:bs:tab-pane title="Notifications">
+      <h3>Notification Preferences</h3>
+      <form>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+          <label class="form-check-label" for="emailNotif">
+            Email notifications
+          </label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="smsNotif">
+          <label class="form-check-label" for="smsNotif">
+            SMS notifications
+          </label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="pushNotif" checked>
+          <label class="form-check-label" for="pushNotif">
+            Push notifications
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Preferences</button>
+      </form>
+    </twig:bs:tab-pane>
+  </div>
+</div>
+
+<hr class="my-5">
+
+{# Example 2: Dashboard with Pills Navigation #}
+<div class="container-fluid my-4">
+  <h2>Analytics Dashboard</h2>
+  
+  <ul class="nav nav-pills mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="tab" 
+              data-bs-target="#tab-overview" type="button">
+        Overview
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" 
+              data-bs-target="#tab-analytics" type="button">
+        Analytics
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" 
+              data-bs-target="#tab-reports" type="button">
+        Reports
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <twig:bs:tab-pane title="Overview" :active="true" class="p-3">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Total Users</h5>
+              <p class="display-6 mb-0">1,234</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Revenue</h5>
+              <p class="display-6 mb-0">$45.2k</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Orders</h5>
+              <p class="display-6 mb-0">892</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Conversion</h5>
+              <p class="display-6 mb-0">3.2%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </twig:bs:tab-pane>
+
+    <twig:bs:tab-pane title="Analytics" class="p-3">
+      <h3>Analytics Dashboard</h3>
+      <p class="text-muted">Detailed analytics charts and graphs would go here.</p>
+      <div class="alert alert-info">
+        <strong>Tip:</strong> This pane could contain charts, graphs, and detailed metrics.
+      </div>
+    </twig:bs:tab-pane>
+
+    <twig:bs:tab-pane title="Reports" class="p-3">
+      <h3>Reports</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Report Name</th>
+            <th>Generated</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monthly Sales Report</td>
+            <td>2024-01-15</td>
+            <td><span class="badge bg-success">Complete</span></td>
+            <td><button class="btn btn-sm btn-primary">Download</button></td>
+          </tr>
+          <tr>
+            <td>User Activity Report</td>
+            <td>2024-01-14</td>
+            <td><span class="badge bg-success">Complete</span></td>
+            <td><button class="btn btn-sm btn-primary">Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </twig:bs:tab-pane>
+  </div>
+</div>
+
+<hr class="my-5">
+
+{# Example 3: Product Details Tabs #}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="https://via.placeholder.com/400x300" class="img-fluid" alt="Product">
+    </div>
+    <div class="col-md-6">
+      <h2>Premium Wireless Headphones</h2>
+      <p class="h3 text-primary">$299.99</p>
+      
+      <ul class="nav nav-tabs mt-4" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" data-bs-toggle="tab" 
+                  data-bs-target="#tab-description" type="button">
+            Description
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" 
+                  data-bs-target="#tab-specifications" type="button">
+            Specifications
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" 
+                  data-bs-target="#tab-reviews" type="button">
+            Reviews (24)
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content border border-top-0 p-3">
+        <twig:bs:tab-pane title="Description" :active="true">
+          <p>
+            Experience premium audio quality with our wireless headphones. 
+            Features include active noise cancellation, 30-hour battery life, 
+            and premium comfort for all-day wear.
+          </p>
+          <ul>
+            <li>Active Noise Cancellation</li>
+            <li>30-hour battery life</li>
+            <li>Premium sound quality</li>
+            <li>Comfortable over-ear design</li>
+          </ul>
+        </twig:bs:tab-pane>
+
+        <twig:bs:tab-pane title="Specifications">
+          <table class="table table-sm">
+            <tbody>
+              <tr>
+                <th>Driver Size</th>
+                <td>40mm</td>
+              </tr>
+              <tr>
+                <th>Frequency Response</th>
+                <td>20Hz - 20kHz</td>
+              </tr>
+              <tr>
+                <th>Impedance</th>
+                <td>32 Ohms</td>
+              </tr>
+              <tr>
+                <th>Battery Life</th>
+                <td>30 hours</td>
+              </tr>
+              <tr>
+                <th>Weight</th>
+                <td>250g</td>
+              </tr>
+            </tbody>
+          </table>
+        </twig:bs:tab-pane>
+
+        <twig:bs:tab-pane title="Reviews">
+          <div class="mb-3">
+            <div class="d-flex justify-content-between">
+              <strong>Sarah M.</strong>
+              <span>⭐⭐⭐⭐⭐</span>
+            </div>
+            <p class="mb-0">Amazing sound quality! Worth every penny.</p>
+          </div>
+          <hr>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between">
+              <strong>John D.</strong>
+              <span>⭐⭐⭐⭐</span>
+            </div>
+            <p class="mb-0">Great headphones, very comfortable for long use.</p>
+          </div>
+        </twig:bs:tab-pane>
+      </div>
+      
+      <button class="btn btn-primary btn-lg mt-3 w-100">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<hr class="my-5">
+
+{# Example 4: Multi-Step Form (Wizard) #}
+<div class="container my-4" style="max-width: 700px;">
+  <h2 class="text-center mb-4">Account Registration</h2>
+  
+  {# Progress Indicator #}
+  <ul class="nav nav-pills nav-justified mb-4" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" data-bs-toggle="tab" 
+              data-bs-target="#tab-step1" type="button">
+        <small>Step 1</small><br>Personal Info
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" 
+              data-bs-target="#tab-step2" type="button">
+        <small>Step 2</small><br>Account Setup
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" data-bs-toggle="tab" 
+              data-bs-target="#tab-step3" type="button">
+        <small>Step 3</small><br>Confirmation
+      </button>
+    </li>
+  </ul>
+
+  <form>
+    <div class="tab-content">
+      <twig:bs:tab-pane title="Step1" :active="true">
+        <h3>Personal Information</h3>
+        <p class="text-muted">Tell us a bit about yourself</p>
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" required>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="dateOfBirth" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="dateOfBirth" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone">
+        </div>
+        
+        <div class="text-end">
+          <button type="button" class="btn btn-primary" 
+                  data-bs-toggle="tab" data-bs-target="#tab-step2">
+            Next Step →
+          </button>
+        </div>
+      </twig:bs:tab-pane>
+
+      <twig:bs:tab-pane title="Step2">
+        <h3>Account Setup</h3>
+        <p class="text-muted">Create your account credentials</p>
+        
+        <div class="mb-3">
+          <label for="emailStep2" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="emailStep2" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="passwordStep2" class="form-label">Password</label>
+          <input type="password" class="form-control" id="passwordStep2" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="confirmPasswordStep2" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPasswordStep2" required>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" 
+                  data-bs-toggle="tab" data-bs-target="#tab-step1">
+            ← Previous
+          </button>
+          <button type="button" class="btn btn-primary" 
+                  data-bs-toggle="tab" data-bs-target="#tab-step3">
+            Next Step →
+          </button>
+        </div>
+      </twig:bs:tab-pane>
+
+      <twig:bs:tab-pane title="Step3">
+        <h3>Review & Confirm</h3>
+        <p class="text-muted">Please review your information before submitting</p>
+        
+        <div class="alert alert-info">
+          <h5>Summary</h5>
+          <p class="mb-1"><strong>Name:</strong> [User will see their name here]</p>
+          <p class="mb-1"><strong>Email:</strong> [User will see their email here]</p>
+          <p class="mb-0"><strong>Username:</strong> [User will see their username here]</p>
+        </div>
+        
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="termsAgree" required>
+          <label class="form-check-label" for="termsAgree">
+            I agree to the Terms of Service and Privacy Policy
+          </label>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" 
+                  data-bs-toggle="tab" data-bs-target="#tab-step2">
+            ← Previous
+          </button>
+          <button type="submit" class="btn btn-success">
+            Complete Registration
+          </button>
+        </div>
+      </twig:bs:tab-pane>
+    </div>
+  </form>
+</div>
+
+{# 
+  Note: These examples show various use cases for the bs:tab-pane component:
+  
+  1. Settings Page - Multiple configuration sections
+  2. Dashboard - Data visualization with pills navigation
+  3. Product Details - Product information organization
+  4. Multi-Step Form - Wizard-style registration process
+  
+  The component automatically handles:
+  - ID generation from title
+  - ARIA attributes for accessibility
+  - Fade transitions
+  - Bootstrap styling
+#}
+

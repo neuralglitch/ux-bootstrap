@@ -1,0 +1,134 @@
+{% apply spaceless -%}
+  {% set o = this.options() %}
+
+  {# Tour container - hidden by default, controlled by Stimulus #}
+  <div
+    class="{{ o.classes }}"
+    {{ this.renderHtmlAttributes(o.attrs) | raw }}
+    style="display: none;"
+  >
+    {# Backdrop overlay #}
+    <div
+      class="tour-backdrop"
+      data-bs-tour-target="backdrop"
+      style="display: none;"
+    ></div>
+
+    {# Highlight spotlight #}
+    <div
+      class="tour-highlight"
+      data-bs-tour-target="highlight"
+      style="display: none;"
+    ></div>
+
+    {# Tour popover #}
+    <div
+      class="tour-popover popover bs-popover-auto {{ o.popoverVariant == 'dark' ? 'tour-popover-dark' : '' }}"
+      data-bs-tour-target="popover"
+      role="dialog"
+      aria-modal="true"
+      style="display: none; max-width: {{ o.popoverVariant == 'dark' ? o.popoverWidth : o.popoverWidth }}px;"
+    >
+      {# Popover arrow #}
+      <div class="popover-arrow" data-bs-tour-target="arrow"></div>
+
+      {# Popover header #}
+      <div class="popover-header d-flex align-items-start justify-content-between">
+        <div class="flex-grow-1">
+          {# Step number (if enabled) #}
+          {% if o.showStepNumbers %}
+            <div class="tour-step-number small text-muted mb-1" data-bs-tour-target="stepNumber"></div>
+          {% endif %}
+          {# Step title #}
+          <h3 class="popover-title mb-0" data-bs-tour-target="title"></h3>
+        </div>
+        {# Close button #}
+        <button
+          type="button"
+          class="btn-close"
+          data-action="click->bs-tour#close"
+          aria-label="{{ o.closeLabel }}"
+        ></button>
+      </div>
+
+      {# Popover body #}
+      <div class="popover-body">
+        {# Step content #}
+        <div class="tour-step-content" data-bs-tour-target="content"></div>
+
+        {# Progress bar (if enabled) #}
+        {% if o.showProgress %}
+          <div class="tour-progress mt-3 mb-2">
+            <div class="progress" style="height: 4px;">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                data-bs-tour-target="progressBar"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+        {% endif %}
+
+        {# Navigation buttons #}
+        <div class="tour-navigation d-flex gap-2 align-items-center mt-3">
+          {# Skip button #}
+          {% if o.showSkipButton %}
+            <button
+              type="button"
+              class="btn btn-sm btn-link text-muted px-0"
+              data-action="click->bs-tour#skip"
+              data-bs-tour-target="skipBtn"
+            >
+              {{ o.skipLabel }}
+            </button>
+          {% endif %}
+
+          {# Spacer #}
+          <div class="flex-grow-1"></div>
+
+          {# Previous button #}
+          {% if o.showPrevButton %}
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              data-action="click->bs-tour#previous"
+              data-bs-tour-target="prevBtn"
+            >
+              {{ o.prevLabel }}
+            </button>
+          {% endif %}
+
+          {# Next button #}
+          {% if o.showNextButton %}
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              data-action="click->bs-tour#next"
+              data-bs-tour-target="nextBtn"
+            >
+              {{ o.nextLabel }}
+            </button>
+          {% endif %}
+
+          {# Finish button #}
+          {% if o.showFinishButton %}
+            <button
+              type="button"
+              class="btn btn-sm btn-success"
+              data-action="click->bs-tour#finish"
+              data-bs-tour-target="finishBtn"
+              style="display: none;"
+            >
+              {{ o.finishLabel }}
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endapply %}
+

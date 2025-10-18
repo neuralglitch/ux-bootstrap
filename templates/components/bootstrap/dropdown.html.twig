@@ -1,0 +1,33 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom menu content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+
+  <div class="{{ o.wrapperClasses }}" {{ this.renderHtmlAttributes(o.wrapperAttrs) | raw }}>
+    {% if o.split %}
+      {# Split button: Main button + dropdown toggle #}
+      <button type="button" class="btn {% if this.outline %}btn-outline-{{ this.variant ?? 'secondary' }}{% else %}btn-{{ this.variant ?? 'secondary' }}{% endif %}{% if this.size %} btn-{{ this.size }}{% endif %}">
+        {{ o.splitLabel }}
+      </button>
+      <button class="{{ o.toggleClasses }}" {{ this.renderHtmlAttributes(o.toggleAttrs) | raw }}>
+        <span class="visually-hidden">Toggle Dropdown</span>
+      </button>
+    {% else %}
+      {# Single button dropdown #}
+      <button class="{{ o.toggleClasses }}" {{ this.renderHtmlAttributes(o.toggleAttrs) | raw }}>
+        {{ o.label }}
+      </button>
+    {% endif %}
+
+    <ul class="{{ o.menuClasses }}" {{ this.renderHtmlAttributes(o.menuAttrs) | raw }}>
+      {% if has_content %}
+        {{ slot_content|raw }}
+      {% endif %}
+    </ul>
+  </div>
+
+{%- endapply %}
+

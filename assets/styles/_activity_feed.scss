@@ -1,0 +1,153 @@
+// Activity Feed Styles
+
+.activity-feed {
+  // Container styles
+  position: relative;
+
+  // Add padding when border is visible
+  &.border-start {
+    padding-left: 1rem;
+  }
+
+  &.border-end {
+    padding-right: 1rem;
+  }
+
+  // Compact mode
+  &.activity-feed-compact {
+    .activity-feed-item {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+
+      .activity-feed-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.activity-feed-item {
+  position: relative;
+  border-bottom: 1px solid var(--bs-border-color);
+  transition: background-color 0.2s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Link behavior
+  &.activity-feed-item-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+    }
+  }
+
+  // Unread indicator
+  &.activity-feed-item-unread {
+    background-color: var(--bs-primary-bg-subtle);
+    
+    &:hover {
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+    }
+  }
+
+  // Icon container
+  .activity-feed-icon {
+    font-size: 1.25rem;
+    
+    i {
+      display: inline-block;
+    }
+  }
+
+  // Content area
+  .activity-feed-item-content {
+    margin-top: 0.5rem;
+  }
+
+  // Hover effect for non-link items
+  &:not(.activity-feed-item-link):hover {
+    background-color: var(--bs-gray-50);
+  }
+}
+
+// Date group headers
+.activity-feed-date-header {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bs-secondary);
+  padding: 0.5rem 0;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--bs-border-color);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+// Scrollable container
+.activity-feed[style*="max-height"] {
+  padding-right: 0.5rem;
+  
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--bs-gray-200);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--bs-gray-400);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--bs-gray-500);
+    }
+  }
+}
+
+// Dark mode support
+[data-bs-theme="dark"] {
+  .activity-feed-item {
+    &.activity-feed-item-link:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &:not(.activity-feed-item-link):hover {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    &.activity-feed-item-unread {
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+      
+      &:hover {
+        background-color: rgba(var(--bs-primary-rgb), 0.15);
+      }
+    }
+  }
+
+  .activity-feed[style*="max-height"] {
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+

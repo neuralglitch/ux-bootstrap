@@ -1,0 +1,320 @@
+{# Timeline Component Examples #}
+{# This file demonstrates various use cases of the bs:timeline component #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Component Examples</title>
+</head>
+<body>
+
+<div class="container my-5">
+  
+  {# Example 1: Order Tracking #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 1: Order Tracking</h2>
+    <twig:bs:timeline variant="vertical" align="start">
+      <twig:bs:timeline-item
+        title="Order Placed"
+        time="Jan 15, 2024 - 10:30 AM"
+        state="completed"
+        icon="✓"
+        variant="success">
+        Your order #12345 has been confirmed.
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Payment Received"
+        time="Jan 15, 2024 - 10:31 AM"
+        state="completed"
+        icon="💳"
+        variant="success">
+        Payment of $99.99 processed successfully.
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Order Processing"
+        time="Jan 16, 2024 - 9:00 AM"
+        state="completed"
+        icon="📦"
+        variant="info">
+        Items are being picked and packed.
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Shipped"
+        time="Jan 17, 2024 - 2:15 PM"
+        state="active"
+        icon="🚚"
+        variant="primary"
+        :markerSize="'lg'">
+        <p class="mb-1 fw-semibold">Package is in transit</p>
+        <p class="mb-0">Tracking #: 1Z999AA10123456784</p>
+        <small class="text-muted">Estimated delivery: Jan 19, 2024</small>
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Delivered"
+        time="Expected: Jan 19, 2024"
+        state="pending"
+        icon="🏠">
+        Package will be delivered to your address.
+      </twig:bs:timeline-item>
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 2: Activity Log #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 2: Activity Log</h2>
+    <twig:bs:timeline variant="vertical" align="start" size="sm">
+      <twig:bs:timeline-item
+        title="John Doe updated the document"
+        time="2 minutes ago"
+        icon="📝"
+        variant="primary">
+        Changed 15 lines in project-plan.md
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Sarah Smith commented"
+        time="15 minutes ago"
+        icon="💬"
+        variant="info">
+        "Looks good to me! Ready to merge."
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Mike Johnson pushed to main"
+        time="1 hour ago"
+        icon="🚀"
+        variant="success">
+        3 commits added to main branch
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Build completed"
+        time="1 hour ago"
+        icon="✓"
+        variant="success">
+        Build #1234 passed all tests
+      </twig:bs:timeline-item>
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 3: Project Milestones (Alternating) #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 3: Project Milestones (Alternating)</h2>
+    <twig:bs:timeline variant="alternating">
+      <twig:bs:timeline-item
+        title="Project Kickoff"
+        time="January 2024"
+        timePosition="opposite"
+        state="completed"
+        badge="1"
+        variant="success">
+        <p class="mb-0">Initial planning and team formation</p>
+        <ul class="mb-0 mt-2">
+          <li>Team assigned</li>
+          <li>Goals defined</li>
+          <li>Timeline approved</li>
+        </ul>
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Design Phase"
+        time="February 2024"
+        timePosition="opposite"
+        state="completed"
+        badge="2"
+        variant="success">
+        <p class="mb-0">UI/UX design and architecture planning</p>
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Development Sprint"
+        time="March - April 2024"
+        timePosition="opposite"
+        state="active"
+        badge="3"
+        variant="primary">
+        <p class="mb-0">Core features implementation</p>
+        <div class="progress mt-2" style="height: 10px;">
+          <div class="progress-bar" role="progressbar" style="width: 65%"></div>
+        </div>
+        <small class="text-muted">65% complete</small>
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Testing & QA"
+        time="May 2024"
+        timePosition="opposite"
+        state="pending"
+        badge="4">
+        Comprehensive testing and bug fixes
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Launch"
+        time="June 2024"
+        timePosition="opposite"
+        state="pending"
+        badge="5">
+        Production deployment and go-live
+      </twig:bs:timeline-item>
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 4: Horizontal Timeline #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 4: Horizontal Timeline (Event History)</h2>
+    <twig:bs:timeline variant="horizontal">
+      <twig:bs:timeline-item
+        title="Account Created"
+        time="Jan 2023"
+        state="completed"
+        icon="👤">
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="First Purchase"
+        time="Feb 2023"
+        state="completed"
+        icon="🛍️">
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Premium Member"
+        time="Mar 2023"
+        state="completed"
+        icon="⭐">
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Referral Bonus"
+        time="Apr 2023"
+        state="completed"
+        icon="🎁">
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Top Contributor"
+        time="May 2023"
+        state="completed"
+        icon="🏆">
+      </twig:bs:timeline-item>
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 5: Centered Timeline #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 5: Centered Timeline</h2>
+    <twig:bs:timeline variant="vertical" align="center">
+      <twig:bs:timeline-item
+        title="Foundation Phase"
+        time="Q1 2024"
+        timePosition="opposite"
+        state="completed"
+        badge="1"
+        variant="success">
+        Research and planning completed
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Development Phase"
+        time="Q2 2024"
+        timePosition="opposite"
+        state="active"
+        badge="2"
+        variant="primary">
+        Currently in development
+      </twig:bs:timeline-item>
+      
+      <twig:bs:timeline-item
+        title="Testing Phase"
+        time="Q3 2024"
+        timePosition="opposite"
+        state="pending"
+        badge="3">
+        Upcoming testing period
+      </twig:bs:timeline-item>
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 6: Compact Timeline #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 6: Compact Timeline</h2>
+    <twig:bs:timeline variant="compact">
+      <twig:bs:timeline-item 
+        title="Meeting with client" 
+        time="9:00 AM" 
+        state="completed"
+        icon="✓" />
+      
+      <twig:bs:timeline-item 
+        title="Code review" 
+        time="10:30 AM" 
+        state="completed"
+        icon="✓" />
+      
+      <twig:bs:timeline-item 
+        title="Lunch break" 
+        time="12:00 PM" 
+        state="completed"
+        icon="✓" />
+      
+      <twig:bs:timeline-item 
+        title="Development work" 
+        time="1:00 PM" 
+        state="active"
+        icon="⚙️" />
+      
+      <twig:bs:timeline-item 
+        title="Team standup" 
+        time="4:00 PM" 
+        state="pending" />
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 7: Custom Line Styling #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 7: Custom Line Styling</h2>
+    
+    <h5 class="mt-4">Dashed Line with Primary Color</h5>
+    <twig:bs:timeline lineStyle="dashed" lineVariant="primary">
+      <twig:bs:timeline-item title="Step 1" time="Today" state="completed" badge="1" />
+      <twig:bs:timeline-item title="Step 2" time="Tomorrow" state="active" badge="2" />
+      <twig:bs:timeline-item title="Step 3" time="Next week" state="pending" badge="3" />
+    </twig:bs:timeline>
+    
+    <h5 class="mt-4">Dotted Line with Success Color</h5>
+    <twig:bs:timeline lineStyle="dotted" lineVariant="success">
+      <twig:bs:timeline-item title="Initialize" state="completed" icon="✓" />
+      <twig:bs:timeline-item title="Processing" state="active" icon="⚙️" />
+      <twig:bs:timeline-item title="Complete" state="pending" icon="🎯" />
+    </twig:bs:timeline>
+  </section>
+
+  {# Example 8: Size Variants #}
+  <section class="mb-5">
+    <h2 class="mb-4">Example 8: Size Variants</h2>
+    
+    <h5 class="mt-4">Small Timeline</h5>
+    <twig:bs:timeline size="sm">
+      <twig:bs:timeline-item title="Small item 1" time="10:00" state="completed" badge="1" />
+      <twig:bs:timeline-item title="Small item 2" time="11:00" state="active" badge="2" />
+    </twig:bs:timeline>
+    
+    <h5 class="mt-4">Large Timeline</h5>
+    <twig:bs:timeline size="lg">
+      <twig:bs:timeline-item title="Large item 1" time="Today" state="completed" icon="🎯" :markerSize="'lg'" />
+      <twig:bs:timeline-item title="Large item 2" time="Tomorrow" state="active" icon="⚡" :markerSize="'lg'" />
+    </twig:bs:timeline>
+  </section>
+
+</div>
+
+</body>
+</html>
+

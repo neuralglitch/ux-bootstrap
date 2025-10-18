@@ -1,0 +1,506 @@
+# Metrics Grid - Usage Examples
+
+This document provides practical, copy-paste-ready examples for using the `bs:metrics-grid` component.
+
+---
+
+## Basic Examples
+
+### 1. Simple Dashboard Metrics
+
+```twig
+<twig:bs:metrics-grid
+    :columns="4"
+    :metrics="[
+        {value: '1,234', label: 'Total Users', variant: 'primary'},
+        {value: '567', label: 'Active Sessions', variant: 'success'},
+        {value: '89', label: 'Pending Tasks', variant: 'warning'},
+        {value: '$12,345', label: 'Revenue', variant: 'info'}
+    ]"
+/>
+```
+
+### 2. Metrics with Trends
+
+```twig
+<twig:bs:metrics-grid
+    :columns="3"
+    :cardShadow="true"
+    :metrics="[
+        {
+            value: '2,456',
+            label: 'Sales',
+            variant: 'success',
+            trend: 'up',
+            change: '+12%',
+            description: 'vs last month'
+        },
+        {
+            value: '98%',
+            label: 'Uptime',
+            variant: 'primary',
+            trend: 'neutral',
+            change: '±0%',
+            description: 'Last 30 days'
+        },
+        {
+            value: '34',
+            label: 'Issues',
+            variant: 'danger',
+            trend: 'down',
+            change: '-8%',
+            description: 'Open tickets'
+        }
+    ]"
+/>
+```
+
+### 3. Metrics with Icons
+
+```twig
+<twig:bs:metrics-grid
+    :columns="4"
+    gap="3"
+    :metrics="[
+        {value: '12,345', label: 'Revenue', icon: '💰', variant: 'success'},
+        {value: '1,234', label: 'Customers', icon: '👥', variant: 'primary'},
+        {value: '567', label: 'Orders', icon: '📦', variant: 'info'},
+        {value: '23', label: 'Support', icon: '🎫', variant: 'warning'}
+    ]"
+/>
+```
+
+---
+
+## Advanced Examples
+
+### 4. Dashboard with Sparklines
+
+```twig
+<twig:bs:metrics-grid
+    :columns="4"
+    :showSparklines="true"
+    sparklineColor="primary"
+    :sparklineHeight="40"
+    :cardBorder="true"
+    :metrics="[
+        {
+            value: '45,231',
+            label: 'Page Views',
+            variant: 'primary',
+            sparkline: [3000, 3500, 3200, 4000, 4200, 3800, 4500],
+            trend: 'up',
+            change: '+23%'
+        },
+        {
+            value: '2,345',
+            label: 'Visitors',
+            variant: 'success',
+            sparkline: [200, 250, 220, 280, 300, 270, 320],
+            trend: 'up',
+            change: '+18%'
+        },
+        {
+            value: '3:45',
+            label: 'Avg. Duration',
+            variant: 'info',
+            sparkline: [180, 200, 190, 220, 240, 210, 225],
+            trend: 'up',
+            change: '+12%'
+        },
+        {
+            value: '2.3%',
+            label: 'Bounce Rate',
+            variant: 'danger',
+            sparkline: [5, 4.5, 4, 3.5, 3, 2.5, 2.3],
+            trend: 'down',
+            change: '-54%'
+        }
+    ]"
+/>
+```
+
+### 5. Sales Dashboard
+
+```twig
+<twig:bs:metrics-grid
+    :columns="3"
+    gap="4"
+    :cardShadow="true"
+    :showSparklines="true"
+    :metrics="[
+        {
+            value: '$124,563',
+            label: 'Total Revenue',
+            variant: 'success',
+            icon: '💰',
+            iconPosition: 'top',
+            trend: 'up',
+            change: '+15.3%',
+            description: 'vs last quarter',
+            sparkline: [95000, 105000, 98000, 115000, 120000, 110000, 124563]
+        },
+        {
+            value: '1,234',
+            label: 'New Customers',
+            variant: 'primary',
+            icon: '👥',
+            iconPosition: 'top',
+            trend: 'up',
+            change: '+8.2%',
+            description: 'This month',
+            sparkline: [900, 950, 920, 1000, 1100, 1150, 1234]
+        },
+        {
+            value: '$101',
+            label: 'Avg. Order Value',
+            variant: 'info',
+            icon: '💳',
+            iconPosition: 'top',
+            trend: 'up',
+            change: '+5.1%',
+            description: 'Per transaction',
+            sparkline: [85, 88, 90, 92, 95, 98, 101]
+        }
+    ]"
+/>
+```
+
+---
+
+## Responsive Layouts
+
+### 6. Mobile-First Responsive Grid
+
+```twig
+<twig:bs:metrics-grid
+    :columns="4"
+    :columnsSm="2"
+    :columnsMd="3"
+    :columnsLg="4"
+    :columnsXl="6"
+    gap="3"
+    :metrics="[
+        {value: '234', label: 'Users', variant: 'primary'},
+        {value: '567', label: 'Sessions', variant: 'success'},
+        {value: '89', label: 'Errors', variant: 'danger'},
+        {value: '12', label: 'Warnings', variant: 'warning'},
+        {value: '456', label: 'Events', variant: 'info'},
+        {value: '78%', label: 'Success', variant: 'secondary'}
+    ]"
+/>
+```
+
+### 7. Compact View (6 Columns)
+
+```twig
+<twig:bs:metrics-grid
+    :columns="6"
+    gap="2"
+    size="sm"
+    :metrics="[
+        {value: '234', label: 'CPU', variant: 'primary'},
+        {value: '567', label: 'Memory', variant: 'success'},
+        {value: '89', label: 'Disk', variant: 'info'},
+        {value: '12', label: 'Network', variant: 'warning'},
+        {value: '456', label: 'Requests', variant: 'secondary'},
+        {value: '99%', label: 'Uptime', variant: 'success'}
+    ]"
+/>
+```
+
+---
+
+## Centered Display
+
+### 8. Hero Metrics (Centered, Large)
+
+```twig
+<twig:bs:metrics-grid
+    :columns="3"
+    textAlign="center"
+    size="lg"
+    :cardShadow="true"
+    :metrics="[
+        {
+            value: '99.9%',
+            label: 'Uptime',
+            variant: 'success',
+            icon: '✅',
+            iconPosition: 'top',
+            description: 'Last 30 days'
+        },
+        {
+            value: '< 100ms',
+            label: 'Response Time',
+            variant: 'primary',
+            icon: '⚡',
+            iconPosition: 'top',
+            description: 'Average'
+        },
+        {
+            value: '24/7',
+            label: 'Support',
+            variant: 'info',
+            icon: '💬',
+            iconPosition: 'top',
+            description: 'Always available'
+        }
+    ]"
+/>
+```
+
+---
+
+## From Controller Data
+
+### 9. Using Symfony Controller
+
+**Controller:**
+```php
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class DashboardController extends AbstractController
+{
+    #[Route('/dashboard', name: 'app_dashboard')]
+    public function index(): Response
+    {
+        $metrics = [
+            [
+                'value' => $this->getMetricValue('total_users'),
+                'label' => 'Total Users',
+                'variant' => 'primary',
+                'trend' => 'up',
+                'change' => '+' . $this->getGrowthPercentage('users') . '%',
+                'sparkline' => $this->getSparklineData('users', 30),
+            ],
+            [
+                'value' => '$' . number_format($this->getMetricValue('revenue'), 2),
+                'label' => 'Revenue',
+                'variant' => 'success',
+                'trend' => $this->getTrend('revenue'),
+                'change' => $this->getChange('revenue'),
+                'sparkline' => $this->getSparklineData('revenue', 30),
+            ],
+            // ... more metrics
+        ];
+        
+        return $this->render('dashboard/index.html.twig', [
+            'metrics' => $metrics,
+        ]);
+    }
+    
+    private function getMetricValue(string $metric): int|float
+    {
+        // Your business logic here
+        return 1234;
+    }
+    
+    private function getGrowthPercentage(string $metric): float
+    {
+        // Calculate growth percentage
+        return 12.5;
+    }
+    
+    private function getTrend(string $metric): string
+    {
+        // Determine trend: 'up', 'down', 'neutral'
+        return 'up';
+    }
+    
+    private function getChange(string $metric): string
+    {
+        // Format change string
+        return '+15.3%';
+    }
+    
+    private function getSparklineData(string $metric, int $days): array
+    {
+        // Get historical data for sparkline
+        return [100, 120, 115, 130, 140, 135, 150];
+    }
+}
+```
+
+**Template:**
+```twig
+{# templates/dashboard/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container my-5">
+        <h1>Dashboard</h1>
+        
+        <twig:bs:metrics-grid
+            :columns="4"
+            :showSparklines="true"
+            :cardShadow="true"
+            :metrics="metrics"
+        />
+    </div>
+{% endblock %}
+```
+
+---
+
+## Custom Styling
+
+### 10. Bordered Cards with Custom Classes
+
+```twig
+<twig:bs:metrics-grid
+    :columns="4"
+    :cardBorder="true"
+    cardVariant="primary"
+    class="my-custom-metrics"
+    :attr="{'data-controller': 'metrics'}"
+    :metrics="metricsData"
+/>
+```
+
+### 11. Shadow Cards with Hover Effect
+
+```twig
+<style>
+    .metric-card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.2s;
+    }
+</style>
+
+<twig:bs:metrics-grid
+    :columns="4"
+    :cardShadow="true"
+    :metrics="metricsData"
+/>
+```
+
+---
+
+## Real-World Use Cases
+
+### 12. E-commerce Dashboard
+
+```twig
+<div class="container-fluid">
+    <h2 class="mb-4">Sales Overview</h2>
+    
+    <twig:bs:metrics-grid
+        :columns="4"
+        :showSparklines="true"
+        :cardShadow="true"
+        gap="4"
+        :metrics="[
+            {
+                value: '$' ~ revenue|number_format(2),
+                label: 'Total Revenue',
+                variant: 'success',
+                icon: '💰',
+                trend: revenueTrend,
+                change: revenueChange,
+                sparkline: revenueHistory
+            },
+            {
+                value: ordersCount,
+                label: 'Orders',
+                variant: 'primary',
+                icon: '📦',
+                trend: ordersTrend,
+                change: ordersChange,
+                sparkline: ordersHistory
+            },
+            {
+                value: customersCount,
+                label: 'Customers',
+                variant: 'info',
+                icon: '👥',
+                trend: customersTrend,
+                change: customersChange,
+                sparkline: customersHistory
+            },
+            {
+                value: conversionRate ~ '%',
+                label: 'Conversion',
+                variant: 'warning',
+                icon: '🎯',
+                trend: conversionTrend,
+                change: conversionChange,
+                sparkline: conversionHistory
+            }
+        ]"
+    />
+</div>
+```
+
+### 13. System Monitoring
+
+```twig
+<div class="container-fluid">
+    <h2 class="mb-4">System Health</h2>
+    
+    <twig:bs:metrics-grid
+        :columns="6"
+        size="sm"
+        gap="2"
+        :metrics="[
+            {value: cpuUsage ~ '%', label: 'CPU', variant: cpuUsage > 80 ? 'danger' : 'success'},
+            {value: memoryUsage ~ '%', label: 'Memory', variant: memoryUsage > 80 ? 'danger' : 'success'},
+            {value: diskUsage ~ '%', label: 'Disk', variant: diskUsage > 80 ? 'danger' : 'success'},
+            {value: activeConnections, label: 'Connections', variant: 'info'},
+            {value: requestsPerSec, label: 'Req/s', variant: 'primary'},
+            {value: uptime, label: 'Uptime', variant: 'success'}
+        ]"
+    />
+</div>
+```
+
+---
+
+## Tips & Best Practices
+
+1. **Keep Metric Count Reasonable**: For optimal UX, display 4-8 metrics per grid
+2. **Use Sparklines Sparingly**: Only add sparklines when trend visualization adds value
+3. **Consistent Icons**: Use consistent icon styles (all emoji or all SVG)
+4. **Meaningful Trends**: Only show trends when historical data is available
+5. **Responsive Design**: Test your metrics grid on mobile devices
+6. **Loading States**: Consider using skeleton loaders while fetching data
+7. **Color Coding**: Use variants consistently (success=positive, danger=negative)
+8. **Accessibility**: Ensure metric values are readable and color-independent
+
+---
+
+## Performance Optimization
+
+```twig
+{# Cache metrics data for better performance #}
+{% cache 'dashboard_metrics_' ~ app.user.id ttl(300) %}
+    <twig:bs:metrics-grid
+        :columns="4"
+        :showSparklines="true"
+        :metrics="heavyMetricsData"
+    />
+{% endcache %}
+```
+
+---
+
+## Integration with APIs
+
+```javascript
+// Fetch metrics from API
+fetch('/api/dashboard/metrics')
+    .then(response => response.json())
+    .then(data => {
+        // Update metrics dynamically
+        // Use Stimulus controller or vanilla JS
+    });
+```
+
+For more information, see the [full component documentation](../metrics_grid_component.md).
+

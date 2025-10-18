@@ -1,0 +1,107 @@
+{# templates/components/extra/sidebar.html.twig #}
+{# Sidebar Component for Admin dashboards, Documentation sites, Settings pages, Multi-level navigation #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture content blocks #}
+{% set slot_header %}{% block header %}{% endblock %}{% endset %}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set slot_footer %}{% block footer %}{% endblock %}{% endset %}
+
+{# Check if blocks have content #}
+{% set has_header = slot_header is not empty and slot_header|trim != '' %}
+{% set has_content = slot_content is not empty and slot_content|trim != '' %}
+{% set has_footer = slot_footer is not empty and slot_footer|trim != '' %}
+
+{# Sidebar wrapper #}
+<aside class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  
+  {# Sidebar header #}
+  {% if o.showHeader or has_header %}
+    <div class="ux-sidebar__header" data-bs-sidebar-target="header">
+      {% if has_header %}
+        {{ slot_header|raw }}
+      {% else %}
+        <div class="d-flex align-items-center justify-content-between px-3 py-3 border-bottom">
+          {% if o.headerTitle %}
+            <h5 class="mb-0 ux-sidebar__title">{{ o.headerTitle }}</h5>
+          {% endif %}
+          {% if o.showToggle and o.collapsible %}
+            <button 
+              type="button" 
+              class="btn btn-link text-decoration-none p-0"
+              data-action="bs-sidebar#toggle"
+              data-bs-sidebar-target="toggleBtn"
+              aria-label="Toggle sidebar">
+              <span class="ux-sidebar__toggle-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+              </span>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+  {# Sidebar content/body #}
+  <div class="ux-sidebar__body{% if o.scrollable %} overflow-auto{% endif %}" data-bs-sidebar-target="body">
+    {% if has_content %}
+      {{ slot_content|raw }}
+    {% else %}
+      {# Default navigation structure #}
+      <nav class="ux-sidebar__nav">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-bs-sidebar-target="navItem">
+              <span class="ux-sidebar__nav-icon">📊</span>
+              <span class="ux-sidebar__nav-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-sidebar-target="navItem">
+              <span class="ux-sidebar__nav-icon">📄</span>
+              <span class="ux-sidebar__nav-text">Pages</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-sidebar-target="navItem">
+              <span class="ux-sidebar__nav-icon">⚙️</span>
+              <span class="ux-sidebar__nav-text">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+  
+  {# Sidebar footer #}
+  {% if o.showFooter or has_footer %}
+    <div class="ux-sidebar__footer border-top" data-bs-sidebar-target="footer">
+      {% if has_footer %}
+        {{ slot_footer|raw }}
+      {% else %}
+        <div class="px-3 py-3">
+          <small class="text-muted">Footer content</small>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+</aside>
+
+{# Overlay backdrop (if enabled) #}
+{% if o.overlay %}
+  <div 
+    class="ux-sidebar__backdrop{% if not o.collapsed %} show{% endif %}" 
+    data-bs-sidebar-target="backdrop"
+    data-action="click->bs-sidebar#close"
+    style="display: {% if o.collapsed %}none{% else %}block{% endif %};">
+  </div>
+{% endif %}
+
+{%- endapply %}
+

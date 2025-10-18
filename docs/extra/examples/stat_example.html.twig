@@ -1,0 +1,339 @@
+{# Stat Component Examples #}
+
+{# Basic Stats #}
+<h3>Basic Stats</h3>
+<div class="row g-3">
+    <div class="col-md-3">
+        <twig:bs:stat 
+            label="Total Users"
+            value="1,234"
+            variant="primary"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            label="Revenue"
+            value="$45,678"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            label="Orders"
+            value="789"
+            variant="info"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            label="Pending"
+            value="23"
+            variant="warning"
+        />
+    </div>
+</div>
+
+{# Stats with Trends #}
+<h3 class="mt-5">Stats with Trends</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="Active Users"
+            value="2,456"
+            trend="up"
+            trendValue="12.5%"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="Page Views"
+            value="145K"
+            trend="up"
+            trendValue="8.3%"
+            variant="info"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="Bounce Rate"
+            value="42%"
+            trend="down"
+            trendValue="3.2%"
+            variant="danger"
+        />
+    </div>
+</div>
+
+{# Stats with Icons #}
+<h3 class="mt-5">Stats with Icons</h3>
+<div class="row g-3">
+    <div class="col-md-3">
+        <twig:bs:stat 
+            icon="bi bi-people-fill"
+            label="Total Customers"
+            value="8,234"
+            trend="up"
+            trendValue="15%"
+            variant="primary"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            icon="bi bi-cart-fill"
+            label="Total Orders"
+            value="3,567"
+            trend="up"
+            trendValue="23%"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            icon="bi bi-currency-dollar"
+            label="Revenue"
+            value="$89,456"
+            trend="up"
+            trendValue="18%"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-3">
+        <twig:bs:stat 
+            icon="bi bi-graph-up"
+            label="Conversion Rate"
+            value="3.24%"
+            trend="up"
+            trendValue="0.8%"
+            variant="info"
+        />
+    </div>
+</div>
+
+{# Large Stats #}
+<h3 class="mt-5">Large Stats Display</h3>
+<div class="row g-3">
+    <div class="col-md-6">
+        <twig:bs:stat 
+            icon="bi bi-cash-stack"
+            label="Total Revenue This Month"
+            value="$234,567"
+            trend="up"
+            trendValue="34.5%"
+            :description="'Compared to last month'"
+            variant="success"
+            size="lg"
+        />
+    </div>
+    <div class="col-md-6">
+        <twig:bs:stat 
+            icon="bi bi-people"
+            label="New Customers"
+            value="4,892"
+            trend="up"
+            trendValue="12.8%"
+            :description="'Signed up this month'"
+            variant="primary"
+            size="lg"
+        />
+    </div>
+</div>
+
+{# Stats with Comparison #}
+<h3 class="mt-5">Stats with Period Comparison</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="This Week"
+            value="1,234"
+            trend="up"
+            trendValue="23%"
+            :description="'vs. last week: 1,003'"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="This Month"
+            value="5,678"
+            trend="up"
+            trendValue="15%"
+            :description="'vs. last month: 4,938'"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            label="This Year"
+            value="45,890"
+            trend="up"
+            trendValue="28%"
+            :description="'vs. last year: 35,851'"
+            variant="success"
+        />
+    </div>
+</div>
+
+{# Negative Trends #}
+<h3 class="mt-5">Stats with Negative Trends</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:stat 
+            icon="bi bi-x-circle"
+            label="Failed Transactions"
+            value="23"
+            trend="down"
+            trendValue="45%"
+            :description="'Great improvement!'"
+            variant="success"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            icon="bi bi-exclamation-triangle"
+            label="Support Tickets"
+            value="67"
+            trend="up"
+            trendValue="12%"
+            :description="'Needs attention'"
+            variant="warning"
+        />
+    </div>
+    <div class="col-md-4">
+        <twig:bs:stat 
+            icon="bi bi-arrow-counterclockwise"
+            label="Refund Requests"
+            value="8"
+            trend="down"
+            trendValue="20%"
+            :description="'Improved from 10'"
+            variant="success"
+        />
+    </div>
+</div>
+
+{# Compact Stats #}
+<h3 class="mt-5">Compact Stats</h3>
+<div class="row g-2">
+    <div class="col-6 col-md-3">
+        <twig:bs:stat label="Views" value="12.4K" variant="primary" size="sm" />
+    </div>
+    <div class="col-6 col-md-3">
+        <twig:bs:stat label="Likes" value="3.2K" variant="danger" size="sm" />
+    </div>
+    <div class="col-6 col-md-3">
+        <twig:bs:stat label="Shares" value="892" variant="info" size="sm" />
+    </div>
+    <div class="col-6 col-md-3">
+        <twig:bs:stat label="Comments" value="456" variant="success" size="sm" />
+    </div>
+</div>
+
+{# Stats in Cards #}
+<h3 class="mt-5">Stats in Cards</h3>
+<div class="row g-3">
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h5 class="card-title">Sales Performance</h5>
+                <div class="row g-3 mt-2">
+                    <div class="col-6">
+                        <twig:bs:stat 
+                            label="Today"
+                            value="$12,345"
+                            trend="up"
+                            trendValue="5%"
+                            variant="success"
+                            size="sm"
+                        />
+                    </div>
+                    <div class="col-6">
+                        <twig:bs:stat 
+                            label="This Week"
+                            value="$67,890"
+                            trend="up"
+                            trendValue="12%"
+                            variant="success"
+                            size="sm"
+                        />
+                    </div>
+                </div>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h5 class="card-title">User Engagement</h5>
+                <div class="row g-3 mt-2">
+                    <div class="col-6">
+                        <twig:bs:stat 
+                            label="Active Now"
+                            value="234"
+                            trend="up"
+                            trendValue="8%"
+                            variant="primary"
+                            size="sm"
+                        />
+                    </div>
+                    <div class="col-6">
+                        <twig:bs:stat 
+                            label="Avg. Session"
+                            value="4:32"
+                            trend="up"
+                            trendValue="15%"
+                            variant="info"
+                            size="sm"
+                        />
+                    </div>
+                </div>
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# Dashboard Stats Grid #}
+<h3 class="mt-5">Complete Dashboard Stats</h3>
+<div class="row g-3">
+    <div class="col-12 col-sm-6 col-lg-3">
+        <twig:bs:stat 
+            icon="bi bi-people-fill"
+            label="Total Users"
+            value="12,345"
+            trend="up"
+            trendValue="12%"
+            variant="primary"
+        />
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <twig:bs:stat 
+            icon="bi bi-cart-fill"
+            label="Total Sales"
+            value="$89,234"
+            trend="up"
+            trendValue="23%"
+            variant="success"
+        />
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <twig:bs:stat 
+            icon="bi bi-graph-up-arrow"
+            label="Growth"
+            value="+34.5%"
+            trend="up"
+            trendValue="5.2%"
+            variant="success"
+        />
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <twig:bs:stat 
+            icon="bi bi-star-fill"
+            label="Avg Rating"
+            value="4.8"
+            trend="up"
+            trendValue="0.3"
+            variant="warning"
+        />
+    </div>
+</div>
+

@@ -1,0 +1,59 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    
+    {# Show text before rating if position is 'start' #}
+    {% if o.showText and o.textPosition == 'start' %}
+      <span class="rating-text me-2">{{ o.text }}</span>
+    {% endif %}
+
+    {# Rating items container #}
+    <span class="rating-items" aria-hidden="true">
+      {% for item in o.items %}
+        {% if o.readonly %}
+          <span class="{{ item.classes }}" data-rating-index="{{ item.index }}">{{ item.icon|raw }}</span>
+        {% else %}
+          <button
+            type="button"
+            class="{{ item.classes }} rating-item-button"
+            data-rating-index="{{ item.index }}"
+            aria-label="Rate {{ item.index }} out of {{ o.max }}"
+          >{{ item.icon|raw }}</button>
+        {% endif %}
+      {% endfor %}
+    </span>
+
+    {# Show numeric value #}
+    {% if o.showValue %}
+      <span class="rating-value ms-2">
+        {% if o.halfStars %}
+          {{ o.value|number_format(1) }}
+        {% else %}
+          {{ o.value|round }}
+        {% endif %}
+      </span>
+    {% endif %}
+
+    {# Show count (e.g., "4/5") #}
+    {% if o.showCount %}
+      <span class="rating-count ms-2">
+        {% if o.halfStars %}
+          {{ o.value|number_format(1) }}
+        {% else %}
+          {{ o.value|round }}
+        {% endif %}
+        / {{ o.max }}
+      </span>
+    {% endif %}
+
+    {# Show text after rating if position is 'end' #}
+    {% if o.showText and o.textPosition == 'end' %}
+      <span class="rating-text ms-2">{{ o.text }}</span>
+    {% endif %}
+
+  </div>
+
+{%- endapply %}
+

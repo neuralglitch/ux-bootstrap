@@ -1,0 +1,86 @@
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+<div class="{{ o.containerClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.rowClasses }}">
+        {% for metric in o.metrics %}
+            <div class="{{ o.colClasses }}">
+                <div class="{{ o.cardClasses }}">
+                    <div class="{{ o.bodyClasses }}">
+                        {% if metric.iconPosition == 'top' and metric.icon %}
+                            <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                        {% endif %}
+                        
+                        <div class="metric-content{% if metric.iconPosition != 'top' %} d-flex align-items-center justify-content-between{% endif %}">
+                            <div class="metric-main{% if metric.iconPosition == 'start' and metric.icon %} d-flex align-items-center{% endif %}">
+                                {% if metric.iconPosition == 'start' and metric.icon %}
+                                    <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                                {% endif %}
+                                
+                                <div class="flex-grow-1">
+                                    <div class="{{ metric.valueClasses }}">
+                                        {{ metric.value }}
+                                        {% if metric.change and metric.trendData %}
+                                            <span class="{{ metric.trendData.classes }}">
+                                                {{ metric.trendData.icon }}
+                                                {{ metric.change }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="{{ metric.labelClasses }}">{{ metric.label }}</div>
+                                    {% if metric.description %}
+                                        <div class="{{ metric.descriptionClasses }}">{{ metric.description }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if metric.iconPosition == 'end' and metric.icon %}
+                                    <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% if metric.sparkline %}
+                            <div class="metric-sparkline mt-3">
+                                <svg width="100%" height="{{ metric.sparkline.height }}" class="sparkline-svg">
+                                    {% set max_value = max(metric.sparkline.values) %}
+                                    {% set min_value = min(metric.sparkline.values) %}
+                                    {% set range = max_value - min_value %}
+                                    {% set point_count = metric.sparkline.values|length %}
+                                    {% set x_step = 100 / (point_count - 1) %}
+                                    
+                                    {# Build SVG path #}
+                                    {% set path_data = [] %}
+                                    {% for index, value in metric.sparkline.values %}
+                                        {% set x = index * x_step %}
+                                        {% set y = range > 0 ? 100 - ((value - min_value) / range * 100) : 50 %}
+                                        {% if loop.first %}
+                                            {% set path_data = path_data|merge(['M ' ~ x ~ ' ' ~ y]) %}
+                                        {% else %}
+                                            {% set path_data = path_data|merge(['L ' ~ x ~ ' ' ~ y]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                    <polyline
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="text-{{ metric.sparkline.color }}"
+                                        points="{% for index, value in metric.sparkline.values %}{% set x = index * x_step %}{% set y = range > 0 ? 100 - ((value - min_value) / range * 100) : 50 %}{% if not loop.first %} {% endif %}{{ x }},{{ y }}{% endfor %}"
+                                        vector-effect="non-scaling-stroke"
+                                        style="transform: scaleY(0.8); transform-origin: center;"
+                                    />
+                                </svg>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{%- endapply %}
+

@@ -1,0 +1,148 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Lightbox gallery wrapper - hidden by default #}
+  <div class="lightbox-gallery d-none">
+    {% for image in o.images %}
+      <a href="{{ image.src }}"
+         data-lightbox="{{ o.id }}"
+         {% if image.thumbnail is defined %}data-thumbnail="{{ image.thumbnail }}"{% endif %}
+         {% if image.caption is defined %}data-caption="{{ image.caption }}"{% endif %}
+         {% if image.alt is defined %}data-alt="{{ image.alt }}"{% endif %}
+         data-bs-lightbox-target="trigger"
+         data-action="click->bs-lightbox#open">
+        <img src="{{ image.thumbnail ?? image.src }}"
+             alt="{{ image.alt ?? 'Image ' ~ (loop.index) }}"
+             class="lightbox-thumbnail">
+      </a>
+    {% endfor %}
+  </div>
+
+  {# Lightbox modal overlay #}
+  <div class="{{ o.classes }}"
+       {{ this.renderHtmlAttributes(o.attrs) | raw }}
+       style="display: none;"
+       data-bs-lightbox-target="modal"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Image lightbox">
+
+    {# Backdrop #}
+    <div class="lightbox-backdrop"
+         data-bs-lightbox-target="backdrop"
+         {% if o.attrs['data-bs-lightbox-close-on-backdrop-value'] == 'true' %}
+         data-action="click->bs-lightbox#close"
+         {% endif %}></div>
+
+    {# Main content #}
+    <div class="lightbox-content" data-bs-lightbox-target="content">
+
+      {# Close button #}
+      {% if o.showClose %}
+        <button type="button"
+                class="lightbox-close btn-close btn-close-white"
+                data-action="click->bs-lightbox#close"
+                aria-label="Close">
+        </button>
+      {% endif %}
+
+      {# Toolbar #}
+      <div class="lightbox-toolbar">
+        {# Counter #}
+        {% if o.showCounter %}
+          <div class="lightbox-counter" data-bs-lightbox-target="counter">
+            <span data-bs-lightbox-target="currentIndex">1</span> / <span>{{ o.imageCount }}</span>
+          </div>
+        {% endif %}
+
+        {# Action buttons #}
+        <div class="lightbox-actions">
+          {% if o.showDownload %}
+            <button type="button"
+                    class="lightbox-btn"
+                    data-action="click->bs-lightbox#download"
+                    aria-label="Download image"
+                    title="Download">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+              </svg>
+            </button>
+          {% endif %}
+
+          {% if o.showFullscreen %}
+            <button type="button"
+                    class="lightbox-btn"
+                    data-action="click->bs-lightbox#toggleFullscreen"
+                    data-bs-lightbox-target="fullscreenBtn"
+                    aria-label="Toggle fullscreen"
+                    title="Fullscreen">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+            </button>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Navigation buttons #}
+      {% if o.imageCount > 1 %}
+        <button type="button"
+                class="lightbox-nav lightbox-nav-prev"
+                data-action="click->bs-lightbox#prev"
+                data-bs-lightbox-target="prevBtn"
+                aria-label="Previous image">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+
+        <button type="button"
+                class="lightbox-nav lightbox-nav-next"
+                data-action="click->bs-lightbox#next"
+                data-bs-lightbox-target="nextBtn"
+                aria-label="Next image">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      {% endif %}
+
+      {# Image container #}
+      <div class="lightbox-image-container" data-bs-lightbox-target="imageContainer">
+        <img src="" alt="" class="lightbox-image" data-bs-lightbox-target="image">
+
+        {# Loading spinner #}
+        <div class="lightbox-spinner" data-bs-lightbox-target="spinner">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      {# Caption #}
+      {% if o.showCaptions %}
+        <div class="lightbox-caption" data-bs-lightbox-target="caption"></div>
+      {% endif %}
+
+      {# Thumbnails #}
+      {% if o.showThumbnails and o.imageCount > 1 %}
+        <div class="lightbox-thumbnails" data-bs-lightbox-target="thumbnails">
+          {% for image in o.images %}
+            <button type="button"
+                    class="lightbox-thumbnail-btn{% if loop.first %} active{% endif %}"
+                    data-action="click->bs-lightbox#goto"
+                    data-index="{{ loop.index0 }}"
+                    aria-label="Go to image {{ loop.index }}">
+              <img src="{{ image.thumbnail ?? image.src }}"
+                   alt="{{ image.alt ?? 'Thumbnail ' ~ loop.index }}">
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{%- endapply %}
+

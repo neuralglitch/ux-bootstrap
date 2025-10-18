@@ -1,0 +1,119 @@
+{# Card Component Examples #}
+
+{# Basic Card #}
+<h3>Basic Card</h3>
+<twig:bs:card>
+    <div class="card-body">
+        <h5 class="card-title">Card Title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <twig:bs:button variant="primary">Go somewhere</twig:bs:button>
+    </div>
+</twig:bs:card>
+
+{# Card with Header and Footer #}
+<h3 class="mt-5">Card with Header and Footer</h3>
+<twig:bs:card header="Featured" footer="2 days ago">
+    <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <twig:bs:button variant="primary">Go somewhere</twig:bs:button>
+    </div>
+</twig:bs:card>
+
+{# Card with Image #}
+<h3 class="mt-5">Card with Image</h3>
+<twig:bs:card style="width: 18rem;">
+    <img src="https://via.placeholder.com/286x180" class="card-img-top" alt="Placeholder">
+    <div class="card-body">
+        <h5 class="card-title">Card with Image</h5>
+        <p class="card-text">Some quick example text to build on the card title.</p>
+        <twig:bs:button variant="primary">View Details</twig:bs:button>
+    </div>
+</twig:bs:card>
+
+{# Card with List Group #}
+<h3 class="mt-5">Card with List Group</h3>
+<twig:bs:card style="width: 18rem;">
+    <div class="card-header">Featured</div>
+    <twig:bs:list-group :flush="true">
+        <twig:bs:list-group-item>An item</twig:bs:list-group-item>
+        <twig:bs:list-group-item>A second item</twig:bs:list-group-item>
+        <twig:bs:list-group-item>A third item</twig:bs:list-group-item>
+    </twig:bs:list-group>
+</twig:bs:card>
+
+{# Colored Cards #}
+<h3 class="mt-5">Colored Cards</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:card class="text-bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Primary Card</h5>
+                <p class="card-text">This is a primary card with custom background and text color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card class="text-bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Success Card</h5>
+                <p class="card-text">This is a success card with custom background and text color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card class="text-bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Danger Card</h5>
+                <p class="card-text">This is a danger card with custom background and text color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# Card with Border #}
+<h3 class="mt-5">Card with Border Variants</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <twig:bs:card class="border-primary">
+            <div class="card-body">
+                <h5 class="card-title">Primary Border</h5>
+                <p class="card-text">Card with primary border color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card class="border-success">
+            <div class="card-body">
+                <h5 class="card-title">Success Border</h5>
+                <p class="card-text">Card with success border color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-4">
+        <twig:bs:card class="border-warning">
+            <div class="card-body">
+                <h5 class="card-title">Warning Border</h5>
+                <p class="card-text">Card with warning border color.</p>
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# Horizontal Card #}
+<h3 class="mt-5">Horizontal Card</h3>
+<twig:bs:card class="mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="https://via.placeholder.com/180x250" class="img-fluid rounded-start" alt="Placeholder">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Horizontal Card</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in.</p>
+                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+</twig:bs:card>
+

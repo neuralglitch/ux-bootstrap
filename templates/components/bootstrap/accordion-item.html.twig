@@ -1,0 +1,32 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for accordion body content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  <div class="{{ o.itemClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <h2 class="accordion-header">
+      <button 
+        class="{{ o.buttonClasses }}" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#{{ o.targetId }}" 
+        aria-expanded="{{ o.show ? 'true' : 'false' }}" 
+        aria-controls="{{ o.targetId }}">
+        {{ o.title|raw }}
+      </button>
+    </h2>
+    <div 
+      id="{{ o.targetId }}" 
+      class="{{ o.collapseClasses }}"
+      {% if o.parentId %}data-bs-parent="#{{ o.parentId }}"{% endif %}
+      aria-labelledby="{{ o.targetId }}-heading">
+      <div class="accordion-body">
+        {{ slot_content|raw }}
+      </div>
+    </div>
+  </div>
+
+{%- endapply %}
+

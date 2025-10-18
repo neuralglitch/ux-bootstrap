@@ -1,0 +1,124 @@
+{# List Group Component Examples #}
+
+{# Basic List Group #}
+<h3>Basic List Group</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item>An item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A second item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A third item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A fourth item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>And a fifth one</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Active and Disabled Items #}
+<h3 class="mt-5">Active and Disabled Items</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item :active="true">An active item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A second item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A third item</twig:bs:list-group-item>
+    <twig:bs:list-group-item :disabled="true">A disabled item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Links and Buttons #}
+<h3 class="mt-5">Links and Buttons</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item href="#" :active="true">Active link item</twig:bs:list-group-item>
+    <twig:bs:list-group-item href="#">Link item</twig:bs:list-group-item>
+    <twig:bs:list-group-item href="#">Another link item</twig:bs:list-group-item>
+    <twig:bs:list-group-item href="#" :disabled="true">Disabled link item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Flush List Group #}
+<h3 class="mt-5">Flush List Group</h3>
+<twig:bs:list-group :flush="true">
+    <twig:bs:list-group-item>An item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A second item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A third item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A fourth item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Numbered List Group #}
+<h3 class="mt-5">Numbered List Group</h3>
+<twig:bs:list-group tag="ol" :numbered="true">
+    <twig:bs:list-group-item tag="li">First item</twig:bs:list-group-item>
+    <twig:bs:list-group-item tag="li">Second item</twig:bs:list-group-item>
+    <twig:bs:list-group-item tag="li">Third item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Horizontal List Groups #}
+<h3 class="mt-5">Horizontal List Groups</h3>
+<twig:bs:list-group horizontal="md">
+    <twig:bs:list-group-item>An item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A second item</twig:bs:list-group-item>
+    <twig:bs:list-group-item>A third item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Contextual Classes #}
+<h3 class="mt-5">Contextual Classes</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item>Default list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="primary">Primary list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="secondary">Secondary list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="success">Success list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="danger">Danger list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="warning">Warning list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="info">Info list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="light">Light list group item</twig:bs:list-group-item>
+    <twig:bs:list-group-item variant="dark">Dark list group item</twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# List Group with Badges #}
+<h3 class="mt-5">List Group with Badges</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Inbox
+        <twig:bs:badge variant="primary" :pill="true">14</twig:bs:badge>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Unread
+        <twig:bs:badge variant="danger" :pill="true">99+</twig:bs:badge>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Updates
+        <twig:bs:badge variant="success" :pill="true">7</twig:bs:badge>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Custom Content #}
+<h3 class="mt-5">Custom Content</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item href="#" :active="true">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small>3 days ago</small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small>And some small print.</small>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item href="#">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-body-secondary">3 days ago</small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small class="text-body-secondary">And some muted small print.</small>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+
+{# Checkboxes and Radios #}
+<h3 class="mt-5">Checkboxes</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item>
+        <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
+        <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item>
+        <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
+        <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item>
+        <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+        <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+

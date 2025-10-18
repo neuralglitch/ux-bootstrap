@@ -1,0 +1,197 @@
+{# Code Block Component Examples #}
+
+{# Basic Code Block #}
+<h3>Basic Code Block</h3>
+<twig:bs:code-block language="php">
+function greet($name) {
+    return "Hello, " . $name . "!";
+}
+
+echo greet("World");
+</twig:bs:code-block>
+
+{# Code Block with Line Numbers #}
+<h3 class="mt-5">Code Block with Line Numbers</h3>
+<twig:bs:code-block language="javascript" :lineNumbers="true">
+const fetchData = async (url) => {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+</twig:bs:code-block>
+
+{# Code Block with Filename #}
+<h3 class="mt-5">Code Block with Filename</h3>
+<twig:bs:code-block language="python" filename="app.py" :copyable="true">
+def calculate_fibonacci(n):
+    if n <= 1:
+        return n
+    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+
+# Calculate first 10 Fibonacci numbers
+for i in range(10):
+    print(f"F({i}) = {calculate_fibonacci(i)}")
+</twig:bs:code-block>
+
+{# Code Block with Highlighting #}
+<h3 class="mt-5">Code Block with Line Highlighting</h3>
+<twig:bs:code-block language="typescript" :lineNumbers="true" :highlight="[3, 4, 5]">
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    active: boolean;
+}
+
+const users: User[] = [
+    { id: 1, name: 'John', email: 'john@example.com', active: true },
+    { id: 2, name: 'Jane', email: 'jane@example.com', active: false }
+];
+</twig:bs:code-block>
+
+{# Different Languages #}
+<h3 class="mt-5">Different Programming Languages</h3>
+
+<h5>HTML</h5>
+<twig:bs:code-block language="html" :copyable="true">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+</body>
+</html>
+</twig:bs:code-block>
+
+<h5 class="mt-4">CSS</h5>
+<twig:bs:code-block language="css" :copyable="true">
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+</twig:bs:code-block>
+
+<h5 class="mt-4">SQL</h5>
+<twig:bs:code-block language="sql" :lineNumbers="true">
+SELECT u.id, u.name, u.email, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.active = 1
+GROUP BY u.id, u.name, u.email
+HAVING order_count > 5
+ORDER BY order_count DESC
+LIMIT 10;
+</twig:bs:code-block>
+
+{# Code Block with Theme #}
+<h3 class="mt-5">Code Block with Dark Theme</h3>
+<twig:bs:code-block language="javascript" theme="dark" :copyable="true" :lineNumbers="true">
+class Calculator {
+    constructor() {
+        this.result = 0;
+    }
+    
+    add(x) {
+        this.result += x;
+        return this;
+    }
+    
+    subtract(x) {
+        this.result -= x;
+        return this;
+    }
+    
+    getResult() {
+        return this.result;
+    }
+}
+
+const calc = new Calculator();
+console.log(calc.add(10).subtract(3).getResult()); // Output: 7
+</twig:bs:code-block>
+
+{# Inline Code #}
+<h3 class="mt-5">Inline Code Snippets</h3>
+<p>
+    To install the package, run <code>npm install ux-bootstrap</code> in your terminal.
+</p>
+<p>
+    Use the <code>className</code> prop to add custom CSS classes, or use <code>style</code> for inline styles.
+</p>
+<p>
+    The <code>const</code> keyword creates a block-scoped constant, while <code>let</code> creates a block-scoped variable.
+</p>
+
+{# Multiple Code Blocks in Tabs #}
+<h3 class="mt-5">Multiple Language Examples</h3>
+<ul class="nav nav-tabs" id="codeTab" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#phpCode">PHP</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#jsCode">JavaScript</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pyCode">Python</button>
+    </li>
+</ul>
+<div class="tab-content border border-top-0 p-3">
+    <div class="tab-pane fade show active" id="phpCode">
+        <twig:bs:code-block language="php" :copyable="true">
+$data = ['name' => 'John', 'age' => 30];
+$json = json_encode($data);
+echo $json;
+        </twig:bs:code-block>
+    </div>
+    <div class="tab-pane fade" id="jsCode">
+        <twig:bs:code-block language="javascript" :copyable="true">
+const data = { name: 'John', age: 30 };
+const json = JSON.stringify(data);
+console.log(json);
+        </twig:bs:code-block>
+    </div>
+    <div class="tab-pane fade" id="pyCode">
+        <twig:bs:code-block language="python" :copyable="true">
+import json
+data = {'name': 'John', 'age': 30}
+json_str = json.dumps(data)
+print(json_str)
+        </twig:bs:code-block>
+    </div>
+</div>
+
+{# Code Block in Card #}
+<h3 class="mt-5">Code Block in Documentation Card</h3>
+<twig:bs:card>
+    <div class="card-header">
+        <h5 class="mb-0">Installation Instructions</h5>
+    </div>
+    <div class="card-body">
+        <p>Install the package using npm:</p>
+        <twig:bs:code-block language="bash" :copyable="true">
+npm install @neuralglitch/ux-bootstrap
+        </twig:bs:code-block>
+        
+        <p class="mt-3">Or using Composer:</p>
+        <twig:bs:code-block language="bash" :copyable="true">
+composer require neuralglitch/ux-bootstrap
+        </twig:bs:code-block>
+    </div>
+</twig:bs:card>
+

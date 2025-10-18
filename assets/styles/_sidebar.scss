@@ -1,0 +1,308 @@
+// _sidebar.scss
+// Sidebar component styles for admin dashboards, documentation sites, and multi-level navigation
+
+// CSS Variables
+:root {
+  --ux-sidebar-width: 280px;
+  --ux-sidebar-mini-width: 80px;
+  --ux-sidebar-z-index: 1040;
+  --ux-sidebar-transition-duration: 300ms;
+  --ux-sidebar-bg: var(--bs-body-bg);
+  --ux-sidebar-border-color: var(--bs-border-color);
+  --ux-sidebar-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+  --ux-sidebar-backdrop-bg: rgba(0, 0, 0, 0.5);
+}
+
+// Sidebar container
+.ux-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--ux-sidebar-width);
+  background-color: var(--ux-sidebar-bg);
+  z-index: var(--ux-sidebar-z-index);
+  transition: transform var(--ux-sidebar-transition-duration) ease-in-out,
+              width var(--ux-sidebar-transition-duration) ease-in-out;
+  display: flex;
+  flex-direction: column;
+  
+  // Position variants
+  &--left {
+    left: 0;
+    border-right: 1px solid var(--ux-sidebar-border-color);
+  }
+  
+  &--right {
+    right: 0;
+    border-left: 1px solid var(--ux-sidebar-border-color);
+  }
+  
+  // Variant: Fixed (always visible)
+  &--fixed {
+    position: fixed;
+    
+    &.ux-sidebar--collapsed {
+      transform: translateX(0);
+    }
+  }
+  
+  // Variant: Collapsible (can be hidden)
+  &--collapsible {
+    &.ux-sidebar--collapsed {
+      &.ux-sidebar--left {
+        transform: translateX(-100%);
+      }
+      
+      &.ux-sidebar--right {
+        transform: translateX(100%);
+      }
+    }
+  }
+  
+  // Variant: Overlay (slides over content)
+  &--overlay {
+    &.ux-sidebar--collapsed {
+      &.ux-sidebar--left {
+        transform: translateX(-100%);
+      }
+      
+      &.ux-sidebar--right {
+        transform: translateX(100%);
+      }
+    }
+  }
+  
+  // Variant: Push (pushes content)
+  &--push {
+    ~ .main-content {
+      transition: margin var(--ux-sidebar-transition-duration) ease-in-out;
+    }
+    
+    &.ux-sidebar--left:not(.ux-sidebar--collapsed) ~ .main-content {
+      margin-left: var(--ux-sidebar-width);
+    }
+    
+    &.ux-sidebar--right:not(.ux-sidebar--collapsed) ~ .main-content {
+      margin-right: var(--ux-sidebar-width);
+    }
+  }
+  
+  // Variant: Mini (collapses to icon-only)
+  &--mini {
+    &.ux-sidebar--collapsed {
+      width: var(--ux-sidebar-mini-width);
+      
+      .ux-sidebar__nav-text,
+      .ux-sidebar__title {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+      }
+      
+      .ux-sidebar__nav-icon {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  // Scrollable body
+  &--scrollable {
+    .ux-sidebar__body {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
+
+// Header
+.ux-sidebar__header {
+  flex-shrink: 0;
+  
+  .ux-sidebar__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: opacity var(--ux-sidebar-transition-duration) ease-in-out;
+  }
+  
+  .ux-sidebar__toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-body-color);
+    transition: transform var(--ux-sidebar-transition-duration) ease-in-out;
+    
+    &:hover {
+      color: var(--bs-primary);
+    }
+  }
+}
+
+// Body (main content area)
+.ux-sidebar__body {
+  flex: 1;
+  min-height: 0;
+  
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+// Footer
+.ux-sidebar__footer {
+  flex-shrink: 0;
+}
+
+// Navigation
+.ux-sidebar__nav {
+  .nav {
+    padding: 0.5rem 0;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out;
+    border-radius: 0;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--bs-primary);
+    }
+    
+    &.active {
+      background-color: rgba(var(--bs-primary-rgb), 0.1);
+      color: var(--bs-primary);
+      font-weight: 500;
+      
+      .ux-sidebar__nav-icon {
+        color: var(--bs-primary);
+      }
+    }
+    
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+  
+  .ux-sidebar__nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    transition: margin var(--ux-sidebar-transition-duration) ease-in-out;
+  }
+  
+  .ux-sidebar__nav-text {
+    flex: 1;
+    white-space: nowrap;
+    transition: opacity var(--ux-sidebar-transition-duration) ease-in-out,
+                width var(--ux-sidebar-transition-duration) ease-in-out;
+  }
+  
+  // Submenu/nested navigation
+  .ux-sidebar__submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--ux-sidebar-transition-duration) ease-in-out;
+    
+    .nav-link {
+      padding-left: 3rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  .nav-item.open .ux-sidebar__submenu {
+    max-height: 500px;
+  }
+}
+
+// Backdrop overlay
+.ux-sidebar__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ux-sidebar-backdrop-bg);
+  z-index: calc(var(--ux-sidebar-z-index) - 1);
+  opacity: 0;
+  transition: opacity var(--ux-sidebar-transition-duration) ease-in-out;
+  pointer-events: none;
+  
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// Mobile behavior
+@media (max-width: 991.98px) { // Default lg breakpoint
+  .ux-sidebar {
+    &--mobile-overlay {
+      &.ux-sidebar--collapsed {
+        &.ux-sidebar--left {
+          transform: translateX(-100%);
+        }
+        
+        &.ux-sidebar--right {
+          transform: translateX(100%);
+        }
+      }
+    }
+    
+    &--mobile-hidden {
+      &.ux-sidebar--collapsed {
+        display: none;
+      }
+    }
+  }
+}
+
+// Push body when sidebar is open (for push variant)
+body.sidebar-push-left {
+  margin-left: var(--sidebar-width);
+  transition: margin-left var(--ux-sidebar-transition-duration) ease-in-out;
+}
+
+body.sidebar-push-right {
+  margin-right: var(--sidebar-width);
+  transition: margin-right var(--ux-sidebar-transition-duration) ease-in-out;
+}
+
+// Dark theme adjustments
+[data-bs-theme="dark"] {
+  --ux-sidebar-bg: var(--bs-dark);
+  --ux-sidebar-border-color: rgba(255, 255, 255, 0.1);
+  --ux-sidebar-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  
+  .ux-sidebar__nav {
+    .nav-link {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+

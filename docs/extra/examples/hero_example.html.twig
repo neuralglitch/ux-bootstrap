@@ -1,0 +1,99 @@
+{# Hero Component Examples #}
+
+{# Centered Hero #}
+<h3>Centered Hero</h3>
+<twig:bs:hero
+    variant="centered"
+    title="Build something amazing"
+    lead="Start creating beautiful web applications with our component library."
+    ctaLabel="Get Started"
+    ctaHref="/docs"
+    secondaryCtaLabel="Learn More"
+    secondaryCtaHref="/features"
+/>
+
+{# Hero with Screenshot #}
+<h3 class="mt-5">Hero with Screenshot</h3>
+<twig:bs:hero
+    variant="screenshot_centered"
+    title="Modern Dashboard Interface"
+    lead="A beautiful, responsive dashboard built with Bootstrap components."
+    screenshotSrc="https://via.placeholder.com/800x500/667eea/ffffff?text=Dashboard+Preview"
+    ctaLabel="View Demo"
+    ctaHref="#demo"
+/>
+
+{# Image Left Hero #}
+<h3 class="mt-5">Image Left Hero</h3>
+<twig:bs:hero
+    variant="image_left"
+    title="Powerful Features"
+    lead="Discover all the amazing features that make our platform unique."
+    imageSrc="https://via.placeholder.com/500x400/764ba2/ffffff?text=Features"
+    imageAlt="Features illustration"
+    ctaLabel="Explore Features"
+    ctaHref="/features"
+/>
+
+{# Signup Hero #}
+<h3 class="mt-5">Signup Hero</h3>
+<twig:bs:hero
+    variant="signup"
+    title="Join thousands of users"
+    lead="Get started with your free account today. No credit card required."
+    ctaLabel="Sign Up Free"
+    ctaHref="/signup"
+    secondaryCtaLabel="Learn More"
+    secondaryCtaHref="/about"
+/>
+
+{# Border Image Hero #}
+<h3 class="mt-5">Border Image Hero</h3>
+<twig:bs:hero
+    variant="border_image"
+    title="Premium Experience"
+    lead="Experience the best-in-class features with our premium plan."
+    imageSrc="https://via.placeholder.com/1200x600/f093fb/ffffff?text=Premium+Features"
+    ctaLabel="Start Free Trial"
+    ctaHref="/trial"
+/>
+
+{# Full Height Hero #}
+<h3 class="mt-5">Full Height Hero</h3>
+<twig:bs:hero
+    variant="centered"
+    title="Welcome to Our Platform"
+    lead="The all-in-one solution for your business needs."
+    :fullHeight="true"
+    ctaLabel="Get Started"
+    ctaHref="/start"
+    secondaryCtaLabel="Watch Video"
+    secondaryCtaHref="#video"
+/>
+
+{# Custom Container Hero #}
+<h3 class="mt-5">Wide Container Hero</h3>
+<twig:bs:hero
+    variant="centered"
+    container="container-fluid"
+    title="Enterprise Solution"
+    lead="Scale your business with our enterprise-grade platform."
+    ctaLabel="Contact Sales"
+    ctaHref="/contact"
+/>
+
+{# Hero with Custom Classes #}
+<h3 class="mt-5">Hero with Custom Styling</h3>
+<twig:bs:hero
+    variant="centered"
+    class="bg-primary text-white"
+    title="Special Offer"
+    lead="Limited time offer - Get 50% off on all plans!"
+    ctaLabel="Claim Offer"
+    ctaHref="/pricing"
+    ctaVariant="light"
+    secondaryCtaLabel="View Plans"
+    secondaryCtaHref="/pricing"
+    secondaryCtaVariant="outline-light"
+/>
+

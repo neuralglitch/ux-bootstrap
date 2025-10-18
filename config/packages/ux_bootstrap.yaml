@@ -1,0 +1,1536 @@
+neuralglitch_ux_bootstrap:
+
+  # ============================================================
+  # Bootstrap Core Components (alphabetically ordered)
+  # ============================================================
+
+  accordion:
+    flush: false
+    always_open: false
+    id: null
+    class: null
+    attr: {  }
+
+  accordion_item:
+    show: false
+    collapsed: true
+    target_id: null
+    class: null
+    attr: {  }
+
+  alert:
+    variant: 'primary'
+    dismissible: false
+    fade: true
+    show: true
+    auto_hide: false
+    auto_hide_delay: 5000
+    role: 'alert'
+    class: null
+    attr: {  }
+
+  badge:
+    variant: 'secondary'
+    pill: false
+    href: null
+    target: '_self'
+    rel: null
+    title: null
+    id: null
+    text: null            # e.g. "dark", "white", "body-secondary", "success", ...
+    positioned: false     # for absolute positioning within a container
+    position: null        # e.g. "top-0 start-100" (container needs position-relative)
+    translate: true       # adds "translate-middle" when positioned=true
+    class: null
+    attr: {  }
+
+  breadcrumbs:
+    auto_generate: true
+    show_home: true
+    home_label: 'Home'
+    home_route: 'default'
+    home_route_params: {  }
+    divider: '/'
+    auto_collapse: false
+    collapse_threshold: 4
+    class: null
+    attr: {  }
+
+  button:
+    variant: 'primary'
+    outline: false
+    size: null
+    block: false
+    disabled: false
+    active: false
+
+    stimulus_controller: 'bs-link'
+
+    tooltip:
+      text: null
+      placement: 'bottom'
+      trigger: 'hover'
+      container: null
+      html: null
+    popover:
+      title: null
+      content: null
+      placement: 'bottom'
+      trigger: 'hover focus'
+      boundary: 'clippingParents'
+      html: null
+
+    icon_only: false
+    icon_gap: 2
+
+  button_group:
+    vertical: false
+    size: null              # null | 'sm' | 'lg'
+    role: 'group'           # 'group' | 'toolbar'
+    aria_label: null
+    aria_labelledby: null
+    class: null
+    attr: {  }
+
+  card:
+    variant: null
+    outline: false
+    border: true
+    img_position: 'top'        # 'top' | 'bottom' | 'overlay'
+    text_align: null           # 'start' | 'center' | 'end'
+    bg: null                   # Background color variant
+    text_color: null           # Text color variant
+    width: null                # e.g., '18rem', '20rem'
+    id: null
+    class: null
+    attr: {  }
+
+  # Carousel
+  carousel:
+    id: null
+    indicators: false
+    controls: true
+    fade: false
+    dark: false
+    ride: false         # false | true | 'carousel'
+    interval: 5000      # milliseconds
+    keyboard: true
+    pause: 'hover'      # 'hover' | false
+    touch: true
+    wrap: true
+    class: null
+    attr: {  }
+
+  carousel_item:
+    active: false
+    img_class: 'd-block w-100'
+    class: null
+    attr: {  }
+
+  collapse:
+    show: false                 # Whether to show by default
+    horizontal: false           # Horizontal collapse (width instead of height)
+    parent: null                # Parent selector for accordion-like behavior
+    class: null
+    attr: {  }
+
+  dropdown:
+    label: 'Dropdown'
+    variant: 'secondary'
+    outline: false
+    size: null              # null | 'sm' | 'lg'
+    direction: null         # null | 'dropup' | 'dropend' | 'dropstart' | 'dropup-center' | 'dropdown-center'
+    menu_align: null        # null | 'end' | 'sm-end' | 'md-end' | 'lg-end' | 'xl-end' | 'xxl-end'
+    dark: false             # Dark dropdown menu
+    split: false            # Split button dropdown
+    split_label: null       # Label for main button in split mode (defaults to label)
+    auto_close: null        # null | 'true' | 'false' | 'inside' | 'outside'
+    toggle_class: null
+    menu_class: null
+    menu_attr: {  }
+    class: null
+    attr: {  }
+
+  dropdown_divider:
+    class: null
+    attr: {  }
+
+  dropdown_header:
+    label: null
+    class: null
+    attr: {  }
+
+  dropdown_item:
+    label: null
+    href: null
+    tag: null               # null (auto-detected) | 'a' | 'button'
+    active: false
+    disabled: false
+    class: null
+    attr: {  }
+
+  link:
+    variant: null  # No default variant - allows nav-link and other uses without interference
+    outline: false
+    size: null
+    block: false
+    active: false
+    disabled: false
+
+    stimulus_controller: 'bs-link'
+
+    tooltip:
+      text: null
+      placement: 'bottom'
+      trigger: 'hover'
+      container: null
+      html: null
+
+    popover:
+      title: null
+      content: null
+      placement: 'bottom'
+      trigger: 'hover focus'
+      boundary: 'clippingParents'
+      html: null
+
+    icon_only: false
+    icon_gap: 2
+
+    underline: null
+    underline_opacity: null
+    underline_opacity_hover: null
+    offset: null
+    stretched: false
+
+  list_group:
+    flush: false
+    numbered: false
+    horizontal: null      # null | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    tag: 'ul'             # 'ul' | 'ol' | 'div'
+    id: null
+    class: null
+    attr: {  }
+
+  list_group_item:
+    tag: 'li'             # 'li' | 'a' | 'button' (auto-detected based on props)
+    action: false         # Adds hover/focus styles
+    active: false
+    disabled: false
+    variant: null         # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    target: null          # For links: '_self' | '_blank' | '_parent' | '_top'
+    rel: null             # For links: 'noopener' | 'noreferrer' | etc.
+    class: null
+    attr: {  }
+
+  modal:
+    # Size options
+    size: null                  # null | 'sm' | 'lg' | 'xl'
+    fullscreen: false           # false | true | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    
+    # Layout
+    centered: false             # Vertically center modal
+    scrollable: false           # Scrollable modal body
+    
+    # Behavior
+    backdrop: true              # true | false | 'static'
+    keyboard: true              # Close on escape key
+    focus: true                 # Focus on modal when opened
+    
+    # Animation
+    animation: true             # Fade animation
+    
+    # Visibility
+    show_header: true
+    show_footer: true
+    show_close_button: true
+    
+    # Labels
+    close_label: 'Close'
+    save_label: 'Save changes'
+    
+    class: null
+    attr: {  }
+
+  nav:
+    variant: null         # null | 'tabs' | 'pills' | 'underline'
+    fill: false           # nav-fill: fill available space equally
+    justified: false      # nav-justified: equal widths
+    vertical: false       # false | true | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' (responsive)
+    align: null           # null | 'start' | 'center' | 'end'
+    tag: 'ul'             # 'ul' | 'ol' | 'nav' | 'div'
+    id: null
+    role: null            # null (auto-detected based on tag)
+    class: null
+    attr: {  }
+
+  nav_item:
+    label: null
+    href: null
+    active: false
+    disabled: false
+    tag: 'a'              # 'a' | 'button' | 'span' (auto-detected)
+    id: null
+    target: null          # For links: '_blank' | '_self' | '_parent' | '_top'
+    aria_current: 'page'  # Value for aria-current when active
+    wrapper: true         # Render nav-item wrapper (for <ul> nav)
+    class: null
+    attr: {  }
+
+  # Navbar
+  navbar:
+    # Basic branding
+    brand: null
+    brand_href: '#'
+    brand_img: null
+    brand_img_alt: ''
+    brand_img_width: '30'
+    brand_img_height: '30'
+    brand_icon: null           # ux:icon name (e.g., 'bi:bootstrap')
+    brand_icon_width: '32'
+    brand_icon_height: '32'
+    
+    # Appearance
+    bg: 'body-tertiary'        # 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'body' | 'body-tertiary' | 'white' | 'transparent'
+    theme: null                # 'light' | 'dark' | null
+    expand: 'lg'               # 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | null (always expanded)
+    container: 'container-fluid'  # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    placement: null            # null | 'fixed-top' | 'fixed-bottom' | 'sticky-top' | 'sticky-bottom'
+    border_bottom: false
+    
+    # Collapse behavior
+    collapse_id: 'navbarSupportedContent'
+    toggler_label: 'Toggle navigation'
+    show_toggler: true
+    toggler_icon: 'bi:three-dots'
+    toggler_icon_width: '1.5em'
+    toggler_icon_height: '1.5em'
+    
+    # ========================================
+    # Collapse Type (8 variants available)
+    # ========================================
+    collapse_type: 'standard'  # 'standard' | 'offcanvas' | 'fullscreen' | 'mega-menu' | 'centered-split' | 'double' | 'sidebar'
+    
+    # Offcanvas configuration (type: 'offcanvas')
+    offcanvas_placement: 'start'  # 'start' | 'end' | 'top' | 'bottom'
+    offcanvas_backdrop: true
+    offcanvas_scroll: false
+    offcanvas_title: null      # If null, uses brand text
+    
+    # Fullscreen overlay configuration (type: 'fullscreen')
+    fullscreen_animation: 'fade'  # 'fade' | 'slide-down' | 'scale'
+    fullscreen_bg: 'var(--bs-body-bg)'
+    fullscreen_centered: true
+    
+    # Sticky/Scroll behavior (can be combined with any type)
+    sticky_behavior: false     # Enable sticky scroll features
+    shrink_on_scroll: false    # Shrink navbar height on scroll
+    auto_hide: false           # Hide on scroll down, show on scroll up
+    shadow_on_scroll: false    # Add shadow when scrolled
+    transparent_until_scroll: false  # Transparent background until scrolled
+    
+    # Centered split navigation (type: 'centered-split')
+    centered_brand: false      # Center the brand with split nav
+    
+    # Double navbar (type: 'double')
+    double_row: false          # Enable two-row navbar
+    top_row_bg: null           # Background for top row
+    
+    # Sidebar navigation (type: 'sidebar')
+    sidebar_width: '250px'     # Sidebar width (CSS value)
+    sidebar_position: 'left'   # 'left' | 'right'
+    sidebar_collapsible: true  # Collapse to offcanvas on mobile
+    
+    # Mega menu (type: 'mega-menu')
+    mega_menu: false           # Enable mega menu functionality
+    mega_menu_width: 'full'    # 'full' | 'auto' | specific px/% value
+    mega_menu_columns: 4       # Default columns for auto layout
+    
+    # General
+    id: null
+    class: null
+    attr: {  }
+
+  # Offcanvas
+  offcanvas:
+    placement: 'start'          # 'start' | 'end' | 'top' | 'bottom'
+    backdrop: true              # true | false | 'static'
+    scroll: false               # Allow body scrolling
+    keyboard: true              # Close on escape key
+    show: false                 # Show by default
+    show_close_button: true     # Show close button in header
+    body_class: null            # Additional classes for offcanvas-body
+    header_class: null          # Additional classes for offcanvas-header
+    class: null
+    attr: {  }
+
+  # Pagination
+  pagination:
+    aria_label: 'Page navigation'
+    size: null                  # null (default) | 'sm' | 'lg'
+    alignment: null             # null (start/default) | 'center' | 'end'
+    class: null
+    attr: {  }
+
+  pagination_item:
+    active: false
+    disabled: false
+    aria_current: 'page'
+    class: null
+    attr: {  }
+
+  # Placeholder (Skeleton Loader)
+  placeholder:
+    col: null                   # Grid column width (e.g., '6', '12')
+    size: null                  # null (default) | 'lg' | 'sm' | 'xs'
+    animation: null             # null | 'glow' | 'wave'
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    width: null                 # Custom width (e.g., '75%', '100px')
+    tag: 'span'                 # HTML tag (default: 'span')
+    aria_hidden: true           # Hide from screen readers (default: true)
+    class: null
+    attr: {  }
+
+  # Progress
+  progress:
+    value: 0                    # Current progress value (0-100 by default)
+    min: 0                      # Minimum value
+    max: 100                    # Maximum value
+    show_label: false           # Show percentage as label
+    height: null                # Custom height (e.g., '1px', '20px')
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    striped: false              # Striped appearance
+    animated: false             # Animated stripes (requires striped=true)
+    aria_label: null            # Accessible label for screen readers
+    class: null
+    attr: {  }
+
+  # Spinner
+  spinner:
+    type: 'border'              # 'border' | 'grow'
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    size: null                  # null (default) | 'sm'
+    label: 'Loading...'         # Visually hidden label for accessibility
+    role: 'status'              # ARIA role attribute
+    class: null
+    attr: {  }
+
+  toast:
+    variant: 'primary'
+    title: null
+    header: true
+    body: true
+    autohide: false
+    delay: 5000
+    animation: true
+    position: 'top-0 end-0'
+    class: null
+    attr: {  }
+
+  # ============================================================
+  # Extra Components (alphabetically ordered)
+  # ============================================================
+
+  # ActivityFeed (Extra component for social feeds, audit logs, team activity)
+  activity_feed:
+    mode: 'default'             # 'default' | 'compact'
+    show_timestamps: true
+    show_icons: true
+    border: 'start'             # null | 'start' | 'end'
+    group_by_date: false
+    max_height: null            # e.g., '400px' for scrollable feed
+    tag: 'div'
+    class: null
+    attr: {  }
+
+  # ActivityFeedItem (Extra component for individual feed items)
+  activity_feed_item:
+    icon: null                  # Icon class (e.g., 'bi-person-plus')
+    avatar: null                # Avatar image URL
+    icon_variant: 'primary'     # Bootstrap color variant
+    title: null
+    description: null
+    timestamp: null             # e.g., "2 hours ago"
+    metadata: []                # Array of additional info strings
+    href: null                  # Makes entire item clickable
+    action_label: null          # Action button label
+    action_href: null           # Action button URL
+    highlighted: false          # Emphasize this item
+    unread: false               # Show unread indicator
+    type: null                  # Semantic type for custom styling
+    class: null
+    attr: {  }
+
+  # Alert Stack (Extra component for flash messages, bulk notifications, and toast management)
+  alert_stack:
+    # Positioning
+    position: 'top-end'         # 'top-end' | 'top-start' | 'top-center' | 'bottom-end' | 'bottom-start' | 'bottom-center'
+    
+    # Limits
+    max_alerts: 0               # Maximum alerts to show (0 = unlimited)
+    
+    # Defaults
+    default_variant: 'info'     # Default variant if not specified per alert
+    dismissible: true           # Alerts dismissible by default
+    
+    # Auto-hide behavior
+    auto_hide: false            # Auto-hide alerts
+    auto_hide_delay: 5000       # Auto-hide delay in milliseconds
+    fade: true                  # Fade animation
+    
+    # Styling
+    z_index: 1080               # CSS z-index for stack
+    gap: 0.75                   # Gap between alerts (in rem)
+    
+    # Integration
+    auto_load_flash_messages: false  # Automatically load flash messages from session
+    
+    # Stimulus
+    stimulus_controller: 'bs-alert-stack'
+    
+    class: null
+    attr: {  }
+
+  # Avatar (Extra component for user profile pictures and initials)
+  avatar:
+    size: 'md'                  # 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' or custom value (e.g., '64px', '3rem')
+    shape: 'circle'             # 'circle' | 'square' | 'rounded'
+    status: null                # null | 'online' | 'offline' | 'away' | 'busy'
+    border: false               # Show border
+    border_color: null          # null or Bootstrap color variant (e.g., 'primary', 'success')
+    variant: null               # Background variant for initials (null for default gray, or 'primary', 'success', etc.)
+    class: null
+    attr: {  }
+
+  # Calendar (Extra component - Event calendar, not datepicker)
+  calendar:
+    view: 'month'               # 'month' | 'week' | 'day' | 'list'
+    locale: 'en'
+    show_week_numbers: false
+    show_navigation: true
+    show_today_button: true
+    show_view_switcher: true
+    initial_date: null          # Y-m-d format, defaults to today
+    first_day_of_week: 0        # 0=Sunday, 1=Monday
+    event_url: '/calendar/events'
+    load_events_async: false
+    show_header: true
+    show_weekends: true
+    event_limit: 3              # Max events per day before "+N more"
+    show_time_grid: true
+    time_format: '24h'          # '12h' | '24h'
+    slot_duration: '00:30:00'
+    slot_min_time: '00:00:00'
+    slot_max_time: '24:00:00'
+    allow_event_click: true
+    allow_date_click: true
+    event_click_url: null       # URL pattern for event clicks
+    date_click_url: null        # URL pattern for date clicks
+    height: 'auto'              # 'auto' | specific height like '600px'
+    header_toolbar: 'default'   # 'default' | 'minimal' | 'none'
+    editable: false             # Allow drag-and-drop
+    selectable: false           # Allow date range selection
+    class: null
+    attr: {  }
+
+  # Code Block (Extra component for syntax highlighted code snippets)
+  code_block:
+    # Content
+    language: null                # Language identifier (e.g., 'php', 'javascript', 'python', 'html')
+    code: null                    # Alternative to content block
+    
+    # Header/Label
+    title: null                   # Display title above code
+    filename: null                # Display filename above code
+    
+    # Features
+    line_numbers: false           # Show line numbers
+    copy_button: true             # Show copy button
+    highlight_lines: null         # Comma-separated line numbers to highlight (e.g., '1,3-5,8')
+    
+    # Styling
+    theme: null                   # null (auto) | 'light' | 'dark'
+    max_height: 0                 # 0 = no limit, >0 = max height in pixels with scroll
+    wrap_lines: false             # Wrap long lines instead of horizontal scroll
+    
+    class: null
+    attr: {  }
+
+  # ColorPicker (Extra component for color selection with presets)
+  color_picker:
+    # Basic options
+    name: 'color'
+    value: null
+    label: null
+    required: false
+    disabled: false
+    
+    # Preset colors
+    presets: []                   # Array of hex colors (e.g., ['#FF0000', '#00FF00', '#0000FF'])
+    show_presets: true
+    columns: 6                    # Number of columns in preset grid
+    
+    # Display options
+    show_input: true              # Show text input field
+    show_hex: true                # Show # prefix for hex input
+    allow_custom: true            # Show native color picker for custom colors
+    
+    # Sizing
+    size: 'default'               # 'sm' | 'default' | 'lg'
+    swatch_size: 'default'        # 'sm' | 'default' | 'lg'
+    
+    # Additional options
+    placeholder: null             # Placeholder text for input
+    help_text: null               # Help text below input
+    inline: false                 # Display inline (label and input on same line)
+    
+    # Extensibility
+    class: null
+    attr: {  }
+    input_attr: {  }              # Additional attributes for the input field
+
+  # Command Palette (Extra component for Cmd+K style quick actions, navigation, and commands)
+  command_palette:
+    # Keyboard trigger
+    trigger: 'Cmd+K'            # Display name for trigger shortcut
+    trigger_key: 'k'            # Key to trigger (default: 'k')
+    trigger_ctrl: false         # Require Ctrl key
+    trigger_meta: true          # Require Meta/Cmd key (Mac)
+    trigger_shift: false        # Require Shift key
+    trigger_alt: false          # Require Alt/Option key
+    
+    # Appearance
+    placeholder: 'Type a command or search...'
+    empty_message: 'No commands found'
+    show_shortcuts: true        # Show keyboard shortcuts next to commands
+    show_icons: true            # Show icons for commands
+    show_recent: true           # Show recent commands
+    max_recent: 5               # Maximum recent commands to show
+    
+    # Behavior
+    search_url: '/command-palette'
+    min_chars: 0                # Minimum characters before search (0 = search on first char)
+    debounce: 150               # Debounce delay in milliseconds
+    close_on_select: true       # Close palette when command is selected
+    close_on_escape: true       # Close palette on Escape key
+    close_on_backdrop: true     # Close palette when clicking backdrop
+    
+    # Modal styling
+    size: 'lg'                  # null | 'sm' | 'lg' | 'xl'
+    placement: 'top'            # 'top' | 'center'
+    centered: false             # Center modal vertically
+    scrollable: false           # Scrollable modal body
+    
+    # Animation
+    animation: 'fade'           # 'fade' | 'none'
+    animation_duration: 200     # Animation duration in milliseconds
+    
+    # Categories/Groups
+    grouped: true               # Group commands by category
+    default_groups: ['Quick Actions', 'Navigation', 'Admin']
+    
+    class: null
+    attr: {  }
+
+  # Comment Thread (Extra component for nested, threaded comments with replies)
+  comment_thread:
+    max_depth: 3                  # Maximum nesting depth (0 = unlimited)
+    show_reply: true              # Show reply button
+    show_edit: true               # Show edit button
+    show_delete: true             # Show delete button
+    show_like: true               # Show like/upvote button
+    date_format: 'relative'       # 'relative' | 'absolute' | 'both'
+    avatar_size: 'md'             # 'sm' | 'md' | 'lg' | 'xl'
+    highlight_author: false       # Highlight author comments
+    compact: false                # Compact mode (reduced spacing)
+    show_thread_lines: true       # Show lines connecting replies
+    collapsible: true             # Enable collapsible threads
+    default_collapsed: false      # Default collapsed state for threads
+    container_class: null         # Additional container CSS class
+    class: null
+    attr: {  }
+
+  # Comparison Table (Extra component for feature comparisons)
+  comparison_table:
+    # Layout
+    variant: 'default'          # 'default' | 'bordered' | 'striped' | 'cards' | 'horizontal'
+    responsive: true            # Enable responsive table wrapper
+    container: 'container'      # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    
+    # Highlighting
+    highlight_column: -1        # Index of column to highlight (-1 = none)
+    
+    # Values display
+    show_checkmarks: true       # Use checkmarks for boolean values
+    check_icon: '✓'             # Icon for checked/true values
+    uncheck_icon: '✗'           # Icon for unchecked/false values
+    empty_text: '—'             # Text for empty/null values
+    
+    # Table options
+    sticky: false               # Sticky header on scroll
+    centered: true              # Center-align values
+    hover: true                 # Hover effect on rows
+    
+    class: null
+    attr: {  }
+
+  cookie_banner:
+    # Position
+    position: 'bottom'            # 'top' | 'bottom' | 'top-fixed' | 'bottom-fixed'
+    
+    # Content
+    title: 'We use cookies'
+    message: 'We use cookies to ensure you get the best experience on our website.'
+    privacy_url: null
+    privacy_link_text: 'Privacy Policy'
+    cookie_policy_url: null
+    cookie_policy_link_text: 'Cookie Policy'
+    
+    # Buttons
+    accept_text: 'Accept'
+    reject_text: 'Reject'
+    customize_text: 'Customize'
+    show_reject: true
+    show_customize: false
+    
+    # Button variants
+    accept_variant: 'primary'
+    reject_variant: 'secondary'
+    customize_variant: 'outline-secondary'
+    
+    # Storage
+    cookie_name: 'cookie_consent'
+    expiry_days: 365
+    
+    # Behavior
+    dismissible: false
+    backdrop: false               # Show backdrop overlay
+    
+    # Styling
+    variant: 'light'              # Bootstrap background variant
+    shadow: 'shadow-lg'
+    
+    # Extensibility
+    class: null
+    attr: {  }
+
+  # CTA (Extra component for Call-to-Action blocks in marketing pages)
+  cta:
+    # Layout variant
+    variant: 'centered'         # 'centered' | 'split' | 'bordered' | 'background' | 'minimal'
+    
+    # Content
+    title: 'Ready to get started?'
+    description: null
+    icon: null                  # Icon HTML (e.g., emoji or SVG)
+    
+    # Call-to-Action
+    cta_variant: 'primary'
+    cta_size: 'lg'
+    cta_outline: false
+    
+    # Secondary CTA
+    secondary_cta_variant: 'outline-secondary'
+    secondary_cta_size: 'lg'
+    secondary_cta_outline: false
+    
+    # Layout & Styling
+    alignment: 'center'         # 'start' | 'center' | 'end'
+    container: 'container'      # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    bg: null                    # Background variant: 'primary' | 'secondary' | 'light' | 'dark' | 'body-tertiary' | etc.
+    text_color: null            # Text color variant
+    border: false
+    shadow: false
+    rounded: true
+    padding: 'py-5'             # Padding class (e.g., 'py-3', 'py-5', 'p-4')
+    
+    class: null
+    attr: {  }
+
+  # Data Table (Extra component for admin panels, reports, dashboards, user management, order listings, product catalogs)
+  data_table:
+    # Table appearance
+    striped: true
+    bordered: false
+    borderless: false
+    hover: true
+    small: false
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    
+    # Responsive behavior
+    responsive: true
+    responsive_breakpoint: null  # null | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    
+    # Table layout
+    caption_position: 'top'     # 'top' | 'bottom'
+    thead: null                 # null | 'light' | 'dark'
+    divider: false              # Add divider between thead and tbody
+    
+    # Sorting
+    sortable: false
+    sort_direction: 'asc'       # 'asc' | 'desc'
+    
+    # Selection
+    selectable: false
+    select_name: 'selected[]'
+    select_all: false           # Show "select all" checkbox
+    
+    # Actions column
+    show_actions: false
+    actions_label: 'Actions'
+    actions_position: 'end'     # 'start' | 'end'
+    
+    # Empty state
+    empty_message: 'No data available'
+    show_empty_state: true
+    
+    # Container
+    container: 'container-fluid'  # 'container' | 'container-fluid' | 'container-{breakpoint}' | null
+    
+    # Card wrapper
+    card_wrapper: false
+    
+    class: null
+    attr: {  }
+
+  # Dropdown Multi (Extra component for filters, permissions, categories, tags)
+  dropdown_multi:
+    # Label and display
+    label: 'Select options'
+    placeholder: null           # Placeholder when nothing selected (defaults to label)
+    
+    # Button styling
+    variant: 'secondary'
+    outline: false
+    size: null                  # null | 'sm' | 'lg'
+    
+    # Dropdown behavior
+    direction: null             # null | 'dropup' | 'dropend' | 'dropstart' | 'dropup-center' | 'dropdown-center'
+    menu_align: null            # null | 'end' | 'sm-end' | 'md-end' | 'lg-end' | 'xl-end' | 'xxl-end'
+    dark: false                 # Dark dropdown menu
+    auto_close: 'outside'       # 'true' | 'false' | 'inside' | 'outside'
+    
+    # Search functionality
+    searchable: false
+    search_placeholder: 'Search...'
+    search_min_chars: 0         # Minimum characters before filtering
+    
+    # Action buttons
+    show_select_all: true
+    show_clear: true
+    show_apply: false           # If true, selections only apply when "Apply" clicked
+    select_all_label: 'Select All'
+    clear_label: 'Clear'
+    apply_label: 'Apply'
+    
+    # Display options
+    show_count: true            # Show count in button label
+    count_format: '{count} selected'
+    show_checks: true           # Show checkmarks in menu
+    max_display: 3              # Max items to show in button label before showing count
+    
+    # Form integration
+    name: null                  # Form field name (will add [] automatically)
+    required: false
+    
+    # Styling
+    toggle_class: null
+    menu_class: null
+    max_height: '300px'         # Max height of options list
+    menu_attr: {  }
+    class: null
+    attr: {  }
+    
+    # Stimulus
+    stimulus_controller: 'bs-dropdown-multi'
+
+  # Empty State (Extra component for empty tables, no results, new user experiences)
+  empty_state:
+    # Content
+    title: 'No items found'
+    description: null
+    
+    # Icon/Image
+    icon: null                    # Icon class (e.g., 'bi bi-inbox', 'fas fa-box-open')
+    icon_class: null              # Additional icon classes
+    image_src: null               # Image URL
+    image_alt: null               # Image alt text (defaults to title)
+    
+    # Call-to-Action
+    cta_label: null
+    cta_href: null
+    cta_variant: 'primary'
+    cta_size: null                # null | 'sm' | 'lg'
+    
+    # Secondary CTA
+    secondary_cta_label: null
+    secondary_cta_href: null
+    secondary_cta_variant: 'outline-secondary'
+    secondary_cta_size: null
+    
+    # Styling
+    variant: null                 # null | 'info' | 'warning' | 'success' | 'danger'
+    size: null                    # null | 'sm' | 'lg'
+    container: 'container'        # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    centered: true                # Center content
+    
+    class: null
+    attr: {  }
+
+  # FAQ (Extra component for styled Q&A sections)
+  faq:
+    variant: 'accordion'          # 'accordion' | 'simple' | 'card' | 'bordered'
+    title: null
+    lead: null
+    flush: false                  # For accordion variant - removes borders
+    always_open: false            # For accordion variant - allows multiple items open
+    class: null
+    attr: {  }
+
+  # Feature Grid (Extra component for landing page features with icons and descriptions)
+  feature_grid:
+    # Layout
+    columns: 3                  # Number of columns: 2, 3, 4, or 6
+    gap: '4'                    # Gap between items (1-5)
+    container: 'container'      # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    
+    # Appearance
+    variant: 'default'          # 'default' | 'icon-lg' | 'icon-box' | 'icon-colored' | 'bordered' | 'shadow'
+    align: 'start'              # 'start' | 'center' | 'end'
+    centered: false             # Center all content
+    
+    # Heading
+    heading_tag: 'h2'           # Heading HTML tag
+    heading_align: 'center'     # 'start' | 'center' | 'end'
+    
+    class: null
+    attr: {  }
+
+  # Hero (Extra component)
+  hero:
+    variant: 'centered'          # 'centered' | 'screenshot_centered' | 'image_left' | 'signup' | 'border_image'
+    title: 'Build something great'
+    lead: null
+    
+    # Call-to-Action
+    cta_variant: 'primary'
+    cta_size: 'lg'
+    
+    # Secondary CTA
+    secondary_cta_variant: 'outline-secondary'
+    secondary_cta_size: 'lg'
+    
+    # Layout
+    full_height: false
+    container: 'container'        # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    
+    class: null
+    attr: {  }
+
+  # Kanban (Extra component for task management, project boards, workflow tracking, order status)
+  kanban:
+    # Layout
+    variant: 'horizontal'       # 'horizontal' | 'vertical' | 'compact'
+    scrollable: true
+    height: null                # CSS height value (e.g., '600px', '80vh')
+    
+    # Drag and drop
+    draggable: true
+    allow_cross_column: true    # Allow cards to be dragged between columns
+    drop_zone_class: null       # Custom class for drop zones
+    
+    # Container
+    container: 'container-fluid'  # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    
+    # Responsive
+    responsive: true            # Stack columns on mobile
+    mobile_breakpoint: 'md'     # 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    
+    # Styling
+    card_wrapper: false         # Wrap entire kanban in a card
+    gap: '3'                    # Gap between columns (Bootstrap spacing scale: 0-5)
+    
+    # Features
+    show_column_count: true     # Show card count in column headers
+    compact_mode: false         # More compact card layout
+    
+    # Stimulus
+    stimulus_controller: 'bs-kanban'
+    
+    class: null
+    attr: {  }
+
+  # Kanban Card
+  kanban_card:
+    # Content
+    title: null
+    description: null
+    label: null                 # Fallback if no content provided
+    
+    # Metadata
+    badge: null                 # Badge text (e.g., priority, status)
+    badge_variant: 'secondary'  # Badge color variant
+    avatar_src: null            # Assigned user avatar
+    avatar_alt: null
+    footer_text: null           # Due date, timestamp, etc.
+    icon: null                  # Icon HTML in header
+    
+    # Styling
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    shadow: true
+    hover_effect: true
+    
+    # Features
+    clickable: false            # Make entire card clickable
+    href: null                  # Link destination if clickable
+    show_drag_handle: true      # Show drag handle icon
+    
+    # State
+    draggable: true             # Can be dragged
+    priority: null              # 'low' | 'medium' | 'high' | 'urgent'
+    status: null                # Custom status indicator
+    
+    class: null
+    attr: {  }
+
+  # Kanban Column
+  kanban_column:
+    # Content
+    title: 'Column'
+    description: null
+    limit: null                 # Maximum number of cards (WIP limit)
+    icon: null                  # Icon HTML (emoji or SVG)
+    
+    # Styling
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    bg: null                    # Background color for column
+    shadow: false
+    border: true
+    
+    # State
+    collapsed: false            # Collapsed state
+    collapsible: false          # Allow collapsing
+    disabled: false             # Disable dropping
+    
+    # Features
+    show_count: true            # Show card count in header
+    show_add_button: true       # Show "Add card" button
+    add_button_label: null      # Custom label for add button
+    
+    class: null
+    attr: {  }
+
+  # Lightbox (Extra component for image galleries, portfolios, product galleries, photo albums)
+  lightbox:
+    # Images array (required)
+    images: []                  # Array of images: [{src: 'url', alt: 'text', caption: 'text', thumbnail: 'url'}]
+    start_index: 0              # Initial image index to display
+    
+    # Navigation
+    show_thumbnails: false      # Show thumbnail navigation
+    show_counter: true          # Show image counter (e.g., "1 / 5")
+    show_captions: true         # Show image captions
+    
+    # Features
+    enable_zoom: true           # Enable zoom functionality
+    enable_keyboard: true       # Enable keyboard navigation (arrows, escape)
+    enable_swipe: true          # Enable swipe gestures on touch devices
+    close_on_backdrop: true     # Close when clicking outside image
+    
+    # Animation
+    transition: 'fade'          # 'fade' | 'slide' | 'zoom' | 'none'
+    transition_duration: 300    # Transition duration in milliseconds
+    
+    # Autoplay
+    autoplay: false             # Enable autoplay slideshow
+    autoplay_interval: 3000     # Autoplay interval in milliseconds
+    
+    # Controls
+    show_download: false        # Show download button
+    show_fullscreen: true       # Show fullscreen button
+    show_close: true            # Show close button
+    
+    id: null
+    class: null
+    attr: {  }
+
+  # Mega Footer (Extra component for complex multi-column footers)
+  mega_footer:
+    # Layout variant
+    variant: 'default'          # 'default' | 'minimal' | 'centered' | 'compact'
+    
+    # Branding
+    brand_name: null            # e.g., 'My Company'
+    brand_logo: null            # Logo image URL
+    brand_href: '/'             # Brand link destination
+    brand_description: null     # Short description under brand
+    
+    # Social Links (array of icon/href/label objects)
+    social_links: []            # e.g., [{ icon: 'bi-facebook', href: '#', label: 'Facebook' }]
+    
+    # Copyright
+    copyright_text: null        # Custom copyright text (auto-generated if null)
+    show_copyright: true        # Display copyright notice
+    
+    # Newsletter
+    show_newsletter: false      # Display newsletter signup
+    newsletter_title: 'Subscribe to our newsletter'
+    newsletter_placeholder: 'Email address'
+    newsletter_button_text: 'Subscribe'
+    
+    # Layout & Styling
+    background_color: 'dark'    # 'dark' | 'light' | 'body' | 'body-tertiary' | Bootstrap color
+    text_color: 'white'         # 'white' | 'dark' | 'body' | 'body-secondary'
+    container: 'container'      # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    show_divider: true          # Show border-top divider
+    
+    class: null
+    attr: {  }
+
+  # Metrics Grid (Extra component - enhanced grid layout with sparklines for multiple stats)
+  metrics_grid:
+    # Grid layout
+    columns: 4                    # Number of columns in desktop view (1-6)
+    gap: '4'                      # Bootstrap gap spacing (0-5)
+    equal_height: true            # Make all cards equal height
+    
+    # Global card styling (applied to all metrics)
+    card_variant: null            # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'
+    card_border: false
+    card_shadow: false
+    size: 'default'               # 'sm' | 'default' | 'lg'
+    text_align: 'start'           # 'start' | 'center' | 'end'
+    
+    # Sparklines
+    show_sparklines: false
+    sparkline_color: 'primary'
+    sparkline_height: 40
+    
+    # Responsive columns (optional)
+    columns_sm: null              # Small devices (≥576px)
+    columns_md: null              # Medium devices (≥768px) - defaults to 2
+    columns_lg: null              # Large devices (≥992px) - defaults to 'columns' value
+    columns_xl: null              # Extra large devices (≥1200px)
+    columns_xxl: null             # Extra extra large devices (≥1400px)
+    
+    class: null
+    attr: {  }
+
+  # NotificationBadge (Extra component for notification indicators on nav, avatars, buttons)
+  notification_badge:
+    # Appearance
+    variant: 'danger'             # Bootstrap color variant
+    size: 'md'                    # 'sm' | 'md' | 'lg'
+    dot: false                    # Show as dot (no content)
+    pill: true                    # Rounded pill style
+    bordered: true                # Show white border
+    
+    # Positioning
+    position: 'top-end'           # 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
+    inline: false                 # Show inline instead of positioned
+    
+    # Behavior
+    pulse: false                  # Show pulse animation
+    max: null                     # Maximum number to show (e.g., 99 shows "99+")
+    
+    class: null
+    attr: {  }
+
+  # Notification Center (Extra component for user notifications, inbox messages, activity feeds)
+  notification_center:
+    # Layout & Appearance
+    variant: 'dropdown'         # 'dropdown' | 'popover' | 'offcanvas' | 'modal' | 'inline'
+    title: 'Notifications'
+    empty_message: 'No notifications'
+    
+    # Badge/Count
+    show_badge: true
+    unread_count: 0
+    badge_variant: 'danger'
+    badge_positioned: true
+    
+    # Trigger button (for dropdown/popover/offcanvas/modal variants)
+    trigger_variant: 'link'     # 'primary' | 'secondary' | 'link' | etc.
+    trigger_icon: '🔔'          # Bell icon by default
+    trigger_label: null
+    trigger_icon_only: true
+    
+    # Offcanvas options (when variant='offcanvas')
+    offcanvas_placement: 'end'  # 'start' | 'end' | 'top' | 'bottom'
+    offcanvas_backdrop: true
+    offcanvas_scroll: false
+    
+    # Modal options (when variant='modal')
+    modal_size: null            # null | 'sm' | 'lg' | 'xl'
+    modal_centered: false
+    modal_scrollable: true
+    
+    # Dropdown options (when variant='dropdown')
+    dropdown_direction: 'dropdown'  # 'dropdown' | 'dropup' | 'dropstart' | 'dropend'
+    dropdown_menu_align: 'end'  # 'start' | 'end'
+    dropdown_width: '350px'     # CSS width value
+    dropdown_max_height: '400px'  # CSS max-height value
+    
+    # Features
+    grouped: false              # Group notifications by date/category
+    show_timestamps: true
+    show_avatars: true
+    show_actions: true          # Mark as read, delete, etc.
+    show_mark_all_read: true
+    show_clear_all: true
+    show_view_all: true
+    view_all_label: 'View all notifications'
+    
+    # Behavior
+    mark_read_on_click: true
+    auto_refresh: false
+    auto_refresh_interval: 30000  # milliseconds
+    
+    # Stimulus
+    stimulus_controller: 'bs-notification-center'
+    
+    class: null
+    attr: {  }
+
+  # Pricing Card (Extra component for subscription plans and pricing pages)
+  pricing_card:
+    # Plan Details
+    plan_name: 'Free'
+    plan_description: null
+    
+    # Pricing
+    price: '0'
+    currency: '$'
+    period: 'month'             # 'month' | 'year' | 'week' | 'day' | 'forever'
+    show_period: true
+    
+    # Badge (e.g., "Popular", "Best Value")
+    badge: null
+    badge_variant: 'primary'
+    
+    # Features
+    features: []                # Array of feature strings
+    show_checkmarks: true       # Show checkmark icons before features
+    
+    # Call-to-Action
+    cta_label: 'Get Started'
+    cta_href: null
+    cta_variant: 'primary'
+    cta_size: 'lg'              # null | 'sm' | 'lg'
+    cta_outline: false
+    cta_block: true             # Full-width button
+    
+    # Styling
+    featured: false             # Highlighted/featured plan (thicker border)
+    shadow: false               # Add shadow
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    border: true
+    text_align: 'center'        # 'start' | 'center' | 'end'
+    
+    class: null
+    attr: {  }
+
+  # Rating (Extra component for reviews, feedback forms, product ratings, skill levels)
+  rating:
+    # Rating value
+    value: 0                    # Current rating value (supports decimal for half stars)
+    max: 5                      # Maximum rating value
+    
+    # Display mode
+    mode: 'stars'               # 'stars' | 'hearts' | 'circles' | 'custom'
+    readonly: false             # true = display only, false = interactive
+    half_stars: false           # Allow half-star ratings (e.g., 4.5)
+    
+    # Appearance
+    size: 'default'             # 'sm' | 'default' | 'lg'
+    variant: null               # null (uses 'warning' for filled) | 'primary' | 'secondary' | 'success' | 'danger' | etc.
+    empty_variant: 'secondary'  # Color for empty/unfilled items
+    
+    # Labels and display
+    show_value: false           # Show numeric value (e.g., "4.5")
+    show_count: false           # Show count/max (e.g., "4/5")
+    show_text: false            # Show text label
+    text_position: 'end'        # 'start' | 'end' (position of text relative to rating)
+    aria_live: false            # Announce changes to screen readers (for interactive ratings)
+    
+    class: null
+    attr: {  }
+
+  # SearchBar (Extra component)
+  searchbar:
+    placeholder: 'Search...'
+    search_url: '/search'
+    min_chars: 2
+    debounce: 300
+    size: 'default'     # 'sm' | 'default' | 'lg'
+    show_clear: true
+    autofocus: false
+    name: 'q'
+    class: null
+    attr: {  }
+
+  # Sidebar (Extra component for admin dashboards, documentation sites, settings pages, multi-level navigation)
+  sidebar:
+    # Layout variants
+    variant: 'fixed'            # 'fixed' | 'collapsible' | 'overlay' | 'push' | 'mini'
+    
+    # Position and dimensions
+    position: 'left'            # 'left' | 'right'
+    width: '280px'              # CSS value (e.g., '250px', '280px', '20rem')
+    mini_width: '80px'          # Width when collapsed to mini (e.g., '80px')
+    
+    # Behavior
+    collapsed: false            # Initial collapsed state
+    collapsible: true           # Allow collapse/expand
+    overlay: false              # Show overlay backdrop when open
+    backdrop_close: true        # Close on backdrop click
+    
+    # Mobile behavior
+    mobile_breakpoint: 'lg'     # 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    mobile_behavior: 'overlay'  # 'overlay' | 'push' | 'hidden'
+    
+    # Header and footer
+    show_header: false
+    header_title: null
+    show_toggle: true           # Show toggle button in header
+    show_footer: false
+    
+    # Styling
+    bg: null                    # Bootstrap background variant
+    text_color: null            # Text color variant
+    border: false               # Show border
+    shadow: false               # Show shadow
+    
+    # Scrolling
+    scrollable: true            # Make sidebar scrollable
+    
+    # Z-index
+    z_index: 1040
+    
+    # Animation
+    transition: 'slide'         # 'slide' | 'fade' | 'none'
+    transition_duration: 300    # milliseconds
+    
+    # Stimulus
+    stimulus_controller: 'bs-sidebar'
+    
+    class: null
+    attr: {  }
+
+  # Skeleton (Extra component for content-aware loading states)
+  skeleton:
+    # Skeleton type/preset
+    type: 'text'                # 'text' | 'heading' | 'avatar' | 'card' | 'list' | 'paragraph' | 'custom'
+    
+    # Configuration
+    lines: 3                    # Number of lines/items (for text, paragraph, list types)
+    width: null                 # Width of skeleton (e.g., 'full', 'sm', 'md', 'lg', '200px', '75%')
+    height: null                # Height of skeleton (CSS value, useful for custom skeletons)
+    
+    # Animation
+    animation: 'wave'           # 'wave' | 'pulse' | 'none'
+    
+    # Avatar options
+    size: null                  # 'sm' | 'md' | 'lg' | 'xl' (for avatar type)
+    avatar_shape: 'circle'      # 'circle' | 'square' | 'rounded'
+    
+    # Card/List enhancements
+    with_avatar: false          # Show avatar with text (for card/list types)
+    with_button: false          # Show button skeleton (for card type)
+    with_image: false           # Show image skeleton (for card type)
+    
+    # Styling
+    rounded: null               # 'none' | 'sm' | 'default' | 'lg' | 'pill' | 'circle'
+    
+    # HTML
+    tag: 'div'                  # Container tag
+    
+    class: null
+    attr: {  }
+
+  # Split Panes (Extra component for resizable split layouts in code editors, email clients, documentation)
+  split_panes:
+    # Orientation
+    orientation: 'horizontal'   # 'horizontal' (left/right) | 'vertical' (top/bottom)
+    
+    # Sizing
+    initial_size: '50%'         # Initial size of first pane (%, px)
+    min_size: '10%'             # Minimum size of first pane
+    max_size: '90%'             # Maximum size of first pane
+    
+    # Features
+    resizable: true             # Enable resizing
+    collapsible: false          # Enable collapsible panes
+    persistent: false           # Persist size to localStorage (requires unique id)
+    
+    # Divider
+    divider_size: 4             # Divider size in pixels
+    snap_threshold: 50          # Snap threshold in pixels for collapse
+    
+    # Initial state
+    collapsed: null             # Initial collapsed pane: null | 'first' | 'second'
+    
+    class: null
+    attr: {  }
+
+  # Stat (Extra component for KPIs, metrics, and analytics)
+  stat:
+    value: '0'
+    label: 'Statistic'
+    variant: null                 # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'
+    icon: null                    # Icon/emoji HTML
+    icon_position: 'start'        # 'start' | 'end' | 'top'
+    trend: null                   # null | 'up' | 'down' | 'neutral'
+    change: null                  # e.g., '+12%' | '-5%'
+    description: null             # Additional descriptive text
+    size: 'default'               # 'sm' | 'default' | 'lg'
+    border: false
+    shadow: false
+    text_align: 'start'           # 'start' | 'center' | 'end'
+    class: null
+    attr: {  }
+
+  # Stepper (Extra component for multi-step processes)
+  stepper:
+    variant: 'horizontal'       # 'horizontal' | 'vertical'
+    style: 'default'            # 'default' | 'progress' | 'minimal' | 'numbered' | 'icon'
+    current_step: 1             # Current active step number
+    clickable_completed: true   # Allow clicking on completed steps
+    show_labels: true           # Show step labels
+    show_descriptions: false    # Show step descriptions
+    show_progress_bar: false    # Show progress bar above steps
+    completed_icon: null        # Icon for completed steps (e.g., '✓')
+    active_icon: null           # Icon for active step
+    pending_icon: null          # Icon for pending steps
+    completed_variant: 'success'  # Bootstrap variant for completed steps
+    active_variant: 'primary'   # Bootstrap variant for active step
+    pending_variant: 'secondary'  # Bootstrap variant for pending steps
+    size: 'default'             # 'sm' | 'default' | 'lg'
+    responsive: true            # Auto-switch to vertical on mobile
+    class: null
+    attr: {  }
+
+  # Tab Pane (Extra component for tabbed content)
+  tab_pane:
+    active: false               # Whether this pane is active by default
+    fade: true                  # Enable fade transition
+    class: null
+    attr: {  }
+
+  # Testimonial (Extra component for social proof, customer reviews, and testimonials)
+  testimonial:
+    # Layout variant
+    variant: 'single'           # 'single' | 'featured' | 'grid' | 'wall' | 'minimal'
+    
+    # Content
+    quote: null
+    author: null
+    role: null
+    company: null
+    
+    # Media
+    avatar_src: null
+    avatar_alt: null
+    
+    # Rating (optional, 1-5 stars)
+    rating: null
+    
+    # Layout
+    container: 'container'      # 'container' | 'container-fluid' | 'container-{breakpoint}'
+    alignment: 'left'           # 'left' | 'center' | 'right'
+    columns: 3                  # For grid/wall variants: 2, 3, or 4
+    
+    class: null
+    attr: {  }
+
+  theme_toggle:
+    variant: 'outline-secondary'
+    mode: 'button-icon'    # 'button-icon' | 'button-icon-toggle' | 'button-text' | 'button-icon-text' | 'button-icon-toggle-text' | 'dropdown-text' | 'dropdown-icon' | 'link' | 'link-icon' | 'link-icon-toggle' | 'form-select' | 'form-select-float' | 'form-switch' | 'form-check'
+    class: null
+    attr: {  }
+
+  # Timeline (Extra component for events, activities, and milestones)
+  timeline:
+    variant: 'vertical'         # 'vertical' | 'horizontal' | 'alternating' | 'compact'
+    align: 'start'              # 'start' | 'center' | 'end' (for vertical)
+    show_line: true             # Show connecting line between items
+    line_style: 'solid'         # 'solid' | 'dashed' | 'dotted'
+    line_variant: null          # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'
+    size: null                  # null | 'sm' | 'lg'
+    class: null
+    attr: {  }
+
+  # Timeline Item
+  timeline_item:
+    time_position: 'inline'     # 'inline' | 'below' | 'opposite'
+    variant: null               # null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
+    state: null                 # null | 'pending' | 'active' | 'completed'
+    show_line: true             # Show connecting line to next item
+    marker_size: null           # null | 'sm' | 'lg'
+    class: null
+    attr: {  }
+
+  # Tour (Extra component for guided product tours and feature highlights)
+  tour:
+    # Behavior options
+    show_progress: true
+    show_step_numbers: true
+    keyboard: true              # Enable keyboard navigation
+    backdrop: true              # Show backdrop/overlay
+    highlight: true             # Highlight target elements
+    scroll_to_element: true     # Auto-scroll to target
+    auto_start: false           # Start tour automatically on mount
+    
+    # Navigation options
+    show_prev_button: true
+    show_next_button: true
+    show_skip_button: true
+    show_finish_button: true
+    allow_click_through: false  # Allow clicking through backdrop
+    
+    # Button labels
+    next_label: 'Next'
+    prev_label: 'Previous'
+    skip_label: 'Skip Tour'
+    finish_label: 'Finish'
+    close_label: 'Close'
+    
+    # Styling
+    popover_variant: 'light'    # 'light' | 'dark'
+    popover_placement: 'auto'   # 'auto' | 'top' | 'right' | 'bottom' | 'left'
+    popover_width: 360          # Width in pixels
+    highlight_padding: 10       # Padding around highlighted element
+    highlight_border_radius: 8  # Border radius of highlight
+    
+    class: null
+    attr: {  }
+
+  # Tree View (Extra component for hierarchical data like file browsers, organization structures, menus)
+  tree_view:
+    # Selection behavior
+    selectable: false           # Enable selection of nodes
+    multi_select: false         # Allow multiple selection
+    
+    # Icons
+    show_icons: true            # Show icons for nodes
+    default_icon: 'bi-file-earmark'         # Icon for leaf nodes
+    folder_icon: 'bi-folder'                # Icon for collapsed folders
+    folder_open_icon: 'bi-folder-open'      # Icon for expanded folders
+    show_expand_icons: true                 # Show expand/collapse icons
+    expand_icon: 'bi-chevron-right'         # Icon for collapsed nodes
+    collapse_icon: 'bi-chevron-down'        # Icon for expanded nodes
+    
+    # Default state
+    expand_all: false           # Expand all nodes by default
+    collapse_all: false         # Collapse all nodes by default
+    
+    # Behavior
+    keyboard: true              # Enable keyboard navigation
+    
+    # Appearance
+    show_lines: false           # Show connecting lines between nodes
+    compact: false              # Compact mode (less padding)
+    hoverable: true             # Hover effect on nodes
+    
+    class: null
+    attr: {  }

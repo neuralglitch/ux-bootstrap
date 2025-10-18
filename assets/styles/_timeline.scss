@@ -1,0 +1,542 @@
+// Timeline Component Styles
+// Bootstrap 5.3 compatible timeline for events, activities, and milestones
+
+// Base timeline container
+.timeline {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// Timeline item
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+  
+  &:last-child {
+    padding-bottom: 0;
+    
+    .timeline-line {
+      display: none;
+    }
+  }
+}
+
+// Timeline marker (dot/icon/badge)
+.timeline-marker {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--bs-primary);
+  color: var(--bs-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 3px solid var(--bs-body-bg);
+  box-shadow: 0 0 0 2px var(--bs-primary);
+  z-index: 2;
+  
+  &.timeline-marker-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    border-width: 2px;
+  }
+  
+  &.timeline-marker-lg {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.125rem;
+    border-width: 4px;
+  }
+}
+
+// Pulsing animation for active items
+.timeline-marker-pulse {
+  animation: timeline-pulse 2s infinite;
+}
+
+@keyframes timeline-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px var(--bs-primary), 0 0 0 4px rgba(var(--bs-primary-rgb), 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 2px var(--bs-primary), 0 0 0 8px rgba(var(--bs-primary-rgb), 0);
+  }
+}
+
+// Timeline marker icon
+.timeline-marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+// Timeline marker badge
+.timeline-marker-badge {
+  display: block;
+  line-height: 1;
+}
+
+// Timeline content
+.timeline-content {
+  position: relative;
+  flex: 1;
+}
+
+.timeline-body {
+  position: relative;
+}
+
+.timeline-title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--bs-body-color);
+}
+
+.timeline-description {
+  margin-top: 0.5rem;
+  color: var(--bs-secondary-color);
+}
+
+.timeline-time {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--bs-secondary-color);
+  
+  &.timeline-time-below {
+    display: block;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  &.timeline-time-opposite {
+    text-align: right;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Connecting line between items
+.timeline-line {
+  position: absolute;
+  width: 2px;
+  background-color: var(--bs-border-color);
+  z-index: 1;
+}
+
+// ========================================
+// Variant: Vertical (default)
+// ========================================
+.timeline-vertical {
+  &.timeline-align-start {
+    .timeline-item {
+      display: flex;
+      padding-left: 3rem;
+    }
+    
+    .timeline-marker {
+      left: 0;
+      top: 0;
+    }
+    
+    .timeline-line {
+      left: 0.9375rem; // Center of marker (2rem / 2 - 1px)
+      top: 2rem;
+      bottom: -2rem;
+    }
+  }
+  
+  &.timeline-align-center {
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      padding-left: 0;
+      
+      &:nth-child(odd) {
+        .timeline-content {
+          grid-column: 1;
+          text-align: right;
+          
+          .timeline-time-opposite {
+            text-align: left;
+          }
+        }
+        
+        .timeline-marker {
+          grid-column: 2;
+        }
+        
+        .timeline-body {
+          grid-column: 3;
+        }
+      }
+      
+      &:nth-child(even) {
+        .timeline-content {
+          grid-column: 3;
+          text-align: left;
+        }
+        
+        .timeline-marker {
+          grid-column: 2;
+        }
+        
+        .timeline-body {
+          grid-column: 1;
+          text-align: right;
+        }
+      }
+    }
+    
+    .timeline-marker {
+      position: relative;
+      left: auto;
+      top: auto;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 2rem;
+      bottom: -2rem;
+    }
+  }
+  
+  &.timeline-align-end {
+    .timeline-item {
+      display: flex;
+      flex-direction: row-reverse;
+      padding-right: 3rem;
+      text-align: right;
+    }
+    
+    .timeline-marker {
+      right: 0;
+      left: auto;
+      top: 0;
+    }
+    
+    .timeline-line {
+      right: 0.9375rem;
+      left: auto;
+      top: 2rem;
+      bottom: -2rem;
+    }
+  }
+}
+
+// ========================================
+// Variant: Alternating
+// ========================================
+.timeline-alternating {
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    
+    &:nth-child(odd) {
+      .timeline-content {
+        grid-column: 1;
+        text-align: right;
+      }
+      
+      .timeline-marker {
+        grid-column: 2;
+      }
+      
+      .timeline-time-opposite {
+        grid-column: 3;
+        text-align: left;
+      }
+    }
+    
+    &:nth-child(even) {
+      .timeline-content {
+        grid-column: 3;
+        text-align: left;
+      }
+      
+      .timeline-marker {
+        grid-column: 2;
+      }
+      
+      .timeline-time-opposite {
+        grid-column: 1;
+        text-align: right;
+      }
+    }
+  }
+  
+  .timeline-marker {
+    position: relative;
+  }
+  
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2rem;
+    bottom: -2rem;
+  }
+}
+
+// ========================================
+// Variant: Horizontal
+// ========================================
+.timeline-horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    padding-bottom: 0;
+    padding-right: 2rem;
+    
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  
+  .timeline-marker {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-content {
+    text-align: center;
+  }
+  
+  .timeline-line {
+    position: absolute;
+    width: calc(100% - 2rem);
+    height: 2px;
+    top: 1rem; // Center of marker
+    left: calc(50% + 1rem);
+    bottom: auto;
+  }
+  
+  .timeline-item:last-child .timeline-line {
+    display: none;
+  }
+}
+
+// ========================================
+// Variant: Compact
+// ========================================
+.timeline-compact {
+  &.timeline-vertical.timeline-align-start {
+    .timeline-item {
+      padding-bottom: 1rem;
+      padding-left: 2rem;
+    }
+    
+    .timeline-marker {
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: 0.75rem;
+      border-width: 2px;
+    }
+    
+    .timeline-line {
+      left: 0.6875rem; // Center of smaller marker
+    }
+  }
+  
+  .timeline-title {
+    font-size: 0.9375rem;
+  }
+  
+  .timeline-description {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// ========================================
+// Size Variants
+// ========================================
+.timeline-sm {
+  .timeline-item {
+    padding-bottom: 1.5rem;
+  }
+  
+  .timeline-marker {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    border-width: 2px;
+  }
+  
+  .timeline-title {
+    font-size: 0.9375rem;
+  }
+  
+  .timeline-description {
+    font-size: 0.875rem;
+  }
+}
+
+.timeline-lg {
+  .timeline-item {
+    padding-bottom: 3rem;
+  }
+  
+  .timeline-marker {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.125rem;
+    border-width: 4px;
+  }
+  
+  .timeline-title {
+    font-size: 1.125rem;
+  }
+  
+  .timeline-description {
+    font-size: 1rem;
+  }
+}
+
+// ========================================
+// Line Styles
+// ========================================
+.timeline-line-dashed {
+  .timeline-line {
+    border-left: 2px dashed var(--bs-border-color);
+    background: none;
+  }
+  
+  &.timeline-horizontal .timeline-line {
+    border-left: none;
+    border-top: 2px dashed var(--bs-border-color);
+  }
+}
+
+.timeline-line-dotted {
+  .timeline-line {
+    border-left: 2px dotted var(--bs-border-color);
+    background: none;
+  }
+  
+  &.timeline-horizontal .timeline-line {
+    border-left: none;
+    border-top: 2px dotted var(--bs-border-color);
+  }
+}
+
+// ========================================
+// Line Variants (Colors)
+// ========================================
+@each $color, $value in $theme-colors {
+  .timeline-line-#{$color} {
+    .timeline-line {
+      background-color: $value;
+    }
+    
+    &.timeline-line-dashed .timeline-line {
+      border-color: $value;
+    }
+    
+    &.timeline-line-dotted .timeline-line {
+      border-color: $value;
+    }
+  }
+}
+
+// ========================================
+// Item States
+// ========================================
+.timeline-item-pending {
+  opacity: 0.6;
+  
+  .timeline-marker {
+    background-color: var(--bs-secondary);
+    box-shadow: 0 0 0 2px var(--bs-secondary);
+  }
+}
+
+.timeline-item-active {
+  .timeline-marker {
+    background-color: var(--bs-primary);
+    box-shadow: 0 0 0 2px var(--bs-primary), 0 0 0 4px rgba(var(--bs-primary-rgb), 0.3);
+  }
+}
+
+.timeline-item-completed {
+  .timeline-marker {
+    background-color: var(--bs-success);
+    box-shadow: 0 0 0 2px var(--bs-success);
+  }
+}
+
+// ========================================
+// Responsive Adjustments
+// ========================================
+@media (max-width: 767.98px) {
+  .timeline-alternating {
+    .timeline-item {
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      
+      &:nth-child(odd),
+      &:nth-child(even) {
+        .timeline-content {
+          grid-column: 2;
+          text-align: left;
+        }
+        
+        .timeline-marker {
+          grid-column: 1;
+        }
+        
+        .timeline-time-opposite {
+          grid-column: 2;
+          text-align: left;
+          order: -1;
+        }
+      }
+    }
+    
+    .timeline-line {
+      left: 1rem;
+      transform: none;
+    }
+  }
+  
+  .timeline-vertical.timeline-align-center {
+    .timeline-item {
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      
+      &:nth-child(odd),
+      &:nth-child(even) {
+        .timeline-content {
+          grid-column: 2;
+          text-align: left;
+        }
+        
+        .timeline-marker {
+          grid-column: 1;
+        }
+      }
+    }
+    
+    .timeline-line {
+      left: 1rem;
+      transform: none;
+    }
+  }
+}
+

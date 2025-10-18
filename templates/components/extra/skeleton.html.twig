@@ -1,0 +1,101 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Custom content block for manual skeleton layouts #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+
+  {% if has_content %}
+    {# Custom skeleton - use provided content #}
+    <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      {{ slot_content|raw }}
+    </{{ o.tag }}>
+  {% else %}
+    {# Predefined skeleton types #}
+    {% if o.type == 'text' %}
+      {# Text skeleton - multiple lines #}
+      <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {% for line in o.structure.lines %}
+          <span class="{{ line.classes }}" style="width: {{ line.width }}; display: block;"></span>
+        {% endfor %}
+      </{{ o.tag }}>
+
+    {% elseif o.type == 'heading' %}
+      {# Heading skeleton - single large line #}
+      <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        <span class="{{ o.structure.classes }}" style="width: {{ o.structure.width }}; display: block; height: 2rem;"></span>
+      </{{ o.tag }}>
+
+    {% elseif o.type == 'avatar' %}
+      {# Avatar skeleton - circular or square #}
+      <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        <span class="{{ o.structure.classes }} {{ o.structure.shape }}" 
+              style="width: {{ o.structure.size }}; height: {{ o.structure.size }}; display: inline-block;"></span>
+      </{{ o.tag }}>
+
+    {% elseif o.type == 'card' %}
+      {# Card skeleton - image, title, text, button #}
+      <div class="card {{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {% if o.withImage %}
+          <div class="card-img-top placeholder" style="height: 180px;"></div>
+        {% endif %}
+        <div class="card-body">
+          {% if o.withAvatar %}
+            <div class="d-flex align-items-center mb-3">
+              <span class="placeholder rounded-circle" style="width: 40px; height: 40px; display: inline-block;"></span>
+              <div class="ms-2 flex-grow-1">
+                <span class="placeholder" style="width: 120px; display: block;"></span>
+              </div>
+            </div>
+          {% endif %}
+          <h5 class="card-title">
+            <span class="{{ o.structure.title.classes }}" style="width: {{ o.structure.title.width }}; display: block;"></span>
+          </h5>
+          <p class="card-text">
+            {% for i in 0..(o.structure.text.lines - 1) %}
+              <span class="{{ o.structure.text.classes }}" style="width: {% if loop.last %}60%{% else %}{{ 85 + (i * 3) }}%{% endif %}; display: block;"></span>
+            {% endfor %}
+          </p>
+          {% if o.withButton %}
+            <span class="placeholder col-4 btn disabled"></span>
+          {% endif %}
+        </div>
+      </div>
+
+    {% elseif o.type == 'list' %}
+      {# List skeleton - items with optional avatars #}
+      <{{ o.tag }} class="list-group {{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {% for item in o.structure.items %}
+          <div class="list-group-item">
+            <div class="d-flex align-items-start">
+              {% if item.withAvatar %}
+                <span class="placeholder rounded-circle me-3" style="width: 48px; height: 48px; display: inline-block;"></span>
+              {% endif %}
+              <div class="flex-grow-1">
+                <span class="{{ item.title.classes }}" style="width: {{ item.title.width }}; display: block; margin-bottom: 0.5rem;"></span>
+                <span class="{{ item.subtitle.classes }}" style="width: {{ item.subtitle.width }}; display: block;"></span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </{{ o.tag }}>
+
+    {% elseif o.type == 'paragraph' %}
+      {# Paragraph skeleton - text with natural line breaks #}
+      <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {% for line in o.structure.lines %}
+          <span class="{{ line.classes }}" style="width: {{ line.width }}; display: block; margin-bottom: 0.5rem;"></span>
+        {% endfor %}
+      </{{ o.tag }}>
+
+    {% else %}
+      {# Custom/fallback skeleton #}
+      <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        <span class="placeholder" style="{% if o.width %}width: {{ o.width }};{% endif %}{% if o.height %}height: {{ o.height }};{% endif %} display: block;"></span>
+      </{{ o.tag }}>
+    {% endif %}
+  {% endif %}
+
+{%- endapply %}
+

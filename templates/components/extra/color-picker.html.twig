@@ -1,0 +1,120 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  <div
+    class="{{ o.classes }}"
+    {{ this.renderHtmlAttributes(o.attrs) | raw }}
+    data-controller="bs-color-picker"
+    data-bs-color-picker-value-value="{{ o.value }}"
+    data-bs-color-picker-show-hex-value="{{ o.showHex ? 'true' : 'false' }}"
+    data-bs-color-picker-allow-custom-value="{{ o.allowCustom ? 'true' : 'false' }}"
+  >
+    {% if o.label and not o.inline %}
+      <label for="{{ o.name }}" class="form-label{% if o.required %} required{% endif %}">
+        {{ o.label }}
+        {% if o.required %}
+          <span class="text-danger">*</span>
+        {% endif %}
+      </label>
+    {% endif %}
+
+    {% if o.inline and o.label %}
+      <label for="{{ o.name }}" class="form-label mb-0 me-2{% if o.required %} required{% endif %}">
+        {{ o.label }}
+        {% if o.required %}
+          <span class="text-danger">*</span>
+        {% endif %}
+      </label>
+    {% endif %}
+
+    {% if o.showPresets %}
+      <div class="color-picker-presets mb-2" data-bs-color-picker-target="presets">
+        <div class="row g-2">
+          {% for color in o.presets %}
+            <div class="col-{{ 12 // o.columns }}">
+              <button
+                type="button"
+                class="{{ o.swatchClasses }}{% if o.value == color %} active{% endif %}"
+                data-color="{{ color }}"
+                data-action="click->bs-color-picker#selectColor"
+                style="background-color: {{ color }};"
+                title="{{ color }}"
+                {% if o.disabled %}disabled{% endif %}
+              >
+                <span class="visually-hidden">{{ color }}</span>
+                {% if o.value == color %}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+                {% endif %}
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if o.showInput %}
+      <div class="color-picker-input-wrapper{% if o.inline %} d-inline-flex align-items-center gap-2{% endif %}">
+        {% if o.showHex %}
+          <div class="input-group{% if o.inline %} input-group-inline{% endif %}">
+            <span class="input-group-text">#</span>
+            <input
+              class="{{ o.inputClasses }}"
+              {{ this.renderHtmlAttributes(o.inputAttrs) | raw }}
+              data-bs-color-picker-target="input"
+              data-action="input->bs-color-picker#updateFromInput"
+              maxlength="6"
+            />
+            {% if o.allowCustom %}
+              <input
+                type="color"
+                class="form-control form-control-color"
+                data-bs-color-picker-target="picker"
+                data-action="input->bs-color-picker#updateFromPicker"
+                value="{{ o.value }}"
+                {% if o.disabled %}disabled{% endif %}
+                title="Choose color"
+              />
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="{{ o.inputClasses }}"
+              {{ this.renderHtmlAttributes(o.inputAttrs) | raw }}
+              data-bs-color-picker-target="input"
+              data-action="input->bs-color-picker#updateFromInput"
+            />
+            {% if o.allowCustom %}
+              <input
+                type="color"
+                class="form-control form-control-color"
+                data-bs-color-picker-target="picker"
+                data-action="input->bs-color-picker#updateFromPicker"
+                value="{{ o.value }}"
+                {% if o.disabled %}disabled{% endif %}
+                title="Choose color"
+              />
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if o.helpText and not o.inline %}
+      <div class="form-text">{{ o.helpText }}</div>
+    {% endif %}
+
+    {# Hidden input to store the actual value for form submission #}
+    <input
+      type="hidden"
+      name="{{ o.name }}"
+      value="{{ o.value }}"
+      data-bs-color-picker-target="hiddenInput"
+    />
+  </div>
+
+{%- endapply %}
+

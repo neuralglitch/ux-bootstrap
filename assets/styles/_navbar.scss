@@ -1,0 +1,830 @@
+// ============================================
+// Navbar Variants & Extensions
+// ============================================
+
+// --------------------------------------------
+// 1. Standard Navbar Enhancements
+// --------------------------------------------
+
+.navbar {
+  transition: all 0.3s ease;
+  
+  // Modern toggler without border
+  .navbar-toggler {
+    border: 0;
+    padding: 0.25rem 0.5rem;
+    
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+  
+  // Only enhance theme-aware backgrounds
+  &.bg-body-tertiary,
+  &.bg-body,
+  &.bg-transparent {
+    .navbar-brand,
+    .nav-link {
+      color: var(--bs-body-color);
+    }
+    
+    .nav-link {
+      &:hover,
+      &:focus {
+        color: var(--bs-primary);
+      }
+      
+      &.active {
+        color: var(--bs-primary);
+      }
+    }
+    
+    .navbar-toggler {
+      color: var(--bs-body-color);
+    }
+  }
+}
+
+// Force consistent colors on emphasis backgrounds regardless of theme
+// Bootstrap's default behavior gets overridden by theme switching
+[data-bs-theme="light"],
+[data-bs-theme="dark"] {
+  .navbar {
+    &.bg-primary,
+    &.bg-secondary,
+    &.bg-success,
+    &.bg-danger,
+    &.bg-warning,
+    &.bg-info,
+    &.bg-dark {
+      --bs-navbar-color: rgba(255, 255, 255, 0.65);
+      --bs-navbar-hover-color: rgba(255, 255, 255, 0.85);
+      --bs-navbar-active-color: #fff;
+      --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
+      --bs-navbar-brand-color: #fff;
+      --bs-navbar-brand-hover-color: #fff;
+      
+      .navbar-brand {
+        color: #fff !important;
+      }
+      
+      .nav-link {
+        color: rgba(255, 255, 255, 0.65) !important;
+        
+        &:hover,
+        &:focus {
+          color: rgba(255, 255, 255, 0.85) !important;
+        }
+        
+        &.active {
+          color: #fff !important;
+        }
+      }
+      
+      .navbar-toggler {
+        color: rgba(255, 255, 255, 0.65) !important;
+      }
+      
+      .btn-link {
+        color: rgba(255, 255, 255, 0.65) !important;
+        
+        &:hover {
+          color: rgba(255, 255, 255, 0.85) !important;
+        }
+      }
+      
+      svg {
+        color: rgba(255, 255, 255, 0.65);
+      }
+    }
+    
+    &.bg-light {
+      --bs-navbar-color: rgba(0, 0, 0, 0.55);
+      --bs-navbar-hover-color: rgba(0, 0, 0, 0.7);
+      --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
+      --bs-navbar-brand-color: rgba(0, 0, 0, 0.9);
+      
+      .navbar-brand {
+        color: rgba(0, 0, 0, 0.9) !important;
+      }
+      
+      .nav-link {
+        color: rgba(0, 0, 0, 0.55) !important;
+        
+        &:hover,
+        &:focus {
+          color: rgba(0, 0, 0, 0.7) !important;
+        }
+        
+        &.active {
+          color: rgba(0, 0, 0, 0.9) !important;
+        }
+      }
+      
+      .navbar-toggler {
+        color: rgba(0, 0, 0, 0.55) !important;
+      }
+    }
+  }
+}
+
+// --------------------------------------------
+// 2. Sticky/Scroll Behaviors
+// --------------------------------------------
+
+// Shrink on scroll
+.navbar-shrink.navbar-scrolled {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  
+  .navbar-brand {
+    font-size: 1rem;
+  }
+  
+  .nav-link {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+// Auto-hide behavior
+.navbar-autohide {
+  transition: transform 0.3s ease;
+  
+  &.navbar-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+// Shadow on scroll
+.navbar-shadow.navbar-scrolled {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Transparent until scroll
+.navbar-transparent {
+  transition: background-color 0.3s ease;
+  
+  &.navbar-transparent-active {
+    background-color: transparent !important;
+  }
+  
+  &.navbar-opaque {
+    background-color: var(--bs-navbar-bg) !important;
+  }
+}
+
+// --------------------------------------------
+// 3. Fullscreen Overlay Navbar
+// --------------------------------------------
+
+.navbar-fullscreen {
+  position: relative;
+  
+  // Overlay container
+  .navbar-fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    background: var(--bs-body-bg);
+    
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  // Content wrapper
+  .navbar-fullscreen-content {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    
+    &.navbar-fullscreen-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  
+  // Close button
+  .navbar-fullscreen-close {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    z-index: 10001;
+    filter: none;
+  }
+  
+  // Navigation items
+  .navbar-fullscreen-nav {
+    .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+      
+      .nav-item {
+        margin: 0.5rem 0;
+      }
+      
+      .nav-link {
+        font-size: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          transform: translateX(10px);
+        }
+      }
+    }
+  }
+  
+  // Animation variants
+  &.navbar-fullscreen-fade {
+    .navbar-fullscreen-overlay {
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+  }
+  
+  &.navbar-fullscreen-slide-down {
+    .navbar-fullscreen-overlay {
+      transform: translateY(-100%);
+      transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
+      
+      &.active {
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  &.navbar-fullscreen-scale {
+    .navbar-fullscreen-overlay {
+      transform: scale(0.8);
+      transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
+      
+      &.active {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+// --------------------------------------------
+// 4. Sidebar Navbar
+// --------------------------------------------
+
+.navbar-sidebar-wrapper {
+  display: flex;
+  
+  .navbar-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: var(--bs-body-bg);
+    border-right: 1px solid var(--bs-border-color);
+    z-index: 1030;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    
+    &.navbar-sidebar-right {
+      left: auto;
+      right: 0;
+      border-right: none;
+      border-left: 1px solid var(--bs-border-color);
+    }
+  }
+  
+  .navbar-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+  }
+  
+  .navbar-sidebar-brand {
+    border-bottom: 1px solid var(--bs-border-color);
+    flex-shrink: 0;
+  }
+  
+  .navbar-sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+    
+    .navbar-nav {
+      flex-direction: column;
+      width: 100%;
+      
+      .nav-item {
+        width: 100%;
+      }
+      
+      .nav-link {
+        padding: 0.75rem 1.5rem;
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background: var(--bs-tertiary-bg);
+        }
+        
+        &.active {
+          border-left-color: var(--bs-primary);
+          background: var(--bs-primary-bg-subtle);
+        }
+      }
+    }
+  }
+  
+  .navbar-sidebar-end {
+    border-top: 1px solid var(--bs-border-color);
+    padding: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .navbar-sidebar-toggler {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1040;
+    padding: 0.5rem;
+    
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+
+// Add padding to body/main content when sidebar toggler is visible on mobile
+@media (max-width: 991.98px) {
+  body:has(.navbar-sidebar) {
+    padding-top: 3.5rem;
+  }
+  
+  .navbar-sidebar-wrapper + * {
+    padding-top: 3.5rem;
+  }
+}
+
+// --------------------------------------------
+// 5. Centered Split Navigation
+// --------------------------------------------
+
+.navbar-centered-split {
+  .container,
+  .container-fluid,
+  [class*="container-"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  // Mobile layout (brand centered, toggler right)
+  // Default order for mobile
+  .navbar-brand {
+    order: 0;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  
+  .navbar-toggler {
+    order: 1;
+    flex: 0 0 auto;
+  }
+  
+  .navbar-collapse {
+    order: 2;
+    flex-basis: 100%;
+    
+    // Stack nav items vertically in mobile collapse
+    .navbar-nav {
+      flex-direction: column;
+    }
+  }
+  
+  .navbar-nav-left {
+    flex: 1 1 auto;
+    
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+  }
+  
+  .navbar-nav-right {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+  
+  // Desktop layout (left nav - brand - right nav)
+  &.navbar-expand-lg {
+    @media (min-width: 992px) {
+      .navbar-nav-left {
+        order: 0;
+      }
+      
+      .navbar-brand {
+        order: 1;
+        flex: 0 0 auto;
+        text-align: left;
+        margin: 0;
+      }
+      
+      .navbar-nav-right {
+        order: 2;
+      }
+      
+      .navbar-toggler {
+        display: none;
+      }
+      
+      .navbar-collapse {
+        order: 3;
+      }
+    }
+  }
+  
+  // Override Bootstrap's navbar-expand behavior for centered-split
+  // The collapse should ONLY show on mobile, never on desktop
+  &.navbar-expand-sm .navbar-collapse-mobile {
+    @media (min-width: 576px) {
+      display: none !important;
+    }
+  }
+  
+  &.navbar-expand-md .navbar-collapse-mobile {
+    @media (min-width: 768px) {
+      display: none !important;
+    }
+  }
+  
+  &.navbar-expand-lg .navbar-collapse-mobile {
+    @media (min-width: 992px) {
+      display: none !important;
+    }
+  }
+  
+  &.navbar-expand-xl .navbar-collapse-mobile {
+    @media (min-width: 1200px) {
+      display: none !important;
+    }
+  }
+  
+  &.navbar-expand-xxl .navbar-collapse-mobile {
+    @media (min-width: 1400px) {
+      display: none !important;
+    }
+  }
+  
+  // Similar desktop overrides for other breakpoints
+  &.navbar-expand-md {
+    @media (min-width: 768px) {
+      .navbar-nav-left { order: 0; }
+      .navbar-brand { order: 1; flex: 0 0 auto; text-align: left; margin: 0; }
+      .navbar-nav-right { order: 2; }
+      .navbar-toggler { display: none; }
+    }
+  }
+  
+  &.navbar-expand-sm {
+    @media (min-width: 576px) {
+      .navbar-nav-left { order: 0; }
+      .navbar-brand { order: 1; flex: 0 0 auto; text-align: left; margin: 0; }
+      .navbar-nav-right { order: 2; }
+      .navbar-toggler { display: none; }
+    }
+  }
+  
+  &.navbar-expand-xl {
+    @media (min-width: 1200px) {
+      .navbar-nav-left { order: 0; }
+      .navbar-brand { order: 1; flex: 0 0 auto; text-align: left; margin: 0; }
+      .navbar-nav-right { order: 2; }
+      .navbar-toggler { display: none; }
+    }
+  }
+  
+  &.navbar-expand-xxl {
+    @media (min-width: 1400px) {
+      .navbar-nav-left { order: 0; }
+      .navbar-brand { order: 1; flex: 0 0 auto; text-align: left; margin: 0; }
+      .navbar-nav-right { order: 2; }
+      .navbar-toggler { display: none; }
+    }
+  }
+}
+
+// --------------------------------------------
+// 6. Double Row Navbar
+// --------------------------------------------
+
+.navbar-double-wrapper {
+  .navbar-top-row {
+    border-bottom: 1px solid var(--bs-border-color);
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+    background-color: var(--bs-secondary-bg);
+    
+    .navbar-top-left,
+    .navbar-top-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+}
+
+// --------------------------------------------
+// 7. Mega Menu
+// --------------------------------------------
+
+.navbar {
+  &.navbar-expand-lg,
+  &.navbar-expand-md,
+  &.navbar-expand-sm,
+  &.navbar-expand-xl,
+  &.navbar-expand-xxl {
+    .navbar-collapse {
+      position: static;
+    }
+  }
+}
+
+// Mega menu positioning
+.navbar {
+  // Only apply static positioning when navbar is expanded (desktop)
+  &.navbar-expand-lg {
+    @media (min-width: 992px) {
+      .navbar-collapse:has(.dropdown[data-navbar-mega-menu]) {
+        position: static;
+      }
+      
+      .dropdown[data-navbar-mega-menu] {
+        position: static;
+        
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          top: 100%;
+          left: 0 !important;
+          right: 0;
+          transform: none !important;
+          margin: 0;
+          width: 100%;
+          max-width: none;
+        }
+      }
+    }
+    
+    // On mobile (collapsed), behave like normal dropdown
+    @media (max-width: 991.98px) {
+      .dropdown[data-navbar-mega-menu] {
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          left: 0;
+          right: auto;
+          width: 100%;
+          max-width: 100%;
+          transform: none !important;
+        }
+      }
+    }
+  }
+  
+  // Similar breakpoints for other expand sizes
+  &.navbar-expand-md {
+    @media (min-width: 768px) {
+      .navbar-collapse:has(.dropdown[data-navbar-mega-menu]) {
+        position: static;
+      }
+      
+      .dropdown[data-navbar-mega-menu] {
+        position: static;
+        
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          top: 100%;
+          left: 0 !important;
+          right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  &.navbar-expand-sm {
+    @media (min-width: 576px) {
+      .navbar-collapse:has(.dropdown[data-navbar-mega-menu]) {
+        position: static;
+      }
+      
+      .dropdown[data-navbar-mega-menu] {
+        position: static;
+        
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          top: 100%;
+          left: 0 !important;
+          right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  &.navbar-expand-xl {
+    @media (min-width: 1200px) {
+      .navbar-collapse:has(.dropdown[data-navbar-mega-menu]) {
+        position: static;
+      }
+      
+      .dropdown[data-navbar-mega-menu] {
+        position: static;
+        
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          top: 100%;
+          left: 0 !important;
+          right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  &.navbar-expand-xxl {
+    @media (min-width: 1400px) {
+      .navbar-collapse:has(.dropdown[data-navbar-mega-menu]) {
+        position: static;
+      }
+      
+      .dropdown[data-navbar-mega-menu] {
+        position: static;
+        
+        .dropdown-menu.mega-menu {
+          position: absolute;
+          top: 100%;
+          left: 0 !important;
+          right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+  
+// Multi-column layout
+.mega-menu-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  padding: 1.5rem;
+  
+  // Columns automatically break only when they don't fit screen width
+  // Falls back to stacking on very small screens naturally
+}
+
+.mega-menu-column {
+  .mega-menu-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    color: var(--bs-secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .mega-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    a {
+      color: var(--bs-body-color);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: var(--bs-primary);
+      }
+    }
+  }
+}
+
+// Featured item
+.mega-menu-featured {
+  background: var(--bs-tertiary-bg);
+  padding: 1rem;
+  border-radius: var(--bs-border-radius);
+  
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--bs-border-radius);
+    margin-bottom: 0.5rem;
+  }
+}
+
+// --------------------------------------------
+// 8. Offcanvas Enhancements
+// --------------------------------------------
+
+.navbar {
+  .offcanvas {
+    &.offcanvas-no-backdrop {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// --------------------------------------------
+// Responsive Adjustments
+// --------------------------------------------
+
+@media (max-width: 991.98px) {
+  // Sidebar collapses to offcanvas on mobile
+  .navbar-sidebar-wrapper {
+    .navbar-sidebar {
+      transform: translateX(-100%);
+      
+      &.show {
+        transform: translateX(0);
+      }
+    }
+  }
+  
+  // Fullscreen overlay adjustments
+  .navbar-fullscreen {
+    .navbar-fullscreen-content {
+      padding: 1rem;
+    }
+    
+    .navbar-fullscreen-nav .navbar-nav .nav-link {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+// --------------------------------------------
+// Dark Mode Support
+// --------------------------------------------
+
+[data-bs-theme="dark"] {
+  .navbar-sidebar {
+    border-color: var(--bs-border-color);
+  }
+  
+  .mega-menu {
+    background: var(--bs-body-bg);
+    border-color: var(--bs-border-color);
+  }
+  
+  .navbar-fullscreen-overlay {
+    background: var(--bs-body-bg);
+  }
+}
+
+// --------------------------------------------
+// Accessibility
+// --------------------------------------------
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar-fullscreen-overlay,
+  .navbar-autohide,
+  .navbar-transparent,
+  .nav-link {
+    transition: none !important;
+  }
+}
+

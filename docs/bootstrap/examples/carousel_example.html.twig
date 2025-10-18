@@ -1,0 +1,97 @@
+{# Carousel Component Examples #}
+
+{# Basic Carousel #}
+<h3>Basic Carousel</h3>
+<twig:bs:carousel id="carouselBasic">
+    <twig:bs:carousel-item :active="true" image="https://via.placeholder.com/800x400/0066cc/ffffff?text=Slide+1" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/00cc66/ffffff?text=Slide+2" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/cc6600/ffffff?text=Slide+3" />
+</twig:bs:carousel>
+
+{# Carousel with Captions #}
+<h3 class="mt-5">Carousel with Captions</h3>
+<twig:bs:carousel id="carouselCaptions">
+    <twig:bs:carousel-item 
+        :active="true" 
+        image="https://via.placeholder.com/800x400/0066cc/ffffff?text=First+Slide"
+        caption="First slide label"
+        description="Some representative placeholder content for the first slide."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/00cc66/ffffff?text=Second+Slide"
+        caption="Second slide label"
+        description="Some representative placeholder content for the second slide."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/cc6600/ffffff?text=Third+Slide"
+        caption="Third slide label"
+        description="Some representative placeholder content for the third slide."
+    />
+</twig:bs:carousel>
+
+{# Carousel with Controls #}
+<h3 class="mt-5">Carousel with Controls</h3>
+<twig:bs:carousel id="carouselControls" :controls="true">
+    <twig:bs:carousel-item :active="true" image="https://via.placeholder.com/800x400/ff6b6b/ffffff?text=Slide+1" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/4ecdc4/ffffff?text=Slide+2" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/ffe66d/333333?text=Slide+3" />
+</twig:bs:carousel>
+
+{# Carousel with Indicators #}
+<h3 class="mt-5">Carousel with Indicators</h3>
+<twig:bs:carousel id="carouselIndicators" :indicators="true" :controls="true">
+    <twig:bs:carousel-item :active="true" image="https://via.placeholder.com/800x400/a8e6cf/333333?text=Nature" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/ffd3b6/333333?text=Sunset" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/ffaaa5/ffffff?text=Ocean" />
+</twig:bs:carousel>
+
+{# Auto-playing Carousel #}
+<h3 class="mt-5">Auto-playing Carousel</h3>
+<twig:bs:carousel id="carouselAuto" :autoplay="true" :interval="3000" :controls="true" :indicators="true">
+    <twig:bs:carousel-item 
+        :active="true" 
+        image="https://via.placeholder.com/800x400/667eea/ffffff?text=Auto+Slide+1"
+        caption="Auto Slide 1"
+        description="This carousel automatically transitions every 3 seconds."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/764ba2/ffffff?text=Auto+Slide+2"
+        caption="Auto Slide 2"
+        description="Hover over the carousel to pause auto-play."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/f093fb/ffffff?text=Auto+Slide+3"
+        caption="Auto Slide 3"
+        description="Perfect for image galleries and featured content."
+    />
+</twig:bs:carousel>
+
+{# Fade Transition Carousel #}
+<h3 class="mt-5">Fade Transition Carousel</h3>
+<twig:bs:carousel id="carouselFade" :fade="true" :controls="true" :indicators="true">
+    <twig:bs:carousel-item :active="true" image="https://via.placeholder.com/800x400/00b4d8/ffffff?text=Fade+1" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/0077b6/ffffff?text=Fade+2" />
+    <twig:bs:carousel-item image="https://via.placeholder.com/800x400/023e8a/ffffff?text=Fade+3" />
+</twig:bs:carousel>
+
+{# Dark Variant Carousel #}
+<h3 class="mt-5">Dark Variant Carousel</h3>
+<twig:bs:carousel id="carouselDark" :dark="true" :controls="true" :indicators="true">
+    <twig:bs:carousel-item 
+        :active="true" 
+        image="https://via.placeholder.com/800x400/f8f9fa/333333?text=Light+Background+1"
+        caption="First slide"
+        description="Dark controls work well on light backgrounds."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/e9ecef/333333?text=Light+Background+2"
+        caption="Second slide"
+        description="The dark variant provides better contrast."
+    />
+    <twig:bs:carousel-item 
+        image="https://via.placeholder.com/800x400/dee2e6/333333?text=Light+Background+3"
+        caption="Third slide"
+        description="Perfect for bright image galleries."
+    />
+</twig:bs:carousel>
+

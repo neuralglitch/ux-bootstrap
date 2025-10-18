@@ -1,0 +1,20 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Content block for tab content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+
+  <div
+    {% if o.id %}id="{{ o.id }}"{% endif %}
+    class="{{ o.classes }}"
+    {{ this.renderHtmlAttributes(o.attrs) | raw }}
+  >
+    {% if has_content %}
+      {{ slot_content|raw }}
+    {% endif %}
+  </div>
+
+{%- endapply %}
+

@@ -1,0 +1,196 @@
+{# Data Table Component Examples #}
+
+{# Example 1: Basic Admin User Management Table #}
+<twig:bs:data-table
+    :rows="users"
+    :columns="[
+        {'key': 'id', 'label': 'ID', 'align': 'end'},
+        {'key': 'name', 'label': 'Name'},
+        {'key': 'email', 'label': 'Email'},
+        {'key': 'role', 'label': 'Role'},
+        {'key': 'created_at', 'label': 'Joined'},
+    ]"
+    :cardWrapper="true"
+    cardTitle="Users"
+    cardSubtitle="Manage system users"
+    :sortable="true"
+    sortBaseUrl="/admin/users"
+    :sortedColumn="sortColumn"
+    :sortDirection="sortDir"
+    :selectable="true"
+    :selectAll="true"
+    :showActions="true"
+    actionsLabel="Manage"
+>
+    {% block actions_end %}
+        <div class="btn-group btn-group-sm">
+            <a href="/admin/users/{{ row.id }}/edit" class="btn btn-outline-primary">Edit</a>
+            <button type="button" class="btn btn-outline-danger" onclick="confirmDelete({{ row.id }})">Delete</button>
+        </div>
+    {% endblock %}
+</twig:bs:data-table>
+
+{# Example 2: Order Listing with Status Badges #}
+<twig:bs:data-table
+    :rows="orders"
+    :columns="[
+        {'key': 'id', 'label': 'Order #', 'align': 'end'},
+        {'key': 'customer', 'label': 'Customer'},
+        {'key': 'total', 'label': 'Total', 'align': 'end'},
+        {'key': 'status', 'label': 'Status', 'align': 'center'},
+        {'key': 'date', 'label': 'Date'},
+    ]"
+    :cardWrapper="true"
+    cardTitle="Recent Orders"
+    :sortable="true"
+    sortBaseUrl="/orders"
+    :sortedColumn="sort"
+    :sortDirection="direction"
+    :showActions="true"
+>
+    {% block actions_end %}
+        <a href="/orders/{{ row.id }}" class="btn btn-sm btn-outline-primary">View</a>
+    {% endblock %}
+</twig:bs:data-table>
+
+{# Example 3: Product Catalog #}
+<twig:bs:data-table
+    :rows="products"
+    :columns="[
+        {'key': 'id', 'label': '#', 'align': 'end'},
+        {'key': 'image', 'label': 'Image'},
+        {'key': 'name', 'label': 'Product'},
+        {'key': 'category', 'label': 'Category'},
+        {'key': 'price', 'label': 'Price', 'align': 'end'},
+        {'key': 'stock', 'label': 'Stock', 'align': 'center'},
+    ]"
+    :bordered="true"
+    thead="light"
+    :showActions="true"
+    actionsLabel="Manage"
+>
+    {% block actions_end %}
+        <div class="btn-group btn-group-sm">
+            <a href="/admin/products/{{ row.id }}/edit" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-pencil"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-id="{{ row.id }}">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+    {% endblock %}
+</twig:bs:data-table>
+
+{# Example 4: Compact Dashboard Stats Table #}
+<twig:bs:data-table
+    :rows="stats"
+    :columns="[
+        {'key': 'metric', 'label': 'Metric'},
+        {'key': 'value', 'label': 'Value', 'align': 'end'},
+        {'key': 'change', 'label': 'Change', 'align': 'end'},
+    ]"
+    :small="true"
+    :bordered="true"
+    :striped="false"
+    :hover="false"
+    container=""
+    emptyMessage="No statistics available"
+/>
+
+{# Example 5: Report with Dark Header #}
+<twig:bs:data-table
+    :rows="reportData"
+    :columns="reportColumns"
+    :cardWrapper="true"
+    cardTitle="Monthly Report"
+    cardSubtitle="Sales performance for January 2024"
+    captionText="Data as of January 31, 2024"
+    captionPosition="bottom"
+    thead="dark"
+    :divider="true"
+    :sortable="true"
+    sortBaseUrl="/reports/monthly"
+    :sortedColumn="sort"
+    :sortDirection="direction"
+/>
+
+{# Example 6: Form with Bulk Selection #}
+<form method="post" action="/admin/users/bulk-action">
+    <twig:bs:data-table
+        :rows="users"
+        :columns="userColumns"
+        :selectable="true"
+        :selectAll="true"
+        selectName="user_ids[]"
+    />
+    
+    <div class="d-flex gap-2 mt-3">
+        <button type="submit" name="action" value="activate" class="btn btn-success">
+            Activate Selected
+        </button>
+        <button type="submit" name="action" value="deactivate" class="btn btn-warning">
+            Deactivate Selected
+        </button>
+        <button type="submit" name="action" value="delete" class="btn btn-danger">
+            Delete Selected
+        </button>
+    </div>
+</form>
+
+{# Example 7: Responsive Table with Custom Breakpoint #}
+<twig:bs:data-table
+    :rows="largeDataset"
+    :columns="manyColumns"
+    :responsive="true"
+    responsiveBreakpoint="lg"
+    :small="true"
+/>
+
+{# Example 8: Empty State Example #}
+<twig:bs:data-table
+    :rows="[]"
+    :columns="columns"
+    emptyMessage="No results found for your search. Try adjusting your filters."
+    :cardWrapper="true"
+    cardTitle="Search Results"
+/>
+
+{# Example 9: Actions at Start (Left Side) #}
+<twig:bs:data-table
+    :rows="tasks"
+    :columns="taskColumns"
+    :showActions="true"
+    actionsLabel="Quick Actions"
+    actionsPosition="start"
+>
+    {% block actions_start %}
+        <input type="checkbox" class="form-check-input" id="task-{{ row.id }}">
+    {% endblock %}
+</twig:bs:data-table>
+
+{# Example 10: Dropdown Actions Menu #}
+<twig:bs:data-table
+    :rows="invoices"
+    :columns="invoiceColumns"
+    :showActions="true"
+>
+    {% block actions_end %}
+        <div class="dropdown">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                    type="button" 
+                    id="dropdownMenu{{ row.id }}"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Actions
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ row.id }}">
+                <li><a class="dropdown-item" href="/invoices/{{ row.id }}/view">View</a></li>
+                <li><a class="dropdown-item" href="/invoices/{{ row.id }}/download">Download PDF</a></li>
+                <li><a class="dropdown-item" href="/invoices/{{ row.id }}/email">Email to Customer</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="/invoices/{{ row.id }}/void">Void Invoice</a></li>
+            </ul>
+        </div>
+    {% endblock %}
+</twig:bs:data-table>
+

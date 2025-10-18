@@ -1,0 +1,25 @@
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {% if o.items is not empty %}
+        <ul class="tree-view-list" role="group">
+            {% for item in o.items %}
+                {{ include('components/extra/tree-view-item.html.twig', {
+                    item: item,
+                    level: 0,
+                    options: o
+                }) }}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="tree-view-empty text-muted py-3 text-center">
+            <i class="bi bi-folder2-open fs-1"></i>
+            <p class="mb-0 mt-2">No items to display</p>
+        </div>
+    {% endif %}
+</div>
+
+{%- endapply %}
+

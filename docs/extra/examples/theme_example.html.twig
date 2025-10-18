@@ -1,0 +1,181 @@
+{# Theme Toggle Component Examples #}
+
+{# Button Icon Toggle #}
+<h3>Button Icon Toggle</h3>
+<twig:bs:theme mode="button-icon" variant="outline-secondary" />
+
+{# Button Icon with Text #}
+<h3 class="mt-5">Button with Icon and Text</h3>
+<twig:bs:theme mode="button-icon-text" variant="primary" />
+
+{# Button Text Only #}
+<h3 class="mt-5">Button with Text Only</h3>
+<twig:bs:theme mode="button-text" variant="secondary" />
+
+{# Toggle Button Style #}
+<h3 class="mt-5">Toggle Button Style</h3>
+<twig:bs:theme mode="button-icon-toggle" variant="outline-primary" />
+
+{# Dropdown with Text #}
+<h3 class="mt-5">Dropdown with Text</h3>
+<twig:bs:theme mode="dropdown-text" variant="secondary" />
+
+{# Dropdown with Icons #}
+<h3 class="mt-5">Dropdown with Icons</h3>
+<twig:bs:theme mode="dropdown-icon" variant="primary" />
+
+{# Link Toggle #}
+<h3 class="mt-5">Link Toggle</h3>
+<twig:bs:theme mode="link" />
+
+{# Link with Icon #}
+<h3 class="mt-5">Link with Icon</h3>
+<twig:bs:theme mode="link-icon" />
+
+{# Form Select #}
+<h3 class="mt-5">Form Select</h3>
+<div style="max-width: 200px;">
+    <label class="form-label">Theme</label>
+    <twig:bs:theme mode="form-select" />
+</div>
+
+{# Form Switch #}
+<h3 class="mt-5">Form Switch</h3>
+<twig:bs:theme mode="form-switch" />
+
+{# Form Radio Buttons #}
+<h3 class="mt-5">Form Radio Buttons</h3>
+<twig:bs:theme mode="form-check" />
+
+{# Theme Toggle in Navbar #}
+<h3 class="mt-5">Theme Toggle in Navbar</h3>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">My App</a>
+        <div class="d-flex align-items-center ms-auto">
+            <twig:bs:theme mode="button-icon" variant="outline-secondary" />
+        </div>
+    </div>
+</nav>
+
+{# Theme Toggle with Initial State #}
+<h3 class="mt-5">Theme Toggle with Initial State</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <p>Start with Light:</p>
+        <twig:bs:theme mode="button-icon-text" initial="light" variant="primary" />
+    </div>
+    <div class="col-md-4">
+        <p>Start with Dark:</p>
+        <twig:bs:theme mode="button-icon-text" initial="dark" variant="secondary" />
+    </div>
+    <div class="col-md-4">
+        <p>Start with Auto:</p>
+        <twig:bs:theme mode="button-icon-text" initial="auto" variant="info" />
+    </div>
+</div>
+
+{# Theme Toggle in Card #}
+<h3 class="mt-5">Theme Toggle in Settings Card</h3>
+<twig:bs:card style="max-width: 400px;">
+    <div class="card-body">
+        <h5 class="card-title">Appearance Settings</h5>
+        <p class="card-text">Choose your preferred theme for the interface.</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <span>Theme Mode</span>
+            <twig:bs:theme mode="form-select" />
+        </div>
+    </div>
+</twig:bs:card>
+
+{# Theme Toggle Options Grid #}
+<h3 class="mt-5">All Theme Toggle Options</h3>
+<div class="row g-3">
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h6 class="card-title">Button Modes</h6>
+                <div class="d-flex flex-column gap-2">
+                    <div>
+                        <small class="text-muted d-block mb-1">Icon Only</small>
+                        <twig:bs:theme mode="button-icon" variant="outline-secondary" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Icon + Text</small>
+                        <twig:bs:theme mode="button-icon-text" variant="primary" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Text Only</small>
+                        <twig:bs:theme mode="button-text" variant="secondary" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Toggle Button</small>
+                        <twig:bs:theme mode="button-icon-toggle" variant="outline-primary" />
+                    </div>
+                </div>
+            </div>
+        </twig:bs:card>
+    </div>
+    <div class="col-md-6">
+        <twig:bs:card>
+            <div class="card-body">
+                <h6 class="card-title">Dropdown & Form Modes</h6>
+                <div class="d-flex flex-column gap-3">
+                    <div>
+                        <small class="text-muted d-block mb-1">Dropdown Text</small>
+                        <twig:bs:theme mode="dropdown-text" variant="secondary" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Dropdown Icon</small>
+                        <twig:bs:theme mode="dropdown-icon" variant="primary" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Form Select</small>
+                        <twig:bs:theme mode="form-select" />
+                    </div>
+                    <div>
+                        <small class="text-muted d-block mb-1">Form Switch</small>
+                        <twig:bs:theme mode="form-switch" />
+                    </div>
+                </div>
+            </div>
+        </twig:bs:card>
+    </div>
+</div>
+
+{# Compact Theme Switcher #}
+<h3 class="mt-5">Compact Theme Switcher for Mobile</h3>
+<div class="d-flex justify-content-around p-3 bg-light rounded">
+    <button class="btn btn-sm btn-outline-secondary" onclick="document.documentElement.setAttribute('data-bs-theme', 'light')">
+        <i class="bi bi-sun-fill"></i>
+    </button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="document.documentElement.setAttribute('data-bs-theme', 'dark')">
+        <i class="bi bi-moon-fill"></i>
+    </button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="document.documentElement.removeAttribute('data-bs-theme')">
+        <i class="bi bi-circle-half"></i>
+    </button>
+</div>
+
+{# Theme Demo Area #}
+<h3 class="mt-5">Live Theme Demo</h3>
+<div class="d-flex justify-content-end mb-3">
+    <twig:bs:theme mode="dropdown-text" variant="secondary" />
+</div>
+<twig:bs:card>
+    <div class="card-header">
+        <h5 class="mb-0">Theme Preview</h5>
+    </div>
+    <div class="card-body">
+        <p>This area will automatically update when you switch themes.</p>
+        <div class="d-flex gap-2 mb-3">
+            <twig:bs:button variant="primary">Primary</twig:bs:button>
+            <twig:bs:button variant="secondary">Secondary</twig:bs:button>
+            <twig:bs:button variant="success">Success</twig:bs:button>
+        </div>
+        <twig:bs:alert variant="info">
+            The theme switcher uses Bootstrap's built-in dark mode support.
+        </twig:bs:alert>
+    </div>
+</twig:bs:card>
+

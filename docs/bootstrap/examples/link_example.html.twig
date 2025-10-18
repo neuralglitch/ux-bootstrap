@@ -1,0 +1,119 @@
+{# Link Component Examples #}
+
+{# Basic Links #}
+<h3>Basic Links</h3>
+<p>
+    <twig:bs:link href="/">Home</twig:bs:link> |
+    <twig:bs:link href="/about">About</twig:bs:link> |
+    <twig:bs:link href="/contact">Contact</twig:bs:link>
+</p>
+
+{# Links with Tooltips #}
+<h3 class="mt-5">Links with Tooltips</h3>
+<p>
+    <twig:bs:link 
+        href="/profile" 
+        :tooltip="{text: 'View your profile', placement: 'top'}">
+        Profile
+    </twig:bs:link>
+</p>
+<p>
+    <twig:bs:link 
+        href="/settings" 
+        :tooltip="{text: 'Manage your settings', placement: 'bottom'}">
+        Settings
+    </twig:bs:link>
+</p>
+
+{# Links with Popovers #}
+<h3 class="mt-5">Links with Popovers</h3>
+<p>
+    <twig:bs:link 
+        href="#"
+        :popover="{
+            title: 'Help Information',
+            text: 'This link provides additional help information in a popover.',
+            placement: 'right',
+            trigger: 'hover'
+        }">
+        Hover for help
+    </twig:bs:link>
+</p>
+<p>
+    <twig:bs:link 
+        href="#"
+        :popover="{
+            title: 'Click me',
+            text: 'This popover appears on click.',
+            placement: 'bottom',
+            trigger: 'click'
+        }">
+        Click for more info
+    </twig:bs:link>
+</p>
+
+{# Links with Icons #}
+<h3 class="mt-5">Links with Icons</h3>
+<p>
+    <twig:bs:link href="/download" iconStart="bi bi-download">Download</twig:bs:link>
+</p>
+<p>
+    <twig:bs:link href="/docs" iconEnd="bi bi-arrow-right">Read docs</twig:bs:link>
+</p>
+<p>
+    <twig:bs:link href="https://github.com" target="_blank" iconEnd="bi bi-box-arrow-up-right">
+        External link
+    </twig:bs:link>
+</p>
+
+{# Disabled Links #}
+<h3 class="mt-5">Disabled Links</h3>
+<p>
+    <twig:bs:link href="#" :disabled="true">Disabled link</twig:bs:link>
+</p>
+
+{# Colored Links #}
+<h3 class="mt-5">Colored Links</h3>
+<p>
+    <twig:bs:link href="#" class="link-primary">Primary link</twig:bs:link> |
+    <twig:bs:link href="#" class="link-secondary">Secondary link</twig:bs:link> |
+    <twig:bs:link href="#" class="link-success">Success link</twig:bs:link> |
+    <twig:bs:link href="#" class="link-danger">Danger link</twig:bs:link> |
+    <twig:bs:link href="#" class="link-warning">Warning link</twig:bs:link> |
+    <twig:bs:link href="#" class="link-info">Info link</twig:bs:link>
+</p>
+
+{# Links with Badges #}
+<h3 class="mt-5">Links with Badges</h3>
+<p>
+    <twig:bs:link href="/notifications">
+        Notifications <twig:bs:badge variant="danger">5</twig:bs:badge>
+    </twig:bs:link>
+</p>
+<p>
+    <twig:bs:link href="/messages">
+        Messages <twig:bs:badge variant="primary" :pill="true">12</twig:bs:badge>
+    </twig:bs:link>
+</p>
+
+{# Underline Variants #}
+<h3 class="mt-5">Underline Variants</h3>
+<p>
+    <twig:bs:link href="#" class="link-underline-primary">Underline primary</twig:bs:link>
+</p>
+<p>
+    <twig:bs:link href="#" class="link-underline-opacity-25">Underline opacity 25%</twig:bs:link>
+</p>
+<p>
+    <twig:bs:link href="#" class="link-underline-opacity-0">No underline</twig:bs:link>
+</p>
+
+{# Navigation Links #}
+<h3 class="mt-5">Navigation Links</h3>
+<nav class="nav">
+    <twig:bs:link href="/" class="nav-link">Home</twig:bs:link>
+    <twig:bs:link href="/features" class="nav-link">Features</twig:bs:link>
+    <twig:bs:link href="/pricing" class="nav-link">Pricing</twig:bs:link>
+    <twig:bs:link href="/about" class="nav-link">About</twig:bs:link>
+</nav>
+

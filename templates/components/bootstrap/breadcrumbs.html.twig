@@ -1,0 +1,41 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slots: default content for custom breadcrumb items #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content priority: Slot > Items prop #}
+  {% set has_content = slot_content is not empty %}
+  {% set items = has_content ? [] : (o.items ?? []) %}
+
+  <nav class="{{ o.classes }}" 
+       data-controller="bs-breadcrumbs"
+       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <ol class="breadcrumb">
+      {% if has_content %}
+        {# Custom breadcrumb content via slot #}
+        {{ slot_content|raw }}
+      {% else %}
+        {# Generated breadcrumb items #}
+        {% for item in items %}
+          {% if item.active|default(false) %}
+            <li class="breadcrumb-item active" aria-current="page" data-bs-breadcrumbs-target="item">
+              {{ item.label }}
+            </li>
+          {% elseif item.url %}
+            <li class="breadcrumb-item" data-bs-breadcrumbs-target="item">
+              <a href="{{ item.url }}">{{ item.label }}</a>
+            </li>
+          {% else %}
+            <li class="breadcrumb-item" data-bs-breadcrumbs-target="item">
+              {{ item.label }}
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </ol>
+  </nav>
+
+{%- endapply %}
+

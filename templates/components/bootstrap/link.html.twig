@@ -1,0 +1,40 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slots auswerten: content / icon_start / icon_end #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set slot_icon_start %}{% block icon_start %}{% endblock %}{% endset %}
+  {% set slot_icon_end %}{% block icon_end %}{% endblock %}{% endset %}
+
+  {# Inhalt (Label) bestimmen: Slot > Prop #}
+  {% set has_content = slot_content is not empty %}
+  {% set label_html  = has_content ? slot_content : (o.label ?? '') %}
+
+  {# Icons bestimmen: Slot > Prop #}
+  {# If slot provided, use it; otherwise check if prop is an icon name and render it #}
+  {% if slot_icon_start is not empty %}
+    {% set icon_start_html = slot_icon_start %}
+  {% elseif o.iconStart %}
+    {% set icon_start_html %}<twig:ux:icon name="{{ o.iconStart }}" width="{{ o.iconSize }}" height="{{ o.iconSize }}" />{% endset %}
+  {% else %}
+    {% set icon_start_html = '' %}
+  {% endif %}
+  
+  {% if slot_icon_end is not empty %}
+    {% set icon_end_html = slot_icon_end %}
+  {% elseif o.iconEnd %}
+    {% set icon_end_html %}<twig:ux:icon name="{{ o.iconEnd }}" width="{{ o.iconSize }}" height="{{ o.iconSize }}" />{% endset %}
+  {% else %}
+    {% set icon_end_html = '' %}
+  {% endif %}
+
+  <a href="{{ o.href }}"
+     class="{{ o.classes }}"
+    {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {%- if icon_start_html %}<span class="{{ o.iconStartClasses }}">{{ icon_start_html|raw }}</span>{% endif -%}
+    {%- if not o.iconOnly and label_html %}{{ label_html|raw }}{% endif -%}
+    {%- if icon_end_html %}<span class="{{ o.iconEndClasses }}">{{ icon_end_html|raw }}</span>{% endif -%}
+  </a>
+
+{%- endapply %}

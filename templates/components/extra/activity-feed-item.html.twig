@@ -1,0 +1,89 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Determine the wrapper tag based on href #}
+  {% set wrapper_tag = o.href ? 'a' : 'div' %}
+  {% set wrapper_attrs = o.attrs %}
+  {% if o.href %}
+    {% set wrapper_attrs = wrapper_attrs|merge({'href': o.href}) %}
+  {% endif %}
+
+  <{{ wrapper_tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(wrapper_attrs) | raw }}>
+    
+    {# Icon or Avatar #}
+    <div class="flex-shrink-0">
+      {% if o.avatar %}
+        <img src="{{ o.avatar }}" alt="" class="rounded-circle" width="40" height="40">
+      {% elseif o.icon %}
+        <div class="activity-feed-icon rounded-circle d-flex align-items-center justify-content-center bg-{{ o.iconVariant }}-subtle text-{{ o.iconVariant }}" style="width: 40px; height: 40px;">
+          <i class="{{ o.icon }}"></i>
+        </div>
+      {% else %}
+        <div class="activity-feed-icon rounded-circle d-flex align-items-center justify-content-center bg-secondary-subtle text-secondary" style="width: 40px; height: 40px;">
+          <i class="bi-circle-fill" style="font-size: 0.5rem;"></i>
+        </div>
+      {% endif %}
+    </div>
+
+    {# Content #}
+    <div class="flex-grow-1 min-w-0">
+      
+      {# Title and Timestamp #}
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <div class="flex-grow-1">
+          {% if o.title %}
+            <div class="fw-semibold{{ o.unread ? ' text-primary' : '' }}">
+              {{ o.title }}
+              {% if o.unread %}
+                <span class="badge bg-primary ms-1" style="font-size: 0.5rem; padding: 2px 4px;">●</span>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        
+        {% if o.timestamp %}
+          <small class="text-muted text-nowrap ms-2">{{ o.timestamp }}</small>
+        {% endif %}
+      </div>
+
+      {# Description #}
+      {% if o.description %}
+        <p class="text-muted mb-1 small">{{ o.description }}</p>
+      {% endif %}
+
+      {# Custom Content Slot #}
+      {% if slot_content is not empty %}
+        <div class="activity-feed-item-content">
+          {{ slot_content|raw }}
+        </div>
+      {% endif %}
+
+      {# Metadata #}
+      {% if o.metadata is not empty %}
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          {% for meta in o.metadata %}
+            <small class="text-muted">
+              <i class="bi-dot"></i>{{ meta }}
+            </small>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {# Action Button #}
+      {% if o.actionLabel and o.actionHref %}
+        <div class="mt-2">
+          <a href="{{ o.actionHref }}" class="btn btn-sm btn-outline-primary">
+            {{ o.actionLabel }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+  </{{ wrapper_tag }}>
+
+{%- endapply %}
+

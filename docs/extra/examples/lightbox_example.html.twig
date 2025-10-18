@@ -1,0 +1,186 @@
+{# ============================= #}
+{# Lightbox Component Examples  #}
+{# ============================= #}
+
+{# Example 1: Simple Gallery #}
+<h2>Simple Gallery</h2>
+<twig:bs:lightbox :images="[
+    {'src': '/images/portfolio/photo1.jpg', 'alt': 'Photo 1', 'caption': 'Beautiful landscape'},
+    {'src': '/images/portfolio/photo2.jpg', 'alt': 'Photo 2', 'caption': 'City skyline'},
+    {'src': '/images/portfolio/photo3.jpg', 'alt': 'Photo 3', 'caption': 'Ocean sunset'}
+]" />
+
+{# Example 2: Gallery with Thumbnails #}
+<h2>Gallery with Thumbnails</h2>
+<twig:bs:lightbox
+    :images="[
+        {
+            'src': '/images/full/photo1.jpg',
+            'thumbnail': '/images/thumb/photo1.jpg',
+            'alt': 'Photo 1',
+            'caption': 'Beautiful landscape'
+        },
+        {
+            'src': '/images/full/photo2.jpg',
+            'thumbnail': '/images/thumb/photo2.jpg',
+            'alt': 'Photo 2',
+            'caption': 'City skyline'
+        },
+        {
+            'src': '/images/full/photo3.jpg',
+            'thumbnail': '/images/thumb/photo3.jpg',
+            'alt': 'Photo 3',
+            'caption': 'Ocean sunset'
+        }
+    ]"
+    :showThumbnails="true"
+/>
+
+{# Example 3: Product Gallery #}
+<h2>Product Gallery</h2>
+<twig:bs:lightbox
+    :images="[
+        {'src': '/images/products/product-front.jpg', 'alt': 'Product Front View'},
+        {'src': '/images/products/product-back.jpg', 'alt': 'Product Back View'},
+        {'src': '/images/products/product-detail.jpg', 'alt': 'Product Detail'},
+        {'src': '/images/products/product-lifestyle.jpg', 'alt': 'Product Lifestyle'}
+    ]"
+    :showCounter="true"
+    :showCaptions="false"
+    transition="slide"
+/>
+
+{# Example 4: Photo Album with Autoplay #}
+<h2>Photo Album with Autoplay</h2>
+<twig:bs:lightbox
+    :images="[
+        {'src': '/images/album/photo1.jpg', 'alt': 'Album Photo 1', 'caption': 'Vacation Day 1'},
+        {'src': '/images/album/photo2.jpg', 'alt': 'Album Photo 2', 'caption': 'Vacation Day 2'},
+        {'src': '/images/album/photo3.jpg', 'alt': 'Album Photo 3', 'caption': 'Vacation Day 3'},
+        {'src': '/images/album/photo4.jpg', 'alt': 'Album Photo 4', 'caption': 'Vacation Day 4'}
+    ]"
+    :autoplay="true"
+    :autoplayInterval="4000"
+    :showThumbnails="true"
+    transition="fade"
+/>
+
+{# Example 5: Real Estate Listing #}
+<h2>Real Estate Listing</h2>
+<twig:bs:lightbox
+    :images="[
+        {'src': '/images/property/exterior.jpg', 'alt': 'Property Exterior', 'caption': '123 Main St - Exterior'},
+        {'src': '/images/property/living-room.jpg', 'alt': 'Living Room', 'caption': 'Spacious Living Room'},
+        {'src': '/images/property/kitchen.jpg', 'alt': 'Kitchen', 'caption': 'Modern Kitchen'},
+        {'src': '/images/property/bedroom.jpg', 'alt': 'Master Bedroom', 'caption': 'Master Bedroom with En-suite'},
+        {'src': '/images/property/backyard.jpg', 'alt': 'Backyard', 'caption': 'Beautiful Backyard'}
+    ]"
+    :showThumbnails="true"
+    :showDownload="true"
+    :showFullscreen="true"
+    :enableZoom="true"
+/>
+
+{# Example 6: Portfolio with Zoom Transition #}
+<h2>Portfolio Gallery</h2>
+<twig:bs:lightbox
+    :images="[
+        {
+            'src': '/images/portfolio/project1.jpg',
+            'thumbnail': '/images/portfolio/project1-thumb.jpg',
+            'alt': 'Website Redesign',
+            'caption': 'E-commerce Website Redesign'
+        },
+        {
+            'src': '/images/portfolio/project2.jpg',
+            'thumbnail': '/images/portfolio/project2-thumb.jpg',
+            'alt': 'Mobile App',
+            'caption': 'iOS Fitness App'
+        },
+        {
+            'src': '/images/portfolio/project3.jpg',
+            'thumbnail': '/images/portfolio/project3-thumb.jpg',
+            'alt': 'Brand Identity',
+            'caption': 'Startup Brand Identity'
+        }
+    ]"
+    :showThumbnails="true"
+    :showCaptions="true"
+    transition="zoom"
+    :transitionDuration="400"
+/>
+
+{# Example 7: Minimal Gallery #}
+<h2>Minimal Gallery</h2>
+<twig:bs:lightbox
+    :images="[
+        {'src': '/images/minimal/photo1.jpg', 'alt': 'Photo 1'},
+        {'src': '/images/minimal/photo2.jpg', 'alt': 'Photo 2'},
+        {'src': '/images/minimal/photo3.jpg', 'alt': 'Photo 3'}
+    ]"
+    :showCounter="false"
+    :showThumbnails="false"
+    :showCaptions="false"
+    :showDownload="false"
+    :showFullscreen="false"
+    transition="none"
+/>
+
+{# Example 8: Dynamic Images from Controller #}
+<h2>Dynamic Gallery</h2>
+{# Assuming 'galleryImages' is passed from the controller #}
+<twig:bs:lightbox
+    :images="galleryImages"
+    :startIndex="0"
+    :showThumbnails="true"
+    :enableZoom="true"
+    :enableKeyboard="true"
+    :enableSwipe="true"
+/>
+
+{# Example 9: Custom Styled Lightbox #}
+<h2>Custom Styled Lightbox</h2>
+<twig:bs:lightbox
+    :images="[
+        {'src': '/images/custom/photo1.jpg', 'alt': 'Photo 1', 'caption': 'Custom Style 1'},
+        {'src': '/images/custom/photo2.jpg', 'alt': 'Photo 2', 'caption': 'Custom Style 2'}
+    ]"
+    class="my-custom-lightbox"
+/>
+
+{# Example 10: Grid Gallery with Trigger Links #}
+<h2>Grid Gallery</h2>
+<div class="row g-3">
+    <div class="col-md-4">
+        <a href="/images/grid/photo1.jpg" 
+           data-lightbox="grid-gallery"
+           data-caption="Grid Photo 1">
+            <img src="/images/grid/thumb1.jpg" alt="Grid Photo 1" class="img-fluid rounded">
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/images/grid/photo2.jpg" 
+           data-lightbox="grid-gallery"
+           data-caption="Grid Photo 2">
+            <img src="/images/grid/thumb2.jpg" alt="Grid Photo 2" class="img-fluid rounded">
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/images/grid/photo3.jpg" 
+           data-lightbox="grid-gallery"
+           data-caption="Grid Photo 3">
+            <img src="/images/grid/thumb3.jpg" alt="Grid Photo 3" class="img-fluid rounded">
+        </a>
+    </div>
+</div>
+
+{# Lightbox component (renders hidden gallery) #}
+<twig:bs:lightbox
+    id="grid-gallery"
+    :images="[
+        {'src': '/images/grid/photo1.jpg', 'alt': 'Grid Photo 1', 'caption': 'Grid Photo 1'},
+        {'src': '/images/grid/photo2.jpg', 'alt': 'Grid Photo 2', 'caption': 'Grid Photo 2'},
+        {'src': '/images/grid/photo3.jpg', 'alt': 'Grid Photo 3', 'caption': 'Grid Photo 3'}
+    ]"
+/>
+

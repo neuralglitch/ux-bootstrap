@@ -1,0 +1,138 @@
+{# templates/components/extra/calendar.html.twig #}
+{# Event Calendar Component (not a datepicker) - Symfony UX Twig Component #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  
+  {# Header with navigation and view switcher #}
+  {% if o.showHeader and o.showNavigation %}
+    <div class="calendar-header bg-body-tertiary border rounded-top p-3 d-flex align-items-center justify-content-between">
+      
+      {# Navigation buttons #}
+      <div class="calendar-nav d-flex gap-2 align-items-center">
+        <button 
+          class="btn btn-sm btn-outline-secondary" 
+          data-action="click->bs-calendar#previousPeriod"
+          aria-label="Previous">
+          <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        
+        {% if o.showTodayButton %}
+          <button 
+            class="btn btn-sm btn-outline-primary" 
+            data-action="click->bs-calendar#goToToday">
+            Today
+          </button>
+        {% endif %}
+        
+        <button 
+          class="btn btn-sm btn-outline-secondary" 
+          data-action="click->bs-calendar#nextPeriod"
+          aria-label="Next">
+          <svg width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </div>
+      
+      {# Current period title #}
+      <div class="calendar-title">
+        <h5 class="mb-0" data-bs-calendar-target="title">
+          {# Will be populated by Stimulus controller #}
+        </h5>
+      </div>
+      
+      {# View switcher #}
+      {% if o.showViewSwitcher %}
+        <div class="calendar-view-switcher btn-group btn-group-sm" role="group" aria-label="Calendar view">
+          <button 
+            type="button" 
+            class="btn btn-outline-secondary {% if o.view == 'month' %}active{% endif %}"
+            data-action="click->bs-calendar#changeView"
+            data-bs-calendar-view-param="month">
+            Month
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-outline-secondary {% if o.view == 'week' %}active{% endif %}"
+            data-action="click->bs-calendar#changeView"
+            data-bs-calendar-view-param="week">
+            Week
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-outline-secondary {% if o.view == 'day' %}active{% endif %}"
+            data-action="click->bs-calendar#changeView"
+            data-bs-calendar-view-param="day">
+            Day
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-outline-secondary {% if o.view == 'list' %}active{% endif %}"
+            data-action="click->bs-calendar#changeView"
+            data-bs-calendar-view-param="list">
+            List
+          </button>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+  {# Calendar grid/content area #}
+  <div 
+    class="calendar-body border {% if o.showHeader %}border-top-0{% endif %} {% if not o.showHeader %}rounded{% else %}rounded-bottom{% endif %}"
+    data-bs-calendar-target="content"
+    {% if o.height != 'auto' %}style="height: {{ o.height }}; overflow-y: auto;"{% endif %}>
+    
+    {# Custom content slot (for server-side rendering or custom layouts) #}
+    {% if has_custom_content %}
+      {{ slot_content|raw }}
+    {% else %}
+      {# Default loading state #}
+      <div class="d-flex align-items-center justify-content-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading calendar...</span>
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Hidden events data (if not loading async) #}
+    {% if not o.loadEventsAsync and o.events is not empty %}
+      <script type="application/json" data-bs-calendar-target="eventsData">
+        {{ o.events|json_encode|raw }}
+      </script>
+    {% endif %}
+  </div>
+  
+  {# Event detail modal (optional) #}
+  {% if o.allowEventClick %}
+    <div class="modal fade" id="calendarEventModal" tabindex="-1" aria-labelledby="calendarEventModalLabel" aria-hidden="true" data-bs-calendar-target="eventModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="calendarEventModalLabel" data-bs-calendar-target="eventModalTitle">Event Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" data-bs-calendar-target="eventModalBody">
+            {# Will be populated by Stimulus controller #}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{%- endapply %}
+

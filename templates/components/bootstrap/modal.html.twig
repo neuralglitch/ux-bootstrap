@@ -1,0 +1,59 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Capture blocks #}
+  {% set slot_header %}{% block header %}{% endblock %}{% endset %}
+  {% set slot_body %}{% block content %}{% endblock %}{% endset %}
+  {% set slot_footer %}{% block footer %}{% endblock %}{% endset %}
+
+  {# Check if blocks have content #}
+  {% set has_header = slot_header is not empty %}
+  {% set has_body = slot_body is not empty %}
+  {% set has_footer = slot_footer is not empty %}
+
+  <div class="{{ o.modalClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.dialogClasses }}">
+      <div class="modal-content">
+        
+        {# Modal Header #}
+        {% if o.showHeader and (o.title or has_header) %}
+          <div class="modal-header">
+            {% if has_header %}
+              {{ slot_header|raw }}
+            {% else %}
+              {% if o.title %}
+                <h1 class="modal-title fs-5" id="{{ o.titleId }}">{{ o.title }}</h1>
+              {% endif %}
+            {% endif %}
+            {% if o.showCloseButton %}
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        {# Modal Body #}
+        <div class="modal-body">
+          {% if has_body %}
+            {{ slot_body|raw }}
+          {% endif %}
+        </div>
+        
+        {# Modal Footer #}
+        {% if o.showFooter and has_footer %}
+          <div class="modal-footer">
+            {{ slot_footer|raw }}
+          </div>
+        {% elseif o.showFooter %}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ o.closeLabel }}</button>
+            <button type="button" class="btn btn-primary">{{ o.saveLabel }}</button>
+          </div>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+
+{%- endapply %}
+

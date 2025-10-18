@@ -1,0 +1,183 @@
+{# templates/components/extra/testimonial.html.twig #}
+{# Parametrisierbare Testimonial-Komponente (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Check if custom content is provided (excluding whitespace) #}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+{# Default single testimonial content #}
+{% set default_single_testimonial %}
+  <div class="card border-0 shadow-sm h-100">
+    <div class="card-body p-4 {{ this.getAlignmentClass() }}">
+      {% if o.rating %}
+        {{ this.renderStars(o.rating)|raw }}
+      {% endif %}
+      {% if o.quote %}
+        <blockquote class="mb-4">
+          <p class="fs-5 fst-italic">"{{ o.quote }}"</p>
+        </blockquote>
+      {% endif %}
+      <div class="d-flex {{ o.alignment == 'center' ? 'justify-content-center' : (o.alignment == 'right' ? 'justify-content-end' : '') }} align-items-center gap-3">
+        {% if o.avatarSrc %}
+          <img src="{{ o.avatarSrc }}" alt="{{ o.avatarAlt ?? o.author ?? 'Avatar' }}" 
+               class="rounded-circle" width="48" height="48" style="object-fit: cover;">
+        {% endif %}
+        <div class="{{ o.alignment == 'center' ? 'text-center' : (o.alignment == 'right' ? 'text-end' : 'text-start') }}">
+          {% if o.author %}
+            <div class="fw-bold">{{ o.author }}</div>
+          {% endif %}
+          {% if o.role or o.company %}
+            <small class="text-muted">
+              {% if o.role %}{{ o.role }}{% endif %}
+              {% if o.role and o.company %}, {% endif %}
+              {% if o.company %}{{ o.company }}{% endif %}
+            </small>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endset %}
+
+{# Default grid item (used in grid/wall variants) #}
+{% set default_grid_item %}
+  <div class="{{ this.getColumnClass() }} mb-4">
+    {{ default_single_testimonial|raw }}
+  </div>
+{% endset %}
+
+<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+    
+    {# ------------------ VARIANT: SINGLE ------------------ #}
+    {% if o.variant == 'single' %}
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            {{ default_single_testimonial|raw }}
+          {% endif %}
+        </div>
+      </div>
+
+    {# ------------------ VARIANT: FEATURED ------------------ #}
+    {% elseif o.variant == 'featured' %}
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            <div class="card border-0 shadow-lg">
+              <div class="card-body p-5 text-center">
+                {% if o.rating %}
+                  <div class="mb-3">
+                    {{ this.renderStars(o.rating)|raw }}
+                  </div>
+                {% endif %}
+                {% if o.quote %}
+                  <blockquote class="mb-4">
+                    <p class="display-6 fst-italic">"{{ o.quote }}"</p>
+                  </blockquote>
+                {% endif %}
+                <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
+                  {% if o.avatarSrc %}
+                    <img src="{{ o.avatarSrc }}" alt="{{ o.avatarAlt ?? o.author ?? 'Avatar' }}" 
+                         class="rounded-circle" width="64" height="64" style="object-fit: cover;">
+                  {% endif %}
+                  <div class="text-start">
+                    {% if o.author %}
+                      <div class="fw-bold fs-5">{{ o.author }}</div>
+                    {% endif %}
+                    {% if o.role or o.company %}
+                      <div class="text-muted">
+                        {% if o.role %}{{ o.role }}{% endif %}
+                        {% if o.role and o.company %}, {% endif %}
+                        {% if o.company %}{{ o.company }}{% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    {# ------------------ VARIANT: GRID ------------------ #}
+    {% elseif o.variant == 'grid' %}
+      {% if has_custom_content %}
+        <div class="row">
+          {{ slot_content|raw }}
+        </div>
+      {% else %}
+        <div class="row">
+          {# This variant expects custom content with grid items #}
+          <div class="col-12 text-center text-muted">
+            <p>Grid variant requires custom content. Use {% verbatim %}{% block content %}{% endverbatim %} to add testimonial items.</p>
+          </div>
+        </div>
+      {% endif %}
+
+    {# ------------------ VARIANT: WALL ------------------ #}
+    {% elseif o.variant == 'wall' %}
+      {% if has_custom_content %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-{{ o.columns }} g-4">
+          {{ slot_content|raw }}
+        </div>
+      {% else %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-{{ o.columns }} g-4">
+          {# This variant expects custom content with wall items #}
+          <div class="col">
+            <div class="text-center text-muted p-4">
+              <p>Wall variant requires custom content. Use {% verbatim %}{% block content %}{% endverbatim %} to add testimonial items.</p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    {# ------------------ VARIANT: MINIMAL ------------------ #}
+    {% elseif o.variant == 'minimal' %}
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            <div class="border-start border-primary border-4 ps-4 {{ this.getAlignmentClass() }}">
+              {% if o.rating %}
+                {{ this.renderStars(o.rating)|raw }}
+              {% endif %}
+              {% if o.quote %}
+                <blockquote class="mb-3">
+                  <p class="fs-4 fst-italic text-muted">"{{ o.quote }}"</p>
+                </blockquote>
+              {% endif %}
+              <div>
+                {% if o.author %}
+                  <div class="fw-bold">{{ o.author }}</div>
+                {% endif %}
+                {% if o.role or o.company %}
+                  <small class="text-muted">
+                    {% if o.role %}{{ o.role }}{% endif %}
+                    {% if o.role and o.company %}, {% endif %}
+                    {% if o.company %}{{ o.company }}{% endif %}
+                  </small>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    {% endif %}
+  </div>
+</section>
+
+{%- endapply %}
+

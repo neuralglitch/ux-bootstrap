@@ -1,0 +1,42 @@
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+<div class="{{ o.cardClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    <div class="{{ o.bodyClasses }}">
+        {% if o.iconPosition == 'top' and o.icon %}
+            <div class="{{ o.iconClasses }}">{{ o.icon|raw }}</div>
+        {% endif %}
+        
+        <div class="stat-content{% if o.iconPosition != 'top' %} d-flex align-items-center justify-content-between{% endif %}">
+            <div class="stat-main{% if o.iconPosition == 'start' and o.icon %} d-flex align-items-center{% endif %}">
+                {% if o.iconPosition == 'start' and o.icon %}
+                    <div class="{{ o.iconClasses }}">{{ o.icon|raw }}</div>
+                {% endif %}
+                
+                <div>
+                    <div class="{{ o.valueClasses }}">
+                        {{ o.value }}
+                        {% if o.change %}
+                            <span class="{{ o.trendClasses }}">
+                                {% if o.trendIcon %}{{ o.trendIcon }}{% endif %}
+                                {{ o.change }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div class="{{ o.labelClasses }}">{{ o.label }}</div>
+                    {% if o.description %}
+                        <div class="{{ o.descriptionClasses }}">{{ o.description }}</div>
+                    {% endif %}
+                </div>
+                
+                {% if o.iconPosition == 'end' and o.icon %}
+                    <div class="{{ o.iconClasses }}">{{ o.icon|raw }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{%- endapply %}
+

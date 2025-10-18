@@ -1,0 +1,184 @@
+// Tour Component Styles
+
+.tour-container {
+  position: relative;
+  z-index: 1050;
+}
+
+.tour-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1048;
+  backdrop-filter: blur(2px);
+  transition: opacity 0.3s ease;
+}
+
+.tour-highlight {
+  position: absolute;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  z-index: 1049;
+}
+
+.tour-popover {
+  z-index: 1050;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  
+  .popover-header {
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 1rem;
+  }
+  
+  .popover-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  
+  .tour-step-number {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .popover-body {
+    padding: 1rem;
+  }
+  
+  .tour-step-content {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .tour-progress {
+    .progress {
+      background-color: var(--bs-border-color);
+    }
+    
+    .progress-bar {
+      background-color: var(--bs-primary);
+      transition: width 0.3s ease;
+    }
+  }
+  
+  .tour-navigation {
+    .btn-link {
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Dark variant
+.tour-popover-dark {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-dark);
+  
+  .popover-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--bs-light);
+  }
+  
+  .popover-body {
+    color: var(--bs-light);
+  }
+  
+  .tour-step-number {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .tour-step-content {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+  
+  .tour-progress {
+    .progress {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Animation classes
+.tour-fade-in {
+  animation: tourFadeIn 0.2s ease;
+}
+
+.tour-fade-out {
+  animation: tourFadeOut 0.2s ease;
+}
+
+@keyframes tourFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes tourFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .tour-popover {
+    max-width: calc(100vw - 2rem) !important;
+    
+    .popover-header {
+      padding: 0.75rem;
+    }
+    
+    .popover-body {
+      padding: 0.75rem;
+    }
+    
+    .tour-navigation {
+      flex-wrap: wrap;
+      gap: 0.5rem !important;
+      
+      .btn {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .tour-container,
+  .tour-backdrop,
+  .tour-highlight,
+  .tour-popover {
+    display: none !important;
+  }
+}
+

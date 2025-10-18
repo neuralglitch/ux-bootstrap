@@ -1,0 +1,297 @@
+{# Example: Kanban Board Component Usage #}
+
+{# Basic Task Management Board #}
+<div class="container-fluid py-5">
+  <h2 class="mb-4">Task Management Board</h2>
+  
+  <twig:bs:kanban height="700px" gap="4">
+    
+    {# Backlog Column #}
+    <twig:bs:kanban-column 
+      title="Backlog" 
+      column_key="backlog"
+      icon="📝"
+      variant="secondary"
+      description="Future tasks">
+      
+      <twig:bs:kanban-card 
+        title="Add dark mode toggle"
+        description="Implement theme switching functionality with persistence"
+        badge="Feature"
+        badge_variant="primary"
+        priority="medium"
+        card_id="TASK-001"
+        footer_text="Created: 3 days ago" />
+      
+      <twig:bs:kanban-card 
+        title="Performance optimization"
+        description="Optimize database queries and add caching"
+        badge="Enhancement"
+        badge_variant="info"
+        priority="low"
+        card_id="TASK-006" />
+        
+    </twig:bs:kanban-column>
+    
+    {# To Do Column #}
+    <twig:bs:kanban-column 
+      title="To Do" 
+      column_key="todo"
+      icon="📋"
+      variant="info">
+      
+      <twig:bs:kanban-card 
+        title="Fix responsive issues on mobile"
+        description="Navigation menu doesn't collapse properly on small screens"
+        badge="Bug"
+        badge_variant="danger"
+        priority="high"
+        card_id="TASK-002"
+        footer_text="Due: Today" />
+      
+      <twig:bs:kanban-card 
+        title="Update documentation"
+        badge="Docs"
+        badge_variant="secondary"
+        priority="medium"
+        card_id="TASK-007" />
+        
+    </twig:bs:kanban-column>
+    
+    {# In Progress Column with WIP Limit #}
+    <twig:bs:kanban-column 
+      title="In Progress" 
+      column_key="in_progress"
+      icon="🚀"
+      variant="primary"
+      :limit="3"
+      description="Max 3 tasks at once">
+      
+      <twig:bs:kanban-card 
+        title="Implement user authentication"
+        description="Add login, registration, and password reset functionality"
+        badge="Feature"
+        badge_variant="primary"
+        avatar_src="https://i.pravatar.cc/150?img=1"
+        avatar_alt="Jane Smith"
+        priority="urgent"
+        card_id="TASK-003"
+        footer_text="Started 1h ago" />
+      
+      <twig:bs:kanban-card 
+        title="Design system updates"
+        badge="Design"
+        badge_variant="warning"
+        avatar_src="https://i.pravatar.cc/150?img=2"
+        avatar_alt="Bob Johnson"
+        priority="medium"
+        card_id="TASK-008"
+        footer_text="Started today" />
+        
+    </twig:bs:kanban-column>
+    
+    {# Review Column #}
+    <twig:bs:kanban-column 
+      title="Review" 
+      column_key="review"
+      icon="👀"
+      variant="warning">
+      
+      <twig:bs:kanban-card 
+        title="API documentation"
+        description="Complete REST API documentation with examples"
+        badge="Docs"
+        badge_variant="info"
+        avatar_src="https://i.pravatar.cc/150?img=3"
+        avatar_alt="John Doe"
+        priority="medium"
+        card_id="TASK-004"
+        footer_text="Ready for review"
+        href="/tasks/task-004" />
+        
+    </twig:bs:kanban-column>
+    
+    {# Done Column #}
+    <twig:bs:kanban-column 
+      title="Done" 
+      column_key="done"
+      icon="✅"
+      variant="success">
+      
+      <twig:bs:kanban-card 
+        title="Setup CI/CD pipeline"
+        description="GitHub Actions workflow for testing and deployment"
+        badge="DevOps"
+        badge_variant="success"
+        priority="medium"
+        card_id="TASK-005"
+        footer_text="Completed yesterday" />
+      
+      <twig:bs:kanban-card 
+        title="Database migration"
+        badge="Backend"
+        badge_variant="dark"
+        card_id="TASK-009"
+        footer_text="Completed 2 days ago" />
+        
+    </twig:bs:kanban-column>
+    
+  </twig:bs:kanban>
+</div>
+
+{# Order Status Tracking #}
+<div class="container py-5">
+  <h2 class="mb-4">Order Status Tracking</h2>
+  
+  <twig:bs:kanban container="container" :card_wrapper="true">
+    
+    <twig:bs:kanban-column title="Received" column_key="received" variant="secondary">
+      <twig:bs:kanban-card 
+        title="Order #12345"
+        description="2x Blue T-Shirts (Size M)"
+        badge="Standard Shipping"
+        badge_variant="secondary"
+        icon="📦"
+        card_id="ORDER-12345"
+        footer_text="Ordered: 2 days ago" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Processing" column_key="processing" variant="info">
+      <twig:bs:kanban-card 
+        title="Order #12344"
+        description="1x Coffee Maker"
+        badge="Express Shipping"
+        badge_variant="warning"
+        icon="⚡"
+        card_id="ORDER-12344"
+        footer_text="Processing..." />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Shipped" column_key="shipped" variant="primary">
+      <twig:bs:kanban-card 
+        title="Order #12343"
+        description="3x Books"
+        icon="🚚"
+        card_id="ORDER-12343"
+        footer_text="Tracking: ABC123XYZ"
+        href="/orders/12343" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Delivered" column_key="delivered" variant="success">
+      <twig:bs:kanban-card 
+        title="Order #12342"
+        description="1x Laptop Stand"
+        icon="✅"
+        card_id="ORDER-12342"
+        footer_text="Delivered: Today" />
+    </twig:bs:kanban-column>
+    
+  </twig:bs:kanban>
+</div>
+
+{# Compact Mode Example #}
+<div class="container py-5">
+  <h2 class="mb-4">Compact Kanban Board</h2>
+  
+  <twig:bs:kanban :compact_mode="true" gap="2" height="400px">
+    
+    <twig:bs:kanban-column title="To Do" column_key="todo">
+      <twig:bs:kanban-card label="Task 1" priority="high" badge="P1" badge_variant="danger" />
+      <twig:bs:kanban-card label="Task 2" priority="medium" badge="P2" badge_variant="warning" />
+      <twig:bs:kanban-card label="Task 3" priority="low" badge="P3" badge_variant="success" />
+      <twig:bs:kanban-card label="Task 4" priority="low" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Doing" column_key="doing">
+      <twig:bs:kanban-card label="Task 5" priority="urgent" badge="P0" badge_variant="danger" />
+      <twig:bs:kanban-card label="Task 6" priority="high" badge="P1" badge_variant="danger" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Done" column_key="done">
+      <twig:bs:kanban-card label="Task 7" />
+      <twig:bs:kanban-card label="Task 8" />
+      <twig:bs:kanban-card label="Task 9" />
+    </twig:bs:kanban-column>
+    
+  </twig:bs:kanban>
+</div>
+
+{# Collapsible Columns Example #}
+<div class="container py-5">
+  <h2 class="mb-4">Kanban with Collapsible Archive</h2>
+  
+  <twig:bs:kanban>
+    
+    <twig:bs:kanban-column 
+      title="Archive" 
+      column_key="archive"
+      :collapsible="true"
+      :collapsed="true"
+      bg="light">
+      <twig:bs:kanban-card title="Old Task 1" footer_text="Completed: Last month" />
+      <twig:bs:kanban-card title="Old Task 2" footer_text="Completed: Last month" />
+      <twig:bs:kanban-card title="Old Task 3" footer_text="Completed: Last month" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Active Tasks" column_key="active" variant="primary">
+      <twig:bs:kanban-card 
+        title="Current Task"
+        description="This is being worked on right now"
+        priority="high"
+        avatar_src="https://i.pravatar.cc/150?img=4"
+        footer_text="In progress" />
+    </twig:bs:kanban-column>
+    
+    <twig:bs:kanban-column title="Upcoming" column_key="upcoming" variant="info">
+      <twig:bs:kanban-card title="Future Task 1" priority="medium" />
+      <twig:bs:kanban-card title="Future Task 2" priority="low" />
+    </twig:bs:kanban-column>
+    
+  </twig:bs:kanban>
+</div>
+
+{# JavaScript Event Handling Example #}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const kanbanBoard = document.querySelector('[data-controller="bs-kanban"]');
+    
+    if (kanbanBoard) {
+      // Listen for card moved events
+      kanbanBoard.addEventListener('kanban:card-moved', function(event) {
+        console.log('Card moved:', event.detail.cardId);
+        console.log('To column:', event.detail.targetColumn);
+        
+        // Example: Make AJAX call to update backend
+        /*
+        fetch('/api/tasks/move', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            cardId: event.detail.cardId,
+            targetColumn: event.detail.targetColumn
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Task updated:', data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Optionally revert the move
+        });
+        */
+      });
+      
+      // Listen for add card events
+      kanbanBoard.addEventListener('kanban:add-card', function(event) {
+        console.log('Add card to column:', event.detail.column);
+        
+        // Example: Show a modal or form to create new card
+        // showCreateCardModal(event.detail.column);
+      });
+    }
+  });
+</script>
+

@@ -1,0 +1,75 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for carousel items #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_slot = slot_content is not empty %}
+
+  <div id="{{ o.id }}" class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    
+    {# Indicators #}
+    {% if o.indicators %}
+      <div class="carousel-indicators">
+        {% if has_slot %}
+          {# Indicators will be populated by JavaScript or manually #}
+          {% block indicators %}{% endblock %}
+        {% else %}
+          {% for index, item in o.items %}
+            <button 
+              type="button" 
+              data-bs-target="#{{ o.id }}" 
+              data-bs-slide-to="{{ index }}"
+              {% if index == 0 %}class="active" aria-current="true"{% endif %}
+              aria-label="Slide {{ index + 1 }}">
+            </button>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {# Carousel Inner - contains slides #}
+    <div class="carousel-inner">
+      {% if has_slot %}
+        {# Use slotted content (bs:carousel:item components) #}
+        {{ slot_content|raw }}
+      {% else %}
+        {# Render items from array #}
+        {% for index, item in o.items %}
+          <div class="carousel-item{% if index == 0 %} active{% endif %}"{% if item.interval is defined %} data-bs-interval="{{ item.interval }}"{% endif %}>
+            {% if item.imgSrc is defined %}
+              <img src="{{ item.imgSrc }}" class="{{ item.imgClass ?? 'd-block w-100' }}" alt="{{ item.imgAlt ?? '' }}">
+            {% endif %}
+            {% if item.content is defined %}
+              {{ item.content|raw }}
+            {% endif %}
+            {% if item.captionTitle is defined or item.captionText is defined %}
+              <div class="carousel-caption d-none d-md-block">
+                {% if item.captionTitle is defined %}
+                  <h5>{{ item.captionTitle }}</h5>
+                {% endif %}
+                {% if item.captionText is defined %}
+                  <p>{{ item.captionText }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {# Previous/Next Controls #}
+    {% if o.controls %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#{{ o.id }}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#{{ o.id }}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    {% endif %}
+  </div>
+
+{%- endapply %}
+

@@ -1,0 +1,18 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content - nav items #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Render nav container #}
+  <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {%- if o.isListTag and slot_content is not empty -%}
+      {{ slot_content | raw }}
+    {%- elseif not o.isListTag and slot_content is not empty -%}
+      {{ slot_content | raw }}
+    {%- endif -%}
+  </{{ o.tag }}>
+
+{%- endapply %}
+

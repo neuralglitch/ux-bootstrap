@@ -1,0 +1,13 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+  {% set has_content = slot_content is not empty %}
+  {% set content = has_content ? slot_content : (o.label ?? '') %}
+
+  <li><h6 class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>{{ content|raw }}</h6></li>
+
+{%- endapply %}
+

@@ -1,0 +1,299 @@
+{# docs/stepper_example.twig #}
+{# Comprehensive examples of the Stepper component #}
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stepper Component Examples</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-5">
+    <h1 class="mb-4">Stepper Component Examples</h1>
+
+    {# Example 1: Simple Horizontal Stepper #}
+    <section class="mb-5">
+        <h2>Simple Horizontal Stepper</h2>
+        <p class="text-muted">Basic stepper with 4 steps, currently on step 2.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Account Info'},
+                    {label: 'Shipping Address'},
+                    {label: 'Payment'},
+                    {label: 'Confirmation'}
+                ]"
+                :currentStep="2"
+            />
+        </div>
+    </section>
+
+    {# Example 2: Checkout Flow with Progress Bar #}
+    <section class="mb-5">
+        <h2>Checkout Flow with Progress Bar</h2>
+        <p class="text-muted">E-commerce checkout with clickable completed steps and progress indicator.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Shopping Cart', href: '/cart'},
+                    {label: 'Shipping Info', href: '/shipping'},
+                    {label: 'Payment', href: '/payment'},
+                    {label: 'Review Order', href: '/review'}
+                ]"
+                :currentStep="3"
+                :showProgressBar="true"
+                completedIcon="✓"
+            />
+        </div>
+    </section>
+
+    {# Example 3: Vertical Layout with Descriptions #}
+    <section class="mb-5">
+        <h2>Vertical Layout with Descriptions</h2>
+        <p class="text-muted">Vertical stepper with step descriptions, ideal for onboarding.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                variant="vertical"
+                :steps="[
+                    {label: 'Personal Details', description: 'Enter your basic information'},
+                    {label: 'Contact Info', description: 'How can we reach you?'},
+                    {label: 'Verification', description: 'Confirm your identity'},
+                    {label: 'Complete', description: 'All done!'}
+                ]"
+                :currentStep="2"
+                :showDescriptions="true"
+            />
+        </div>
+    </section>
+
+    {# Example 4: Icon Style with Custom Icons #}
+    <section class="mb-5">
+        <h2>Icon Style with Custom Icons</h2>
+        <p class="text-muted">Using Bootstrap Icons for each step.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                style="icon"
+                :steps="[
+                    {label: 'Sign Up', icon: '<i class=\"bi bi-person-plus\"></i>'},
+                    {label: 'Verify Email', icon: '<i class=\"bi bi-envelope-check\"></i>'},
+                    {label: 'Complete Profile', icon: '<i class=\"bi bi-card-checklist\"></i>'},
+                    {label: 'Welcome', icon: '<i class=\"bi bi-check-circle\"></i>'}
+                ]"
+                :currentStep="2"
+                completedIcon="<i class=\"bi bi-check-circle-fill\"></i>"
+            />
+        </div>
+    </section>
+
+    {# Example 5: Minimal Style #}
+    <section class="mb-5">
+        <h2>Minimal Style</h2>
+        <p class="text-muted">Clean, minimalist design with outlined badges.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                style="minimal"
+                :steps="[
+                    {label: 'Select Plan'},
+                    {label: 'Add Details'},
+                    {label: 'Confirm'},
+                    {label: 'Payment'}
+                ]"
+                :currentStep="3"
+            />
+        </div>
+    </section>
+
+    {# Example 6: Small Size #}
+    <section class="mb-5">
+        <h2>Small Size (Compact)</h2>
+        <p class="text-muted">Compact stepper for tight spaces.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                size="sm"
+                :steps="[
+                    {label: 'Start'},
+                    {label: 'Process'},
+                    {label: 'Finish'}
+                ]"
+                :currentStep="2"
+            />
+        </div>
+    </section>
+
+    {# Example 7: Large Size #}
+    <section class="mb-5">
+        <h2>Large Size (Prominent)</h2>
+        <p class="text-muted">Larger stepper for better visibility.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                size="lg"
+                :steps="[
+                    {label: 'Begin', icon: '🚀'},
+                    {label: 'Process', icon: '⚙️'},
+                    {label: 'Finish', icon: '🎉'}
+                ]"
+                :currentStep="2"
+            />
+        </div>
+    </section>
+
+    {# Example 8: Survey/Quiz (Non-Clickable) #}
+    <section class="mb-5">
+        <h2>Survey/Quiz (Non-Clickable)</h2>
+        <p class="text-muted">Linear progression without ability to go back.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Introduction'},
+                    {label: 'Demographics'},
+                    {label: 'Preferences'},
+                    {label: 'Feedback'},
+                    {label: 'Summary'}
+                ]"
+                :currentStep="3"
+                :clickableCompleted="false"
+                style="minimal"
+            />
+        </div>
+    </section>
+
+    {# Example 9: Onboarding Wizard (Vertical with Icons) #}
+    <section class="mb-5">
+        <h2>Onboarding Wizard</h2>
+        <p class="text-muted">Comprehensive onboarding flow with icons and descriptions.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                variant="vertical"
+                style="icon"
+                :steps="[
+                    {
+                        label: 'Welcome',
+                        description: 'Get started with your new account',
+                        icon: '<i class=\"bi bi-house\"></i>'
+                    },
+                    {
+                        label: 'Profile Setup',
+                        description: 'Tell us about yourself',
+                        icon: '<i class=\"bi bi-person\"></i>'
+                    },
+                    {
+                        label: 'Preferences',
+                        description: 'Customize your experience',
+                        icon: '<i class=\"bi bi-gear\"></i>'
+                    },
+                    {
+                        label: 'Complete',
+                        description: 'You\'re all set!',
+                        icon: '<i class=\"bi bi-check-circle\"></i>'
+                    }
+                ]"
+                :currentStep="2"
+                :showDescriptions="true"
+            />
+        </div>
+    </section>
+
+    {# Example 10: Progress Style #}
+    <section class="mb-5">
+        <h2>Progress Style</h2>
+        <p class="text-muted">Emphasizes progress with thicker connecting lines.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                style="progress"
+                :steps="[
+                    {label: 'Upload'},
+                    {label: 'Processing'},
+                    {label: 'Review'},
+                    {label: 'Publish'}
+                ]"
+                :currentStep="2"
+                :showProgressBar="true"
+            />
+        </div>
+    </section>
+
+    {# Example 11: Registration Wizard #}
+    <section class="mb-5">
+        <h2>Registration Wizard</h2>
+        <p class="text-muted">Multi-step registration with descriptions and progress.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Account', description: 'Create your account'},
+                    {label: 'Profile', description: 'Add profile details'},
+                    {label: 'Verify', description: 'Confirm your email'},
+                    {label: 'Done', description: 'Start using the app'}
+                ]"
+                :currentStep="2"
+                :showDescriptions="true"
+                :showProgressBar="true"
+            />
+        </div>
+    </section>
+
+    {# Example 12: All Steps Completed #}
+    <section class="mb-5">
+        <h2>All Steps Completed</h2>
+        <p class="text-muted">Shows final state when all steps are done.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Create Account', href: '/step1'},
+                    {label: 'Add Information', href: '/step2'},
+                    {label: 'Verify', href: '/step3'},
+                    {label: 'Complete', href: '/step4'}
+                ]"
+                :currentStep="5"
+                completedIcon="✓"
+                :showProgressBar="true"
+            />
+        </div>
+    </section>
+
+    {# Example 13: First Step (Initial State) #}
+    <section class="mb-5">
+        <h2>First Step (Initial State)</h2>
+        <p class="text-muted">Starting state with no completed steps.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Start'},
+                    {label: 'Configure'},
+                    {label: 'Test'},
+                    {label: 'Deploy'}
+                ]"
+                :currentStep="1"
+                :showProgressBar="true"
+            />
+        </div>
+    </section>
+
+    {# Example 14: Custom Variant Colors #}
+    <section class="mb-5">
+        <h2>Custom Variant Colors</h2>
+        <p class="text-muted">Using different Bootstrap variants for different states.</p>
+        <div class="border rounded p-4 bg-light">
+            <twig:bs:stepper
+                :steps="[
+                    {label: 'Planning'},
+                    {label: 'Development'},
+                    {label: 'Testing'},
+                    {label: 'Launch'}
+                ]"
+                :currentStep="3"
+                completedVariant="info"
+                activeVariant="warning"
+                pendingVariant="secondary"
+            />
+        </div>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

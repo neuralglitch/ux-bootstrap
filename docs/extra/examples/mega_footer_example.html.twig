@@ -1,0 +1,206 @@
+{# Example: Default Multi-Column Footer #}
+<twig:bs:mega-footer
+    brandName="Acme Corporation"
+    brandLogo="/assets/logo.svg"
+    brandDescription="Building innovative solutions since 2020. Trusted by thousands worldwide."
+    :socialLinks="[
+        { icon: 'bi-facebook', href: 'https://facebook.com/acmecorp', label: 'Facebook' },
+        { icon: 'bi-twitter', href: 'https://twitter.com/acmecorp', label: 'Twitter' },
+        { icon: 'bi-linkedin', href: 'https://linkedin.com/company/acmecorp', label: 'LinkedIn' },
+        { icon: 'bi-github', href: 'https://github.com/acmecorp', label: 'GitHub' }
+    ]"
+    :showNewsletter="true"
+    backgroundColor="dark"
+    textColor="white">
+    
+    {# Column 1: Products #}
+    <twig:block name="column1">
+        <h5 class="mb-3">Products</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="/features" class="nav-link p-0 text-body-secondary">Features</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/pricing" class="nav-link p-0 text-body-secondary">Pricing</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/security" class="nav-link p-0 text-body-secondary">Security</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/roadmap" class="nav-link p-0 text-body-secondary">Roadmap</a>
+            </li>
+        </ul>
+    </twig:block>
+    
+    {# Column 2: Company #}
+    <twig:block name="column2">
+        <h5 class="mb-3">Company</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="/about" class="nav-link p-0 text-body-secondary">About Us</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/team" class="nav-link p-0 text-body-secondary">Team</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/careers" class="nav-link p-0 text-body-secondary">Careers</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/press" class="nav-link p-0 text-body-secondary">Press Kit</a>
+            </li>
+        </ul>
+    </twig:block>
+    
+    {# Column 3: Resources #}
+    <twig:block name="column3">
+        <h5 class="mb-3">Resources</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="/docs" class="nav-link p-0 text-body-secondary">Documentation</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/guides" class="nav-link p-0 text-body-secondary">Guides</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/api" class="nav-link p-0 text-body-secondary">API Reference</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/blog" class="nav-link p-0 text-body-secondary">Blog</a>
+            </li>
+        </ul>
+    </twig:block>
+    
+    {# Bottom: Legal Links #}
+    <twig:block name="bottom">
+        <a href="/privacy" class="link-body-emphasis text-decoration-none small">Privacy Policy</a>
+        <a href="/terms" class="link-body-emphasis text-decoration-none small">Terms of Service</a>
+        <a href="/cookies" class="link-body-emphasis text-decoration-none small">Cookie Policy</a>
+    </twig:block>
+</twig:bs:mega-footer>
+
+{# ============================================== #}
+
+{# Example: Minimal Footer #}
+<twig:bs:mega-footer
+    variant="minimal"
+    brandName="Acme"
+    brandLogo="/assets/logo.svg"
+    backgroundColor="light"
+    textColor="dark">
+    
+    <twig:block name="column1">
+        <a href="/about" class="link-dark text-decoration-none me-3">About</a>
+        <a href="/contact" class="link-dark text-decoration-none me-3">Contact</a>
+        <a href="/privacy" class="link-dark text-decoration-none">Privacy</a>
+    </twig:block>
+</twig:bs:mega-footer>
+
+{# ============================================== #}
+
+{# Example: Centered Footer with Social Links #}
+<twig:bs:mega-footer
+    variant="centered"
+    brandName="Acme Corp"
+    brandLogo="/assets/logo.svg"
+    brandDescription="Building amazing products"
+    :socialLinks="[
+        { icon: 'bi-facebook', href: 'https://facebook.com', label: 'Facebook' },
+        { icon: 'bi-twitter', href: 'https://twitter.com', label: 'Twitter' },
+        { icon: 'bi-github', href: 'https://github.com', label: 'GitHub' }
+    ]"
+    backgroundColor="body-tertiary"
+    textColor="body">
+    
+    <twig:block name="column1">
+        <div class="d-flex gap-3 justify-content-center">
+            <a href="/about" class="link-body-emphasis text-decoration-none">About</a>
+            <a href="/blog" class="link-body-emphasis text-decoration-none">Blog</a>
+            <a href="/contact" class="link-body-emphasis text-decoration-none">Contact</a>
+        </div>
+    </twig:block>
+</twig:bs:mega-footer>
+
+{# ============================================== #}
+
+{# Example: Compact Footer #}
+<twig:bs:mega-footer
+    variant="compact"
+    brandName="Acme"
+    :socialLinks="[
+        { icon: 'bi-twitter', href: 'https://twitter.com', label: 'Twitter' },
+        { icon: 'bi-github', href: 'https://github.com', label: 'GitHub' }
+    ]"
+    backgroundColor="dark"
+    textColor="white">
+    
+    <twig:block name="column1">
+        <a href="/about" class="link-light text-decoration-none">About</a>
+        <a href="/blog" class="link-light text-decoration-none">Blog</a>
+        <a href="/contact" class="link-light text-decoration-none">Contact</a>
+    </twig:block>
+</twig:bs:mega-footer>
+
+{# ============================================== #}
+
+{# Example: Footer with Newsletter and Custom Copyright #}
+<twig:bs:mega-footer
+    brandName="Acme Corp"
+    :showNewsletter="true"
+    newsletterTitle="Stay Updated"
+    newsletterPlaceholder="Enter your email"
+    newsletterButtonText="Subscribe"
+    copyrightText="© 2020-2025 Acme Corp. Licensed under MIT.">
+    
+    <twig:block name="column1">
+        <h5 class="mb-3">Support</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="/help" class="nav-link p-0 text-body-secondary">Help Center</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/contact" class="nav-link p-0 text-body-secondary">Contact Us</a>
+            </li>
+        </ul>
+    </twig:block>
+    
+    <twig:block name="column2">
+        <h5 class="mb-3">Legal</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="/privacy" class="nav-link p-0 text-body-secondary">Privacy</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="/terms" class="nav-link p-0 text-body-secondary">Terms</a>
+            </li>
+        </ul>
+    </twig:block>
+</twig:bs:mega-footer>
+
+{# ============================================== #}
+
+{# Example: Light Footer with Full-Width Container #}
+<twig:bs:mega-footer
+    brandName="Acme"
+    brandLogo="/assets/logo.svg"
+    container="container-fluid"
+    backgroundColor="light"
+    textColor="dark"
+    :showDivider="false">
+    
+    <twig:block name="column1">
+        <h5 class="mb-3">Products</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Product A</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Product B</a></li>
+        </ul>
+    </twig:block>
+    
+    <twig:block name="column2">
+        <h5 class="mb-3">Company</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Team</a></li>
+        </ul>
+    </twig:block>
+</twig:bs:mega-footer>
+

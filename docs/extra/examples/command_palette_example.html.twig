@@ -1,0 +1,224 @@
+{# Command Palette Component - Usage Examples #}
+
+{# ============================================ #}
+{# Basic Usage #}
+{# ============================================ #}
+
+{# Minimal - Default Cmd+K shortcut #}
+<twig:bs:command-palette />
+
+{# ============================================ #}
+{# Custom Configuration #}
+{# ============================================ #}
+
+{# Custom search endpoint and settings #}
+<twig:bs:command-palette
+    searchUrl="/api/commands"
+    placeholder="What do you want to do?"
+    :maxRecent="10"
+    size="xl"
+/>
+
+{# ============================================ #}
+{# Custom Keyboard Trigger #}
+{# ============================================ #}
+
+{# Cmd+P for navigation palette #}
+<twig:bs:command-palette
+    triggerKey="p"
+    trigger="Cmd+P"
+    placeholder="Go to..."
+    searchUrl="/api/navigation"
+    :showIcons="false"
+/>
+
+{# Ctrl+Space for admin commands #}
+<twig:bs:command-palette
+    triggerKey=" "
+    :triggerCtrl="true"
+    :triggerMeta="false"
+    trigger="Ctrl+Space"
+    placeholder="Admin command..."
+    searchUrl="/api/admin-commands"
+/>
+
+{# ============================================ #}
+{# Quick Actions Palette #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    placeholder="Quick action..."
+    searchUrl="/api/quick-actions"
+    :defaultGroups="['Actions', 'Tools', 'Settings']"
+    :showShortcuts="true"
+    :showIcons="true"
+    :closeOnSelect="true"
+/>
+
+{# ============================================ #}
+{# Navigation-Only Palette #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    triggerKey="p"
+    trigger="Cmd+P"
+    placeholder="Search pages..."
+    searchUrl="/api/pages"
+    :grouped="false"
+    :showIcons="false"
+    :showRecent="true"
+    :maxRecent="15"
+/>
+
+{# ============================================ #}
+{# Admin Command Center #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    placeholder="Admin command..."
+    searchUrl="/api/admin/commands"
+    size="xl"
+    :showRecent="true"
+    :maxRecent="10"
+    :showShortcuts="true"
+    :defaultGroups="['User Management', 'System', 'Content', 'Reports']"
+/>
+
+{# ============================================ #}
+{# Custom Styling #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    class="custom-palette elevated-shadow"
+    :attr="{
+        'data-theme': 'dark',
+        'data-analytics': 'command-palette'
+    }"
+/>
+
+{# ============================================ #}
+{# No Grouping #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    :grouped="false"
+    searchUrl="/api/commands/flat"
+    placeholder="Search all commands..."
+/>
+
+{# ============================================ #}
+{# Minimal UI #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    :showShortcuts="false"
+    :showIcons="false"
+    :showRecent="false"
+    placeholder="Search..."
+    size="sm"
+/>
+
+{# ============================================ #}
+{# Backend Integration Example #}
+{# ============================================ #}
+
+{# Your Symfony controller should return JSON like this: #}
+{#
+{
+  "commands": [
+    {
+      "id": "create-post",
+      "label": "Create New Post",
+      "description": "Write a new blog post",
+      "icon": "📝",
+      "group": "Quick Actions",
+      "href": "/posts/new",
+      "shortcut": "Cmd+N"
+    },
+    {
+      "id": "nav-dashboard",
+      "label": "Dashboard",
+      "description": "Go to main dashboard",
+      "icon": "📊",
+      "group": "Navigation",
+      "href": "/dashboard"
+    },
+    {
+      "id": "clear-cache",
+      "label": "Clear Cache",
+      "description": "Clear application cache",
+      "icon": "🗑️",
+      "group": "Admin",
+      "action": "clear-cache"
+    }
+  ]
+}
+#}
+
+{# ============================================ #}
+{# JavaScript Event Handling #}
+{# ============================================ #}
+
+<script>
+// Listen for command execution events
+document.addEventListener('command:execute', (event) => {
+    const { id, action, command } = event.detail;
+    
+    // Handle custom actions
+    if (action === 'clear-cache') {
+        fetch('/api/cache/clear', { method: 'POST' })
+            .then(() => alert('Cache cleared!'));
+    } else if (action === 'export-data') {
+        window.location.href = '/export';
+    }
+});
+</script>
+
+{# ============================================ #}
+{# Complete Example with All Features #}
+{# ============================================ #}
+
+<twig:bs:command-palette
+    {# Trigger Configuration #}
+    trigger="Cmd+K"
+    triggerKey="k"
+    :triggerCtrl="false"
+    :triggerMeta="true"
+    :triggerShift="false"
+    :triggerAlt="false"
+    
+    {# Appearance #}
+    placeholder="Type a command or search..."
+    emptyMessage="No commands found"
+    :showShortcuts="true"
+    :showIcons="true"
+    :showRecent="true"
+    :maxRecent="5"
+    
+    {# Behavior #}
+    searchUrl="/command-palette"
+    :minChars="0"
+    :debounce="150"
+    :closeOnSelect="true"
+    :closeOnEscape="true"
+    :closeOnBackdrop="true"
+    
+    {# Modal Styling #}
+    size="lg"
+    placement="top"
+    :centered="false"
+    :scrollable="false"
+    
+    {# Animation #}
+    animation="fade"
+    :animationDuration="200"
+    
+    {# Groups #}
+    :grouped="true"
+    :defaultGroups="['Quick Actions', 'Navigation', 'Admin']"
+    
+    {# Custom Styling #}
+    class="my-palette"
+    :attr="{'data-analytics': 'true'}"
+/>
+

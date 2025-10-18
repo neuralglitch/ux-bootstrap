@@ -1,0 +1,104 @@
+{
+    "name": "neuralglitch/ux-bootstrap",
+    "description": "Reusable Bootstrap 5.3 Twig Components & Stimulus Controllers for Symfony 6.4/7.x. Requires Bootstrap 5.3 pre-installed.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "symfony",
+        "symfony-bundle",
+        "bootstrap",
+        "twig-components",
+        "stimulus",
+        "ui",
+        "components",
+        "bootstrap5"
+    ],
+    "authors": [
+        {
+            "name": "neuralglit.ch",
+            "email": "dev@neuralglit.ch"
+        }
+    ],
+    "homepage": "https://github.com/neuralglitch/ux-bootstrap",
+    "require": {
+        "php": ">=8.2",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/routing": "^6.4 || ^7.0",
+        "symfony/twig-bundle": "^6.4 || ^7.0",
+        "symfony/ux-icons": "^2.30",
+        "symfony/ux-twig-component": "^2.30",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^10.0 || ^11.0",
+        "symfony/asset-mapper": "^6.4 || ^7.0",
+        "symfony/browser-kit": "^6.4 || ^7.0",
+        "symfony/console": "^6.4 || ^7.0",
+        "symfony/css-selector": "^6.4 || ^7.0",
+        "symfony/debug-bundle": "^6.4 || ^7.0",
+        "symfony/dotenv": "^6.4 || ^7.0",
+        "symfony/framework-bundle": "^6.4 || ^7.0",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/monolog-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^6.4 || ^7.0",
+        "symfony/runtime": "^6.4 || ^7.0",
+        "symfony/stimulus-bundle": "^2.30",
+        "symfony/web-profiler-bundle": "^6.4 || ^7.0",
+        "symfony/yaml": "^6.4 || ^7.0",
+        "symfonycasts/sass-bundle": "^0.6"
+    },
+    "suggest": {
+        "twbs/bootstrap": "Bootstrap 5.3 CSS/JS library (REQUIRED - must be installed in consuming application)"
+    },
+    "autoload": {
+        "psr-4": {
+            "NeuralGlitch\\UxBootstrap\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NeuralGlitch\\UxBootstrap\\Tests\\": "tests/",
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "symfony/flex": false,
+            "symfony/runtime": true
+        }
+    },
+    "scripts": {
+        "build": [
+            "@build-styles"
+        ],
+        "build-styles": "bin/build-styles",
+        "test": "vendor/bin/phpunit",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
+    },
+    "scripts-descriptions": {
+        "build": "Build all distributable assets (CSS, JS)",
+        "build-styles": "Compile SCSS to CSS for distribution",
+        "test": "Run PHPUnit tests",
+        "phpstan": "Run PHPStan static analysis"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
+        "symfony": {
+            "require": "^6.4 || ^7.0",
+            "asset-mapper": {
+                "path": "assets",
+                "namespace": "@neuralglitch/ux-bootstrap"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

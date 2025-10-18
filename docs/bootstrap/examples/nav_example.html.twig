@@ -1,0 +1,133 @@
+{# Nav Component Examples #}
+
+{# Basic Nav #}
+<h3>Basic Nav</h3>
+<twig:bs:nav>
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Nav with Pills #}
+<h3 class="mt-5">Nav with Pills</h3>
+<twig:bs:nav variant="pills">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Underline Nav #}
+<h3 class="mt-5">Underline Nav</h3>
+<twig:bs:nav variant="underline">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Vertical Nav #}
+<h3 class="mt-5">Vertical Nav</h3>
+<twig:bs:nav :vertical="true">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Vertical Pills #}
+<h3 class="mt-5">Vertical Pills</h3>
+<twig:bs:nav variant="pills" :vertical="true">
+    <twig:bs:nav-item href="#" :active="true">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Profile</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Messages</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Settings</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Fill and Justify #}
+<h3 class="mt-5">Fill Nav (Equal Width)</h3>
+<twig:bs:nav :fill="true">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Much longer nav link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+<h3 class="mt-5">Justified Nav</h3>
+<twig:bs:nav :justified="true">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Much longer nav link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Nav with Icons #}
+<h3 class="mt-5">Nav with Icons</h3>
+<twig:bs:nav variant="pills">
+    <twig:bs:nav-item href="#" :active="true">
+        <i class="bi bi-house-fill me-2"></i>Home
+    </twig:bs:nav-item>
+    <twig:bs:nav-item href="#">
+        <i class="bi bi-person me-2"></i>Profile
+    </twig:bs:nav-item>
+    <twig:bs:nav-item href="#">
+        <i class="bi bi-envelope me-2"></i>Messages
+    </twig:bs:nav-item>
+    <twig:bs:nav-item href="#">
+        <i class="bi bi-gear me-2"></i>Settings
+    </twig:bs:nav-item>
+</twig:bs:nav>
+
+{# Nav with Dropdowns #}
+<h3 class="mt-5">Nav with Dropdowns</h3>
+<twig:bs:nav>
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dropdown</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else</a></li>
+        </ul>
+    </li>
+</twig:bs:nav>
+
+{# Tabs Navigation #}
+<h3 class="mt-5">Tabs Navigation</h3>
+<twig:bs:nav variant="tabs">
+    <twig:bs:nav-item href="#home" :active="true" data-bs-toggle="tab">Home</twig:bs:nav-item>
+    <twig:bs:nav-item href="#profile" data-bs-toggle="tab">Profile</twig:bs:nav-item>
+    <twig:bs:nav-item href="#contact" data-bs-toggle="tab">Contact</twig:bs:nav-item>
+    <twig:bs:nav-item href="#" :disabled="true">Disabled</twig:bs:nav-item>
+</twig:bs:nav>
+
+<div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="home">
+        <p>This is the home tab content. Click the tabs above to switch between different sections.</p>
+    </div>
+    <div class="tab-pane fade" id="profile">
+        <p>This is the profile tab content with information about the user profile.</p>
+    </div>
+    <div class="tab-pane fade" id="contact">
+        <p>This is the contact tab content with contact information and forms.</p>
+    </div>
+</div>
+
+{# Center and Right Aligned Nav #}
+<h3 class="mt-5">Centered Nav</h3>
+<twig:bs:nav class="justify-content-center">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+</twig:bs:nav>
+
+<h3 class="mt-5">Right Aligned Nav</h3>
+<twig:bs:nav class="justify-content-end">
+    <twig:bs:nav-item href="#" :active="true">Active</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+    <twig:bs:nav-item href="#">Link</twig:bs:nav-item>
+</twig:bs:nav>
+

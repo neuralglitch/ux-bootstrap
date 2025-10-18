@@ -1,0 +1,13 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for accordion items #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {{ slot_content|raw }}
+  </div>
+
+{%- endapply %}
+

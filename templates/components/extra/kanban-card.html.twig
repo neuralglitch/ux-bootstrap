@@ -1,0 +1,94 @@
+{# templates/components/extra/kanban-card.html.twig #}
+{# Bootstrap 5.3 Kanban Card Component (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Content priority: Slot > Props #}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+{# Determine wrapper tag #}
+{% set wrapper_tag = o.clickable and o.href ? 'a' : 'div' %}
+
+<{{ wrapper_tag }}
+  class="{{ o.classes }}"
+  {{ this.renderHtmlAttributes(o.attrs) | raw }}
+  {% if o.clickable and o.href %}href="{{ o.href }}"{% endif %}
+  {% if o.clickable and o.href %}role="button"{% endif %}>
+  
+  <div class="card-body p-3">
+    
+    {# Card Header (Badge, Icon, Drag Handle) #}
+    <div class="d-flex align-items-start justify-content-between mb-2">
+      <div class="d-flex align-items-center gap-2">
+        {% if o.icon %}
+          <span class="kanban-card-icon">{{ o.icon|raw }}</span>
+        {% endif %}
+        
+        {% if o.badge %}
+          <span class="badge text-bg-{{ o.badge_variant }}">{{ o.badge }}</span>
+        {% endif %}
+        
+        {% if o.priority %}
+          <span class="kanban-card-priority kanban-priority-{{ o.priority }}" 
+                title="Priority: {{ o.priority|capitalize }}">
+            {% if o.priority == 'urgent' %}🔴
+            {% elseif o.priority == 'high' %}🟠
+            {% elseif o.priority == 'medium' %}🟡
+            {% else %}🟢{% endif %}
+          </span>
+        {% endif %}
+      </div>
+      
+      {% if o.show_drag_handle %}
+        <span class="kanban-card-drag-handle text-muted cursor-move" title="Drag to move">
+          ⋮⋮
+        </span>
+      {% endif %}
+    </div>
+    
+    {# Card Content #}
+    {% if has_custom_content %}
+      {{ slot_content|raw }}
+    {% else %}
+      {% if o.title %}
+        <h6 class="card-title mb-2">{{ o.title }}</h6>
+      {% endif %}
+      
+      {% if o.description %}
+        <p class="card-text small text-muted mb-2">{{ o.description }}</p>
+      {% elseif o.label %}
+        <p class="card-text mb-0">{{ o.label }}</p>
+      {% endif %}
+    {% endif %}
+    
+    {# Card Footer (Avatar, Metadata) #}
+    {% if o.avatar_src or o.footer_text %}
+      <div class="d-flex align-items-center justify-content-between mt-3 pt-2 border-top">
+        {% if o.avatar_src %}
+          <img 
+            src="{{ o.avatar_src }}" 
+            alt="{{ o.avatar_alt ?? '' }}" 
+            class="rounded-circle" 
+            width="24" 
+            height="24">
+        {% endif %}
+        
+        {% if o.footer_text %}
+          <small class="text-muted {% if not o.avatar_src %}ms-auto{% endif %}">
+            {{ o.footer_text }}
+          </small>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+  </div>
+  
+</{{ wrapper_tag }}>
+
+{%- endapply %}
+

@@ -1,0 +1,96 @@
+{# Button Component Examples #}
+
+{# Basic Buttons - All Variants #}
+<h3>Basic Buttons - All Variants</h3>
+<twig:bs:button variant="primary">Primary</twig:bs:button>
+<twig:bs:button variant="secondary">Secondary</twig:bs:button>
+<twig:bs:button variant="success">Success</twig:bs:button>
+<twig:bs:button variant="danger">Danger</twig:bs:button>
+<twig:bs:button variant="warning">Warning</twig:bs:button>
+<twig:bs:button variant="info">Info</twig:bs:button>
+<twig:bs:button variant="light">Light</twig:bs:button>
+<twig:bs:button variant="dark">Dark</twig:bs:button>
+<twig:bs:button variant="link">Link</twig:bs:button>
+
+{# Outline Buttons #}
+<h3 class="mt-5">Outline Buttons</h3>
+<twig:bs:button variant="primary" :outline="true">Primary</twig:bs:button>
+<twig:bs:button variant="secondary" :outline="true">Secondary</twig:bs:button>
+<twig:bs:button variant="success" :outline="true">Success</twig:bs:button>
+<twig:bs:button variant="danger" :outline="true">Danger</twig:bs:button>
+<twig:bs:button variant="warning" :outline="true">Warning</twig:bs:button>
+<twig:bs:button variant="info" :outline="true">Info</twig:bs:button>
+<twig:bs:button variant="dark" :outline="true">Dark</twig:bs:button>
+
+{# Button Sizes #}
+<h3 class="mt-5">Button Sizes</h3>
+<twig:bs:button variant="primary" size="lg">Large Button</twig:bs:button>
+<twig:bs:button variant="secondary">Default Button</twig:bs:button>
+<twig:bs:button variant="success" size="sm">Small Button</twig:bs:button>
+
+{# Buttons with Icons #}
+<h3 class="mt-5">Buttons with Icons</h3>
+<twig:bs:button variant="primary" iconStart="bi bi-download">Download</twig:bs:button>
+<twig:bs:button variant="success" iconStart="bi bi-check-lg">Confirm</twig:bs:button>
+<twig:bs:button variant="danger" iconStart="bi bi-trash">Delete</twig:bs:button>
+<twig:bs:button variant="info" iconEnd="bi bi-arrow-right">Next</twig:bs:button>
+<twig:bs:button variant="warning" iconStart="bi bi-exclamation-triangle">Warning</twig:bs:button>
+
+{# Icon-Only Buttons #}
+<h3 class="mt-5">Icon-Only Buttons</h3>
+<twig:bs:button variant="primary" icon="bi bi-heart" label="" />
+<twig:bs:button variant="secondary" icon="bi bi-share" label="" />
+<twig:bs:button variant="success" icon="bi bi-check-lg" label="" />
+<twig:bs:button variant="danger" icon="bi bi-x-lg" label="" />
+<twig:bs:button variant="info" icon="bi bi-info-lg" label="" />
+
+{# Button States #}
+<h3 class="mt-5">Button States</h3>
+<twig:bs:button variant="primary" :active="true">Active</twig:bs:button>
+<twig:bs:button variant="secondary" :disabled="true">Disabled</twig:bs:button>
+<twig:bs:button variant="success" :loading="true">Loading</twig:bs:button>
+
+{# Block Buttons #}
+<h3 class="mt-5">Block Buttons</h3>
+<div class="d-grid gap-2">
+    <twig:bs:button variant="primary" size="lg">Block Button</twig:bs:button>
+    <twig:bs:button variant="secondary" size="lg">Block Button</twig:bs:button>
+</div>
+
+{# Button as Link #}
+<h3 class="mt-5">Button as Link</h3>
+<twig:bs:button variant="primary" href="/example">Link Button</twig:bs:button>
+<twig:bs:button variant="success" href="/docs" target="_blank" iconEnd="bi bi-box-arrow-up-right">
+    External Link
+</twig:bs:button>
+
+{# Buttons with Tooltips #}
+<h3 class="mt-5">Buttons with Tooltips</h3>
+<twig:bs:button 
+    variant="primary" 
+    icon="bi bi-save" 
+    label=""
+    :tooltip="{text: 'Save changes', placement: 'top'}"
+/>
+<twig:bs:button 
+    variant="danger" 
+    icon="bi bi-trash" 
+    label=""
+    :tooltip="{text: 'Delete item', placement: 'top'}"
+/>
+<twig:bs:button 
+    variant="info" 
+    icon="bi bi-question-circle" 
+    label=""
+    :tooltip="{text: 'Get help', placement: 'top'}"
+/>
+
+{# Action Buttons #}
+<h3 class="mt-5">Common Action Buttons</h3>
+<twig:bs:button variant="primary" iconStart="bi bi-plus-lg">Add New</twig:bs:button>
+<twig:bs:button variant="success" iconStart="bi bi-pencil">Edit</twig:bs:button>
+<twig:bs:button variant="danger" iconStart="bi bi-trash">Delete</twig:bs:button>
+<twig:bs:button variant="info" iconStart="bi bi-eye">View</twig:bs:button>
+<twig:bs:button variant="warning" iconStart="bi bi-download">Export</twig:bs:button>
+<twig:bs:button variant="secondary" iconStart="bi bi-printer">Print</twig:bs:button>
+

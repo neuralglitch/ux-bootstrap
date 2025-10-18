@@ -1,0 +1,26 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content (Label) priority: Slot > Prop #}
+  {% set has_content = slot_content is not empty %}
+  {% set content = has_content ? slot_content : (o.label ?? '') %}
+
+  {% if o.tag == 'a' %}
+    <a href="{{ o.href }}"
+       class="{{ o.classes }}"
+      {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      {{- content|raw -}}
+    </a>
+  {% else %}
+    <span class="{{ o.classes }}"
+      {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+      {{- content|raw -}}
+    </span>
+  {% endif %}
+
+{%- endapply %}
+

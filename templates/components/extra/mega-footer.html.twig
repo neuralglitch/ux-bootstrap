@@ -1,0 +1,207 @@
+{# templates/components/extra/mega-footer.html.twig #}
+{# Parametrizable Bootstrap 5.3 Mega Footer Component (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture named blocks for footer columns #}
+{% set column1 %}{% block column1 %}{% endblock %}{% endset %}
+{% set column2 %}{% block column2 %}{% endblock %}{% endset %}
+{% set column3 %}{% block column3 %}{% endblock %}{% endset %}
+{% set column4 %}{% block column4 %}{% endblock %}{% endset %}
+{% set column5 %}{% block column5 %}{% endblock %}{% endset %}
+{% set column6 %}{% block column6 %}{% endblock %}{% endset %}
+
+{# Capture custom bottom content #}
+{% set bottom_content %}{% block bottom %}{% endblock %}{% endset %}
+
+{# Count non-empty columns #}
+{% set columns = [column1, column2, column3, column4, column5, column6] %}
+{% set column_count = 0 %}
+{% for col in columns %}
+  {% if col is not empty and col|trim != '' %}
+    {% set column_count = column_count + 1 %}
+  {% endif %}
+{% endfor %}
+
+<footer class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+    
+    {# ------------------ VARIANT: DEFAULT ------------------ #}
+    {% if o.variant == 'default' %}
+      <div class="py-5">
+        <div class="row g-4">
+          
+          {# Brand Column (always shows if brand info provided) #}
+          {% if o.brandName or o.brandLogo or o.brandDescription %}
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+              {% if o.brandLogo or o.brandName %}
+                <a href="{{ o.brandHref }}" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
+                  {% if o.brandLogo %}
+                    <img src="{{ o.brandLogo }}" alt="{{ o.brandName ?? '' }}" height="32" class="me-2">
+                  {% endif %}
+                  {% if o.brandName %}
+                    <span class="fs-4 fw-bold">{{ o.brandName }}</span>
+                  {% endif %}
+                </a>
+              {% endif %}
+              {% if o.brandDescription %}
+                <p class="text-body-secondary">{{ o.brandDescription }}</p>
+              {% endif %}
+              {% if o.socialLinks is not empty %}
+                <div class="d-flex gap-2 mt-3">
+                  {% for social in o.socialLinks %}
+                    <a href="{{ social.href ?? '#' }}" class="btn btn-outline-secondary btn-sm" aria-label="{{ social.label ?? 'Social link' }}">
+                      <i class="{{ social.icon ?? 'bi-link' }}"></i>
+                    </a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          {# Dynamic Columns #}
+          {% if column_count > 0 %}
+            {% set col_class = column_count <= 3 ? 'col-12 col-md-6 col-lg-3 mb-3' : 'col-12 col-sm-6 col-md-4 col-lg-2 mb-3' %}
+            {% for col in columns %}
+              {% if col is not empty and col|trim != '' %}
+                <div class="{{ col_class }}">
+                  {{ col|raw }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+          {# Newsletter Column #}
+          {% if o.showNewsletter %}
+            <div class="col-12 col-md-6 col-lg-3 mb-3">
+              <h5>{{ o.newsletterTitle }}</h5>
+              <form class="mt-3">
+                <div class="input-group">
+                  <input type="email" class="form-control" placeholder="{{ o.newsletterPlaceholder }}" aria-label="{{ o.newsletterPlaceholder }}">
+                  <button class="btn btn-primary" type="submit">{{ o.newsletterButtonText }}</button>
+                </div>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    {# ------------------ VARIANT: MINIMAL ------------------ #}
+    {% elseif o.variant == 'minimal' %}
+      <div class="py-4">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-6 mb-3 mb-md-0">
+            {% if o.brandName or o.brandLogo %}
+              <a href="{{ o.brandHref }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                {% if o.brandLogo %}
+                  <img src="{{ o.brandLogo }}" alt="{{ o.brandName ?? '' }}" height="24" class="me-2">
+                {% endif %}
+                {% if o.brandName %}
+                  <span class="fs-5 fw-semibold">{{ o.brandName }}</span>
+                {% endif %}
+              </a>
+            {% endif %}
+          </div>
+          <div class="col-12 col-md-6 text-md-end">
+            {% if column1 is not empty and column1|trim != '' %}
+              <div class="d-inline-flex gap-3">
+                {{ column1|raw }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    {# ------------------ VARIANT: CENTERED ------------------ #}
+    {% elseif o.variant == 'centered' %}
+      <div class="py-5 text-center">
+        {% if o.brandLogo or o.brandName %}
+          <a href="{{ o.brandHref }}" class="d-inline-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
+            {% if o.brandLogo %}
+              <img src="{{ o.brandLogo }}" alt="{{ o.brandName ?? '' }}" height="32" class="me-2">
+            {% endif %}
+            {% if o.brandName %}
+              <span class="fs-4 fw-bold">{{ o.brandName }}</span>
+            {% endif %}
+          </a>
+        {% endif %}
+        
+        {% if o.brandDescription %}
+          <p class="text-body-secondary mt-2 mb-4">{{ o.brandDescription }}</p>
+        {% endif %}
+        
+        {% if column1 is not empty and column1|trim != '' %}
+          <div class="mb-4">
+            {{ column1|raw }}
+          </div>
+        {% endif %}
+        
+        {% if o.socialLinks is not empty %}
+          <div class="d-flex gap-2 justify-content-center mb-3">
+            {% for social in o.socialLinks %}
+              <a href="{{ social.href ?? '#' }}" class="btn btn-outline-secondary btn-sm" aria-label="{{ social.label ?? 'Social link' }}">
+                <i class="{{ social.icon ?? 'bi-link' }}"></i>
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+    {# ------------------ VARIANT: COMPACT ------------------ #}
+    {% elseif o.variant == 'compact' %}
+      <div class="py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+          <div class="d-flex align-items-center">
+            {% if o.brandLogo or o.brandName %}
+              <a href="{{ o.brandHref }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                {% if o.brandLogo %}
+                  <img src="{{ o.brandLogo }}" alt="{{ o.brandName ?? '' }}" height="24" class="me-2">
+                {% endif %}
+                {% if o.brandName %}
+                  <span class="fw-semibold">{{ o.brandName }}</span>
+                {% endif %}
+              </a>
+            {% endif %}
+          </div>
+          
+          {% if column1 is not empty and column1|trim != '' %}
+            <div class="d-flex gap-3 flex-wrap justify-content-center">
+              {{ column1|raw }}
+            </div>
+          {% endif %}
+          
+          {% if o.socialLinks is not empty %}
+            <div class="d-flex gap-2">
+              {% for social in o.socialLinks %}
+                <a href="{{ social.href ?? '#' }}" class="btn btn-outline-secondary btn-sm" aria-label="{{ social.label ?? 'Social link' }}">
+                  <i class="{{ social.icon ?? 'bi-link' }}"></i>
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    
+    {# Bottom Section (Copyright + Custom Content) #}
+    {% if o.showCopyright or (bottom_content is not empty and bottom_content|trim != '') %}
+      <div class="border-top py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+          {% if o.showCopyright and o.copyrightText %}
+            <p class="mb-0 text-body-secondary small">{{ o.copyrightText }}</p>
+          {% endif %}
+          {% if bottom_content is not empty and bottom_content|trim != '' %}
+            <div class="d-flex gap-3">
+              {{ bottom_content|raw }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</footer>
+
+{%- endapply %}
+

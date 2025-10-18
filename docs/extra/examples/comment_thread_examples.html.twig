@@ -1,0 +1,498 @@
+{# Comment Thread Component Examples #}
+
+{# ============================================
+   EXAMPLE 1: Basic Comment Thread
+   ============================================ #}
+<section class="mb-5">
+    <h2>Basic Comment Thread</h2>
+    <p class="text-muted">Simple comment display with default settings</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>This is a great article! Thanks for sharing your insights.</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 12,
+        },
+        {
+            'id': 2,
+            'author': 'Bob Smith',
+            'avatar': 'https://i.pravatar.cc/150?img=2',
+            'content': '<p>I agree with Alice. Very informative and well-written.</p>',
+            'timestamp': '2024-01-15 09:30:00',
+            'likes': 5,
+        },
+    ] %}
+
+    <twig:bs:comment-thread :comments="comments" />
+</section>
+
+{# ============================================
+   EXAMPLE 2: Nested Replies
+   ============================================ #}
+<section class="mb-5">
+    <h2>Nested Replies</h2>
+    <p class="text-muted">Comments with threaded replies</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>What do you think about this new approach?</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 8,
+            'replies': [
+                {
+                    'id': 2,
+                    'author': 'Bob Smith',
+                    'avatar': 'https://i.pravatar.cc/150?img=2',
+                    'content': '<p>I think it\'s brilliant! Here\'s why...</p>',
+                    'timestamp': '2024-01-15 09:15:00',
+                    'likes': 3,
+                    'replies': [
+                        {
+                            'id': 3,
+                            'author': 'Alice Johnson',
+                            'avatar': 'https://i.pravatar.cc/150?img=1',
+                            'content': '<p>Thanks for the detailed explanation!</p>',
+                            'timestamp': '2024-01-15 09:20:00',
+                            'likes': 1,
+                        },
+                    ],
+                },
+                {
+                    'id': 4,
+                    'author': 'Charlie Davis',
+                    'avatar': 'https://i.pravatar.cc/150?img=3',
+                    'content': '<p>I have some concerns about scalability...</p>',
+                    'timestamp': '2024-01-15 10:00:00',
+                    'likes': 2,
+                },
+            ],
+        },
+    ] %}
+
+    <twig:bs:comment-thread :comments="comments" />
+</section>
+
+{# ============================================
+   EXAMPLE 3: Author Highlighting
+   ============================================ #}
+<section class="mb-5">
+    <h2>Author Highlighting</h2>
+    <p class="text-muted">Highlight comments from the post author</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'username': 'alice_j',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Thanks everyone for the great discussion!</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 15,
+        },
+        {
+            'id': 2,
+            'author': 'Bob Smith',
+            'username': 'bob_s',
+            'avatar': 'https://i.pravatar.cc/150?img=2',
+            'content': '<p>Great post Alice!</p>',
+            'timestamp': '2024-01-15 09:30:00',
+            'likes': 5,
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :highlightAuthor="true"
+        authorUsername="alice_j"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 4: With User Badges
+   ============================================ #}
+<section class="mb-5">
+    <h2>With User Badges</h2>
+    <p class="text-muted">Show user roles and status badges</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'username': 'alice_j',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Official announcement: We\'re launching a new feature next week!</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 25,
+            'badges': [
+                {'label': 'Admin', 'class': 'bg-danger'},
+                {'label': 'Verified', 'class': 'bg-primary'},
+            ],
+        },
+        {
+            'id': 2,
+            'author': 'Bob Smith',
+            'username': 'bob_s',
+            'avatar': 'https://i.pravatar.cc/150?img=2',
+            'content': '<p>Exciting news!</p>',
+            'timestamp': '2024-01-15 09:30:00',
+            'likes': 5,
+            'badges': [
+                {'label': 'Pro', 'class': 'bg-success'},
+            ],
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :highlightAuthor="true"
+        authorUsername="alice_j"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 5: Compact Mode
+   ============================================ #}
+<section class="mb-5">
+    <h2>Compact Mode</h2>
+    <p class="text-muted">Reduced spacing for dense layouts</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice',
+            'content': '<p>Short comment.</p>',
+            'timestamp': '2024-01-15 09:00:00',
+        },
+        {
+            'id': 2,
+            'author': 'Bob',
+            'content': '<p>Another short comment.</p>',
+            'timestamp': '2024-01-15 09:30:00',
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :compact="true"
+        avatarSize="sm"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 6: Without Thread Lines
+   ============================================ #}
+<section class="mb-5">
+    <h2>Without Thread Lines</h2>
+    <p class="text-muted">Clean look without connecting lines</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Parent comment</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'replies': [
+                {
+                    'id': 2,
+                    'author': 'Bob Smith',
+                    'avatar': 'https://i.pravatar.cc/150?img=2',
+                    'content': '<p>Reply without thread line</p>',
+                    'timestamp': '2024-01-15 09:15:00',
+                },
+            ],
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :showThreadLines="false"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 7: Absolute Date Format
+   ============================================ #}
+<section class="mb-5">
+    <h2>Absolute Date Format</h2>
+    <p class="text-muted">Show full date and time</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Comment with absolute date</p>',
+            'timestamp': '2024-01-15 14:30:00',
+            'likes': 5,
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        dateFormat="absolute"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 8: Large Avatars
+   ============================================ #}
+<section class="mb-5">
+    <h2>Large Avatars</h2>
+    <p class="text-muted">Prominent user presence</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Comment with large avatar</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 8,
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        avatarSize="xl"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 9: With Edit/Delete Actions
+   ============================================ #}
+<section class="mb-5">
+    <h2>With Edit/Delete Actions</h2>
+    <p class="text-muted">Allow users to edit and delete their comments</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Current User',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>My comment that I can edit or delete</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 5,
+            'can_edit': true,
+            'can_delete': true,
+        },
+        {
+            'id': 2,
+            'author': 'Other User',
+            'avatar': 'https://i.pravatar.cc/150?img=2',
+            'content': '<p>Other user\'s comment</p>',
+            'timestamp': '2024-01-15 09:30:00',
+            'likes': 3,
+            'can_edit': false,
+            'can_delete': false,
+        },
+    ] %}
+
+    <twig:bs:comment-thread :comments="comments" />
+</section>
+
+{# ============================================
+   EXAMPLE 10: Limited Depth
+   ============================================ #}
+<section class="mb-5">
+    <h2>Limited Nesting Depth</h2>
+    <p class="text-muted">Limit replies to 2 levels deep</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Level 1',
+            'content': '<p>Top level comment</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'replies': [
+                {
+                    'id': 2,
+                    'author': 'Level 2',
+                    'content': '<p>First level reply (can reply)</p>',
+                    'timestamp': '2024-01-15 09:15:00',
+                },
+            ],
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :maxDepth="2"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 11: Edited Comments
+   ============================================ #}
+<section class="mb-5">
+    <h2>Edited Comments</h2>
+    <p class="text-muted">Show edited indicator</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>This comment has been edited for clarity.</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'edited': true,
+            'likes': 10,
+        },
+    ] %}
+
+    <twig:bs:comment-thread :comments="comments" />
+</section>
+
+{# ============================================
+   EXAMPLE 12: Custom Styling
+   ============================================ #}
+<section class="mb-5">
+    <h2>Custom Styling</h2>
+    <p class="text-muted">With custom CSS classes and container</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Styled comment</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 5,
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        class="border border-primary rounded shadow-sm p-4"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 13: Minimal Actions
+   ============================================ #}
+<section class="mb-5">
+    <h2>Minimal Actions</h2>
+    <p class="text-muted">Only show like button, hide other actions</p>
+
+    {% set comments = [
+        {
+            'id': 1,
+            'author': 'Alice Johnson',
+            'avatar': 'https://i.pravatar.cc/150?img=1',
+            'content': '<p>Simple comment with only like action</p>',
+            'timestamp': '2024-01-15 09:00:00',
+            'likes': 15,
+        },
+    ] %}
+
+    <twig:bs:comment-thread
+        :comments="comments"
+        :showReply="false"
+        :showEdit="false"
+        :showDelete="false"
+        :showLike="true"
+    />
+</section>
+
+{# ============================================
+   EXAMPLE 14: Empty State
+   ============================================ #}
+<section class="mb-5">
+    <h2>Empty State</h2>
+    <p class="text-muted">No comments yet</p>
+
+    <twig:bs:comment-thread :comments="[]" />
+</section>
+
+{# ============================================
+   EXAMPLE 15: Real-World Blog Example
+   ============================================ #}
+<section class="mb-5">
+    <h2>Real-World Blog Example</h2>
+    <p class="text-muted">Complete blog post comments section</p>
+
+    {% set blogComments = [
+        {
+            'id': 1,
+            'author': 'Sarah Wilson',
+            'username': 'sarah_w',
+            'avatar': 'https://i.pravatar.cc/150?img=5',
+            'content': '<p>This is exactly what I needed! The examples are very clear and the code is well-documented. I especially appreciate the attention to accessibility.</p>',
+            'timestamp': '2024-01-14 10:30:00',
+            'likes': 24,
+            'edited': false,
+            'badges': [
+                {'label': 'Pro', 'class': 'bg-success'},
+            ],
+            'replies': [
+                {
+                    'id': 2,
+                    'author': 'Mike Chen',
+                    'username': 'mike_c',
+                    'avatar': 'https://i.pravatar.cc/150?img=12',
+                    'content': '<p>+1 on the accessibility comments. That\'s often overlooked!</p>',
+                    'timestamp': '2024-01-14 11:15:00',
+                    'likes': 8,
+                },
+                {
+                    'id': 3,
+                    'author': 'Article Author',
+                    'username': 'author',
+                    'avatar': 'https://i.pravatar.cc/150?img=15',
+                    'content': '<p>Thank you Sarah! I\'m glad you found it helpful. Accessibility is indeed very important to me.</p>',
+                    'timestamp': '2024-01-14 12:00:00',
+                    'likes': 12,
+                    'badges': [
+                        {'label': 'Author', 'class': 'bg-primary'},
+                    ],
+                },
+            ],
+        },
+        {
+            'id': 4,
+            'author': 'Tom Anderson',
+            'username': 'tom_a',
+            'avatar': 'https://i.pravatar.cc/150?img=7',
+            'content': '<p>Quick question: Does this work with server-side rendering?</p>',
+            'timestamp': '2024-01-15 08:30:00',
+            'likes': 5,
+            'replies': [
+                {
+                    'id': 5,
+                    'author': 'Article Author',
+                    'username': 'author',
+                    'avatar': 'https://i.pravatar.cc/150?img=15',
+                    'content': '<p>Yes! It\'s built with Symfony UX TwigComponent which renders server-side. The interactive features use Stimulus for progressive enhancement.</p>',
+                    'timestamp': '2024-01-15 09:00:00',
+                    'likes': 7,
+                    'badges': [
+                        {'label': 'Author', 'class': 'bg-primary'},
+                    ],
+                },
+            ],
+        },
+    ] %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Comments ({{ blogComments|length }})</h5>
+        </div>
+        <div class="card-body">
+            <twig:bs:comment-thread
+                :comments="blogComments"
+                :highlightAuthor="true"
+                authorUsername="author"
+                avatarSize="lg"
+                dateFormat="relative"
+                :maxDepth="3"
+            />
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,177 @@
+/**
+ * Notification Badge Styles
+ * 
+ * Styles for the NotificationBadge component that provides
+ * notification indicators on nav items, avatars, buttons, etc.
+ */
+
+/* Notification Badge Sizing */
+.badge-notification-sm {
+    min-width: 1rem;
+    min-height: 1rem;
+    padding: 0.15rem 0.35rem;
+    font-size: 0.65rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-notification-md {
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    padding: 0.25rem 0.45rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-notification-lg {
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.85rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Notification Badge Positioning */
+.badge-top-start {
+    top: 0;
+    left: 0;
+}
+
+.badge-top-end {
+    top: 0;
+    right: 0;
+}
+
+.badge-bottom-start {
+    bottom: 0;
+    left: 0;
+}
+
+.badge-bottom-end {
+    bottom: 0;
+    right: 0;
+}
+
+/* Pulse Animation */
+.badge-pulse {
+    animation: badge-pulse 2s infinite;
+    
+    // Variant-specific pulse colors
+    &.text-bg-primary {
+        animation-name: badge-pulse-primary;
+    }
+    
+    &.text-bg-secondary {
+        animation-name: badge-pulse-secondary;
+    }
+    
+    &.text-bg-success {
+        animation-name: badge-pulse-success;
+    }
+    
+    &.text-bg-danger {
+        animation-name: badge-pulse-danger;
+    }
+    
+    &.text-bg-warning {
+        animation-name: badge-pulse-warning;
+    }
+    
+    &.text-bg-info {
+        animation-name: badge-pulse-info;
+    }
+}
+
+/* Pulse Animation Keyframes */
+@keyframes badge-pulse-primary {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-primary-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0);
+    }
+}
+
+@keyframes badge-pulse-secondary {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-secondary-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-secondary-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-secondary-rgb), 0);
+    }
+}
+
+@keyframes badge-pulse-success {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-success-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-success-rgb), 0);
+    }
+}
+
+@keyframes badge-pulse-danger {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-danger-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-danger-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-danger-rgb), 0);
+    }
+}
+
+@keyframes badge-pulse-warning {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-warning-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-warning-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-warning-rgb), 0);
+    }
+}
+
+@keyframes badge-pulse-info {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-info-rgb), 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(var(--bs-info-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--bs-info-rgb), 0);
+    }
+}
+
+/* Border enhancements for better visibility */
+.badge.border-light {
+    border-width: 2px !important;
+}
+
+/* Ensure badges work well on dark backgrounds */
+@media (prefers-color-scheme: dark) {
+    .badge.border-light {
+        border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+}
+

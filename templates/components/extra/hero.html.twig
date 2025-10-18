@@ -1,0 +1,167 @@
+{# templates/components/extra/hero.html.twig #}
+{# Parametrisierbare Bootstrap-5.3 Hero-Komponente (Symfony UX Twig Component) #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Variante robust normalisieren: Enum->value oder bereits String #}
+{% set _v = o.variant %}
+{% set _variant = attribute(_v, 'value') is defined ? attribute(_v, 'value') : _v %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Check if custom content is provided (excluding whitespace) #}
+{% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
+
+{# Default content for signup variant (used if no custom content provided) #}
+{% set default_signup_content %}
+  <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com">
+      <label for="signupEmail">Email address</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+      <label for="signupPassword">Password</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+    <hr class="my-4">
+    <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
+  </form>
+{% endset %}
+
+<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.container }}">
+    {# ------------------ VARIANT: CENTERED ------------------ #}
+    {% if _variant == 'centered' %}
+      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            <h1 class="display-5 fw-bold">{{ o.title }}</h1>
+            {% if o.lead %}
+              <p class="col-md-8 fs-5 mt-3">{{ o.lead }}</p>
+            {% endif %}
+            <div class="mt-3 d-flex gap-2">
+              {% if o.ctaLabel and o.ctaHref %}
+                <a class="btn btn-{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+              {% endif %}
+              {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+                <a class="btn btn-{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# ----------- VARIANT: SCREENSHOT_CENTERED -------------- #}
+    {% elseif _variant == 'screenshot_centered' %}
+      <div class="text-center">
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          <h1 class="display-4 fw-semibold">{{ o.title }}</h1>
+          {% if o.lead %}
+            <p class="lead mt-2">{{ o.lead }}</p>
+          {% endif %}
+          <div class="mt-3 d-flex justify-content-center gap-2">
+            {% if o.ctaLabel and o.ctaHref %}
+              <a class="btn btn-{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+            {% endif %}
+            {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+              <a class="btn btn-{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+            {% endif %}
+          </div>
+          {% if o.screenshotSrc %}
+            <div class="overflow-hidden" style="max-height: 30vh;">
+              <div class="container px-5">
+                <img src="{{ o.screenshotSrc }}" class="img-fluid border rounded-3 shadow-lg my-4" alt="">
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      {# ---------------- VARIANT: IMAGE_LEFT ------------------- #}
+    {% elseif _variant == 'image_left' %}
+      <div class="row align-items-center g-5">
+        <div class="col-12 col-lg-6">
+          {% if has_custom_content %}
+            {{ slot_content|raw }}
+          {% else %}
+            <h1 class="display-5 fw-bold lh-1 mb-3">{{ o.title }}</h1>
+            {% if o.lead %}
+              <p class="lead">{{ o.lead }}</p>
+            {% endif %}
+            <div class="d-grid d-sm-flex gap-2">
+              {% if o.ctaLabel and o.ctaHref %}
+                <a class="btn btn-{{ o.ctaVariant }} btn-{{ o.ctaSize }} px-4" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+              {% endif %}
+              {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+                <a class="btn btn-{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }} px-4" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-12 col-lg-6 text-center">
+          {% if o.imageSrc %}
+            <img src="{{ o.imageSrc }}" class="img-fluid rounded-3 shadow-lg" alt="{{ o.imageAlt ?? '' }}">
+          {% endif %}
+        </div>
+      </div>
+
+      {# ------------------ VARIANT: SIGNUP --------------------- #}
+    {% elseif _variant == 'signup' %}
+      {% if has_custom_content %}
+        {{ slot_content|raw }}
+      {% else %}
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">{{ o.title }}</h1>
+            {% if o.lead %}
+              <p class="lead">{{ o.lead }}</p>
+            {% endif %}
+          </div>
+          <div class="col-lg-6">
+            {{ default_signup_content|raw }}
+          </div>
+        </div>
+      {% endif %}
+
+      {# ---------------- VARIANT: BORDER_IMAGE ----------------- #}
+    {% elseif _variant == 'border_image' %}
+      <div class="p-5 mb-4 bg-body-tertiary border rounded-3">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-8">
+            {% if has_custom_content %}
+              {{ slot_content|raw }}
+            {% else %}
+              <h1 class="display-6 fw-bold">{{ o.title }}</h1>
+              {% if o.lead %}
+                <p class="fs-5 mt-2">{{ o.lead }}</p>
+              {% endif %}
+              <div class="mt-3 d-flex gap-2">
+                {% if o.ctaLabel and o.ctaHref %}
+                  <a class="btn btn-{{ o.ctaVariant }} btn-{{ o.ctaSize }}" href="{{ o.ctaHref }}">{{ o.ctaLabel }}</a>
+                {% endif %}
+                {% if o.secondaryCtaLabel and o.secondaryCtaHref %}
+                  <a class="btn btn-{{ o.secondaryCtaVariant }} btn-{{ o.secondaryCtaSize }}" href="{{ o.secondaryCtaHref }}">{{ o.secondaryCtaLabel }}</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="col-lg-4 text-center">
+            {% if o.imageSrc %}
+              <img src="{{ o.imageSrc }}" class="img-fluid rounded-3 shadow-lg border" alt="{{ o.imageAlt ?? '' }}">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{%- endapply %}

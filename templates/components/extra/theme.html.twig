@@ -1,0 +1,319 @@
+{#
+  Usage:
+
+  Standard button with single icon:
+    <twig:bs:theme initial="{{ app.request.attributes.get('theme') }}" />
+    ...same as:
+    <twig:bs:theme mode="button-icon" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Button with toggling icons (sun/moon):
+    <twig:bs:theme mode="button-icon-toggle" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Button with text only:
+    <twig:bs:theme mode="button-text" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Button with single icon and text:
+    <twig:bs:theme mode="button-icon-text" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Button with toggling icon and text:
+    <twig:bs:theme mode="button-icon-toggle-text" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Dropdown button:
+    <twig:bs:theme mode="button-dropdown" initial="{{ app.request.attributes.get('theme') }}" />
+
+  HTML form select:
+    <twig:bs:theme mode="form-select" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Plain text link:
+    <twig:bs:theme mode="link" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Icon link:
+    <twig:bs:theme mode="link-icon" initial="{{ app.request.attributes.get('theme') }}" />
+
+  Toogling icon link:
+    <twig:bs:theme mode="link-icon-toggle" initial="{{ app.request.attributes.get('theme') }}" />
+#}
+{% macro link_text(variant, classes, attrs) %}
+  <a href="javascript:void(0)" class="link {{ variant ? 'link-'~variant }} {{ classes }}" data-action="click->bs-theme#toggle" data-bs-theme-target="label" {{ attrs | raw }}>Dark Theme</a>
+{% endmacro %}
+
+{% macro link_icon(classes, attrs) %}
+  <a href="javascript:void(0)" class="icon-link {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}><twig:ux:icon name="bi:circle-half" width="1.03125rem" height="1.03125rem" /></a>
+{% endmacro %}
+
+{% macro link_icon_text(classes, attrs) %}
+  <a href="javascript:void(0)" class="icon-link {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}><twig:ux:icon name="bi:circle-half" width="1.03125rem" height="1.03125rem" /><span data-action="click->bs-theme#toggle" data-bs-theme-target="label">Dark Theme</span></a>
+{% endmacro %}
+
+{% macro link_icon_toggle(classes, attrs) %}
+  <a href="javascript:void(0)" class="icon-link {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <span data-bs-theme-target="icon">
+      <twig:ux:icon name="bi:moon-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="moon" class="d-block" />
+      <twig:ux:icon name="bi:sun-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="sun" class="d-none" />
+    </span>
+    <span data-action="click->bs-theme#toggle" data-bs-theme-target="label">Dark Theme</span></a>
+{% endmacro %}
+
+{% macro button_icon(variant, classes, attrs) %}
+  <button type="button"
+          class="btn p-2 lh-1 {{ variant ? 'btn-'~variant }} {{ classes }}"
+          style="width:2.25rem; aspect-ratio:1/1"
+          data-action="click->bs-theme#toggle"
+          {{ attrs | raw }}>
+    <twig:ux:icon name="bi:circle-half" width="1.03125rem" height="1.03125rem" />
+  </button>
+{% endmacro %}
+
+{% macro button_icon_toggle(variant, classes, attrs) %}
+  <button type="button"
+          class="btn p-2 lh-1 {{ variant ? 'btn-'~variant }} {{ classes }}"
+          style="width:2.25rem; aspect-ratio:1/1"
+          data-action="click->bs-theme#toggle"
+          data-bs-theme-target="icon"
+          {{ attrs | raw }}>
+    <twig:ux:icon name="bi:moon-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="moon" class="d-block" />
+    <twig:ux:icon name="bi:sun-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="sun" class="d-none" />
+  </button>
+{% endmacro %}
+
+{% macro dropdown_text(variant, classes, attrs) %}
+  <div class="dropdown {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <button class="btn dropdown-toggle {{ variant ? 'btn-'~variant }}"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Theme
+    </button>
+
+    <ul class="dropdown-menu">
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemLight"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="light">
+          <span>Light Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkLight"/>
+        </button>
+      </li>
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemDark"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="dark">
+          <span>Dark Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkDark"/>
+        </button>
+      </li>
+    </ul>
+  </div>
+{% endmacro %}
+
+{% macro dropdown_icon(variant, classes, attrs) %}
+  <div class="dropdown {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <button class="btn dropdown-toggle {{ variant ? 'btn-'~variant }}"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="align-items: center; display: inline-flex; gap: 0.375rem;">
+      <twig:ux:icon name="bi:circle-half" width="1.03125rem" height="1.03125rem" />
+      <span>Theme</span>
+    </button>
+
+    <ul class="dropdown-menu">
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemLight"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="light">
+          <twig:ux:icon name="bi:sun-fill" width="1.03125rem" height="1.03125rem" />
+          <span>Light Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkLight"/>
+        </button>
+      </li>
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemDark"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="dark">
+          <twig:ux:icon name="bi:moon-fill" width="1.03125rem" height="1.03125rem" />
+          <span>Dark Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkDark"/>
+        </button>
+      </li>
+    </ul>
+  </div>
+{% endmacro %}
+
+{% macro dropdown_icon_text(variant, classes, attrs) %}
+  <div class="dropdown {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <button class="btn dropdown-toggle {{ variant ? 'btn-'~variant }}"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Theme
+    </button>
+
+    <ul class="dropdown-menu">
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemLight"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="light">
+          <twig:ux:icon name="bi:sun-fill" width="1.03125rem" height="1.03125rem" />
+          <span>Light Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkLight"/>
+        </button>
+      </li>
+      <li>
+        <button type="button"
+                class="dropdown-item d-flex align-items-center gap-2"
+                data-bs-theme-target="itemDark"
+                data-action="click->bs-theme#applyFromDropdown"
+                data-value="dark">
+          <twig:ux:icon name="bi:moon-fill" width="1.03125rem" height="1.03125rem" />
+          <span>Dark Theme</span>
+          <twig:ux:icon name="bi:check"
+                        width="1rem" height="1rem"
+                        class="ms-auto d-none"
+                        data-bs-theme-target="checkDark"/>
+        </button>
+      </li>
+    </ul>
+  </div>
+{% endmacro %}
+
+{% macro button_text(variant, classes, attrs) %}
+  <button type="button"
+          class="btn {{ variant ? 'btn-'~variant }} {{ classes }}"
+          data-action="click->bs-theme#toggle"
+          {{ attrs | raw }}>
+    <span data-bs-theme-target="label">Dark Theme</span>
+  </button>
+{% endmacro %}
+
+{% macro button_icon_text(variant, classes, attrs) %}
+  <button type="button"
+          class="btn {{ variant ? 'btn-'~variant }} {{ classes }}"
+          data-action="click->bs-theme#toggle" style="align-items: center; display: inline-flex; gap: 0.375rem;"
+          {{ attrs | raw }}>
+    <twig:ux:icon name="bi:circle-half" width="1.03125rem" height="1.03125rem" />
+    <span data-bs-theme-target="label">Dark Theme</span>
+  </button>
+{% endmacro %}
+
+{% macro button_icon_toggle_text(variant, classes, attrs) %}
+  <button type="button"
+          class="btn {{ variant ? 'btn-'~variant }} {{ classes }}"
+          data-action="click->bs-theme#toggle" style="align-items: center; display: inline-flex; gap: 0.375rem;"
+          {{ attrs | raw }}>
+    <span data-bs-theme-target="icon">
+      <twig:ux:icon name="bi:moon-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="moon" class="d-block" />
+      <twig:ux:icon name="bi:sun-fill" width="1.03125rem" height="1.03125rem" data-bs-theme-target="sun" class="d-none" />
+    </span>
+    <span data-bs-theme-target="label">Dark Theme</span>
+  </button>
+{% endmacro %}
+
+{% macro form_select(classes, attrs) %}
+  <select id="themeSelect"
+          class="form-select d-inline w-auto {{ classes }}"
+          data-action="change->bs-theme#select"
+          aria-label="Theme"
+          {{ attrs | raw }}>
+    <option value="light">Light Theme</option>
+    <option value="dark">Dark Theme</option>
+  </select>
+{% endmacro %}
+
+{% macro form_select_float(classes, attrs) %}
+  <div class="form-floating {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <select id="themeSelect"
+            class="form-select d-inline w-auto"
+            data-action="change->bs-theme#select"
+            aria-label="Theme">
+      <option value="light">Light Theme</option>
+      <option value="dark">Dark Theme</option>
+    </select>
+    <label for="floatingSelect">Theme</label>
+  </div>
+{% endmacro %}
+
+{% macro form_switch(classes, attrs) %}
+  <div class="form-check form-switch m-0 {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <input class="form-check-input"
+           type="checkbox"
+           aria-checked="mixed"
+           role="switch"
+           id="themeSwitch"
+           data-action="change->bs-theme#switch"
+           data-bs-theme-target="checkbox">
+    <label class="form-check-label" for="themeSwitch">Dark theme</label>
+  </div>
+{% endmacro %}
+
+{% macro form_check(classes, attrs) %}
+  <div class="form-check m-0 {{ classes  }}" data-action="click->bs-theme#toggle" {{ attrs | raw }}>
+    <input class="form-check-input"
+           type="checkbox"
+           aria-checked="mixed"
+           id="themeCheck"
+           data-action="change->bs-theme#switch"
+           data-bs-theme-target="checkbox">
+    <label class="form-check-label" for="themeCheck">Dark theme</label>
+  </div>
+{% endmacro %}
+
+{% import _self as ui %}
+
+{% set o = this.options() %}
+{% set classes = o.classes %}
+{% set attrs = this.renderHtmlAttributes(o.attrs)|raw %}
+
+{% if o.mode == 'link-text' %}
+  {{ ui.link_text(o.variant, classes, attrs) }}
+{% elseif o.mode == 'link-icon' %}
+  {{ ui.link_icon(classes, attrs) }}
+{% elseif o.mode == 'link-icon-text' %}
+  {{ ui.link_icon_text(classes, attrs) }}
+{% elseif o.mode == 'link-icon-toggle' %}
+  {{ ui.link_icon_toggle(classes, attrs) }}
+{% elseif o.mode == 'button-icon' %}
+  {{ ui.button_icon(o.variant, classes, attrs) }}
+{% elseif o.mode == 'button-icon-toggle' %}
+  {{ ui.button_icon_toggle(o.variant, classes, attrs) }}
+{% elseif o.mode == 'dropdown-text' %}
+  {{ ui.dropdown_text(o.variant, classes, attrs) }}
+{% elseif o.mode == 'dropdown-icon' %}
+  {{ ui.dropdown_icon(o.variant, classes, attrs) }}
+{% elseif o.mode == 'button-text' %}
+  {{ ui.button_text(o.variant, classes, attrs) }}
+{% elseif o.mode == 'button-icon-text' %}
+  {{ ui.button_icon_text(o.variant, classes, attrs) }}
+{% elseif o.mode == 'button-icon-toggle-text' %}
+  {{ ui.button_icon_toggle_text(o.variant, classes, attrs) }}
+{% elseif o.mode == 'form-select' %}
+  {{ ui.form_select(classes, attrs) }}
+{% elseif o.mode == 'form-select-float' %}
+  {{ ui.form_select_float(classes, attrs) }}
+{% elseif o.mode == 'form-switch' %}
+  {{ ui.form_switch(classes, attrs) }}
+{% elseif o.mode == 'form-check' %}
+  {{ ui.form_check(classes, attrs) }}
+{% else %}
+  {{ ui.button_icon(o.variant, classes, attrs) }}
+{% endif %}
+

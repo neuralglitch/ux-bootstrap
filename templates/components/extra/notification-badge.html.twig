@@ -1,0 +1,22 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content - MUST use 'content' block #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  {# Content priority: Slot > Prop > Computed #}
+  {% set has_content = slot_content is not empty %}
+  {% set content = has_content ? slot_content : o.content %}
+
+  <span class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {%- if not o.isDot and content -%}
+      {{ content|raw }}
+    {%- endif -%}
+    {%- if o.isPulse -%}
+      <span class="visually-hidden">New notifications</span>
+    {%- endif -%}
+  </span>
+
+{%- endapply %}
+

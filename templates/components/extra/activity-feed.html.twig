@@ -1,0 +1,13 @@
+{% apply spaceless -%}
+
+  {% set o = this.options() %}
+
+  {# Slot for custom content #}
+  {% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+  <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    {{ slot_content|raw }}
+  </{{ o.tag }}>
+
+{%- endapply %}
+

@@ -1,0 +1,209 @@
+{# docs/testimonial_example.twig #}
+{# Testimonial Component Examples #}
+
+{# 1. Single Testimonial (Default) #}
+<twig:bs:testimonial 
+  quote="This product has completely transformed how we do business. The ROI was apparent within the first month!"
+  author="Sarah Johnson"
+  role="CEO"
+  company="TechStart Inc."
+  avatarSrc="/images/testimonials/sarah.jpg"
+  :rating="5" />
+
+{# 2. Featured Testimonial #}
+<twig:bs:testimonial 
+  variant="featured"
+  quote="Outstanding service from start to finish. The team went above and beyond our expectations."
+  author="Michael Chen"
+  role="Product Manager"
+  company="InnovateCo"
+  avatarSrc="/images/testimonials/michael.jpg"
+  :rating="5" />
+
+{# 3. Minimal Variant #}
+<twig:bs:testimonial 
+  variant="minimal"
+  quote="Simple, elegant, and exactly what we needed."
+  author="Emily Rodriguez"
+  role="Designer"
+  company="Creative Studio"
+  :rating="5" />
+
+{# 4. Centered Alignment #}
+<twig:bs:testimonial 
+  quote="Five stars all around! Highly recommend to anyone."
+  author="David Lee"
+  alignment="center"
+  avatarSrc="/images/testimonials/david.jpg"
+  :rating="5" />
+
+{# 5. Grid Layout with Custom Content #}
+<twig:bs:testimonial variant="grid">
+  {% block content %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body p-4">
+          <div class="text-warning mb-2">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <blockquote class="mb-4">
+            <p class="fs-5 fst-italic">"Fantastic experience from beginning to end!"</p>
+          </blockquote>
+          <div class="d-flex align-items-center gap-3">
+            <img src="/images/testimonials/person1.jpg" class="rounded-circle" width="48" height="48" alt="John Doe">
+            <div>
+              <div class="fw-bold">John Doe</div>
+              <small class="text-muted">Marketing Director</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body p-4">
+          <div class="text-warning mb-2">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <blockquote class="mb-4">
+            <p class="fs-5 fst-italic">"Best decision we made this year!"</p>
+          </blockquote>
+          <div class="d-flex align-items-center gap-3">
+            <img src="/images/testimonials/person2.jpg" class="rounded-circle" width="48" height="48" alt="Jane Smith">
+            <div>
+              <div class="fw-bold">Jane Smith</div>
+              <small class="text-muted">CTO, StartupCo</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body p-4">
+          <div class="text-warning mb-2">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+          </div>
+          <blockquote class="mb-4">
+            <p class="fs-5 fst-italic">"Great product, excellent support!"</p>
+          </blockquote>
+          <div class="d-flex align-items-center gap-3">
+            <img src="/images/testimonials/person3.jpg" class="rounded-circle" width="48" height="48" alt="Alex Johnson">
+            <div>
+              <div class="fw-bold">Alex Johnson</div>
+              <small class="text-muted">Founder</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+</twig:bs:testimonial>
+
+{# 6. Wall Layout with 4 Columns #}
+<twig:bs:testimonial variant="wall" :columns="4">
+  {% block content %}
+    <div class="col">
+      <div class="card mb-3 border-0 shadow-sm">
+        <div class="card-body">
+          <p class="fst-italic">"Amazing product!"</p>
+          <small>- Customer A</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-3 border-0 shadow-sm">
+        <div class="card-body">
+          <p class="fst-italic">"Highly recommended!"</p>
+          <small>- Customer B</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-3 border-0 shadow-sm">
+        <div class="card-body">
+          <p class="fst-italic">"Best service ever!"</p>
+          <small>- Customer C</small>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card mb-3 border-0 shadow-sm">
+        <div class="card-body">
+          <p class="fst-italic">"Worth every penny!"</p>
+          <small>- Customer D</small>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+</twig:bs:testimonial>
+
+{# 7. Full-Width Container #}
+<twig:bs:testimonial 
+  container="container-fluid"
+  variant="featured"
+  quote="This is the best investment we've made for our team this year."
+  author="Robert Taylor"
+  role="VP of Engineering"
+  company="Global Tech Solutions"
+  :rating="5" />
+
+{# 8. Custom Content with Bootstrap Quote Icon #}
+<twig:bs:testimonial variant="single">
+  {% block content %}
+    <div class="card border-0 shadow-lg">
+      <div class="card-body p-5 text-center">
+        <div class="mb-4">
+          <i class="bi bi-quote display-3 text-primary"></i>
+        </div>
+        <blockquote class="mb-4">
+          <p class="fs-3">Custom testimonial layout with your own HTML structure and styling.</p>
+        </blockquote>
+        <div class="text-warning mb-3">
+          <i class="bi bi-star-fill"></i>
+          <i class="bi bi-star-fill"></i>
+          <i class="bi bi-star-fill"></i>
+          <i class="bi bi-star-fill"></i>
+          <i class="bi bi-star-fill"></i>
+        </div>
+        <div class="d-flex justify-content-center align-items-center gap-3">
+          <img src="/images/testimonials/custom.jpg" class="rounded-circle" width="80" height="80" alt="Custom Name">
+          <div class="text-start">
+            <div class="fw-bold fs-5">Custom Name</div>
+            <div class="text-muted">Custom Title, Custom Company</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+</twig:bs:testimonial>
+
+{# 9. Right-Aligned Testimonial #}
+<twig:bs:testimonial 
+  quote="Professional, efficient, and results-driven."
+  author="Patricia Martinez"
+  role="Operations Manager"
+  alignment="right"
+  :rating="5" />
+
+{# 10. Without Rating #}
+<twig:bs:testimonial 
+  quote="Simple and effective solution."
+  author="James Wilson"
+  role="Consultant"
+  avatarSrc="/images/testimonials/james.jpg" />
+

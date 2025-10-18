@@ -1,0 +1,26 @@
+/**
+ * Symfony UX Bootstrap Bundle - Component Styles
+ * 
+ * This bundle provides enhancements for Bootstrap 5.3 components.
+ * It relies on Bootstrap CSS custom properties (--bs-*) being available
+ * in the consuming application.
+ * 
+ * Bootstrap 5.3+ must be installed in your project for these styles to work.
+ */
+
+// Component-specific enhancements
+@import "./activity_feed";
+@import "./avatar";
+@import "./color_picker";
+@import "./command_palette";
+@import "./comment_thread";
+@import "./kanban";
+@import "./search";
+@import "./navbar";
+@import "./notification_badge";
+@import "./timeline";
+@import "./lightbox";
+@import "./sidebar";
+@import "./split_panes";
+@import "./tour";
+@import "./tree-view";

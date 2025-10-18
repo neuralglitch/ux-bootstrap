@@ -1,0 +1,174 @@
+{# Collapse Component Examples #}
+
+{# Example 1: Basic Collapse #}
+<h2>Basic Collapse</h2>
+<button 
+    class="btn btn-primary" 
+    type="button" 
+    data-bs-toggle="collapse" 
+    data-bs-target="#basicCollapse" 
+    aria-expanded="false" 
+    aria-controls="basicCollapse">
+    Toggle Basic Collapse
+</button>
+
+<twig:bs:collapse id="basicCollapse">
+    <div class="card card-body mt-2">
+        This is a basic collapse component. Click the button above to toggle visibility.
+    </div>
+</twig:bs:collapse>
+
+{# Example 2: Horizontal Collapse #}
+<h2 class="mt-5">Horizontal Collapse</h2>
+<button 
+    class="btn btn-primary" 
+    type="button" 
+    data-bs-toggle="collapse" 
+    data-bs-target="#horizontalCollapse" 
+    aria-expanded="false" 
+    aria-controls="horizontalCollapse">
+    Toggle Width
+</button>
+
+<div style="min-height: 120px;">
+    <twig:bs:collapse id="horizontalCollapse" :horizontal="true">
+        <div class="card card-body" style="width: 300px;">
+            This collapse animates width instead of height.
+        </div>
+    </twig:bs:collapse>
+</div>
+
+{# Example 3: Show by Default #}
+<h2 class="mt-5">Visible by Default</h2>
+<button 
+    class="btn btn-primary" 
+    type="button" 
+    data-bs-toggle="collapse" 
+    data-bs-target="#shownCollapse" 
+    aria-expanded="true" 
+    aria-controls="shownCollapse">
+    Toggle Shown Collapse
+</button>
+
+<twig:bs:collapse id="shownCollapse" :show="true">
+    <div class="card card-body mt-2">
+        This collapse is visible by default. Click to hide it.
+    </div>
+</twig:bs:collapse>
+
+{# Example 4: Multiple Toggles #}
+<h2 class="mt-5">Multiple Toggles</h2>
+<p class="d-inline-flex gap-1">
+    <a 
+        class="btn btn-primary" 
+        data-bs-toggle="collapse" 
+        href="#multiCollapse1" 
+        role="button" 
+        aria-expanded="false" 
+        aria-controls="multiCollapse1">
+        Toggle First
+    </a>
+    <button 
+        class="btn btn-primary" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#multiCollapse2" 
+        aria-expanded="false" 
+        aria-controls="multiCollapse2">
+        Toggle Second
+    </button>
+    <button 
+        class="btn btn-primary" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target=".multi-collapse" 
+        aria-expanded="false" 
+        aria-controls="multiCollapse1 multiCollapse2">
+        Toggle Both
+    </button>
+</p>
+
+<div class="row">
+    <div class="col">
+        <twig:bs:collapse id="multiCollapse1" class="multi-collapse">
+            <div class="card card-body">
+                First collapsible element
+            </div>
+        </twig:bs:collapse>
+    </div>
+    <div class="col">
+        <twig:bs:collapse id="multiCollapse2" class="multi-collapse">
+            <div class="card card-body">
+                Second collapsible element
+            </div>
+        </twig:bs:collapse>
+    </div>
+</div>
+
+{# Example 5: Accordion-like Behavior #}
+<h2 class="mt-5">Accordion-like Behavior</h2>
+<div id="accordionExample">
+    <div class="card">
+        <div class="card-header">
+            <button 
+                class="btn btn-link" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#collapseOne" 
+                aria-expanded="true" 
+                aria-controls="collapseOne">
+                Item #1
+            </button>
+        </div>
+        <twig:bs:collapse 
+            id="collapseOne" 
+            :show="true" 
+            parent="#accordionExample">
+            <div class="card-body">
+                Content for item #1
+            </div>
+        </twig:bs:collapse>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <button 
+                class="btn btn-link" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#collapseTwo" 
+                aria-expanded="false" 
+                aria-controls="collapseTwo">
+                Item #2
+            </button>
+        </div>
+        <twig:bs:collapse 
+            id="collapseTwo" 
+            parent="#accordionExample">
+            <div class="card-body">
+                Content for item #2
+            </div>
+        </twig:bs:collapse>
+    </div>
+</div>
+
+{# Example 6: With Custom Styling #}
+<h2 class="mt-5">Custom Styling</h2>
+<button 
+    class="btn btn-success" 
+    type="button" 
+    data-bs-toggle="collapse" 
+    data-bs-target="#customCollapse" 
+    aria-expanded="false" 
+    aria-controls="customCollapse">
+    Toggle Custom Collapse
+</button>
+
+<twig:bs:collapse 
+    id="customCollapse" 
+    class="border border-success rounded mt-2">
+    <div class="p-3 bg-success bg-opacity-10">
+        Collapse with custom border and background styling.
+    </div>
+</twig:bs:collapse>
+

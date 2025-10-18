@@ -1,0 +1,310 @@
+{% apply spaceless -%}
+  {% set o = this.options() %}
+  
+  {# Content block for notification items #}
+  {% set notifications %}{% block content %}{% endblock %}{% endset %}
+  {% set has_notifications = notifications is not empty %}
+  
+  {# Container element #}
+  <div id="{{ o.id }}" class="{{ o.containerClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+    
+    {% if o.variant == 'inline' %}
+      {# Inline variant - direct display #}
+      <div class="notification-center-inline">
+        {% if o.title %}
+          <div class="notification-center-header d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h5 class="mb-0">{{ o.title }}</h5>
+            {% if o.showMarkAllRead or o.showClearAll %}
+              <div class="notification-center-actions">
+                {% if o.showMarkAllRead %}
+                  <button type="button" class="btn btn-sm btn-link" data-action="{{ this.stimulusController }}#markAllRead">
+                    Mark all read
+                  </button>
+                {% endif %}
+                {% if o.showClearAll %}
+                  <button type="button" class="btn btn-sm btn-link text-danger" data-action="{{ this.stimulusController }}#clearAll">
+                    Clear all
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        <div class="notification-center-body" data-{{ this.stimulusController }}-target="notificationList">
+          {% if has_notifications %}
+            {{ notifications|raw }}
+          {% else %}
+            <div class="text-center text-muted p-4">
+              <p class="mb-0">{{ o.emptyMessage }}</p>
+            </div>
+          {% endif %}
+        </div>
+        
+        {% if o.showViewAll and o.viewAllHref %}
+          <div class="notification-center-footer border-top p-2 text-center">
+            <a href="{{ o.viewAllHref }}" class="btn btn-sm btn-link">{{ o.viewAllLabel }}</a>
+          </div>
+        {% endif %}
+      </div>
+      
+    {% elseif o.variant == 'dropdown' %}
+      {# Dropdown variant #}
+      <div class="{{ o.dropdownDirection }}">
+        <button type="button" 
+                id="{{ o.triggerId }}" 
+                class="{{ o.triggerClasses }}" 
+                data-bs-toggle="dropdown" 
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+                data-{{ this.stimulusController }}-target="trigger">
+          {% if o.triggerIcon %}
+            <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+          {% endif %}
+          {% if not o.triggerIconOnly and o.triggerLabel %}
+            <span class="ms-2">{{ o.triggerLabel }}</span>
+          {% endif %}
+          {% if o.showBadge and o.unreadCount > 0 %}
+            <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+              {{ o.unreadCount }}
+            </span>
+          {% endif %}
+        </button>
+        
+        <div class="{{ o.menuClasses }}" 
+             id="{{ o.menuId }}"
+             aria-labelledby="{{ o.triggerId }}"
+             style="width: {{ o.dropdownWidth }}; max-height: {{ o.dropdownMaxHeight }}; overflow-y: auto;">
+          
+          {# Header #}
+          <div class="dropdown-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">{{ o.title }}</h6>
+            {% if o.showMarkAllRead or o.showClearAll %}
+              <div class="notification-actions">
+                {% if o.showMarkAllRead %}
+                  <button type="button" class="btn btn-sm btn-link p-0" data-action="{{ this.stimulusController }}#markAllRead">
+                    Mark all read
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="dropdown-divider"></div>
+          
+          {# Notification list #}
+          <div class="notification-list" data-{{ this.stimulusController }}-target="notificationList">
+            {% if has_notifications %}
+              {{ notifications|raw }}
+            {% else %}
+              <div class="dropdown-item-text text-center text-muted">
+                {{ o.emptyMessage }}
+              </div>
+            {% endif %}
+          </div>
+          
+          {# Footer #}
+          {% if o.showViewAll and o.viewAllHref %}
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-footer text-center">
+              <a href="{{ o.viewAllHref }}" class="dropdown-item">{{ o.viewAllLabel }}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      
+    {% elseif o.variant == 'offcanvas' %}
+      {# Offcanvas variant #}
+      <button type="button" 
+              id="{{ o.triggerId }}" 
+              class="{{ o.triggerClasses }}" 
+              data-bs-toggle="offcanvas" 
+              data-bs-target="#{{ o.menuId }}"
+              aria-controls="{{ o.menuId }}"
+              data-{{ this.stimulusController }}-target="trigger">
+        {% if o.triggerIcon %}
+          <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+        {% endif %}
+        {% if not o.triggerIconOnly and o.triggerLabel %}
+          <span class="ms-2">{{ o.triggerLabel }}</span>
+        {% endif %}
+        {% if o.showBadge and o.unreadCount > 0 %}
+          <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+            {{ o.unreadCount }}
+          </span>
+        {% endif %}
+      </button>
+      
+      <div class="offcanvas offcanvas-{{ o.offcanvasPlacement }}" 
+           id="{{ o.menuId }}"
+           tabindex="-1" 
+           aria-labelledby="{{ o.menuId }}Label"
+           data-bs-backdrop="{{ o.offcanvasBackdrop ? 'true' : 'false' }}"
+           data-bs-scroll="{{ o.offcanvasScroll ? 'true' : 'false' }}">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="{{ o.menuId }}Label">{{ o.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        
+        {% if o.showMarkAllRead or o.showClearAll %}
+          <div class="offcanvas-actions px-3 pb-2 d-flex gap-2">
+            {% if o.showMarkAllRead %}
+              <button type="button" class="btn btn-sm btn-outline-secondary" data-action="{{ this.stimulusController }}#markAllRead">
+                Mark all read
+              </button>
+            {% endif %}
+            {% if o.showClearAll %}
+              <button type="button" class="btn btn-sm btn-outline-danger" data-action="{{ this.stimulusController }}#clearAll">
+                Clear all
+              </button>
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        <div class="offcanvas-body p-0" data-{{ this.stimulusController }}-target="notificationList">
+          {% if has_notifications %}
+            {{ notifications|raw }}
+          {% else %}
+            <div class="text-center text-muted p-4">
+              <p class="mb-0">{{ o.emptyMessage }}</p>
+            </div>
+          {% endif %}
+        </div>
+        
+        {% if o.showViewAll and o.viewAllHref %}
+          <div class="offcanvas-footer border-top p-3 text-center">
+            <a href="{{ o.viewAllHref }}" class="btn btn-primary w-100">{{ o.viewAllLabel }}</a>
+          </div>
+        {% endif %}
+      </div>
+      
+    {% elseif o.variant == 'modal' %}
+      {# Modal variant #}
+      <button type="button" 
+              id="{{ o.triggerId }}" 
+              class="{{ o.triggerClasses }}" 
+              data-bs-toggle="modal" 
+              data-bs-target="#{{ o.menuId }}"
+              data-{{ this.stimulusController }}-target="trigger">
+        {% if o.triggerIcon %}
+          <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+        {% endif %}
+        {% if not o.triggerIconOnly and o.triggerLabel %}
+          <span class="ms-2">{{ o.triggerLabel }}</span>
+        {% endif %}
+        {% if o.showBadge and o.unreadCount > 0 %}
+          <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+            {{ o.unreadCount }}
+          </span>
+        {% endif %}
+      </button>
+      
+      <div class="modal fade" 
+           id="{{ o.menuId }}" 
+           tabindex="-1" 
+           aria-labelledby="{{ o.menuId }}Label" 
+           aria-hidden="true">
+        <div class="modal-dialog{% if o.modalSize %} modal-{{ o.modalSize }}{% endif %}{% if o.modalCentered %} modal-dialog-centered{% endif %}{% if o.modalScrollable %} modal-dialog-scrollable{% endif %}">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="{{ o.menuId }}Label">{{ o.title }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            {% if o.showMarkAllRead or o.showClearAll %}
+              <div class="modal-actions px-3 py-2 border-bottom d-flex gap-2">
+                {% if o.showMarkAllRead %}
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-action="{{ this.stimulusController }}#markAllRead">
+                    Mark all read
+                  </button>
+                {% endif %}
+                {% if o.showClearAll %}
+                  <button type="button" class="btn btn-sm btn-outline-danger" data-action="{{ this.stimulusController }}#clearAll">
+                    Clear all
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+            
+            <div class="modal-body p-0" data-{{ this.stimulusController }}-target="notificationList">
+              {% if has_notifications %}
+                {{ notifications|raw }}
+              {% else %}
+                <div class="text-center text-muted p-4">
+                  <p class="mb-0">{{ o.emptyMessage }}</p>
+                </div>
+              {% endif %}
+            </div>
+            
+            {% if o.showViewAll and o.viewAllHref %}
+              <div class="modal-footer">
+                <a href="{{ o.viewAllHref }}" class="btn btn-primary w-100">{{ o.viewAllLabel }}</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+    {% elseif o.variant == 'popover' %}
+      {# Popover variant - uses dropdown structure with different styling #}
+      <div class="dropdown">
+        <button type="button" 
+                id="{{ o.triggerId }}" 
+                class="{{ o.triggerClasses }}" 
+                data-bs-toggle="dropdown" 
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+                data-{{ this.stimulusController }}-target="trigger">
+          {% if o.triggerIcon %}
+            <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+          {% endif %}
+          {% if not o.triggerIconOnly and o.triggerLabel %}
+            <span class="ms-2">{{ o.triggerLabel }}</span>
+          {% endif %}
+          {% if o.showBadge and o.unreadCount > 0 %}
+            <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+              {{ o.unreadCount }}
+            </span>
+          {% endif %}
+        </button>
+        
+        <div class="dropdown-menu dropdown-menu-end shadow-lg border-0" 
+             id="{{ o.menuId }}"
+             aria-labelledby="{{ o.triggerId }}"
+             style="width: {{ o.dropdownWidth }}; max-height: {{ o.dropdownMaxHeight }}; overflow-y: auto;">
+          
+          {# Similar structure to dropdown #}
+          <div class="dropdown-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">{{ o.title }}</h6>
+            {% if o.showMarkAllRead %}
+              <button type="button" class="btn btn-sm btn-link p-0" data-action="{{ this.stimulusController }}#markAllRead">
+                Mark all read
+              </button>
+            {% endif %}
+          </div>
+          
+          <div class="dropdown-divider"></div>
+          
+          <div class="notification-list" data-{{ this.stimulusController }}-target="notificationList">
+            {% if has_notifications %}
+              {{ notifications|raw }}
+            {% else %}
+              <div class="dropdown-item-text text-center text-muted">
+                {{ o.emptyMessage }}
+              </div>
+            {% endif %}
+          </div>
+          
+          {% if o.showViewAll and o.viewAllHref %}
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-footer text-center">
+              <a href="{{ o.viewAllHref }}" class="dropdown-item">{{ o.viewAllLabel }}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    
+  </div>
+{%- endapply %}
+

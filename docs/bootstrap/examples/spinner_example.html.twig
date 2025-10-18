@@ -1,0 +1,156 @@
+{# Spinner Component Examples #}
+
+{# Basic Border Spinners #}
+<h3>Border Spinners</h3>
+<twig:bs:spinner class="me-2" />
+<twig:bs:spinner variant="primary" class="me-2" />
+<twig:bs:spinner variant="secondary" class="me-2" />
+<twig:bs:spinner variant="success" class="me-2" />
+<twig:bs:spinner variant="danger" class="me-2" />
+<twig:bs:spinner variant="warning" class="me-2" />
+<twig:bs:spinner variant="info" class="me-2" />
+<twig:bs:spinner variant="light" class="me-2" />
+<twig:bs:spinner variant="dark" />
+
+{# Growing Spinners #}
+<h3 class="mt-5">Growing Spinners</h3>
+<twig:bs:spinner type="grow" class="me-2" />
+<twig:bs:spinner type="grow" variant="primary" class="me-2" />
+<twig:bs:spinner type="grow" variant="secondary" class="me-2" />
+<twig:bs:spinner type="grow" variant="success" class="me-2" />
+<twig:bs:spinner type="grow" variant="danger" class="me-2" />
+<twig:bs:spinner type="grow" variant="warning" class="me-2" />
+<twig:bs:spinner type="grow" variant="info" class="me-2" />
+<twig:bs:spinner type="grow" variant="light" class="me-2" />
+<twig:bs:spinner type="grow" variant="dark" />
+
+{# Spinner Sizes #}
+<h3 class="mt-5">Spinner Sizes</h3>
+<div class="mb-3">
+    <p>Border Spinners:</p>
+    <twig:bs:spinner size="sm" variant="primary" class="me-2" />
+    <twig:bs:spinner variant="primary" class="me-2" />
+    <twig:bs:spinner variant="primary" style="width: 3rem; height: 3rem;" class="me-2" />
+    <twig:bs:spinner variant="primary" style="width: 4rem; height: 4rem;" />
+</div>
+<div>
+    <p>Growing Spinners:</p>
+    <twig:bs:spinner type="grow" size="sm" variant="success" class="me-2" />
+    <twig:bs:spinner type="grow" variant="success" class="me-2" />
+    <twig:bs:spinner type="grow" variant="success" style="width: 3rem; height: 3rem;" class="me-2" />
+    <twig:bs:spinner type="grow" variant="success" style="width: 4rem; height: 4rem;" />
+</div>
+
+{# Spinners in Buttons #}
+<h3 class="mt-5">Spinners in Buttons</h3>
+<twig:bs:button variant="primary" :disabled="true">
+    <twig:bs:spinner size="sm" class="me-2" />
+    Loading...
+</twig:bs:button>
+
+<twig:bs:button variant="primary" :disabled="true" class="ms-2">
+    <twig:bs:spinner type="grow" size="sm" class="me-2" />
+    Loading...
+</twig:bs:button>
+
+<twig:bs:button variant="success" :disabled="true" class="ms-2">
+    <twig:bs:spinner size="sm" />
+    <span class="visually-hidden">Loading...</span>
+</twig:bs:button>
+
+{# Loading States #}
+<h3 class="mt-5">Loading States</h3>
+<div class="card" style="width: 18rem;">
+    <div class="card-body text-center">
+        <twig:bs:spinner variant="primary" class="mb-3" />
+        <h5 class="card-title">Loading Content</h5>
+        <p class="card-text">Please wait while we fetch your data...</p>
+    </div>
+</div>
+
+{# Centered Spinner #}
+<h3 class="mt-5">Centered Spinner</h3>
+<div class="d-flex justify-content-center">
+    <twig:bs:spinner variant="primary" />
+</div>
+
+{# Floated Spinner #}
+<h3 class="mt-5">Floated Spinner</h3>
+<div class="clearfix">
+    <twig:bs:spinner class="float-end" variant="info" />
+</div>
+
+{# Text-Aligned Spinner #}
+<h3 class="mt-5">Text-Aligned Spinner</h3>
+<div class="text-center">
+    <twig:bs:spinner variant="primary" />
+</div>
+
+{# Flex-Aligned Spinner #}
+<h3 class="mt-5">Flex-Aligned Spinner</h3>
+<div class="d-flex align-items-center">
+    <strong>Loading...</strong>
+    <twig:bs:spinner class="ms-auto" variant="primary" />
+</div>
+
+{# Spinner with Margin #}
+<h3 class="mt-5">Spinner with Margin Utilities</h3>
+<div class="d-flex align-items-center">
+    <twig:bs:spinner class="m-5" variant="primary" />
+</div>
+
+{# Loading Overlay #}
+<h3 class="mt-5">Loading Overlay Example</h3>
+<div class="position-relative" style="height: 200px; background: #f8f9fa;">
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <twig:bs:spinner variant="primary" style="width: 3rem; height: 3rem;" />
+        <p class="mt-2">Loading content...</p>
+    </div>
+</div>
+
+{# Multiple Spinners #}
+<h3 class="mt-5">Multiple Loading Indicators</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <twig:bs:spinner variant="primary" class="mb-2" />
+                <p class="mb-0 text-muted">Processing...</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <twig:bs:spinner type="grow" variant="success" class="mb-2" />
+                <p class="mb-0 text-muted">Uploading...</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <twig:bs:spinner variant="info" class="mb-2" />
+                <p class="mb-0 text-muted">Analyzing...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Spinner in List #}
+<h3 class="mt-5">Spinner in List Items</h3>
+<twig:bs:list-group>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Processing payment
+        <twig:bs:spinner size="sm" variant="primary" />
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Sending email notification
+        <twig:bs:spinner size="sm" type="grow" variant="info" />
+    </twig:bs:list-group-item>
+    <twig:bs:list-group-item class="d-flex justify-content-between align-items-center">
+        Updating database
+        <twig:bs:spinner size="sm" variant="success" />
+    </twig:bs:list-group-item>
+</twig:bs:list-group>
+

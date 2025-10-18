@@ -1,0 +1,73 @@
+{# templates/components/extra/timeline-item.html.twig #}
+{# Timeline item component for individual events within a timeline #}
+
+{% apply spaceless -%}
+
+{% set o = this.options() %}
+
+{# Capture custom content slot #}
+{% set slot_content %}{% block content %}{% endblock %}{% endset %}
+
+{# Content priority: Slot > Description prop #}
+{% set has_content = slot_content is not empty and slot_content|trim != '' %}
+{% set content = has_content ? slot_content : (o.description ?? '') %}
+
+<div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  
+  {# Timeline marker (icon, badge, or dot) #}
+  <div class="{{ o.markerClasses }}">
+    {% if o.icon %}
+      <span class="timeline-marker-icon">{{ o.icon|raw }}</span>
+    {% elseif o.badge %}
+      <span class="timeline-marker-badge">{{ o.badge }}</span>
+    {% endif %}
+  </div>
+  
+  {# Timeline content #}
+  <div class="timeline-content">
+    
+    {# Time label (opposite position) #}
+    {% if o.time and o.timePosition == 'opposite' %}
+      <div class="timeline-time timeline-time-opposite">
+        <small class="text-muted">{{ o.time }}</small>
+      </div>
+    {% endif %}
+    
+    {# Main content area #}
+    <div class="timeline-body">
+      
+      {# Title and inline time #}
+      {% if o.title %}
+        <div class="timeline-header">
+          <h6 class="timeline-title mb-1">{{ o.title }}</h6>
+          {% if o.time and o.timePosition == 'inline' %}
+            <small class="text-muted ms-2">{{ o.time }}</small>
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      {# Time below title #}
+      {% if o.time and o.timePosition == 'below' %}
+        <div class="timeline-time timeline-time-below">
+          <small class="text-muted">{{ o.time }}</small>
+        </div>
+      {% endif %}
+      
+      {# Description/content #}
+      {% if content %}
+        <div class="timeline-description">
+          {{ content|raw }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  {# Connecting line to next item #}
+  {% if o.showLine %}
+    <div class="timeline-line"></div>
+  {% endif %}
+  
+</div>
+
+{%- endapply %}
+
