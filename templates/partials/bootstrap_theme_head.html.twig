@@ -1,0 +1,18 @@
+<script>
+  (function () {
+    try {
+      let ls = null;
+      try { ls = localStorage.getItem('theme'); } catch(e) {}
+      const m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)\b/);
+      const ck = m ? m[1] : null;
+      let t = ls || ck;
+      if (t !== 'dark' && t !== 'light') {
+        t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        try { localStorage.setItem('theme', t); } catch(e) {}
+        try { document.cookie = 'theme=' + t + '; Max-Age=' + (60*60*24*365) + '; Path=/; SameSite=Lax'; } catch(e) {}
+      }
+      document.documentElement.setAttribute('data-bs-theme', t);
+      document.documentElement.style.colorScheme = t;
+    } catch (e) {}
+  })();
+</script>

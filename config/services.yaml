@@ -11,6 +11,7 @@ services:
     # Auto-register services
     NeuralGlitch\UxBootstrap\Service\:
         resource: '../src/Service/'
+        exclude: '../src/Service/Bootstrap/Config.php'
     
     # Services that need explicit configuration
     NeuralGlitch\UxBootstrap\Service\Search\SearchService:
