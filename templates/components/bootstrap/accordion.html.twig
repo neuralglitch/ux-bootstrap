@@ -2,7 +2,11 @@
 
   {% set o = this.options() %}
 
-  {# Slot for accordion items #}
+  {# Provide parent context to child accordion-items BEFORE capturing content #}
+  {% set accordion_parent_id = o.id %}
+  {% set accordion_always_open = o.alwaysOpen %}
+
+  {# Slot for accordion items - rendered with parent context available #}
   {% set slot_content %}{% block content %}{% endblock %}{% endset %}
 
   <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>

@@ -11,6 +11,9 @@ return [
     '@neuralglitch/ux-bootstrap/controllers/bs_alert_stack_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_alert_stack_controller.js',
     ],
+    '@neuralglitch/ux-bootstrap/controllers/bs_badge_controller.js' => [
+        'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_badge_controller.js',
+    ],
     '@neuralglitch/ux-bootstrap/controllers/bs_breadcrumbs_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_breadcrumbs_controller.js',
     ],
@@ -37,6 +40,9 @@ return [
     ],
     '@neuralglitch/ux-bootstrap/controllers/bs_lightbox_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_lightbox_controller.js',
+    ],
+    '@neuralglitch/ux-bootstrap/controllers/bs_masonry_controller.js' => [
+        'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_masonry_controller.js',
     ],
     '@neuralglitch/ux-bootstrap/controllers/bs_link_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_link_controller.js',

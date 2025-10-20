@@ -9,7 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:accordion-item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/accordion-item.html.twig')]
 final class AccordionItem extends AbstractBootstrap
 {
-    public ?string $title = null;
+    public ?string $header = null;
     public ?string $targetId = null;
     public ?string $parentId = null;
     public bool $show = false;
@@ -22,8 +22,9 @@ final class AccordionItem extends AbstractBootstrap
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
+        $this->header ??= $d['header'] ?? null;
         $this->show = $this->show || ($d['show'] ?? false);
-        $this->collapsed = !$this->show && ($d['collapsed'] ?? true);
+        $this->collapsed = !$this->show;
         
         // Generate unique IDs if not provided
         if (null === $this->targetId) {
@@ -59,7 +60,7 @@ final class AccordionItem extends AbstractBootstrap
         $attrs = $this->mergeAttributes([], $this->attr);
 
         return [
-            'title' => $this->title,
+            'header' => $this->header,
             'targetId' => $this->targetId,
             'parentId' => $this->parentId,
             'show' => $this->show,

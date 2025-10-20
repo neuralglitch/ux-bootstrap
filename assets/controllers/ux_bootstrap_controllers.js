@@ -3,6 +3,7 @@
 
 import BsAlertController from '@neuralglitch/ux-bootstrap/controllers/bs_alert_controller.js';
 import BsAlertStackController from '@neuralglitch/ux-bootstrap/controllers/bs_alert_stack_controller.js';
+import BsBadgeController from '@neuralglitch/ux-bootstrap/controllers/bs_badge_controller.js';
 import BsBreadcrumbsController from '@neuralglitch/ux-bootstrap/controllers/bs_breadcrumbs_controller.js';
 import BsCalendarController from '@neuralglitch/ux-bootstrap/controllers/bs_calendar_controller.js';
 import BsCodeBlockController from '@neuralglitch/ux-bootstrap/controllers/bs_code_block_controller.js';
@@ -13,6 +14,7 @@ import BsDropdownMultiController from '@neuralglitch/ux-bootstrap/controllers/bs
 import BsKanbanController from '@neuralglitch/ux-bootstrap/controllers/bs_kanban_controller.js';
 import BsLightboxController from '@neuralglitch/ux-bootstrap/controllers/bs_lightbox_controller.js';
 import BsLinkController from '@neuralglitch/ux-bootstrap/controllers/bs_link_controller.js';
+import BsMasonryController from '@neuralglitch/ux-bootstrap/controllers/bs_masonry_controller.js';
 import BsNavbarFullscreenController from '@neuralglitch/ux-bootstrap/controllers/bs_navbar_fullscreen_controller.js';
 import BsNavbarMegaMenuController from '@neuralglitch/ux-bootstrap/controllers/bs_navbar_mega_menu_controller.js';
 import BsNavbarStickyController from '@neuralglitch/ux-bootstrap/controllers/bs_navbar_sticky_controller.js';
@@ -28,6 +30,7 @@ import BsTreeViewController from '@neuralglitch/ux-bootstrap/controllers/bs_tree
 export function registerUxBootstrapControllers(app) {
     app.register('bs-alert', BsAlertController);
     app.register('bs-alert-stack', BsAlertStackController);
+    app.register('bs-badge', BsBadgeController);
     app.register('bs-breadcrumbs', BsBreadcrumbsController);
     app.register('bs-calendar', BsCalendarController);
     app.register('bs-code-block', BsCodeBlockController);
@@ -38,6 +41,7 @@ export function registerUxBootstrapControllers(app) {
     app.register('bs-kanban', BsKanbanController);
     app.register('bs-lightbox', BsLightboxController);
     app.register('bs-link', BsLinkController);
+    app.register('bs-masonry', BsMasonryController);
     app.register('bs-navbar-fullscreen', BsNavbarFullscreenController);
     app.register('bs-navbar-mega-menu', BsNavbarMegaMenuController);
     app.register('bs-navbar-sticky', BsNavbarStickyController);

@@ -8,7 +8,7 @@ use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:badge', template: '@NeuralGlitchUxBootstrap/components/bootstrap/badge.html.twig')]
-final class Badge extends AbstractBootstrap
+final class Badge extends AbstractStimulus
 {
     use VariantTrait;
 
@@ -34,11 +34,22 @@ final class Badge extends AbstractBootstrap
     /** If true, applies 'translate-middle' (default for positioned badges) */
     public bool $translate = true;
 
+    // Stimulus Controller Properties
+    public string $stimulusController = 'bs-badge';
+    public ?int $count = null;
+    public int $maxCount = 99;
+    public bool $autoHide = true;
+    public ?string $status = null;  // online, brb, busy, offline
+    public bool $blinking = false;
+    public bool $hasCounter = false;
+    public bool $hasIndicator = false;
+
     public function mount(): void
     {
         $d = $this->config->for('badge');
 
         $this->applyVariantDefaults($d);
+        $this->applyStimulusDefaults($d);
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -52,6 +63,15 @@ final class Badge extends AbstractBootstrap
         $this->positioned = $this->positioned || ($d['positioned'] ?? false);
         $this->position ??= $d['position'] ?? null;
         $this->translate = $this->translate && ($d['translate'] ?? true);
+        
+        // Stimulus controller properties
+        $this->count ??= $d['count'] ?? null;
+        $this->maxCount = $this->maxCount ?: ($d['max_count'] ?? 99);
+        $this->autoHide = $this->autoHide && ($d['auto_hide'] ?? true);
+        $this->status ??= $d['status'] ?? null;
+        $this->blinking = $this->blinking || ($d['blinking'] ?? false);
+        $this->hasCounter = $this->hasCounter || ($d['has_counter'] ?? false);
+        $this->hasIndicator = $this->hasIndicator || ($d['has_indicator'] ?? false);
     }
 
     protected function getComponentName(): string
@@ -65,6 +85,7 @@ final class Badge extends AbstractBootstrap
     public function options(): array
     {
         $isLink = $this->href !== null;
+        $useController = $this->hasCounter || $this->hasIndicator || $this->count !== null || $this->status !== null || $this->blinking;
 
         $classes = $this->buildClasses(
             ['badge'],
@@ -94,6 +115,27 @@ final class Badge extends AbstractBootstrap
             }
         }
 
+        // Add Stimulus controller attributes if interactive features enabled
+        if ($useController) {
+            $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
+            
+            if ($this->count !== null) {
+                $attrs['data-bs-badge-count-value'] = (string)$this->count;
+            }
+            if ($this->maxCount !== 99) {
+                $attrs['data-bs-badge-max-count-value'] = (string)$this->maxCount;
+            }
+            if (!$this->autoHide) {
+                $attrs['data-bs-badge-auto-hide-value'] = 'false';
+            }
+            if ($this->status !== null) {
+                $attrs['data-bs-badge-status-value'] = $this->status;
+            }
+            if ($this->blinking) {
+                $attrs['data-bs-badge-blinking-value'] = 'true';
+            }
+        }
+
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [
@@ -102,6 +144,9 @@ final class Badge extends AbstractBootstrap
             'label' => $this->label,
             'classes' => $classes,
             'attrs' => $attrs,
+            'hasCounter' => $this->hasCounter,
+            'hasIndicator' => $this->hasIndicator,
+            'count' => $this->count,
         ];
     }
 

@@ -1,0 +1,105 @@
+// Badge Controller Styles
+// =======================
+
+// Counter update animation
+.badge-updated {
+  animation: badge-pulse 0.3s ease-out;
+}
+
+@keyframes badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Blinking animation for notifications (alternates green/red, no fade)
+.blink {
+  animation: badge-blink 0.5s step-end infinite;
+}
+
+@keyframes badge-blink {
+  0%, 49.99% {
+    background-color: #28a745; /* Green - holds for 250ms */
+  }
+  50%, 100% {
+    background-color: #dc3545; /* Red - holds for 250ms */
+  }
+}
+
+// Status indicator colors
+.indicator-online {
+  background-color: #28a745 !important;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.indicator-brb {
+  background-color: #ffc107 !important;
+  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.indicator-busy {
+  background-color: #dc3545 !important;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}
+
+.indicator-offline {
+  background-color: #6c757d !important;
+  box-shadow: 0 0 0 2px rgba(108, 117, 125, 0.2);
+}
+
+// Positioned badge with indicator
+.position-relative {
+  .badge-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--bs-body-bg, #fff);
+    transform: translate(50%, -50%);
+    transition: all 0.2s ease-in-out;
+
+    &.indicator-online,
+    &.indicator-brb,
+    &.indicator-busy,
+    &.indicator-offline {
+      // Inherit colors from above
+    }
+
+    &.blink {
+      // Inherit animation from above
+    }
+  }
+}
+
+// Avatar badge indicator (bottom-right corner)
+.avatar-badge {
+  position: relative;
+
+  .badge-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bs-body-bg, #fff);
+  }
+}
+
+// Smooth transitions
+.badge {
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+  &.d-none {
+    display: none !important;
+  }
+}
+

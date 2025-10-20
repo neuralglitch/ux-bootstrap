@@ -9,16 +9,29 @@
   {% set has_content = slot_content is not empty %}
   {% set content = has_content ? slot_content : (o.label ?? '') %}
 
+  {# Render badge #}
   {% if o.tag == 'a' %}
     <a href="{{ o.href }}"
        class="{{ o.classes }}"
       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
-      {{- content|raw -}}
+      {% if o.hasCounter %}
+        <span data-bs-badge-target="counter">{{ o.count ?? content|raw }}</span>
+      {% elseif o.hasIndicator %}
+        <span data-bs-badge-target="indicator"></span>
+      {% else %}
+        {{- content|raw -}}
+      {% endif %}
     </a>
   {% else %}
     <span class="{{ o.classes }}"
       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
-      {{- content|raw -}}
+      {% if o.hasCounter %}
+        <span data-bs-badge-target="counter">{{ o.count ?? content|raw }}</span>
+      {% elseif o.hasIndicator %}
+        <span data-bs-badge-target="indicator"></span>
+      {% else %}
+        {{- content|raw -}}
+      {% endif %}
     </span>
   {% endif %}
 

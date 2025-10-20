@@ -8,9 +8,15 @@
   {% set content = has_content ? slot_content : (o.label ?? '') %}
 
   <li>
-    <{{ o.tag }} class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
-      {{ content|raw }}
-    </{{ o.tag }}>
+    {% if o.tag == 'a' %}
+      <a href="{{ o.href }}" class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {{ content|raw }}
+      </a>
+    {% else %}
+      <button class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+        {{ content|raw }}
+      </button>
+    {% endif %}
   </li>
 
 {%- endapply %}

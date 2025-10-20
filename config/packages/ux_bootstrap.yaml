@@ -163,6 +163,8 @@ neuralglitch_ux_bootstrap:
   dropdown_item:
     label: null
     href: null
+    target: null            # null | '_blank' | '_self' | '_parent' | '_top'
+    rel: null               # null | 'noopener' | 'noreferrer' | etc.
     tag: null               # null (auto-detected) | 'a' | 'button'
     active: false
     disabled: false

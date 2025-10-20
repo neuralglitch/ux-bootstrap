@@ -227,6 +227,8 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('label')->defaultNull()->end()
                         ->scalarNode('href')->defaultNull()->end()
+                        ->scalarNode('target')->defaultNull()->end()
+                        ->scalarNode('rel')->defaultNull()->end()
                         ->scalarNode('tag')->defaultNull()->end()
                         ->booleanNode('active')->defaultFalse()->end()
                         ->booleanNode('disabled')->defaultFalse()->end()

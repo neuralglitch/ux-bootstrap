@@ -10,6 +10,11 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-badge": {
+            "main": "controllers/bs_badge_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-breadcrumbs": {
             "main": "controllers/bs_breadcrumbs_controller.js",
             "fetch": "eager",
@@ -57,6 +62,11 @@
         },
         "bs-link": {
             "main": "controllers/bs_link_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-masonry": {
+            "main": "controllers/bs_masonry_controller.js",
             "fetch": "eager",
             "enabled": true
         },
