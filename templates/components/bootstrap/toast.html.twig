@@ -15,14 +15,7 @@
   {% set header_html = has_header ? slot_header : (o.title ?? '') %}
   {% set body_html = has_body ? slot_body : (has_content ? slot_content : (o.message ?? '')) %}
 
-  <div class="{{ o.classes }} align-items-center text-bg-{{ variant }}" 
-       role="alert" 
-       aria-live="assertive" 
-       aria-atomic="true"
-       data-bs-autohide="{{ o.autohide ? 'true' : 'false' }}"
-       data-bs-delay="{{ o.delay }}"
-       data-controller="bs-toast"
-       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.classes }} align-items-center text-bg-{{ variant }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     <div class="d-flex">
       {% if o.body %}
         <div class="toast-body">

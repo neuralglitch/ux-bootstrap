@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:carousel', template: '@NeuralGlitchUxBootstrap/components/bootstrap/carousel.html.twig')]
-final class Carousel extends AbstractBootstrap
+final class Carousel extends AbstractStimulus
 {
     // Carousel ID (required for controls and indicators)
     public ?string $id = null;
@@ -36,6 +36,8 @@ final class Carousel extends AbstractBootstrap
     {
         $d = $this->config->for('carousel');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
@@ -52,7 +54,11 @@ final class Carousel extends AbstractBootstrap
         // For pause, only apply default if it's still 'hover' (the default value)
         if ($this->pause === 'hover') {
             $this->pause = $d['pause'] ?? 'hover';
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         $this->touch = $this->touch && ($d['touch'] ?? true);
         $this->wrap = $this->wrap && ($d['wrap'] ?? true);
 

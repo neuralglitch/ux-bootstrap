@@ -1,14 +1,14 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Color Picker Controller
- * 
+ *
  * Handles color selection from presets and custom color input
  * Synchronizes between preset swatches, hex input, and native color picker
  */
 export default class extends Controller {
     static targets = ['input', 'picker', 'hiddenInput', 'presets'];
-    
+
     static values = {
         value: String,
         showHex: Boolean,
@@ -33,12 +33,12 @@ export default class extends Controller {
      */
     updateFromInput(event) {
         let value = event.target.value.trim();
-        
+
         // Remove # if present
         if (value.startsWith('#')) {
             value = value.substring(1);
         }
-        
+
         // Validate hex format
         if (this.isValidHex(value)) {
             this.setValue('#' + value.toUpperCase());
@@ -59,9 +59,9 @@ export default class extends Controller {
     setValue(color) {
         this.valueValue = color;
         this.updateUI(color);
-        
+
         // Dispatch custom event for external listeners
-        this.dispatch('change', { detail: { color } });
+        this.dispatch('change', {detail: {color}});
     }
 
     /**
@@ -122,10 +122,10 @@ export default class extends Controller {
         svg.setAttribute('fill', 'currentColor');
         svg.setAttribute('class', 'bi bi-check2');
         svg.setAttribute('viewBox', '0 0 16 16');
-        
+
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', 'M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z');
-        
+
         svg.appendChild(path);
         swatch.appendChild(svg);
     }

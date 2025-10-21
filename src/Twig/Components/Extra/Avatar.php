@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:avatar', template: '@NeuralGlitchUxBootstrap/components/extra/avatar.html.twig')]
-final class Avatar extends AbstractBootstrap
+final class Avatar extends AbstractStimulus
 {
     // Image properties
     public ?string $src = null;
@@ -40,6 +40,8 @@ final class Avatar extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('avatar');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply base class defaults
         $this->applyClassDefaults($d);
@@ -55,7 +57,11 @@ final class Avatar extends AbstractBootstrap
         // Generate alt text from initials if not provided
         if ($this->alt === null && $this->initials !== null) {
             $this->alt = $this->initials;
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
     
     protected function getComponentName(): string

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:tab-pane', template: '@NeuralGlitchUxBootstrap/components/extra/tab-pane.html.twig')]
-final class TabPane extends AbstractBootstrap
+final class TabPane extends AbstractStimulus
 {
     // Identification
     public ?string $id = null;
@@ -25,6 +25,8 @@ final class TabPane extends AbstractBootstrap
     {
         $d = $this->config->for('tab_pane');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults
         $this->active = $this->active || ($d['active'] ?? false);
         $this->fade = $this->fade && ($d['fade'] ?? true);
@@ -32,7 +34,11 @@ final class TabPane extends AbstractBootstrap
         // Generate ID if not provided
         if (!$this->id && $this->title) {
             $this->id = 'tab-' . preg_replace('/[^a-z0-9]+/', '-', strtolower($this->title));
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
 
         // Auto-generate labelledBy if not provided
         if (!$this->labelledBy && $this->id) {

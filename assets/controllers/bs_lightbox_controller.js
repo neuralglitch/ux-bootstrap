@@ -1,4 +1,4 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Lightbox controller for image galleries.
@@ -30,15 +30,15 @@ export default class extends Controller {
     ];
 
     static values = {
-        startIndex: { type: Number, default: 0 },
-        enableZoom: { type: Boolean, default: true },
-        enableKeyboard: { type: Boolean, default: true },
-        enableSwipe: { type: Boolean, default: true },
-        closeOnBackdrop: { type: Boolean, default: true },
-        transition: { type: String, default: 'fade' },
-        transitionDuration: { type: Number, default: 300 },
-        autoplay: { type: Boolean, default: false },
-        autoplayInterval: { type: Number, default: 3000 }
+        startIndex: {type: Number, default: 0},
+        enableZoom: {type: Boolean, default: true},
+        enableKeyboard: {type: Boolean, default: true},
+        enableSwipe: {type: Boolean, default: true},
+        closeOnBackdrop: {type: Boolean, default: true},
+        transition: {type: String, default: 'fade'},
+        transitionDuration: {type: Number, default: 300},
+        autoplay: {type: Boolean, default: false},
+        autoplayInterval: {type: Number, default: 3000}
     };
 
     connect() {
@@ -125,7 +125,7 @@ export default class extends Controller {
 
         // Dispatch custom event
         this.element.dispatchEvent(new CustomEvent('lightbox:opened', {
-            detail: { index: this.currentIndex }
+            detail: {index: this.currentIndex}
         }));
     }
 
@@ -269,7 +269,7 @@ export default class extends Controller {
 
         // Dispatch custom event
         this.element.dispatchEvent(new CustomEvent('lightbox:changed', {
-            detail: { index, image }
+            detail: {index, image}
         }));
     }
 

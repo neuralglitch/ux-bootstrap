@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:hero', template: '@NeuralGlitchUxBootstrap/components/extra/hero.html.twig')]
-final class Hero extends AbstractBootstrap
+final class Hero extends AbstractStimulus
 {
 
     public string $variant = 'centered';
@@ -42,6 +42,8 @@ final class Hero extends AbstractBootstrap
     {
         $d = $this->config->for('hero');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->variant ??= $d['variant'] ?? 'centered';
         $this->title ??= $d['title'] ?? 'Build something great';
@@ -62,7 +64,11 @@ final class Hero extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

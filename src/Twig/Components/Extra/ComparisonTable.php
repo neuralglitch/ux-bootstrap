@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:comparison-table', template: '@NeuralGlitchUxBootstrap/components/extra/comparison-table.html.twig')]
-final class ComparisonTable extends AbstractBootstrap
+final class ComparisonTable extends AbstractStimulus
 {
     // Layout
     public string $variant = 'default';    // 'default' | 'bordered' | 'striped' | 'cards' | 'horizontal'
@@ -41,6 +41,8 @@ final class ComparisonTable extends AbstractBootstrap
     {
         $d = $this->config->for('comparison_table');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults
         $this->variant ??= $d['variant'] ?? 'default';
         $this->responsive = $this->responsive && ($d['responsive'] ?? true);
@@ -59,7 +61,11 @@ final class ComparisonTable extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

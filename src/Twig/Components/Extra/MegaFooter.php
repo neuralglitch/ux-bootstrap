@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:mega-footer', template: '@NeuralGlitchUxBootstrap/components/extra/mega-footer.html.twig')]
-final class MegaFooter extends AbstractBootstrap
+final class MegaFooter extends AbstractStimulus
 {
     public ?string $variant = null; // 'default' | 'minimal' | 'centered' | 'compact'
 
@@ -44,6 +44,8 @@ final class MegaFooter extends AbstractBootstrap
     {
         $d = $this->config->for('mega_footer');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->variant ??= $d['variant'] ?? 'default';
         $this->brandName ??= $d['brand_name'] ?? null;
@@ -54,7 +56,11 @@ final class MegaFooter extends AbstractBootstrap
         // Social links (merge with config defaults)
         if (empty($this->socialLinks) && isset($d['social_links']) && is_array($d['social_links'])) {
             $this->socialLinks = $d['social_links'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
 
         // Copyright
         $this->copyrightText ??= $d['copyright_text'] ?? null;

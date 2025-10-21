@@ -1,8 +1,8 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * TreeView Controller
- * 
+ *
  * Handles expand/collapse, selection, and keyboard navigation
  * for hierarchical tree structures
  */
@@ -48,7 +48,7 @@ export default class extends Controller {
         this.itemTargets.forEach((item) => {
             const itemId = item.dataset.itemId;
             const checkbox = item.querySelector('input[type="checkbox"]');
-            
+
             if (checkbox && this.selectedIdsValue.includes(itemId)) {
                 checkbox.checked = true;
                 item.classList.add('selected');
@@ -64,22 +64,22 @@ export default class extends Controller {
         const item = button.closest('.tree-view-item');
         const children = item.querySelector('.tree-view-children');
         const icon = button.querySelector('i');
-        
+
         if (!children) return;
 
         const isExpanded = !children.classList.contains('collapse');
-        
+
         if (isExpanded) {
             // Collapse
             children.classList.add('collapse');
             item.setAttribute('aria-expanded', 'false');
-            
+
             // Update icon
             if (icon) {
                 icon.classList.remove(this.getCollapseIcon());
                 icon.classList.add(this.getExpandIcon());
             }
-            
+
             // Fire callback
             if (this.hasOnCollapseValue) {
                 this.fireCallback(this.onCollapseValue, {
@@ -90,13 +90,13 @@ export default class extends Controller {
             // Expand
             children.classList.remove('collapse');
             item.setAttribute('aria-expanded', 'true');
-            
+
             // Update icon
             if (icon) {
                 icon.classList.remove(this.getExpandIcon());
                 icon.classList.add(this.getCollapseIcon());
             }
-            
+
             // Update folder icon if present
             const folderIcon = item.querySelector('.tree-view-icon i');
             if (folderIcon && item.dataset.hasChildren) {
@@ -104,7 +104,7 @@ export default class extends Controller {
                 folderIcon.classList.toggle('bi-folder');
                 folderIcon.classList.toggle('bi-folder-open');
             }
-            
+
             // Fire callback
             if (this.hasOnExpandValue) {
                 this.fireCallback(this.onExpandValue, {
@@ -120,9 +120,9 @@ export default class extends Controller {
     handleItemClick(event) {
         const content = event.currentTarget;
         const item = content.closest('.tree-view-item');
-        
+
         // Don't trigger if clicking on checkbox or toggle button
-        if (event.target.matches('input[type="checkbox"]') || 
+        if (event.target.matches('input[type="checkbox"]') ||
             event.target.closest('.tree-view-toggle')) {
             return;
         }
@@ -143,10 +143,10 @@ export default class extends Controller {
         const checkbox = event.currentTarget;
         const item = checkbox.closest('.tree-view-item');
         const isChecked = checkbox.checked;
-        
+
         if (isChecked) {
             item.classList.add('selected');
-            
+
             // If not multi-select, uncheck other checkboxes
             if (!this.multiSelectValue) {
                 this.itemTargets.forEach((otherItem) => {
@@ -162,7 +162,7 @@ export default class extends Controller {
         } else {
             item.classList.remove('selected');
         }
-        
+
         // Fire callback with all selected items
         if (this.hasOnSelectionChangeValue) {
             this.fireCallback(this.onSelectionChangeValue, {
@@ -179,9 +179,9 @@ export default class extends Controller {
     handleKeyDown(event) {
         if (!this.keyboardValue) return;
 
-        const { key } = event;
+        const {key} = event;
         const visibleItems = this.getVisibleItems();
-        
+
         if (visibleItems.length === 0) return;
 
         switch (key) {
@@ -224,7 +224,7 @@ export default class extends Controller {
         return this.itemTargets.filter((item) => {
             let parent = item.parentElement;
             while (parent && parent !== this.element) {
-                if (parent.classList.contains('tree-view-children') && 
+                if (parent.classList.contains('tree-view-children') &&
                     parent.classList.contains('collapse')) {
                     return false;
                 }
@@ -256,24 +256,24 @@ export default class extends Controller {
 
     focusItem(item) {
         if (!item) return;
-        
+
         // Remove focus from previous item
         this.itemTargets.forEach((i) => i.classList.remove('focused'));
-        
+
         // Add focus to new item
         item.classList.add('focused');
-        item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        item.scrollIntoView({block: 'nearest', behavior: 'smooth'});
     }
 
     expandFocusedItem() {
         const visibleItems = this.getVisibleItems();
         const item = visibleItems[this.focusedItemIndex];
-        
+
         if (!item) return;
-        
+
         const toggleButton = item.querySelector('.tree-view-toggle');
         const children = item.querySelector('.tree-view-children');
-        
+
         if (children && children.classList.contains('collapse') && toggleButton) {
             toggleButton.click();
         }
@@ -282,12 +282,12 @@ export default class extends Controller {
     collapseFocusedItem() {
         const visibleItems = this.getVisibleItems();
         const item = visibleItems[this.focusedItemIndex];
-        
+
         if (!item) return;
-        
+
         const toggleButton = item.querySelector('.tree-view-toggle');
         const children = item.querySelector('.tree-view-children');
-        
+
         if (children && !children.classList.contains('collapse') && toggleButton) {
             toggleButton.click();
         }
@@ -296,14 +296,14 @@ export default class extends Controller {
     selectFocusedItem() {
         const visibleItems = this.getVisibleItems();
         const item = visibleItems[this.focusedItemIndex];
-        
+
         if (!item) return;
-        
+
         if (this.selectableValue) {
             const checkbox = item.querySelector('input[type="checkbox"]');
             if (checkbox) {
                 checkbox.checked = !checkbox.checked;
-                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                checkbox.dispatchEvent(new Event('change', {bubbles: true}));
             }
         }
     }

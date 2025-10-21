@@ -29,7 +29,6 @@ final class Breadcrumbs extends AbstractStimulus
     public string $divider = '/';
     public bool $autoCollapse = false;
     public int $collapseThreshold = 4;
-    public string $stimulusController = 'bs-breadcrumbs';
 
     private RouterInterface $router;
     private RequestStack $requestStack;
@@ -107,6 +106,35 @@ final class Breadcrumbs extends AbstractStimulus
         if ($this->autoGenerate && $this->items === null) {
             $this->generateBreadcrumbs();
         }
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
+    
+    /**
+     * Override to conditionally attach controller only when auto-collapse is enabled
+     */
+    protected function shouldAttachController(): bool
+    {
+        return $this->controllerEnabled && $this->autoCollapse;
+    }
+    
+    /**
+     * Override to build Breadcrumbs-specific Stimulus attributes
+     */
+    protected function buildStimulusAttributes(): array
+    {
+        $attrs = $this->stimulusControllerAttributes();
+        
+        // Only add values if controller is active
+        if ($this->resolveControllers() !== '') {
+            $attrs = array_merge($attrs, $this->stimulusValues('bs-breadcrumbs', [
+                'autoCollapse' => $this->autoCollapse,
+                'collapseThreshold' => $this->collapseThreshold,
+            ]));
+        }
+        
+        return $attrs;
     }
 
     protected function getComponentName(): string
@@ -258,15 +286,10 @@ final class Breadcrumbs extends AbstractStimulus
             $attrs['style'] = '--bs-breadcrumb-divider: \'' . addslashes($this->divider) . '\';';
         }
 
-        // Add stimulus attributes
-        $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
+        // Add Stimulus controller attributes using new pattern
+        $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
 
-        // Add Stimulus values for auto-collapse feature
-        if ($this->autoCollapse) {
-            $attrs['data-bs-breadcrumbs-auto-collapse-value'] = 'true';
-            $attrs['data-bs-breadcrumbs-collapse-threshold-value'] = (string)$this->collapseThreshold;
-        }
-
+        // Merge custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [

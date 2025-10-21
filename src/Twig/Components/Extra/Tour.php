@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:tour', template: '@NeuralGlitchUxBootstrap/components/extra/tour.html.twig')]
-final class Tour extends AbstractBootstrap
+final class Tour extends AbstractStimulus
 {
     // Tour identification
     public ?string $tourId = null;
@@ -57,6 +57,8 @@ final class Tour extends AbstractBootstrap
     {
         $d = $this->config->for('tour');
 
+        $this->applyStimulusDefaults($d);
+
         // Generate unique ID if not provided
         $this->tourId ??= 'tour-' . uniqid();
 
@@ -80,7 +82,11 @@ final class Tour extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string
@@ -98,21 +104,8 @@ final class Tour extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes([
-            'data-controller' => 'bs-tour',
-            'data-bs-tour-tour-id-value' => $this->tourId,
-            'data-bs-tour-keyboard-value' => $this->keyboard ? 'true' : 'false',
-            'data-bs-tour-backdrop-value' => $this->backdrop ? 'true' : 'false',
-            'data-bs-tour-highlight-value' => $this->highlight ? 'true' : 'false',
-            'data-bs-tour-scroll-to-element-value' => $this->scrollToElement ? 'true' : 'false',
-            'data-bs-tour-auto-start-value' => $this->autoStart ? 'true' : 'false',
-            'data-bs-tour-allow-click-through-value' => $this->allowClickThrough ? 'true' : 'false',
-            'data-bs-tour-popover-variant-value' => $this->popoverVariant,
-            'data-bs-tour-popover-placement-value' => $this->popoverPlacement,
-            'data-bs-tour-popover-width-value' => (string) $this->popoverWidth,
-            'data-bs-tour-highlight-padding-value' => (string) $this->highlightPadding,
-            'data-bs-tour-highlight-border-radius-value' => (string) $this->highlightBorderRadius,
-        ], $this->attr);
+        $attrs = $this->buildStimulusAttributes();
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         // Add steps as JSON data attribute
         if (!empty($this->steps)) {

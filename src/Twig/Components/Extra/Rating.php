@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:rating', template: '@NeuralGlitchUxBootstrap/components/extra/rating.html.twig')]
-final class Rating extends AbstractBootstrap
+final class Rating extends AbstractStimulus
 {
     // Rating value
     public float $value = 0;
@@ -40,11 +40,17 @@ final class Rating extends AbstractBootstrap
     {
         $d = $this->config->for('rating');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         // For properties with defaults, only apply config if value hasn't been explicitly changed from default
         if (isset($d['value']) && is_numeric($d['value']) && $this->value === 0.0) {
             $this->value = (float) $d['value'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         if (isset($d['max']) && is_int($d['max']) && $this->max === 5) {
             $this->max = $d['max'];
         }

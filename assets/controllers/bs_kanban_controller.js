@@ -1,10 +1,10 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Kanban Board Controller
- * 
+ *
  * Manages drag-and-drop functionality for kanban boards
- * 
+ *
  * Usage:
  *   <div data-controller="bs-kanban" data-bs-kanban-draggable-value="true">
  *     ...kanban columns and cards...
@@ -12,8 +12,8 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
     static values = {
-        draggable: { type: Boolean, default: true },
-        crossColumn: { type: Boolean, default: true }
+        draggable: {type: Boolean, default: true},
+        crossColumn: {type: Boolean, default: true}
     };
 
     static targets = ['card', 'column'];
@@ -213,11 +213,11 @@ export default class extends Controller {
 
     addCard(event) {
         event.preventDefault();
-        
+
         // Dispatch custom event for external handling (e.g., show modal, create new card)
         const button = event.currentTarget;
         const column = button.closest('[data-kanban-column]');
-        
+
         const customEvent = new CustomEvent('kanban:add-card', {
             detail: {
                 column: column?.dataset.kanbanColumn

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent('bs:searchbar', template: '@NeuralGlitchUxBootstrap/components/extra/searchbar.html.twig')]
-final class SearchBar extends AbstractBootstrap
+final class SearchBar extends AbstractStimulus
 {
     public string $placeholder = 'Search...';
     public string $searchUrl = '/search';
@@ -23,6 +23,8 @@ final class SearchBar extends AbstractBootstrap
     {
         $d = $this->config->for('searchbar');
 
+        $this->applyStimulusDefaults($d);
+
         $this->placeholder ??= $d['placeholder'] ?? 'Search...';
         $this->searchUrl ??= $d['search_url'] ?? '/search';
         $this->minChars ??= $d['min_chars'] ?? 2;
@@ -33,11 +35,43 @@ final class SearchBar extends AbstractBootstrap
         $this->name ??= $d['name'] ?? 'q';
 
         $this->applyClassDefaults($d);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
         return 'searchbar';
+    }
+    
+    /**
+     * Override default controller name to match registered controller
+     * Component name is 'searchbar' but controller is 'bs-search' (shorter)
+     */
+    protected function getDefaultController(): string
+    {
+        return 'bs-search';
+    }
+    
+    /**
+     * Override to build SearchBar-specific Stimulus attributes
+     */
+    protected function buildStimulusAttributes(): array
+    {
+        $attrs = $this->stimulusControllerAttributes();
+        
+        // Add SearchBar-specific values
+        if ($this->resolveControllers() !== '') {
+            $attrs = array_merge($attrs, $this->stimulusValues('bs-search', [
+                'url' => $this->searchUrl,
+                'minChars' => $this->minChars,
+                'debounce' => $this->debounce,
+            ]));
+        }
+        
+        return $attrs;
     }
 
     /**
@@ -58,7 +92,9 @@ final class SearchBar extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes([], $this->attr);
+        // Build Stimulus attributes and merge with custom attrs
+        $attrs = $this->buildStimulusAttributes();
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [
             'placeholder' => $this->placeholder,

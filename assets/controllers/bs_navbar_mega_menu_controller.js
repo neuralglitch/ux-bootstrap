@@ -1,15 +1,15 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Mega Menu Navbar Controller
- * 
+ *
  * Enhances Bootstrap dropdowns to support mega menu functionality
  * with multi-column layouts and rich content
- * 
+ *
  * Usage:
  *   Add 'data-navbar-mega-menu' to dropdown items that should be mega menus
  *   Add 'data-navbar-mega-menu-width' attribute to control width ('full', 'auto', or specific value)
- * 
+ *
  * Targets:
  *   - megaMenu: Mega menu dropdown elements
  */
@@ -18,7 +18,7 @@ export default class extends Controller {
 
     connect() {
         this.setupMegaMenus();
-        
+
         // Handle window resize
         this.resizeHandler = this.handleResize.bind(this);
         window.addEventListener('resize', this.resizeHandler);
@@ -31,7 +31,7 @@ export default class extends Controller {
     setupMegaMenus() {
         // Find all mega menu dropdowns
         const megaMenus = this.element.querySelectorAll('[data-navbar-mega-menu]');
-        
+
         megaMenus.forEach(menu => {
             const dropdown = menu.querySelector('.dropdown-menu');
             if (!dropdown) return;
@@ -43,7 +43,7 @@ export default class extends Controller {
 
             // Get width setting
             const width = menu.dataset.navbarMegaMenuWidth || 'full';
-            
+
             if (width === 'full') {
                 dropdown.classList.add('mega-menu-full');
                 // Set full width immediately
@@ -69,7 +69,7 @@ export default class extends Controller {
             // Center align mega menu if needed
             const rect = menuItem.getBoundingClientRect();
             const dropdownRect = dropdown.getBoundingClientRect();
-            
+
             // Check if dropdown would overflow viewport
             const viewportWidth = window.innerWidth;
             const overflowRight = rect.left + dropdownRect.width > viewportWidth;

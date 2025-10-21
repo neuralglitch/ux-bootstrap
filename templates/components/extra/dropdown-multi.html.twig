@@ -2,15 +2,7 @@
 
   {% set o = this.options() %}
 
-  <div 
-    class="{{ o.wrapperClasses }}" 
-    {{ this.renderHtmlAttributes(o.wrapperAttrs) | raw }}
-    data-controller="bs-dropdown-multi"
-    data-bs-dropdown-multi-name-value="{{ o.name }}"
-    data-bs-dropdown-multi-show-apply-value="{{ o.showApply ? 'true' : 'false' }}"
-    data-bs-dropdown-multi-searchable-value="{{ o.searchable ? 'true' : 'false' }}"
-    data-bs-dropdown-multi-min-chars-value="{{ o.searchMinChars }}"
-  >
+  <div class="{{ o.wrapperClasses }}" {{ this.renderHtmlAttributes(o.wrapperAttrs) | raw }}>
     
     {# Toggle Button #}
     <button 

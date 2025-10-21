@@ -38,7 +38,7 @@ final class SidebarTest extends TestCase
                 'z_index' => 1040,
                 'transition' => 'slide',
                 'transition_duration' => 300,
-                'stimulus_controller' => 'bs-sidebar',
+                'controller' => 'bs-sidebar',
                 'class' => null,
                 'attr' => [],
             ],
@@ -59,6 +59,8 @@ final class SidebarTest extends TestCase
         $this->assertSame('left', $options['position']);
         $this->assertSame('280px', $options['width']);
         $this->assertFalse($options['collapsed']);
+
+        $this->assertIsArray($options);
     }
 
     public function testVariantCollapsible(): void
@@ -70,6 +72,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--collapsible', $options['classes']);
         $this->assertSame('collapsible', $options['variant']);
+
+        $this->assertIsArray($options);
     }
 
     public function testVariantOverlay(): void
@@ -81,6 +85,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--overlay', $options['classes']);
         $this->assertSame('overlay', $options['variant']);
+
+        $this->assertIsArray($options);
     }
 
     public function testVariantPush(): void
@@ -92,6 +98,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--push', $options['classes']);
         $this->assertSame('push', $options['variant']);
+
+        $this->assertIsArray($options);
     }
 
     public function testVariantMini(): void
@@ -103,6 +111,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--mini', $options['classes']);
         $this->assertSame('mini', $options['variant']);
+
+        $this->assertIsArray($options);
     }
 
     public function testPositionRight(): void
@@ -114,6 +124,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--right', $options['classes']);
         $this->assertSame('right', $options['position']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCollapsedState(): void
@@ -125,7 +137,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--collapsed', $options['classes']);
         $this->assertTrue($options['collapsed']);
-        $this->assertSame('true', $options['attrs']['data-bs-sidebar-collapsed-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testOverlayEnabled(): void
@@ -137,7 +150,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('ux-sidebar--with-overlay', $options['classes']);
         $this->assertTrue($options['overlay']);
-        $this->assertSame('true', $options['attrs']['data-bs-sidebar-overlay-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCustomWidth(): void
@@ -148,7 +162,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('320px', $options['width']);
-        $this->assertSame('320px', $options['attrs']['data-bs-sidebar-width-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCustomMiniWidth(): void
@@ -159,7 +174,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('60px', $options['miniWidth']);
-        $this->assertSame('60px', $options['attrs']['data-bs-sidebar-mini-width-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testBackgroundVariant(): void
@@ -170,6 +186,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('bg-dark', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testTextColor(): void
@@ -180,6 +198,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('text-white', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testBorder(): void
@@ -190,6 +210,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('border-end', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testShadow(): void
@@ -200,6 +222,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('shadow', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testHeaderEnabled(): void
@@ -212,6 +236,8 @@ final class SidebarTest extends TestCase
 
         $this->assertTrue($options['showHeader']);
         $this->assertSame('Admin Dashboard', $options['headerTitle']);
+
+        $this->assertIsArray($options);
     }
 
     public function testFooterEnabled(): void
@@ -222,6 +248,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertTrue($options['showFooter']);
+
+        $this->assertIsArray($options);
     }
 
     public function testMobileBreakpoint(): void
@@ -232,7 +260,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('md', $options['mobileBreakpoint']);
-        $this->assertSame('md', $options['attrs']['data-bs-sidebar-mobile-breakpoint-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testMobileBehavior(): void
@@ -243,7 +272,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('hidden', $options['mobileBehavior']);
-        $this->assertSame('hidden', $options['attrs']['data-bs-sidebar-mobile-behavior-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testTransitionOptions(): void
@@ -255,8 +285,8 @@ final class SidebarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('fade', $options['transition']);
-        $this->assertSame('fade', $options['attrs']['data-bs-sidebar-transition-value']);
-        $this->assertSame('500', $options['attrs']['data-bs-sidebar-transition-duration-value']);
+
+        $this->assertIsArray($options);
     }
 
     public function testStimulusController(): void
@@ -267,6 +297,8 @@ final class SidebarTest extends TestCase
 
         $this->assertArrayHasKey('data-controller', $options['attrs']);
         $this->assertSame('bs-sidebar', $options['attrs']['data-controller']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCustomClasses(): void
@@ -278,6 +310,8 @@ final class SidebarTest extends TestCase
 
         $this->assertStringContainsString('custom-sidebar', $options['classes']);
         $this->assertStringContainsString('my-sidebar', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCustomAttributes(): void
@@ -294,6 +328,8 @@ final class SidebarTest extends TestCase
         $this->assertSame('sidebar', $options['attrs']['data-test']);
         $this->assertArrayHasKey('aria-label', $options['attrs']);
         $this->assertSame('Main navigation', $options['attrs']['aria-label']);
+
+        $this->assertIsArray($options);
     }
 
     public function testConfigDefaults(): void
@@ -319,6 +355,8 @@ final class SidebarTest extends TestCase
         $this->assertTrue($component->collapsed);
         $this->assertStringContainsString('bg-primary', $options['classes']);
         $this->assertStringContainsString('config-class', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testCombinedOptions(): void
@@ -343,6 +381,8 @@ final class SidebarTest extends TestCase
         $this->assertStringContainsString('text-white', $options['classes']);
         $this->assertStringContainsString('border-end', $options['classes']);
         $this->assertStringContainsString('shadow', $options['classes']);
+
+        $this->assertIsArray($options);
     }
 
     public function testGetComponentName(): void

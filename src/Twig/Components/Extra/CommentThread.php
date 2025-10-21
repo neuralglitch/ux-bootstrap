@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:comment-thread', template: '@NeuralGlitchUxBootstrap/components/extra/comment-thread.html.twig')]
-final class CommentThread extends AbstractBootstrap
+final class CommentThread extends AbstractStimulus
 {
     /**
      * Array of comment data structures
@@ -97,6 +97,8 @@ final class CommentThread extends AbstractBootstrap
     {
         $d = $this->config->for('comment_thread');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->maxDepth ??= $d['max_depth'] ?? 3;
@@ -112,6 +114,10 @@ final class CommentThread extends AbstractBootstrap
         $this->collapsible ??= $d['collapsible'] ?? true;
         $this->defaultCollapsed ??= $d['default_collapsed'] ?? false;
         $this->containerClass ??= $d['container_class'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

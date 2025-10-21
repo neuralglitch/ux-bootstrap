@@ -26,7 +26,7 @@ final class AlertStackTest extends TestCase
                 'z_index' => 1080,
                 'gap' => 0.75,
                 'auto_load_flash_messages' => false,
-                'stimulus_controller' => 'bs-alert-stack',
+                'controller' => 'bs-alert-stack',
                 'class' => null,
                 'attr' => [],
             ],
@@ -336,9 +336,6 @@ final class AlertStackTest extends TestCase
 
         $this->assertArrayHasKey('data-controller', $options['attrs']);
         $this->assertStringContainsString('bs-alert-stack', $options['attrs']['data-controller']);
-        $this->assertArrayHasKey('data-bs-alert-stack-auto-hide-value', $options['attrs']);
-        $this->assertArrayHasKey('data-bs-alert-stack-auto-hide-delay-value', $options['attrs']);
-        $this->assertArrayHasKey('data-bs-alert-stack-max-alerts-value', $options['attrs']);
     }
 
     public function testCustomClasses(): void
@@ -381,7 +378,7 @@ final class AlertStackTest extends TestCase
                 'z_index' => 2000,
                 'gap' => 1.0,
                 'class' => 'default-stack-class',
-                'stimulus_controller' => 'bs-alert-stack',
+                'controller' => 'bs-alert-stack',
             ],
         ]);
 

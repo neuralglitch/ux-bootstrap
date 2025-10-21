@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:progress', template: '@NeuralGlitchUxBootstrap/components/bootstrap/progress.html.twig')]
-final class Progress extends AbstractBootstrap
+final class Progress extends AbstractStimulus
 {
     /** Current progress value (0-100 by default) */
     public int|float|null $value = null;
@@ -43,6 +43,8 @@ final class Progress extends AbstractBootstrap
     {
         $d = $this->config->for('progress');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -58,6 +60,10 @@ final class Progress extends AbstractBootstrap
 
         // Normalize value to be within min-max range
         $this->value = max($this->min, min($this->max, $this->value));
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

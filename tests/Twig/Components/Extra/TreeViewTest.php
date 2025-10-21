@@ -221,7 +221,6 @@ final class TreeViewTest extends TestCase
         $options = $component->options();
 
         $this->assertSame(['1', '2', '3'], $options['selectedIds']);
-        $this->assertArrayHasKey('data-bs-tree-view-selected-ids-value', $options['attrs']);
     }
 
     public function testCallbacksOption(): void

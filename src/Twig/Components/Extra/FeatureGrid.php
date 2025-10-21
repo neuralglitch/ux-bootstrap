@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:feature-grid', template: '@NeuralGlitchUxBootstrap/components/extra/feature-grid.html.twig')]
-final class FeatureGrid extends AbstractBootstrap
+final class FeatureGrid extends AbstractStimulus
 {
     // Layout
     public ?int $columns = null;        // Number of columns: 2, 3, 4, or 6
@@ -36,6 +36,8 @@ final class FeatureGrid extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('feature_grid');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults from config
         $this->columns ??= $d['columns'] ?? 3;
@@ -52,7 +54,11 @@ final class FeatureGrid extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
     
     protected function getComponentName(): string

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:list-group', template: '@NeuralGlitchUxBootstrap/components/bootstrap/list-group.html.twig')]
-final class ListGroup extends AbstractBootstrap
+final class ListGroup extends AbstractStimulus
 {
     public ?string $id = null;
     public bool $flush = false;
@@ -19,6 +19,8 @@ final class ListGroup extends AbstractBootstrap
     {
         $d = $this->config->for('list_group');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -29,7 +31,11 @@ final class ListGroup extends AbstractBootstrap
         // Auto-determine tag if not specified
         if (null === $this->tag) {
             $this->tag = $this->numbered ? 'ol' : ($d['tag'] ?? 'ul');
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         // Generate unique ID if not provided
         if (null === $this->id) {

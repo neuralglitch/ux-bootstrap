@@ -1,13 +1,6 @@
 {% set o = this.options() %}
 
-<div 
-    class="{{ o.containerClasses }}"
-    {{ this.renderHtmlAttributes(o.attrs) | raw }}
-    data-controller="bs-search"
-    data-bs-search-url-value="{{ o.searchUrl }}"
-    data-bs-search-min-chars-value="{{ o.minChars }}"
-    data-bs-search-debounce-value="{{ o.debounce }}"
->
+<div class="{{ o.containerClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     <div class="search-input-wrapper">
         <div class="input-group input-group-sm">
             <span class="input-group-text bg-body-tertiary border-end-0">

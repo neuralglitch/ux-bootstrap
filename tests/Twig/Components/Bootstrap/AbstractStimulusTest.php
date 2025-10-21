@@ -13,8 +13,6 @@ final class AbstractStimulusTest extends TestCase
     private function createTestComponent(Config $config): AbstractStimulus
     {
         return new class($config) extends AbstractStimulus {
-            public string $stimulusController = 'default-controller';
-            
             protected function getComponentName(): string
             {
                 return 'test_component';
@@ -30,26 +28,35 @@ final class AbstractStimulusTest extends TestCase
         self::assertInstanceOf(AbstractStimulus::class, $component);
     }
 
-    public function testStimulusControllerPropertyExists(): void
+    public function testControllerPropertyExists(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        self::assertObjectHasProperty('stimulusController', $component);
+        self::assertObjectHasProperty('controller', $component);
+    }
+
+    public function testControllerEnabledPropertyExists(): void
+    {
+        $config = new Config([]);
+        $component = $this->createTestComponent($config);
+
+        self::assertObjectHasProperty('controllerEnabled', $component);
+        self::assertTrue($component->controllerEnabled);
     }
 
     public function testApplyStimulusDefaultsWithEmptyDefaults(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
-        $component->stimulusController = 'original-controller';
+        $component->controller = 'original-controller';
 
         $reflection = new \ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, []);
 
-        self::assertSame('original-controller', $component->stimulusController);
+        self::assertSame('original-controller', $component->controller);
     }
 
     public function testApplyStimulusDefaultsWithController(): void
@@ -61,45 +68,45 @@ final class AbstractStimulusTest extends TestCase
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
-            'stimulus_controller' => 'custom-controller',
+            'controller' => 'custom-controller',
         ]);
 
-        self::assertSame('custom-controller', $component->stimulusController);
+        self::assertSame('custom-controller', $component->controller);
     }
 
     public function testApplyStimulusDefaultsIgnoresEmptyController(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
-        $component->stimulusController = 'original-controller';
+        $component->controller = 'original-controller';
 
         $reflection = new \ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
-            'stimulus_controller' => '',
+            'controller' => '',
         ]);
 
-        self::assertSame('original-controller', $component->stimulusController);
+        self::assertSame('original-controller', $component->controller);
     }
 
     public function testApplyStimulusDefaultsIgnoresNullController(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
-        $component->stimulusController = 'original-controller';
+        $component->controller = 'original-controller';
 
         $reflection = new \ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
-            'stimulus_controller' => null,
+            'controller' => null,
         ]);
 
-        self::assertSame('original-controller', $component->stimulusController);
+        self::assertSame('original-controller', $component->controller);
     }
 
-    public function testApplyStimulusDefaultsConvertsToString(): void
+    public function testApplyStimulusDefaultsWithControllerEnabled(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
@@ -108,10 +115,10 @@ final class AbstractStimulusTest extends TestCase
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
-            'stimulus_controller' => 123, // Numeric value
+            'controller_enabled' => false,
         ]);
 
-        self::assertSame('123', $component->stimulusController);
+        self::assertFalse($component->controllerEnabled);
     }
 
     public function testExtendsAbstractBootstrap(): void
@@ -122,22 +129,44 @@ final class AbstractStimulusTest extends TestCase
         self::assertInstanceOf(\NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap::class, $component);
     }
 
-    public function testHasStimulusTrait(): void
+    public function testInitializeControllerSetsDefault(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
         $reflection = new \ReflectionClass($component);
-        
-        // Get all traits including those from parent classes
-        $allTraits = [];
-        $class = $reflection;
-        while ($class) {
-            $allTraits = array_merge($allTraits, $class->getTraitNames());
-            $class = $class->getParentClass();
-        }
+        $method = $reflection->getMethod('initializeController');
+        $method->setAccessible(true);
+        $method->invoke($component);
 
-        self::assertContains('NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StimulusTrait', $allTraits);
+        self::assertSame('bs-test_component', $component->controller);
+    }
+
+    public function testInitializeControllerPreservesExplicitValue(): void
+    {
+        $config = new Config([]);
+        $component = $this->createTestComponent($config);
+        $component->controller = 'custom-controller';
+
+        $reflection = new \ReflectionClass($component);
+        $method = $reflection->getMethod('initializeController');
+        $method->setAccessible(true);
+        $method->invoke($component);
+
+        self::assertSame('custom-controller', $component->controller);
+    }
+
+    public function testGetDefaultControllerReturnsExpectedFormat(): void
+    {
+        $config = new Config([]);
+        $component = $this->createTestComponent($config);
+
+        $reflection = new \ReflectionClass($component);
+        $method = $reflection->getMethod('getDefaultController');
+        $method->setAccessible(true);
+        $result = $method->invoke($component);
+
+        self::assertSame('bs-test_component', $result);
     }
 }
 

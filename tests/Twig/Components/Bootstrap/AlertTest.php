@@ -24,6 +24,7 @@ final class AlertTest extends TestCase
     public function testComponentHasCorrectDefaults(): void
     {
         $alert = $this->createAlert();
+        $alert->mount(); // Controller is set in mount()
 
         self::assertNull($alert->message);
         self::assertFalse($alert->dismissible);
@@ -32,7 +33,8 @@ final class AlertTest extends TestCase
         self::assertFalse($alert->autoHide);
         self::assertSame(5000, $alert->autoHideDelay);
         self::assertSame('alert', $alert->role);
-        self::assertSame('bs-alert', $alert->stimulusController);
+        // Controller not attached by default (only when autoHide=true)
+        self::assertSame('', $alert->controller);
         self::assertNull($alert->variant);
         self::assertFalse($alert->outline);
         self::assertSame('', $alert->class);
@@ -49,7 +51,7 @@ final class AlertTest extends TestCase
             'auto_hide' => true,
             'auto_hide_delay' => 3000,
             'role' => 'status',
-            'stimulus_controller' => 'custom-alert',
+            'controller' => 'custom-alert',
         ]);
 
         $alert = $this->createAlert($config);
@@ -65,7 +67,7 @@ final class AlertTest extends TestCase
         self::assertTrue($alert->autoHide);
         self::assertSame(3000, $alert->autoHideDelay);
         self::assertSame('status', $alert->role);
-        self::assertSame('custom-alert', $alert->stimulusController);
+        self::assertSame('custom-alert', $alert->controller);
     }
 
     public function testMountRespectsPropertyOverrides(): void
@@ -268,7 +270,7 @@ final class AlertTest extends TestCase
         $alert = $this->createAlert();
         $alert->autoHide = true;
         $alert->autoHideDelay = 3000;
-        $alert->stimulusController = 'bs-alert';
+        $alert->controller = 'bs-alert';
         $alert->mount();
 
         $options = $alert->options();

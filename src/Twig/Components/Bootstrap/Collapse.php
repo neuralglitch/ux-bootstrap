@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:collapse', template: '@NeuralGlitchUxBootstrap/components/bootstrap/collapse.html.twig')]
-final class Collapse extends AbstractBootstrap
+final class Collapse extends AbstractStimulus
 {
     public ?string $id = null;
     public ?bool $show = null;
@@ -18,11 +18,17 @@ final class Collapse extends AbstractBootstrap
     {
         $d = $this->config->for('collapse');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->show ??= $d['show'] ?? false;
         $this->horizontal ??= $d['horizontal'] ?? false;
         $this->parent ??= $d['parent'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

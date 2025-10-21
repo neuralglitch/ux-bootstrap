@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * organization charts, and menu editors.
  */
 #[AsTwigComponent(name: 'bs:tree-view', template: '@NeuralGlitchUxBootstrap/components/extra/tree-view.html.twig')]
-final class TreeView extends AbstractBootstrap
+final class TreeView extends AbstractStimulus
 {
     /**
      * Tree data structure
@@ -130,6 +130,8 @@ final class TreeView extends AbstractBootstrap
     {
         $d = $this->config->for('tree_view');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->selectable = $this->selectable || ($d['selectable'] ?? false);
@@ -139,7 +141,11 @@ final class TreeView extends AbstractBootstrap
         // Use null coalescing for icon properties to respect component-level changes
         if ($this->defaultIcon === 'bi-file-earmark') {
             $this->defaultIcon = $d['default_icon'] ?? $this->defaultIcon;
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         if ($this->folderIcon === 'bi-folder') {
             $this->folderIcon = $d['folder_icon'] ?? $this->folderIcon;
         }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * like nav items, avatars, buttons, and icons.
  */
 #[AsTwigComponent(name: 'bs:notification-badge', template: '@NeuralGlitchUxBootstrap/components/extra/notification-badge.html.twig')]
-final class NotificationBadge extends AbstractBootstrap
+final class NotificationBadge extends AbstractStimulus
 {
     /**
      * The content to display (number, text, or null for dot)
@@ -70,6 +70,8 @@ final class NotificationBadge extends AbstractBootstrap
     {
         $d = $this->config->for('notification_badge');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults
@@ -82,6 +84,10 @@ final class NotificationBadge extends AbstractBootstrap
         $this->pill = $this->pill && ($d['pill'] ?? true);
         $this->max ??= $d['max'] ?? null;
         $this->inline = $this->inline || ($d['inline'] ?? false);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

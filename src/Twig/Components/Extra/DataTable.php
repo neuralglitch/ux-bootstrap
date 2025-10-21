@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:data-table', template: '@NeuralGlitchUxBootstrap/components/extra/data-table.html.twig')]
-final class DataTable extends AbstractBootstrap
+final class DataTable extends AbstractStimulus
 {
     // Data
     /** @var array<int, array<string, mixed>> */
@@ -67,6 +67,8 @@ final class DataTable extends AbstractBootstrap
     {
         $d = $this->config->for('data_table');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults
         $this->striped = $this->striped && ($d['striped'] ?? true);
         $this->bordered = $this->bordered || ($d['bordered'] ?? false);
@@ -94,7 +96,11 @@ final class DataTable extends AbstractBootstrap
         // Only override actionsLabel if it's still the default value
         if ($this->actionsLabel === 'Actions' && isset($d['actions_label'])) {
             $this->actionsLabel = $d['actions_label'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         $this->actionsPosition ??= $d['actions_position'] ?? 'end';
 

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:offcanvas', template: '@NeuralGlitchUxBootstrap/components/bootstrap/offcanvas.html.twig')]
-final class Offcanvas extends AbstractBootstrap
+final class Offcanvas extends AbstractStimulus
 {
     public string $id;
     public ?string $title = null;
@@ -23,6 +23,8 @@ final class Offcanvas extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('offcanvas');
+
+        $this->applyStimulusDefaults($d);
 
         // Apply base class defaults
         $this->applyClassDefaults($d);
@@ -40,7 +42,11 @@ final class Offcanvas extends AbstractBootstrap
         // Generate unique ID if not provided
         if (!isset($this->id)) {
             $this->id = 'offcanvas-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

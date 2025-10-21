@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:spinner', template: '@NeuralGlitchUxBootstrap/components/bootstrap/spinner.html.twig')]
-final class Spinner extends AbstractBootstrap
+final class Spinner extends AbstractStimulus
 {
     public ?string $type = null;
     public ?string $variant = null;
@@ -19,6 +19,8 @@ final class Spinner extends AbstractBootstrap
     {
         $d = $this->config->for('spinner');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->type ??= $d['type'] ?? 'border';
@@ -26,6 +28,10 @@ final class Spinner extends AbstractBootstrap
         $this->size ??= $d['size'] ?? null;
         $this->label ??= $d['label'] ?? 'Loading...';
         $this->role ??= $d['role'] ?? 'status';
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

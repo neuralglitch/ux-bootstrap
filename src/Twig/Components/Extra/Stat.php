@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:stat', template: '@NeuralGlitchUxBootstrap/components/extra/stat.html.twig')]
-final class Stat extends AbstractBootstrap
+final class Stat extends AbstractStimulus
 {
     // Core properties
     public string|int|float|null $value = null;
@@ -35,6 +35,8 @@ final class Stat extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('stat');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply base class defaults
         $this->applyClassDefaults($d);
@@ -52,6 +54,10 @@ final class Stat extends AbstractBootstrap
         $this->border = $this->border || ($d['border'] ?? false);
         $this->shadow = $this->shadow || ($d['shadow'] ?? false);
         $this->textAlign ??= $d['text_align'] ?? 'start';
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
     
     protected function getComponentName(): string

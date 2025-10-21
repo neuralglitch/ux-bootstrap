@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:skeleton', template: '@NeuralGlitchUxBootstrap/components/extra/skeleton.html.twig')]
-final class Skeleton extends AbstractBootstrap
+final class Skeleton extends AbstractStimulus
 {
     /**
      * Skeleton type/preset
@@ -81,6 +81,8 @@ final class Skeleton extends AbstractBootstrap
     {
         $d = $this->config->for('skeleton');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->type ??= is_string($d['type'] ?? null) ? $d['type'] : 'text';
@@ -95,6 +97,10 @@ final class Skeleton extends AbstractBootstrap
         $this->withImage = $this->withImage || (is_bool($d['with_image'] ?? null) ? $d['with_image'] : false);
         $this->rounded ??= is_string($d['rounded'] ?? null) ? $d['rounded'] : null;
         $this->tag ??= is_string($d['tag'] ?? null) ? $d['tag'] : 'div';
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

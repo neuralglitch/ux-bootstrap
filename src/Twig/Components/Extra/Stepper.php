@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:stepper', template: '@NeuralGlitchUxBootstrap/components/extra/stepper.html.twig')]
-final class Stepper extends AbstractBootstrap
+final class Stepper extends AbstractStimulus
 {
     /**
      * @var array<int, array{label: string, description?: string, icon?: string, clickable?: bool, href?: string}>
@@ -49,6 +49,8 @@ final class Stepper extends AbstractBootstrap
     {
         $d = $this->config->for('stepper');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->variant ??= $d['variant'] ?? 'horizontal';
         $this->style ??= $d['style'] ?? 'default';
@@ -71,7 +73,11 @@ final class Stepper extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:nav', template: '@NeuralGlitchUxBootstrap/components/bootstrap/nav.html.twig')]
-final class Nav extends AbstractBootstrap
+final class Nav extends AbstractStimulus
 {
     /**
      * Nav style variant: null, 'tabs', 'pills', or 'underline'
@@ -54,6 +54,8 @@ final class Nav extends AbstractBootstrap
     {
         $d = $this->config->for('nav');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
@@ -75,6 +77,9 @@ final class Nav extends AbstractBootstrap
                 default => null,
             };
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

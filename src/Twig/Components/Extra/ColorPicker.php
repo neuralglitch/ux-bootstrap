@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:color-picker', template: '@NeuralGlitchUxBootstrap/components/extra/color-picker.html.twig')]
-final class ColorPicker extends AbstractBootstrap
+final class ColorPicker extends AbstractStimulus
 {
     public ?string $name = null;
     public ?string $value = null;
@@ -46,6 +46,8 @@ final class ColorPicker extends AbstractBootstrap
     {
         $d = $this->config->for('color_picker');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults
@@ -57,7 +59,11 @@ final class ColorPicker extends AbstractBootstrap
         
         if (empty($this->presets) && isset($d['presets']) && is_array($d['presets'])) {
             $this->presets = $d['presets'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         $this->showPresets = $this->showPresets && ($d['show_presets'] ?? true);
         $this->showInput = $this->showInput && ($d['show_input'] ?? true);

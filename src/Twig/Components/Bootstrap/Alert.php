@@ -19,7 +19,6 @@ final class Alert extends AbstractStimulus
     public bool $autoHide = false;
     public int $autoHideDelay = 5000;
     public string $role = 'alert';
-    public string $stimulusController = 'bs-alert';
 
     public function mount(): void
     {
@@ -36,6 +35,35 @@ final class Alert extends AbstractStimulus
         $this->autoHide = $this->autoHide || ($d['auto_hide'] ?? false);
         $this->autoHideDelay = $this->autoHideDelay ?: ($d['auto_hide_delay'] ?? 5000);
         $this->role = $this->role ?: ($d['role'] ?? 'alert');
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
+    
+    /**
+     * Override to conditionally attach controller only when auto-hide is enabled
+     */
+    protected function shouldAttachController(): bool
+    {
+        return $this->controllerEnabled && $this->autoHide;
+    }
+    
+    /**
+     * Override to build Alert-specific Stimulus attributes
+     */
+    protected function buildStimulusAttributes(): array
+    {
+        $attrs = $this->stimulusControllerAttributes();
+        
+        // Only add values if controller is active
+        if ($this->resolveControllers() !== '') {
+            $attrs = array_merge($attrs, $this->stimulusValues('bs-alert', [
+                'autoHide' => $this->autoHide,
+                'autoHideDelay' => $this->autoHideDelay,
+            ]));
+        }
+        
+        return $attrs;
     }
 
     protected function getComponentName(): string
@@ -61,13 +89,10 @@ final class Alert extends AbstractStimulus
             'role' => $this->role,
         ];
 
-        // Add stimulus attributes for auto-hide functionality
-        if ($this->autoHide) {
-            $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
-            $attrs['data-bs-alert-auto-hide-value'] = 'true';
-            $attrs['data-bs-alert-auto-hide-delay-value'] = (string)$this->autoHideDelay;
-        }
+        // Add Stimulus controller attributes using new pattern
+        $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
 
+        // Merge custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [

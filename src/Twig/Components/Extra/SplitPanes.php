@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:split-panes', template: '@NeuralGlitchUxBootstrap/components/extra/split-panes.html.twig')]
-final class SplitPanes extends AbstractBootstrap
+final class SplitPanes extends AbstractStimulus
 {
     /**
      * Orientation: 'horizontal' (left/right) or 'vertical' (top/bottom)
@@ -69,12 +69,18 @@ final class SplitPanes extends AbstractBootstrap
     {
         $d = $this->config->for('split_panes');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults - component props take precedence
         if ($this->orientation === 'horizontal' && isset($d['orientation'])) {
             $this->orientation = $d['orientation'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         $this->initialSize ??= $d['initial_size'] ?? null;
         $this->minSize ??= $d['min_size'] ?? null;
         $this->maxSize ??= $d['max_size'] ?? null;
@@ -125,18 +131,8 @@ final class SplitPanes extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes(
-            [
-                'data-controller' => 'bs-split-panes',
-                'data-bs-split-panes-orientation-value' => $this->orientation,
-                'data-bs-split-panes-resizable-value' => $this->resizable ? 'true' : 'false',
-                'data-bs-split-panes-collapsible-value' => $this->collapsible ? 'true' : 'false',
-                'data-bs-split-panes-persistent-value' => $this->persistent ? 'true' : 'false',
-                'data-bs-split-panes-divider-size-value' => (string) $this->dividerSize,
-                'data-bs-split-panes-snap-threshold-value' => (string) $this->snapThreshold,
-            ],
-            $this->attr
-        );
+        $attrs = $this->buildStimulusAttributes();
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         if ($this->id) {
             $attrs['id'] = $this->id;

@@ -1,20 +1,20 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 export default class extends Controller {
     static targets = ['firstPane', 'secondPane', 'divider'];
-    
+
     static values = {
-        orientation: { type: String, default: 'horizontal' },
-        resizable: { type: Boolean, default: true },
-        collapsible: { type: Boolean, default: false },
-        persistent: { type: Boolean, default: false },
-        storageKey: { type: String, default: '' },
-        initialSize: { type: String, default: '50%' },
-        minSize: { type: String, default: '10%' },
-        maxSize: { type: String, default: '90%' },
-        dividerSize: { type: Number, default: 4 },
-        snapThreshold: { type: Number, default: 50 },
-        collapsed: { type: String, default: '' }
+        orientation: {type: String, default: 'horizontal'},
+        resizable: {type: Boolean, default: true},
+        collapsible: {type: Boolean, default: false},
+        persistent: {type: Boolean, default: false},
+        storageKey: {type: String, default: ''},
+        initialSize: {type: String, default: '50%'},
+        minSize: {type: String, default: '10%'},
+        maxSize: {type: String, default: '90%'},
+        dividerSize: {type: Number, default: 4},
+        snapThreshold: {type: Number, default: 50},
+        collapsed: {type: String, default: ''}
     };
 
     connect() {
@@ -41,7 +41,7 @@ export default class extends Controller {
 
     initialize() {
         const isHorizontal = this.orientationValue === 'horizontal';
-        
+
         // Load persisted size or use initial/collapsed state
         let size = this.initialSizeValue;
 
@@ -78,7 +78,7 @@ export default class extends Controller {
         if (!this.resizableValue) return;
 
         event.preventDefault();
-        
+
         this.isDragging = true;
         const isHorizontal = this.orientationValue === 'horizontal';
 
@@ -198,7 +198,7 @@ export default class extends Controller {
 
         if (handled) {
             event.preventDefault();
-            
+
             // Save to localStorage
             if (this.persistentValue && this.storageKeyValue) {
                 const size = isHorizontal ? this.firstPaneTarget.style.width : this.firstPaneTarget.style.height;
@@ -212,7 +212,7 @@ export default class extends Controller {
         const current = isHorizontal ? this.firstPaneTarget.style.width : this.firstPaneTarget.style.height;
         const currentPercent = parseFloat(current) || 50;
         const newPercent = Math.max(0, Math.min(100, currentPercent + delta));
-        
+
         this.applySize(newPercent);
     }
 
@@ -231,7 +231,7 @@ export default class extends Controller {
 
         // Dispatch custom event
         this.element.dispatchEvent(new CustomEvent('split-panes:resize', {
-            detail: { size: percentage }
+            detail: {size: percentage}
         }));
     }
 

@@ -8,7 +8,7 @@ use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:card', template: '@NeuralGlitchUxBootstrap/components/bootstrap/card.html.twig')]
-final class Card extends AbstractBootstrap
+final class Card extends AbstractStimulus
 {
     use VariantTrait;
 
@@ -52,6 +52,8 @@ final class Card extends AbstractBootstrap
     {
         $d = $this->config->for('card');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyVariantDefaults($d);
         $this->applyClassDefaults($d);
 
@@ -63,6 +65,10 @@ final class Card extends AbstractBootstrap
         $this->textColor ??= $d['text_color'] ?? null;
         $this->width ??= $d['width'] ?? null;
         $this->id ??= $d['id'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

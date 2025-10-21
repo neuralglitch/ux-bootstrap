@@ -24,6 +24,7 @@ final class ToastTest extends TestCase
     public function testComponentHasCorrectDefaults(): void
     {
         $toast = $this->createToast();
+        $toast->mount(); // Controller is set in mount()
 
         self::assertNull($toast->message);
         self::assertNull($toast->title);
@@ -33,7 +34,7 @@ final class ToastTest extends TestCase
         self::assertSame(5000, $toast->delay);
         self::assertTrue($toast->animation);
         self::assertSame('top-0 end-0', $toast->position);
-        self::assertSame('bs-toast', $toast->stimulusController);
+        self::assertSame('bs-toast', $toast->controller);
         self::assertNull($toast->variant);
         self::assertFalse($toast->outline);
         self::assertSame('', $toast->class);
@@ -51,7 +52,7 @@ final class ToastTest extends TestCase
             'delay' => 3000,
             'animation' => false,
             'position' => 'bottom-0 start-0',
-            'stimulus_controller' => 'custom-toast',
+            'controller' => 'custom-toast',
         ]);
 
         $toast = $this->createToast($config);
@@ -67,7 +68,7 @@ final class ToastTest extends TestCase
         self::assertSame(3000, $toast->delay);
         self::assertFalse($toast->animation);
         self::assertSame('bottom-0 start-0', $toast->position);
-        self::assertSame('custom-toast', $toast->stimulusController);
+        self::assertSame('custom-toast', $toast->controller);
     }
 
     public function testGetComponentName(): void
@@ -190,7 +191,7 @@ final class ToastTest extends TestCase
     public function testOptionsIncludesStimulusAttributes(): void
     {
         $toast = $this->createToast();
-        $toast->stimulusController = 'bs-toast';
+        $toast->controller = 'bs-toast';
         $toast->mount();
 
         $options = $toast->options();

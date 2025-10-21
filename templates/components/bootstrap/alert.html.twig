@@ -9,10 +9,7 @@
   {% set has_content = slot_content is not empty %}
   {% set content_html = has_content ? slot_content : (o.message ?? '') %}
 
-  <div class="{{ o.classes }}" 
-       data-controller="bs-alert"
-       data-auto-hide-delay="{{ o.autoHideDelay }}"
-       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     {{ content_html|raw }}
     
     {% if o.dismissible %}

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:modal', template: '@NeuralGlitchUxBootstrap/components/bootstrap/modal.html.twig')]
-final class Modal extends AbstractBootstrap
+final class Modal extends AbstractStimulus
 {
     use Traits\SizeTrait;
 
@@ -44,6 +44,8 @@ final class Modal extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('modal');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults
         $this->applySizeDefaults($d);
@@ -55,7 +57,11 @@ final class Modal extends AbstractBootstrap
         // Behavior
         if ($this->backdrop === true) {
             $this->backdrop = $d['backdrop'] ?? true;
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         $this->keyboard = $this->keyboard && ($d['keyboard'] ?? true);
         $this->focus = $this->focus && ($d['focus'] ?? true);
         

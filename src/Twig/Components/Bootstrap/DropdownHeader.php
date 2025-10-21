@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:dropdown-header', template: '@NeuralGlitchUxBootstrap/components/bootstrap/dropdown-header.html.twig')]
-final class DropdownHeader extends AbstractBootstrap
+final class DropdownHeader extends AbstractStimulus
 {
     public ?string $label = null;
 
@@ -15,8 +15,14 @@ final class DropdownHeader extends AbstractBootstrap
     {
         $d = $this->config->for('dropdown_header');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
         $this->label ??= $d['label'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

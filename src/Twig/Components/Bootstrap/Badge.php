@@ -35,7 +35,6 @@ final class Badge extends AbstractStimulus
     public bool $translate = true;
 
     // Stimulus Controller Properties
-    public string $stimulusController = 'bs-badge';
     public ?int $count = null;
     public int $maxCount = 99;
     public bool $autoHide = true;
@@ -72,6 +71,9 @@ final class Badge extends AbstractStimulus
         $this->blinking = $this->blinking || ($d['blinking'] ?? false);
         $this->hasCounter = $this->hasCounter || ($d['has_counter'] ?? false);
         $this->hasIndicator = $this->hasIndicator || ($d['has_indicator'] ?? false);
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -80,12 +82,55 @@ final class Badge extends AbstractStimulus
     }
 
     /**
-     * @return array<string, mixed>
+     * Override to conditionally attach controller only when interactive features are used
      */
+    protected function shouldAttachController(): bool
+    {
+        return $this->controllerEnabled && (
+            $this->hasCounter ||
+            $this->hasIndicator ||
+            $this->count !== null ||
+            $this->status !== null ||
+            $this->blinking
+        );
+    }
+    
+    /**
+     * Override to build Badge-specific Stimulus attributes
+     */
+    protected function buildStimulusAttributes(): array
+    {
+        $attrs = $this->stimulusControllerAttributes();
+        
+        // Only add values if controller is active
+        if ($this->resolveControllers() !== '') {
+            $values = [];
+            
+            if ($this->count !== null) {
+                $values['count'] = $this->count;
+            }
+            if ($this->maxCount !== 99) {
+                $values['maxCount'] = $this->maxCount;
+            }
+            if (!$this->autoHide) {
+                $values['autoHide'] = $this->autoHide;
+            }
+            if ($this->status !== null) {
+                $values['status'] = $this->status;
+            }
+            if ($this->blinking) {
+                $values['blinking'] = $this->blinking;
+            }
+            
+            $attrs = array_merge($attrs, $this->stimulusValues('bs-badge', $values));
+        }
+        
+        return $attrs;
+    }
+
     public function options(): array
     {
         $isLink = $this->href !== null;
-        $useController = $this->hasCounter || $this->hasIndicator || $this->count !== null || $this->status !== null || $this->blinking;
 
         $classes = $this->buildClasses(
             ['badge'],
@@ -115,27 +160,10 @@ final class Badge extends AbstractStimulus
             }
         }
 
-        // Add Stimulus controller attributes if interactive features enabled
-        if ($useController) {
-            $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
-            
-            if ($this->count !== null) {
-                $attrs['data-bs-badge-count-value'] = (string)$this->count;
-            }
-            if ($this->maxCount !== 99) {
-                $attrs['data-bs-badge-max-count-value'] = (string)$this->maxCount;
-            }
-            if (!$this->autoHide) {
-                $attrs['data-bs-badge-auto-hide-value'] = 'false';
-            }
-            if ($this->status !== null) {
-                $attrs['data-bs-badge-status-value'] = $this->status;
-            }
-            if ($this->blinking) {
-                $attrs['data-bs-badge-blinking-value'] = 'true';
-            }
-        }
+        // Add Stimulus controller attributes using new pattern
+        $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
 
+        // Merge custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:pagination-item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/pagination-item.html.twig')]
-final class PaginationItem extends AbstractBootstrap
+final class PaginationItem extends AbstractStimulus
 {
     public ?string $href = null;
     public ?string $label = null;
@@ -20,12 +20,18 @@ final class PaginationItem extends AbstractBootstrap
     {
         $d = $this->config->for('pagination_item');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
         $this->active = $this->active || ($d['active'] ?? false);
         $this->disabled = $this->disabled || ($d['disabled'] ?? false);
         $this->ariaCurrent ??= $d['aria_current'] ?? 'page';
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

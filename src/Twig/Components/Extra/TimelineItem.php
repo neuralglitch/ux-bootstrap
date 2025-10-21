@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:timeline-item', template: '@NeuralGlitchUxBootstrap/components/extra/timeline-item.html.twig')]
-final class TimelineItem extends AbstractBootstrap
+final class TimelineItem extends AbstractStimulus
 {
     /**
      * Title/heading for the timeline item
@@ -74,6 +74,8 @@ final class TimelineItem extends AbstractBootstrap
     {
         $d = $this->config->for('timeline_item');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->timePosition = $this->timePosition ?? ($d['time_position'] ?? 'inline');
         $this->variant = $this->variant ?? ($d['variant'] ?? null);
@@ -86,7 +88,11 @@ final class TimelineItem extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

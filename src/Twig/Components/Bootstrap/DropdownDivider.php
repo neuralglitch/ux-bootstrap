@@ -7,12 +7,18 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:dropdown-divider', template: '@NeuralGlitchUxBootstrap/components/bootstrap/dropdown-divider.html.twig')]
-final class DropdownDivider extends AbstractBootstrap
+final class DropdownDivider extends AbstractStimulus
 {
     public function mount(): void
     {
         $d = $this->config->for('dropdown_divider');
+
+        $this->applyStimulusDefaults($d);
         $this->applyClassDefaults($d);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

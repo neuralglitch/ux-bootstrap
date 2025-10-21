@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:kanban', template: '@NeuralGlitchUxBootstrap/components/extra/kanban.html.twig')]
-final class Kanban extends AbstractBootstrap
+final class Kanban extends AbstractStimulus
 {
     // Layout
     public string $variant = 'horizontal'; // 'horizontal' | 'vertical' | 'compact'
@@ -41,6 +41,8 @@ final class Kanban extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('kanban');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults - config takes precedence over component defaults
         $this->variant = $d['variant'] ?? $this->variant;
@@ -63,7 +65,11 @@ final class Kanban extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
     
     protected function getComponentName(): string
@@ -85,14 +91,8 @@ final class Kanban extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
         
-        $attrs = $this->mergeAttributes(
-            [
-                'data-controller' => $this->stimulus_controller,
-                'data-bs-kanban-draggable-value' => $this->draggable ? 'true' : 'false',
-                'data-bs-kanban-cross-column-value' => $this->allow_cross_column ? 'true' : 'false',
-            ],
-            $this->attr
-        );
+        $attrs = $this->buildStimulusAttributes();
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
         
         return [
             'variant' => $this->variant,

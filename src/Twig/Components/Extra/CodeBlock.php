@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:code-block', template: '@NeuralGlitchUxBootstrap/components/extra/code-block.html.twig')]
-final class CodeBlock extends AbstractBootstrap
+final class CodeBlock extends AbstractStimulus
 {
     public ?string $language = null;
     public ?string $title = null;
@@ -25,6 +25,8 @@ final class CodeBlock extends AbstractBootstrap
     {
         $d = $this->config->for('code_block');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->language ??= $d['language'] ?? null;
@@ -37,6 +39,10 @@ final class CodeBlock extends AbstractBootstrap
         $this->maxHeight = $this->maxHeight ?: ($d['max_height'] ?? 0);
         $this->wrapLines = $this->wrapLines || ($d['wrap_lines'] ?? false);
         $this->code ??= $d['code'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

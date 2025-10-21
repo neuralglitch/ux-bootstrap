@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent('bs:command-palette', template: '@NeuralGlitchUxBootstrap/components/extra/command-palette.html.twig')]
-final class CommandPalette extends AbstractBootstrap
+final class CommandPalette extends AbstractStimulus
 {
     // Trigger
     public ?string $trigger = null;
@@ -56,6 +56,8 @@ final class CommandPalette extends AbstractBootstrap
     {
         $d = $this->config->for('command_palette');
 
+        $this->applyStimulusDefaults($d);
+
         // Trigger configuration
         $this->trigger ??= $d['trigger'] ?? 'Cmd+K';
         $this->triggerKey ??= $d['trigger_key'] ?? 'k';
@@ -95,6 +97,10 @@ final class CommandPalette extends AbstractBootstrap
         $this->defaultGroups = !empty($this->defaultGroups) ? $this->defaultGroups : ($d['default_groups'] ?? ['Quick Actions', 'Navigation', 'Admin']);
 
         $this->applyClassDefaults($d);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

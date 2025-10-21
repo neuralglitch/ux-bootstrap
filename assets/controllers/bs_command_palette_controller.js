@@ -1,11 +1,11 @@
-import { Controller } from '@hotwired/stimulus';
-import { Modal } from 'bootstrap';
+import {Controller} from '@hotwired/stimulus';
+import {Modal} from 'bootstrap';
 
 /**
  * Bootstrap Command Palette Controller
- * 
+ *
  * A Cmd+K style command palette for quick actions, navigation, and commands.
- * 
+ *
  * Features:
  * - Keyboard shortcut to open (Cmd+K / Ctrl+K)
  * - Fuzzy search and filtering
@@ -13,7 +13,7 @@ import { Modal } from 'bootstrap';
  * - Recent commands tracking
  * - Grouped commands by category
  * - Icons and shortcuts display
- * 
+ *
  * Usage:
  * <twig:bs:command-palette
  *   searchUrl="/command-palette"
@@ -34,22 +34,22 @@ export default class extends Controller {
 
     static values = {
         searchUrl: String,
-        minChars: { type: Number, default: 0 },
-        debounce: { type: Number, default: 150 },
-        closeOnSelect: { type: Boolean, default: true },
-        closeOnEscape: { type: Boolean, default: true },
-        closeOnBackdrop: { type: Boolean, default: true },
-        triggerKey: { type: String, default: 'k' },
-        triggerCtrl: { type: Boolean, default: false },
-        triggerMeta: { type: Boolean, default: true },
-        triggerShift: { type: Boolean, default: false },
-        triggerAlt: { type: Boolean, default: false },
-        showShortcuts: { type: Boolean, default: true },
-        showIcons: { type: Boolean, default: true },
-        showRecent: { type: Boolean, default: true },
-        maxRecent: { type: Number, default: 5 },
-        grouped: { type: Boolean, default: true },
-        animationDuration: { type: Number, default: 200 }
+        minChars: {type: Number, default: 0},
+        debounce: {type: Number, default: 150},
+        closeOnSelect: {type: Boolean, default: true},
+        closeOnEscape: {type: Boolean, default: true},
+        closeOnBackdrop: {type: Boolean, default: true},
+        triggerKey: {type: String, default: 'k'},
+        triggerCtrl: {type: Boolean, default: false},
+        triggerMeta: {type: Boolean, default: true},
+        triggerShift: {type: Boolean, default: false},
+        triggerAlt: {type: Boolean, default: false},
+        showShortcuts: {type: Boolean, default: true},
+        showIcons: {type: Boolean, default: true},
+        showRecent: {type: Boolean, default: true},
+        maxRecent: {type: Number, default: 5},
+        grouped: {type: Boolean, default: true},
+        animationDuration: {type: Number, default: 200}
     };
 
     connect() {
@@ -104,11 +104,11 @@ export default class extends Controller {
     }
 
     handleGlobalKeydown(event) {
-        const { key, ctrlKey, metaKey, shiftKey, altKey } = event;
+        const {key, ctrlKey, metaKey, shiftKey, altKey} = event;
 
         // Check if trigger shortcut matches
         const isCorrectKey = key.toLowerCase() === this.triggerKeyValue.toLowerCase();
-        const isCorrectModifiers = 
+        const isCorrectModifiers =
             (this.triggerCtrlValue ? ctrlKey : !ctrlKey || !this.triggerMetaValue) &&
             (this.triggerMetaValue ? metaKey : !metaKey || !this.triggerCtrlValue) &&
             (this.triggerShiftValue ? shiftKey : !shiftKey) &&
@@ -146,7 +146,7 @@ export default class extends Controller {
     }
 
     handleKeydown(event) {
-        const { key } = event;
+        const {key} = event;
 
         switch (key) {
             case 'ArrowDown':
@@ -235,7 +235,7 @@ export default class extends Controller {
         }
 
         // Group commands if enabled
-        const groups = this.groupedValue ? this.groupCommands(this.commands) : { 'All': this.commands };
+        const groups = this.groupedValue ? this.groupCommands(this.commands) : {'All': this.commands};
 
         // Render groups
         let html = '';
@@ -286,16 +286,16 @@ export default class extends Controller {
     }
 
     renderCommand(command, index) {
-        const icon = this.showIconsValue && command.icon 
-            ? `<span class="command-palette-item-icon">${command.icon}</span>` 
-            : '';
-        
-        const shortcut = this.showShortcutsValue && command.shortcut 
-            ? `<kbd class="command-palette-item-shortcut">${this.escapeHtml(command.shortcut)}</kbd>` 
+        const icon = this.showIconsValue && command.icon
+            ? `<span class="command-palette-item-icon">${command.icon}</span>`
             : '';
 
-        const description = command.description 
-            ? `<span class="command-palette-item-description">${this.escapeHtml(command.description)}</span>` 
+        const shortcut = this.showShortcutsValue && command.shortcut
+            ? `<kbd class="command-palette-item-shortcut">${this.escapeHtml(command.shortcut)}</kbd>`
+            : '';
+
+        const description = command.description
+            ? `<span class="command-palette-item-description">${this.escapeHtml(command.description)}</span>`
             : '';
 
         return `

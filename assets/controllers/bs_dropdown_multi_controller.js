@@ -1,8 +1,8 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Multi-select dropdown controller
- * 
+ *
  * Handles:
  * - Multiple checkbox selections
  * - Select all / Clear all functionality
@@ -25,12 +25,12 @@ export default class extends Controller {
         name: String,
         showApply: Boolean,
         searchable: Boolean,
-        minChars: { type: Number, default: 0 }
+        minChars: {type: Number, default: 0}
     };
 
     connect() {
         this.updateLabel();
-        
+
         // Store original options for search filtering
         if (this.searchableValue) {
             this.allOptions = Array.from(this.optionTargets);
@@ -44,7 +44,7 @@ export default class extends Controller {
         // If not using apply button, update immediately
         if (!this.showApplyValue) {
             this.updateLabel();
-            
+
             // Dispatch custom event for form integration
             this.dispatch('change', {
                 detail: {
@@ -61,13 +61,13 @@ export default class extends Controller {
     selectAll(event) {
         event.preventDefault();
         event.stopPropagation();
-        
+
         this.checkboxTargets.forEach(checkbox => {
             if (!checkbox.disabled) {
                 checkbox.checked = true;
             }
         });
-        
+
         if (!this.showApplyValue) {
             this.updateLabel();
             this.dispatchChangeEvent();
@@ -80,13 +80,13 @@ export default class extends Controller {
     clearAll(event) {
         event.preventDefault();
         event.stopPropagation();
-        
+
         this.checkboxTargets.forEach(checkbox => {
             if (!checkbox.disabled) {
                 checkbox.checked = false;
             }
         });
-        
+
         if (!this.showApplyValue) {
             this.updateLabel();
             this.dispatchChangeEvent();
@@ -99,10 +99,10 @@ export default class extends Controller {
     apply(event) {
         event.preventDefault();
         event.stopPropagation();
-        
+
         this.updateLabel();
         this.dispatchChangeEvent();
-        
+
         // Close the dropdown
         const dropdownToggle = this.toggleTarget;
         const dropdown = bootstrap.Dropdown.getInstance(dropdownToggle);
@@ -116,24 +116,24 @@ export default class extends Controller {
      */
     search(event) {
         if (!this.searchableValue) return;
-        
+
         const query = event.target.value.toLowerCase().trim();
-        
+
         // Don't filter until minimum chars met
         if (query.length > 0 && query.length < this.minCharsValue) {
             return;
         }
-        
+
         let visibleCount = 0;
-        
+
         this.optionTargets.forEach(option => {
             const label = option.dataset.optionLabel.toLowerCase();
             const matches = query === '' || label.includes(query);
-            
+
             option.style.display = matches ? '' : 'none';
             if (matches) visibleCount++;
         });
-        
+
         // Show/hide no results message
         if (this.hasNoResultsTarget) {
             if (visibleCount === 0) {
@@ -149,20 +149,20 @@ export default class extends Controller {
      */
     updateLabel() {
         if (!this.hasLabelTarget) return;
-        
+
         const selected = this.getSelectedCheckboxes();
         const count = selected.length;
-        
+
         if (count === 0) {
             // Get placeholder from data attribute or use default
             const placeholder = this.element.dataset.placeholder || 'Select options';
             this.labelTarget.textContent = placeholder;
             return;
         }
-        
+
         // Get max display from data attribute or use default
         const maxDisplay = parseInt(this.element.dataset.maxDisplay || '3');
-        
+
         if (count <= maxDisplay) {
             // Show individual labels
             const labels = selected.map(checkbox => {
@@ -214,11 +214,11 @@ export default class extends Controller {
      */
     setSelected(values) {
         const valueSet = new Set(values);
-        
+
         this.checkboxTargets.forEach(checkbox => {
             checkbox.checked = valueSet.has(checkbox.value);
         });
-        
+
         this.updateLabel();
         this.dispatchChangeEvent();
     }
@@ -237,7 +237,7 @@ export default class extends Controller {
         this.checkboxTargets.forEach(checkbox => {
             checkbox.checked = false;
         });
-        
+
         this.updateLabel();
         this.dispatchChangeEvent();
     }

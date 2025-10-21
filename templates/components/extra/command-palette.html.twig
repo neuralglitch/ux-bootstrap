@@ -3,28 +3,7 @@
   {% set o = this.options() %}
 
   {# Modal structure #}
-  <div 
-    class="{{ o.modalClasses }}"
-    {{ this.renderHtmlAttributes(o.attrs) | raw }}
-    data-controller="bs-command-palette"
-    data-bs-command-palette-search-url-value="{{ o.searchUrl }}"
-    data-bs-command-palette-min-chars-value="{{ o.minChars }}"
-    data-bs-command-palette-debounce-value="{{ o.debounce }}"
-    data-bs-command-palette-close-on-select-value="{{ o.closeOnSelect ? 'true' : 'false' }}"
-    data-bs-command-palette-close-on-escape-value="{{ o.closeOnEscape ? 'true' : 'false' }}"
-    data-bs-command-palette-close-on-backdrop-value="{{ o.closeOnBackdrop ? 'true' : 'false' }}"
-    data-bs-command-palette-trigger-key-value="{{ o.triggerKey }}"
-    data-bs-command-palette-trigger-ctrl-value="{{ o.triggerCtrl ? 'true' : 'false' }}"
-    data-bs-command-palette-trigger-meta-value="{{ o.triggerMeta ? 'true' : 'false' }}"
-    data-bs-command-palette-trigger-shift-value="{{ o.triggerShift ? 'true' : 'false' }}"
-    data-bs-command-palette-trigger-alt-value="{{ o.triggerAlt ? 'true' : 'false' }}"
-    data-bs-command-palette-show-shortcuts-value="{{ o.showShortcuts ? 'true' : 'false' }}"
-    data-bs-command-palette-show-icons-value="{{ o.showIcons ? 'true' : 'false' }}"
-    data-bs-command-palette-show-recent-value="{{ o.showRecent ? 'true' : 'false' }}"
-    data-bs-command-palette-max-recent-value="{{ o.maxRecent }}"
-    data-bs-command-palette-grouped-value="{{ o.grouped ? 'true' : 'false' }}"
-    data-bs-command-palette-animation-duration-value="{{ o.animationDuration }}"
-  >
+  <div class="{{ o.modalClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     <div class="{{ o.dialogClasses }}">
       <div class="modal-content command-palette-content">
         

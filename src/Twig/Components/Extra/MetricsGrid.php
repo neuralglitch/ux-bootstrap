@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:metrics-grid', template: '@NeuralGlitchUxBootstrap/components/extra/metrics-grid.html.twig')]
-final class MetricsGrid extends AbstractBootstrap
+final class MetricsGrid extends AbstractStimulus
 {
     // Grid layout
     public int $columns = 4;              // Number of columns in desktop view (1-6)
@@ -53,6 +53,8 @@ final class MetricsGrid extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('metrics_grid');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply base class defaults
         $this->applyClassDefaults($d);
@@ -61,7 +63,11 @@ final class MetricsGrid extends AbstractBootstrap
         // For non-nullable properties, check against default value
         if ($this->columns === 4 && isset($d['columns'])) {
             $this->columns = $d['columns'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         if ($this->gap === '4' && isset($d['gap'])) {
             $this->gap = $d['gap'];
         }

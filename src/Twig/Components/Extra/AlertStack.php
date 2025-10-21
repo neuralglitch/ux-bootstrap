@@ -68,14 +68,29 @@ final class AlertStack extends AbstractStimulus
     public float $gap = 0.75;
 
     /**
-     * Stimulus controller name
-     */
-    public string $stimulusController = 'bs-alert-stack';
-
-    /**
      * Whether to load flash messages automatically from session
      */
     public bool $autoLoadFlashMessages = false;
+    
+    protected function getComponentName(): string
+    {
+        return 'alert_stack';
+    }
+    
+    protected function buildStimulusAttributes(): array
+    {
+        $attrs = $this->stimulusControllerAttributes();
+        
+        if ($this->resolveControllers() !== '') {
+            $attrs = array_merge($attrs, [
+                'data-bs-alert-stack-auto-hide-value' => $this->autoHide ? 'true' : 'false',
+                'data-bs-alert-stack-auto-hide-delay-value' => (string)$this->autoHideDelay,
+                'data-bs-alert-stack-max-alerts-value' => (string)$this->maxAlerts,
+            ]);
+        }
+        
+        return $attrs;
+    }
 
     public function mount(): void
     {
@@ -88,6 +103,7 @@ final class AlertStack extends AbstractStimulus
         if ($this->position === 'top-end' && isset($d['position'])) {
             $this->position = $d['position'];
         }
+        
         $this->maxAlerts = $this->maxAlerts ?: ($d['max_alerts'] ?? 0);
         if ($this->defaultVariant === 'info' && isset($d['default_variant'])) {
             $this->defaultVariant = $d['default_variant'];
@@ -99,11 +115,9 @@ final class AlertStack extends AbstractStimulus
         $this->zIndex = $this->zIndex === 1080 ? ($d['z_index'] ?? 1080) : $this->zIndex;
         $this->gap = $this->gap === 0.75 ? ($d['gap'] ?? 0.75) : $this->gap;
         $this->autoLoadFlashMessages = $this->autoLoadFlashMessages || ($d['auto_load_flash_messages'] ?? false);
-    }
-
-    protected function getComponentName(): string
-    {
-        return 'alert_stack';
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     /**
@@ -128,15 +142,8 @@ final class AlertStack extends AbstractStimulus
             $normalizedAlerts = array_slice($normalizedAlerts, 0, $this->maxAlerts);
         }
 
-        $attrs = $this->mergeAttributes(
-            $this->stimulusAttributes($this->stimulusController),
-            [
-                'data-bs-alert-stack-auto-hide-value' => $this->autoHide ? 'true' : 'false',
-                'data-bs-alert-stack-auto-hide-delay-value' => (string)$this->autoHideDelay,
-                'data-bs-alert-stack-max-alerts-value' => (string)$this->maxAlerts,
-            ]
-        );
-
+        // Build Stimulus attributes using new pattern
+        $attrs = $this->buildStimulusAttributes();
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [

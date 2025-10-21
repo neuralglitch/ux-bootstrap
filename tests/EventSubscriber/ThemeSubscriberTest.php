@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Tests\EventSubscriber;
 
-use App\EventSubscriber\ThemeSubscriber;
+use NeuralGlitch\UxBootstrap\EventSubscriber\ThemeSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

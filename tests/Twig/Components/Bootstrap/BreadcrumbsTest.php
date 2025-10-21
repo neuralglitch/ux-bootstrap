@@ -60,7 +60,8 @@ final class BreadcrumbsTest extends TestCase
     public function testComponentHasCorrectDefaults(): void
     {
         $breadcrumbs = $this->createBreadcrumbs();
-
+        
+        // Check property defaults before mount
         self::assertNull($breadcrumbs->items);
         self::assertTrue($breadcrumbs->autoGenerate);
         self::assertTrue($breadcrumbs->showHome);
@@ -70,9 +71,15 @@ final class BreadcrumbsTest extends TestCase
         self::assertSame('/', $breadcrumbs->divider);
         self::assertFalse($breadcrumbs->autoCollapse);
         self::assertSame(4, $breadcrumbs->collapseThreshold);
-        self::assertSame('bs-breadcrumbs', $breadcrumbs->stimulusController);
         self::assertSame('', $breadcrumbs->class);
         self::assertSame([], $breadcrumbs->attr);
+        
+        // Mount() will auto-generate items and set controller
+        $breadcrumbs->autoGenerate = false; // Disable to keep items null
+        $breadcrumbs->mount();
+        
+        // Controller not attached by default (only when autoCollapse=true)
+        self::assertSame('', $breadcrumbs->controller);
     }
 
     public function testMountAppliesConfigDefaults(): void
@@ -84,7 +91,7 @@ final class BreadcrumbsTest extends TestCase
             'home_route' => 'homepage',
             'home_route_params' => ['locale' => 'en'],
             'divider' => '>',
-            'stimulus_controller' => 'custom-breadcrumbs',
+            'controller' => 'custom-breadcrumbs',
         ]);
 
         $breadcrumbs = $this->createBreadcrumbs($config);
@@ -97,7 +104,7 @@ final class BreadcrumbsTest extends TestCase
         self::assertSame(['locale' => 'en'], $breadcrumbs->homeRouteParams);
         // Divider uses ?: operator, so empty string won't use config, need to check actual value
         self::assertNotEmpty($breadcrumbs->divider);
-        self::assertSame('custom-breadcrumbs', $breadcrumbs->stimulusController);
+        self::assertSame('custom-breadcrumbs', $breadcrumbs->controller);
     }
 
     public function testMountWithProvidedItems(): void
@@ -234,7 +241,7 @@ final class BreadcrumbsTest extends TestCase
         $breadcrumbs = $this->createBreadcrumbs();
         $breadcrumbs->autoGenerate = false;
         $breadcrumbs->items = [];
-        $breadcrumbs->stimulusController = 'bs-breadcrumbs';
+        $breadcrumbs->autoCollapse = true; // Enable controller attachment
         $breadcrumbs->mount();
 
         $options = $breadcrumbs->options();

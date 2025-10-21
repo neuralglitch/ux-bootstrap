@@ -25,7 +25,7 @@ final class AccordionItemTest extends TestCase
     {
         $item = $this->createAccordionItem();
 
-        self::assertNull($item->title);
+        self::assertNull($item->header);
         self::assertNull($item->targetId);
         self::assertNull($item->parentId);
         self::assertFalse($item->show);
@@ -107,7 +107,7 @@ final class AccordionItemTest extends TestCase
         $options = $item->options();
 
         self::assertIsArray($options);
-        self::assertArrayHasKey('title', $options);
+        self::assertArrayHasKey('header', $options);
         self::assertArrayHasKey('targetId', $options);
         self::assertArrayHasKey('parentId', $options);
         self::assertArrayHasKey('show', $options);
@@ -221,7 +221,7 @@ final class AccordionItemTest extends TestCase
         ]);
 
         $item = $this->createAccordionItem($config);
-        $item->title = 'Test Item';
+        $item->header = 'Test Item';
         $item->targetId = 'test-target';
         $item->parentId = 'test-parent';
         $item->class = 'custom-item';
@@ -230,7 +230,7 @@ final class AccordionItemTest extends TestCase
 
         $options = $item->options();
 
-        self::assertSame('Test Item', $options['title']);
+        self::assertSame('Test Item', $options['header']);
         self::assertSame('test-target', $options['targetId']);
         self::assertSame('test-parent', $options['parentId']);
         self::assertTrue($options['show']);
@@ -291,12 +291,12 @@ final class AccordionItemTest extends TestCase
     public function testTitleIsPassedToOptions(): void
     {
         $item = $this->createAccordionItem();
-        $item->title = 'Custom Title';
+        $item->header = 'Custom Title';
         $item->mount();
 
         $options = $item->options();
 
-        self::assertSame('Custom Title', $options['title']);
+        self::assertSame('Custom Title', $options['header']);
     }
 
     public function testParentIdIsPassedToOptions(): void

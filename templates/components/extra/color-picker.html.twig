@@ -2,14 +2,7 @@
 
   {% set o = this.options() %}
 
-  <div
-    class="{{ o.classes }}"
-    {{ this.renderHtmlAttributes(o.attrs) | raw }}
-    data-controller="bs-color-picker"
-    data-bs-color-picker-value-value="{{ o.value }}"
-    data-bs-color-picker-show-hex-value="{{ o.showHex ? 'true' : 'false' }}"
-    data-bs-color-picker-allow-custom-value="{{ o.allowCustom ? 'true' : 'false' }}"
-  >
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     {% if o.label and not o.inline %}
       <label for="{{ o.name }}" class="form-label{% if o.required %} required{% endif %}">
         {{ o.label }}

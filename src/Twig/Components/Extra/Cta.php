@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:cta', template: '@NeuralGlitchUxBootstrap/components/extra/cta.html.twig')]
-final class Cta extends AbstractBootstrap
+final class Cta extends AbstractStimulus
 {
     // Layout variant
     public ?string $variant = null;  // 'centered' | 'split' | 'bordered' | 'background' | 'minimal'
@@ -46,6 +46,8 @@ final class Cta extends AbstractBootstrap
     {
         $d = $this->config->for('cta');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->variant ??= $d['variant'] ?? 'centered';
         $this->title ??= $d['title'] ?? 'Ready to get started?';
@@ -77,7 +79,11 @@ final class Cta extends AbstractBootstrap
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

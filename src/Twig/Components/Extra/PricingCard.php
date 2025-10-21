@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:pricing-card', template: '@NeuralGlitchUxBootstrap/components/extra/pricing-card.html.twig')]
-final class PricingCard extends AbstractBootstrap
+final class PricingCard extends AbstractStimulus
 {
     // Plan Details
     public ?string $planName = null;
@@ -47,6 +47,8 @@ final class PricingCard extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('pricing_card');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults
         $this->applyClassDefaults($d);
@@ -68,7 +70,11 @@ final class PricingCard extends AbstractBootstrap
         // Features
         if (empty($this->features) && isset($d['features']) && is_array($d['features'])) {
             $this->features = $d['features'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         $this->showCheckmarks ??= $d['show_checkmarks'] ?? true;
         
         // CTA

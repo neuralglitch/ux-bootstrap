@@ -1,14 +1,14 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Sticky Navbar Controller
- * 
+ *
  * Handles scroll behaviors for navbar including:
  * - Shrink on scroll
  * - Auto-hide (hide on scroll down, show on scroll up)
  * - Shadow on scroll
  * - Transparent until scroll
- * 
+ *
  * Values:
  *   - shrink: boolean (shrink navbar height on scroll)
  *   - autoHide: boolean (auto-hide on scroll down)
@@ -17,10 +17,10 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
     static values = {
-        shrink: { type: Boolean, default: false },
-        autoHide: { type: Boolean, default: false },
-        shadow: { type: Boolean, default: false },
-        transparent: { type: Boolean, default: false }
+        shrink: {type: Boolean, default: false},
+        autoHide: {type: Boolean, default: false},
+        shadow: {type: Boolean, default: false},
+        transparent: {type: Boolean, default: false}
     };
 
     connect() {
@@ -35,7 +35,7 @@ export default class extends Controller {
 
         // Throttle scroll handler
         this.throttledScroll = this.throttle(this.handleScroll.bind(this), 16); // ~60fps
-        window.addEventListener('scroll', this.throttledScroll, { passive: true });
+        window.addEventListener('scroll', this.throttledScroll, {passive: true});
 
         // Initial state
         this.handleScroll();
@@ -43,28 +43,27 @@ export default class extends Controller {
 
     // Stimulus value change callbacks
     shrinkValueChanged() {
-        console.log('Shrink value changed to:', this.shrinkValue);
         this.handleScroll();
+        console.debug('bs-navbar-sticky shrink value changed to:', this.shrinkValue);
     }
 
     autoHideValueChanged() {
-        console.log('AutoHide value changed to:', this.autoHideValue);
         if (!this.autoHideValue) {
             this.element.classList.remove('navbar-hidden');
         }
+        console.debug('bs-navbar-sticky autoHide value changed to:', this.autoHideValue);
         this.handleScroll();
     }
 
     shadowValueChanged() {
-        console.log('Shadow value changed to:', this.shadowValue);
         if (!this.shadowValue) {
             this.element.classList.remove('navbar-shadow');
         }
+        console.debug('bs-navbar-sticky shadow value changed to:', this.shadowValue);
         this.handleScroll();
     }
 
     transparentValueChanged() {
-        console.log('Transparent value changed to:', this.transparentValue);
         if (this.transparentValue) {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop <= this.scrollThreshold) {
@@ -73,6 +72,7 @@ export default class extends Controller {
         } else {
             this.element.classList.remove('navbar-transparent-active', 'navbar-opaque');
         }
+        console.debug('bs-navbar-sticky transparent value changed to:', this.transparentValue);
         this.handleScroll();
     }
 
@@ -131,7 +131,7 @@ export default class extends Controller {
      */
     throttle(func, delay) {
         let lastCall = 0;
-        return function(...args) {
+        return function (...args) {
             const now = Date.now();
             if (now - lastCall >= delay) {
                 lastCall = now;

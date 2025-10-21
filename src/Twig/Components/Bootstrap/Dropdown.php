@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:dropdown', template: '@NeuralGlitchUxBootstrap/components/bootstrap/dropdown.html.twig')]
-final class Dropdown extends AbstractBootstrap
+final class Dropdown extends AbstractStimulus
 {
     use Traits\VariantTrait;
     use Traits\SizeTrait;
@@ -31,6 +31,8 @@ final class Dropdown extends AbstractBootstrap
     {
         $d = $this->config->for('dropdown');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyVariantDefaults($d);
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
@@ -45,6 +47,10 @@ final class Dropdown extends AbstractBootstrap
         $this->toggleClass ??= $d['toggle_class'] ?? null;
         $this->menuClass ??= $d['menu_class'] ?? null;
         $this->menuAttr = array_merge($d['menu_attr'] ?? [], $this->menuAttr);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

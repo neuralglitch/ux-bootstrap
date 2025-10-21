@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:theme', template: '@NeuralGlitchUxBootstrap/components/extra/theme.html.twig')]
-final class Theme extends AbstractBootstrap
+final class Theme extends AbstractStimulus
 {
     use VariantTrait;
 
@@ -20,6 +20,7 @@ final class Theme extends AbstractBootstrap
     {
         $d = $this->config->for('theme_toggle');
 
+        $this->applyStimulusDefaults($d);
         $this->applyVariantDefaults($d);
         $this->applyClassDefaults($d);
 
@@ -27,6 +28,9 @@ final class Theme extends AbstractBootstrap
         if ($this->mode === null && isset($d['mode'])) {
             $this->mode = (string)$d['mode'];
         }
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -44,9 +48,11 @@ final class Theme extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes($this->attr, [
-            'data-controller' => 'bs-theme',
-        ]);
+        // Build Stimulus attributes using new pattern
+        $attrs = $this->buildStimulusAttributes();
+        
+        // Merge with custom attributes
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [
             'mode' => $this->mode ?? 'button-icon',

@@ -20,7 +20,6 @@ final class Toast extends AbstractStimulus
     public int $delay = 5000;
     public bool $animation = true;
     public string $position = 'top-0 end-0';
-    public string $stimulusController = 'bs-toast';
 
     public function mount(): void
     {
@@ -38,6 +37,9 @@ final class Toast extends AbstractStimulus
         $this->delay = $this->delay ?: ($d['delay'] ?? 5000);
         $this->animation = $this->animation && ($d['animation'] ?? true);
         $this->position = $this->position ?: ($d['position'] ?? 'top-0 end-0');
+        
+        // Initialize controller with default (Toast always has a controller)
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -64,9 +66,10 @@ final class Toast extends AbstractStimulus
             'data-bs-delay' => (string)$this->delay,
         ];
 
-        // Add stimulus attributes
-        $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
+        // Add Stimulus controller attributes using new pattern
+        $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
 
+        // Merge custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [

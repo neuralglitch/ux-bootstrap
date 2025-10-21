@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:button-group', template: '@NeuralGlitchUxBootstrap/components/bootstrap/button-group.html.twig')]
-final class ButtonGroup extends AbstractBootstrap
+final class ButtonGroup extends AbstractStimulus
 {
     use Traits\SizeTrait;
 
@@ -35,6 +35,8 @@ final class ButtonGroup extends AbstractBootstrap
     {
         $d = $this->config->for('button_group');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
@@ -44,6 +46,10 @@ final class ButtonGroup extends AbstractBootstrap
         $this->role = $this->role ?: ($d['role'] ?? 'group');
         $this->ariaLabel ??= $d['aria_label'] ?? null;
         $this->ariaLabelledby ??= $d['aria_labelledby'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

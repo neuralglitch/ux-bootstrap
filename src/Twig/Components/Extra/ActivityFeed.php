@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -28,7 +28,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * ```
  */
 #[AsTwigComponent(name: 'bs:activity-feed', template: '@NeuralGlitchUxBootstrap/components/extra/activity-feed.html.twig')]
-final class ActivityFeed extends AbstractBootstrap
+final class ActivityFeed extends AbstractStimulus
 {
     /**
      * Display mode: 'default' or 'compact'
@@ -69,6 +69,8 @@ final class ActivityFeed extends AbstractBootstrap
     {
         $d = $this->config->for('activity_feed');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->mode ??= $d['mode'] ?? 'default';
@@ -78,7 +80,11 @@ final class ActivityFeed extends AbstractBootstrap
         // Handle border: if explicitly set in config (even to null), use that value
         if ($this->border === null && array_key_exists('border', $d)) {
             $this->border = $d['border'];
-        } elseif ($this->border === null) {
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    } elseif ($this->border === null) {
             $this->border = 'start';
         }
         

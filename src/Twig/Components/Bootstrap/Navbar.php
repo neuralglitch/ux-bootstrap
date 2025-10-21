@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:navbar', template: '@NeuralGlitchUxBootstrap/components/bootstrap/navbar.html.twig')]
-final class Navbar extends AbstractBootstrap
+final class Navbar extends AbstractStimulus
 {
 
     /** Brand text or HTML */
@@ -184,6 +184,8 @@ final class Navbar extends AbstractBootstrap
     {
         $d = $this->config->for('navbar');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config - Basic properties
         $this->brand ??= $d['brand'] ?? null;
         $this->brandHref ??= $d['brand_href'] ?? '#';
@@ -247,6 +249,10 @@ final class Navbar extends AbstractBootstrap
         $this->megaMenuColumns = $this->megaMenuColumns ?: ($d['mega_menu_columns'] ?? 4);
 
         $this->applyClassDefaults($d);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

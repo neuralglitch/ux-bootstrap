@@ -9,9 +9,7 @@
   {% set has_content = slot_content is not empty %}
   {% set items = has_content ? [] : (o.items ?? []) %}
 
-  <nav class="{{ o.classes }}" 
-       data-controller="bs-breadcrumbs"
-       {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <nav class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     <ol class="breadcrumb">
       {% if has_content %}
         {# Custom breadcrumb content via slot #}

@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 
-use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\HtmlAttributesTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\IconTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\PopoverTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StateTrait;
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StimulusTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\TooltipTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
 
@@ -19,30 +16,19 @@ use function is_int;
 /**
  * Base class for interactive components (buttons, links, etc.)
  * that share common functionality like tooltips, popovers, icons, and state.
+ * 
+ * Extends AbstractStimulus for automatic Stimulus controller management.
  */
-abstract class AbstractInteraction
+abstract class AbstractInteraction extends AbstractStimulus
 {
-    use StimulusTrait;
     use TooltipTrait;
     use PopoverTrait;
-    use HtmlAttributesTrait;
     use VariantTrait;
     use StateTrait;
     use IconTrait;
 
     public ?string $label = null;
-    public string $class = '';
-
-    /**
-     * @var array<string, mixed>
-     */
-    public array $attr = [];
     public ?string $ariaLabel = null;
-    public string $stimulusController = 'bs-link';
-
-    public function __construct(protected readonly Config $config)
-    {
-    }
 
     /**
      * Apply common defaults for interactive components
@@ -53,13 +39,10 @@ abstract class AbstractInteraction
     {
         $this->applyVariantDefaults($defaults);
         $this->applyStateDefaults($defaults);
+        $this->applyStimulusDefaults($defaults);  // Use new pattern
 
         $this->applyTooltipDefaults($defaults['tooltip'] ?? []);
         $this->applyPopoverDefaults($defaults['popover'] ?? []);
-
-        if (!empty($defaults['stimulus_controller'])) {
-            $this->stimulusController = (string)$defaults['stimulus_controller'];
-        }
 
         if (array_key_exists('icon_only', $defaults)) {
             $this->iconOnly = $this->iconOnly || (bool)$defaults['icon_only'];
@@ -83,16 +66,31 @@ abstract class AbstractInteraction
             $attrs['aria-label'] = $this->ariaLabel;
         }
 
+        // Add tooltip/popover attributes (these may trigger controllers)
         $attrs = $this->mergeAttributes($attrs, $this->tooltipAttributes());
         $attrs = $this->mergeAttributes($attrs, $this->popoverAttributes());
-        $attrs = $this->mergeAttributes($attrs, $this->stimulusAttributes($this->stimulusController));
+        
+        // Add Stimulus controller attributes using new pattern
+        $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
+        
+        // Add state attributes
         $attrs = $this->mergeAttributes($attrs, $this->stateAttributesFor($this->getComponentType(), $isAnchor));
 
+        // Apply icon-only aria attributes
         $attrs = $this->applyIconOnlyAria($attrs, $this->label, $this->ariaLabel);
 
+        // Merge custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return $attrs;
+    }
+    
+    /**
+     * Check if tooltips or popovers are enabled (for conditional controller attachment)
+     */
+    protected function hasTooltipOrPopover(): bool
+    {
+        return $this->tooltip !== null || $this->popover !== null;
     }
 
     /**

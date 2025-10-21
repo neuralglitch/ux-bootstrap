@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:kanban-card', template: '@NeuralGlitchUxBootstrap/components/extra/kanban-card.html.twig')]
-final class KanbanCard extends AbstractBootstrap
+final class KanbanCard extends AbstractStimulus
 {
     // Content
     public ?string $title = null;
@@ -45,6 +45,8 @@ final class KanbanCard extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('kanban_card');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults - config takes precedence over component defaults
         $this->title = $d['title'] ?? $this->title;
@@ -69,7 +71,11 @@ final class KanbanCard extends AbstractBootstrap
         // Generate ID if not provided
         if (!$this->id) {
             $this->id = 'kanban-card-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         // Auto-detect clickable from href
         if ($this->href !== null && $this->href !== '') {

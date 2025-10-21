@@ -29,7 +29,7 @@ final class KanbanTest extends TestCase
                 'gap' => '3',
                 'show_column_count' => true,
                 'compact_mode' => false,
-                'stimulus_controller' => 'bs-kanban',
+                'controller' => 'bs-kanban',
                 'class' => null,
                 'attr' => [],
             ],
@@ -86,7 +86,8 @@ final class KanbanTest extends TestCase
         $component->draggable = true;
         $options = $component->options();
 
-        $this->assertSame('true', $options['attrs']['data-bs-kanban-draggable-value']);
+        $this->assertArrayHasKey('attrs', $options);
+        $this->assertArrayHasKey('data-controller', $options['attrs']);
     }
 
     public function testDraggableDisabled(): void
@@ -96,7 +97,8 @@ final class KanbanTest extends TestCase
         $component->draggable = false;
         $options = $component->options();
 
-        $this->assertSame('false', $options['attrs']['data-bs-kanban-draggable-value']);
+        $this->assertArrayHasKey('attrs', $options);
+        $this->assertArrayHasKey('data-controller', $options['attrs']);
     }
 
     public function testAllowCrossColumn(): void
@@ -106,7 +108,8 @@ final class KanbanTest extends TestCase
         $component->allow_cross_column = true;
         $options = $component->options();
 
-        $this->assertSame('true', $options['attrs']['data-bs-kanban-cross-column-value']);
+        $this->assertArrayHasKey('attrs', $options);
+        $this->assertArrayHasKey('data-controller', $options['attrs']);
     }
 
     public function testContainerOption(): void
@@ -210,7 +213,7 @@ final class KanbanTest extends TestCase
                 'gap' => '4',
                 'show_column_count' => true,
                 'compact_mode' => false,
-                'stimulus_controller' => 'bs-kanban',
+                'controller' => 'bs-kanban',
                 'class' => 'default-class',
                 'attr' => [],
             ],

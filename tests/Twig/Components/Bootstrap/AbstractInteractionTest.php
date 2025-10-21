@@ -17,6 +17,17 @@ final class AbstractInteractionTest extends TestCase
             {
                 return 'test';
             }
+
+            protected function getComponentName(): string
+            {
+                return 'test';
+            }
+
+            public function mount(): void
+            {
+                $this->applyCommonDefaults([]);
+                $this->initializeController();
+            }
         };
     }
 
@@ -40,8 +51,10 @@ final class AbstractInteractionTest extends TestCase
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
+        $component->mount();
 
-        self::assertSame('bs-link', $component->stimulusController);
+        // After mount(), controller property should have default value
+        self::assertSame('bs-test', $component->controller);
     }
 
     public function testApplyCommonDefaultsWithEmptyDefaults(): void
@@ -133,7 +146,7 @@ final class AbstractInteractionTest extends TestCase
         self::assertSame('Popover content', $component->popoverContent);
     }
 
-    public function testApplyCommonDefaultsWithStimulusController(): void
+    public function testApplyCommonDefaultsWithController(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
@@ -142,10 +155,10 @@ final class AbstractInteractionTest extends TestCase
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
-            'stimulus_controller' => 'custom-controller',
+            'controller' => 'custom-controller',
         ]);
 
-        self::assertSame('custom-controller', $component->stimulusController);
+        self::assertSame('custom-controller', $component->controller);
     }
 
     public function testApplyCommonDefaultsWithIconOnly(): void

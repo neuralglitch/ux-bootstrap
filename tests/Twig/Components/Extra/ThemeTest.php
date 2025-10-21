@@ -176,11 +176,9 @@ final class ThemeTest extends TestCase
 
         $options = $theme->options();
 
-        // mergeAttributes gives priority to the second argument (custom attrs)
+        // Custom attributes override default controller
         self::assertArrayHasKey('data-controller', $options['attrs']);
-        // In this case, bs-theme is added after custom attrs via mergeAttributes
-        // so bs-theme should be the final value, not custom-controller
-        self::assertSame('bs-theme', $options['attrs']['data-controller']);
+        self::assertSame('custom-controller', $options['attrs']['data-controller']);
     }
 
     public function testThemeWithAllModesWork(): void

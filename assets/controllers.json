@@ -10,6 +10,11 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-accordion": {
+            "main": "controllers/bs_accordion_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-badge": {
             "main": "controllers/bs_badge_controller.js",
             "fetch": "eager",
@@ -20,14 +25,34 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-button": {
+            "main": "controllers/bs_button_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-button-group": {
+            "main": "controllers/bs_button_group_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-calendar": {
             "main": "controllers/bs_calendar_controller.js",
             "fetch": "lazy",
             "enabled": true
         },
+        "bs-carousel": {
+            "main": "controllers/bs_carousel_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-code-block": {
             "main": "controllers/bs_code_block_controller.js",
             "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-collapse": {
+            "main": "controllers/bs_collapse_controller.js",
+            "fetch": "eager",
             "enabled": true
         },
         "bs-color-picker": {
@@ -42,6 +67,11 @@
         },
         "bs-cookie-banner": {
             "main": "controllers/bs_cookie_banner_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-dropdown": {
+            "main": "controllers/bs_dropdown_controller.js",
             "fetch": "eager",
             "enabled": true
         },
@@ -70,6 +100,11 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-modal": {
+            "main": "controllers/bs_modal_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-navbar-fullscreen": {
             "main": "controllers/bs_navbar_fullscreen_controller.js",
             "fetch": "eager",
@@ -85,9 +120,29 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-nav": {
+            "main": "controllers/bs_nav_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-notification-center": {
             "main": "controllers/bs_notification_center_controller.js",
             "fetch": "lazy",
+            "enabled": true
+        },
+        "bs-offcanvas": {
+            "main": "controllers/bs_offcanvas_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-popover": {
+            "main": "controllers/bs_popover_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-progress": {
+            "main": "controllers/bs_progress_controller.js",
+            "fetch": "eager",
             "enabled": true
         },
         "bs-search": {
@@ -105,6 +160,11 @@
             "fetch": "lazy",
             "enabled": true
         },
+        "bs-tab": {
+            "main": "controllers/bs_tab_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
         "bs-theme": {
             "main": "controllers/bs_theme_controller.js",
             "fetch": "eager",
@@ -112,6 +172,11 @@
         },
         "bs-toast": {
             "main": "controllers/bs_toast_controller.js",
+            "fetch": "eager",
+            "enabled": true
+        },
+        "bs-tooltip": {
+            "main": "controllers/bs_tooltip_controller.js",
             "fetch": "eager",
             "enabled": true
         },

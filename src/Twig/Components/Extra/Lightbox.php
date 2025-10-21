@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -13,7 +13,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * Supports image galleries, portfolios, product galleries, and photo albums.
  */
 #[AsTwigComponent(name: 'bs:lightbox', template: '@NeuralGlitchUxBootstrap/components/extra/lightbox.html.twig')]
-final class Lightbox extends AbstractBootstrap
+final class Lightbox extends AbstractStimulus
 {
     /**
      * Array of images to display in the lightbox.
@@ -108,6 +108,8 @@ final class Lightbox extends AbstractBootstrap
     {
         $d = $this->config->for('lightbox');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
@@ -131,7 +133,11 @@ final class Lightbox extends AbstractBootstrap
         // Generate ID if not provided
         if (!$this->id) {
             $this->id = 'lightbox-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
 
         // Validate images array
         if (empty($this->images)) {

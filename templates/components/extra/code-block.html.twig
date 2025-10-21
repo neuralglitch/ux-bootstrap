@@ -9,8 +9,7 @@
   {% set has_content = slot_content is not empty %}
   {% set code_content = has_content ? slot_content : (o.code ?? '') %}
 
-  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}
-       {% if o.copyButton %}data-controller="bs-code-block"{% endif %}>
+  <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
 
     {# Header (title, filename, or language) #}
     {% if o.title or o.filename or o.language %}

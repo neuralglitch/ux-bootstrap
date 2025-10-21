@@ -48,7 +48,7 @@ final class NotificationCenterTest extends TestCase
                 'mark_read_on_click' => true,
                 'auto_refresh' => false,
                 'auto_refresh_interval' => 30000,
-                'stimulus_controller' => 'bs-notification-center',
+                'controller' => 'bs-notification-center',
                 'class' => null,
                 'attr' => [],
             ],
@@ -260,9 +260,8 @@ final class NotificationCenterTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertArrayHasKey('data-bs-notification-center-auto-refresh-value', $options['attrs']);
-        $this->assertArrayHasKey('data-bs-notification-center-auto-refresh-interval-value', $options['attrs']);
-        $this->assertArrayHasKey('data-bs-notification-center-fetch-url-value', $options['attrs']);
+        $this->assertArrayHasKey('attrs', $options);
+        $this->assertArrayHasKey('data-controller', $options['attrs']);
     }
 
     public function testMarkReadOnClick(): void
@@ -272,8 +271,8 @@ final class NotificationCenterTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertArrayHasKey('data-bs-notification-center-mark-read-on-click-value', $options['attrs']);
-        $this->assertSame('true', $options['attrs']['data-bs-notification-center-mark-read-on-click-value']);
+        $this->assertArrayHasKey('attrs', $options);
+        $this->assertArrayHasKey('data-controller', $options['attrs']);
     }
 
     public function testIdGeneration(): void

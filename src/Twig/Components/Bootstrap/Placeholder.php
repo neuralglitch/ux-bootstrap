@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:placeholder', template: '@NeuralGlitchUxBootstrap/components/bootstrap/placeholder.html.twig')]
-final class Placeholder extends AbstractBootstrap
+final class Placeholder extends AbstractStimulus
 {
     /**
      * Grid column class for width (e.g., '6' for 'col-6', '12' for 'col-12')
@@ -48,6 +48,8 @@ final class Placeholder extends AbstractBootstrap
     {
         $d = $this->config->for('placeholder');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->col ??= $d['col'] ?? null;
@@ -57,6 +59,10 @@ final class Placeholder extends AbstractBootstrap
         $this->width ??= $d['width'] ?? null;
         $this->tag = $this->tag !== 'span' ? $this->tag : ($d['tag'] ?? 'span');
         $this->ariaHidden = $this->ariaHidden !== true ? $this->ariaHidden : ($d['aria_hidden'] ?? true);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

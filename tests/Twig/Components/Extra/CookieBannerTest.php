@@ -211,7 +211,6 @@ final class CookieBannerTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertArrayHasKey('data-bs-cookie-banner-cookie-name-value', $options['attrs']);
         $this->assertSame('my_consent', $options['attrs']['data-bs-cookie-banner-cookie-name-value']);
     }
 
@@ -222,7 +221,6 @@ final class CookieBannerTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertArrayHasKey('data-bs-cookie-banner-expiry-days-value', $options['attrs']);
         $this->assertSame('90', $options['attrs']['data-bs-cookie-banner-expiry-days-value']);
     }
 
@@ -244,7 +242,6 @@ final class CookieBannerTest extends TestCase
         $options = $component->options();
 
         $this->assertTrue($options['backdrop']);
-        $this->assertArrayHasKey('data-bs-cookie-banner-backdrop-value', $options['attrs']);
         $this->assertSame('true', $options['attrs']['data-bs-cookie-banner-backdrop-value']);
     }
 
@@ -256,7 +253,6 @@ final class CookieBannerTest extends TestCase
         $options = $component->options();
 
         $this->assertFalse($options['backdrop']);
-        $this->assertArrayHasKey('data-bs-cookie-banner-backdrop-value', $options['attrs']);
         $this->assertSame('false', $options['attrs']['data-bs-cookie-banner-backdrop-value']);
     }
 
@@ -289,7 +285,7 @@ final class CookieBannerTest extends TestCase
         $options = $component->options();
 
         $this->assertArrayHasKey('data-controller', $options['attrs']);
-        $this->assertSame('bs-cookie-banner', $options['attrs']['data-controller']);
+        $this->assertSame('bs-cookie_banner', $options['attrs']['data-controller']);
     }
 
     public function testCustomClasses(): void

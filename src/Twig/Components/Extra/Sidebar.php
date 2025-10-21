@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:sidebar', template: '@NeuralGlitchUxBootstrap/components/extra/sidebar.html.twig')]
-final class Sidebar extends AbstractBootstrap
+final class Sidebar extends AbstractStimulus
 {
     // Layout variants
     public string $variant = 'fixed';           // 'fixed' | 'collapsible' | 'overlay' | 'push' | 'mini'
@@ -50,17 +50,20 @@ final class Sidebar extends AbstractBootstrap
     public string $transition = 'slide';        // 'slide' | 'fade' | 'none'
     public int $transitionDuration = 300;       // milliseconds
 
-    // Stimulus controller
-    public ?string $stimulusController = 'bs-sidebar';
-
     public function mount(): void
     {
         $d = $this->config->for('sidebar');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config (use explicit check for non-nullable properties with defaults)
         if ($this->variant === 'fixed' && isset($d['variant'])) {
             $this->variant = $d['variant'];
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         if ($this->position === 'left' && isset($d['position'])) {
             $this->position = $d['position'];
         }
@@ -105,8 +108,11 @@ final class Sidebar extends AbstractBootstrap
             $this->transitionDuration = $d['transition_duration'];
         }
 
-        // Stimulus controller
-        $this->stimulusController ??= $d['stimulus_controller'] ?? 'bs-sidebar';
+        // Apply Stimulus defaults
+        $this->applyStimulusDefaults($d);
+        
+        // Initialize controller with default
+        $this->initializeController();
 
         $this->applyClassDefaults($d);
 
@@ -140,21 +146,8 @@ final class Sidebar extends AbstractBootstrap
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes([
-            'data-controller' => $this->stimulusController,
-            'data-bs-sidebar-variant-value' => $this->variant,
-            'data-bs-sidebar-position-value' => $this->position,
-            'data-bs-sidebar-collapsed-value' => $this->collapsed ? 'true' : 'false',
-            'data-bs-sidebar-collapsible-value' => $this->collapsible ? 'true' : 'false',
-            'data-bs-sidebar-overlay-value' => $this->overlay ? 'true' : 'false',
-            'data-bs-sidebar-backdrop-close-value' => $this->backdropClose ? 'true' : 'false',
-            'data-bs-sidebar-mobile-breakpoint-value' => $this->mobileBreakpoint,
-            'data-bs-sidebar-mobile-behavior-value' => $this->mobileBehavior,
-            'data-bs-sidebar-width-value' => $this->width,
-            'data-bs-sidebar-mini-width-value' => $this->miniWidth,
-            'data-bs-sidebar-transition-value' => $this->transition,
-            'data-bs-sidebar-transition-duration-value' => (string) $this->transitionDuration,
-        ], $this->attr);
+        $attrs = $this->buildStimulusAttributes();
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         $style = [
             '--ux-sidebar-width' => $this->width,

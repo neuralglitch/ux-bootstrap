@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:empty-state', template: '@NeuralGlitchUxBootstrap/components/extra/empty-state.html.twig')]
-final class EmptyState extends AbstractBootstrap
+final class EmptyState extends AbstractStimulus
 {
     // Content
     public ?string $title = null;
@@ -42,6 +42,8 @@ final class EmptyState extends AbstractBootstrap
     {
         $d = $this->config->for('empty_state');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
@@ -64,6 +66,10 @@ final class EmptyState extends AbstractBootstrap
         $this->size ??= $d['size'] ?? null;
         $this->container ??= $d['container'] ?? 'container';
         $this->centered = $this->centered && ($d['centered'] ?? true);
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

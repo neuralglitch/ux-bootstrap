@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:kanban-column', template: '@NeuralGlitchUxBootstrap/components/extra/kanban-column.html.twig')]
-final class KanbanColumn extends AbstractBootstrap
+final class KanbanColumn extends AbstractStimulus
 {
     // Content
     public string $title = 'Column';
@@ -39,6 +39,8 @@ final class KanbanColumn extends AbstractBootstrap
     public function mount(): void
     {
         $d = $this->config->for('kanban_column');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults - config takes precedence over component defaults
         $this->title = $d['title'] ?? $this->title;
@@ -59,7 +61,11 @@ final class KanbanColumn extends AbstractBootstrap
         // Generate ID if not provided
         if (!$this->id) {
             $this->id = 'kanban-col-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         $this->applyClassDefaults($d);
         

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:carousel:item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/carousel-item.html.twig')]
-final class CarouselItem extends AbstractBootstrap
+final class CarouselItem extends AbstractStimulus
 {
     // State
     public bool $active = false;
@@ -28,6 +28,8 @@ final class CarouselItem extends AbstractBootstrap
     {
         $d = $this->config->for('carousel_item');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
@@ -36,7 +38,11 @@ final class CarouselItem extends AbstractBootstrap
         // For imgClass, only apply default if it's still 'd-block w-100' (the default value)
         if ($this->imgClass === 'd-block w-100') {
             $this->imgClass = $d['img_class'] ?? 'd-block w-100';
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
     }
 
     protected function getComponentName(): string

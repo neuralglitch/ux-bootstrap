@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent('bs:dropdown-multi', template: '@NeuralGlitchUxBootstrap/components/extra/dropdown-multi.html.twig')]
-final class DropdownMulti extends AbstractBootstrap
+final class DropdownMulti extends AbstractStimulus
 {
     use \NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
     use \NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\SizeTrait;
@@ -66,6 +66,8 @@ final class DropdownMulti extends AbstractBootstrap
     {
         $d = $this->config->for('dropdown_multi');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyVariantDefaults($d);
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
@@ -95,7 +97,11 @@ final class DropdownMulti extends AbstractBootstrap
         // Only apply default if not explicitly set
         if ($this->maxDisplay === 3) {
             $this->maxDisplay = $d['max_display'] ?? 3;
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         
         $this->name ??= $d['name'] ?? null;
         $this->required = $this->required || ($d['required'] ?? false);

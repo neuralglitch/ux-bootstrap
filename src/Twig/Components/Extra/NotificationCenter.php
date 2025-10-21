@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:notification-center', template: '@NeuralGlitchUxBootstrap/components/extra/notification-center.html.twig')]
-final class NotificationCenter extends AbstractBootstrap
+final class NotificationCenter extends AbstractStimulus
 {
     // Layout & Appearance
     public ?string $variant = null; // 'dropdown' | 'popover' | 'offcanvas' | 'modal' | 'inline'
@@ -65,12 +65,11 @@ final class NotificationCenter extends AbstractBootstrap
     public ?string $triggerId = null;
     public ?string $menuId = null;
     
-    // Stimulus controller
-    public string $stimulusController = 'bs-notification-center';
-    
     public function mount(): void
     {
         $d = $this->config->for('notification_center');
+
+        $this->applyStimulusDefaults($d);
         
         // Apply defaults
         $this->variant ??= $d['variant'] ?? 'dropdown';
@@ -122,7 +121,11 @@ final class NotificationCenter extends AbstractBootstrap
         // Generate IDs if not provided
         if (!$this->id) {
             $this->id = 'notification-center-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
         if (!$this->triggerId) {
             $this->triggerId = $this->id . '-trigger';
         }
@@ -180,16 +183,17 @@ final class NotificationCenter extends AbstractBootstrap
         $attrs = $this->mergeAttributes([], $this->attr);
         
         // Add Stimulus controller data attributes
+        $controllerName = $this->controller;
         $stimulusAttrs = [
-            'data-controller' => $this->stimulusController,
-            'data-' . $this->stimulusController . '-unread-count-value' => $this->unreadCount,
-            'data-' . $this->stimulusController . '-mark-read-on-click-value' => $this->markReadOnClick ? 'true' : 'false',
-            'data-' . $this->stimulusController . '-auto-refresh-value' => $this->autoRefresh ? 'true' : 'false',
-            'data-' . $this->stimulusController . '-auto-refresh-interval-value' => $this->autoRefreshInterval,
+            'data-controller' => $controllerName,
+            'data-' . $controllerName . '-unread-count-value' => $this->unreadCount,
+            'data-' . $controllerName . '-mark-read-on-click-value' => $this->markReadOnClick ? 'true' : 'false',
+            'data-' . $controllerName . '-auto-refresh-value' => $this->autoRefresh ? 'true' : 'false',
+            'data-' . $controllerName . '-auto-refresh-interval-value' => $this->autoRefreshInterval,
         ];
         
         if ($this->fetchUrl) {
-            $stimulusAttrs['data-' . $this->stimulusController . '-fetch-url-value'] = $this->fetchUrl;
+            $stimulusAttrs['data-' . $controllerName . '-fetch-url-value'] = $this->fetchUrl;
         }
         
         $attrs = array_merge($stimulusAttrs, $attrs);

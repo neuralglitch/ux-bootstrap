@@ -153,7 +153,6 @@ final class CalendarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('2024-12-25', $options['initialDate']);
-        $this->assertArrayHasKey('data-bs-calendar-initial-date-value', $options['attrs']);
         $this->assertSame('2024-12-25', $options['attrs']['data-bs-calendar-initial-date-value']);
     }
 
@@ -309,7 +308,6 @@ final class CalendarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('/events/{id}', $options['eventClickUrl']);
-        $this->assertArrayHasKey('data-bs-calendar-event-click-url-value', $options['attrs']);
     }
 
     public function testDateClickUrlOption(): void
@@ -320,7 +318,6 @@ final class CalendarTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('/events/new?date={date}', $options['dateClickUrl']);
-        $this->assertArrayHasKey('data-bs-calendar-date-click-url-value', $options['attrs']);
     }
 
     public function testHeightOption(): void

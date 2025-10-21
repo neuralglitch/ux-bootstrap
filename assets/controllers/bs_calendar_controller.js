@@ -1,10 +1,10 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 
 /**
  * Calendar Controller
- * 
+ *
  * Event calendar (not datepicker) with multiple views and event management
- * 
+ *
  * @example
  * <div data-controller="bs-calendar"
  *      data-bs-calendar-view-value="month"
@@ -13,18 +13,18 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
     static targets = ['content', 'title', 'eventModal', 'eventModalTitle', 'eventModalBody', 'eventsData'];
-    
+
     static values = {
-        view: { type: String, default: 'month' },
-        locale: { type: String, default: 'en' },
-        eventUrl: { type: String, default: '/calendar/events' },
-        loadAsync: { type: Boolean, default: false },
-        firstDay: { type: Number, default: 0 },
-        showWeekends: { type: Boolean, default: true },
-        eventLimit: { type: Number, default: 3 },
-        timeFormat: { type: String, default: '24h' },
-        editable: { type: Boolean, default: false },
-        selectable: { type: Boolean, default: false },
+        view: {type: String, default: 'month'},
+        locale: {type: String, default: 'en'},
+        eventUrl: {type: String, default: '/calendar/events'},
+        loadAsync: {type: Boolean, default: false},
+        firstDay: {type: Number, default: 0},
+        showWeekends: {type: Boolean, default: true},
+        eventLimit: {type: Number, default: 3},
+        timeFormat: {type: String, default: '24h'},
+        editable: {type: Boolean, default: false},
+        selectable: {type: Boolean, default: false},
         initialDate: String,
         eventClickUrl: String,
         dateClickUrl: String
@@ -35,7 +35,7 @@ export default class extends Controller {
         this.events = [];
         this.selectedDate = null;
         this.draggedEvent = null;
-        
+
         // Parse inline events data if present
         if (this.hasEventsDataTarget && !this.loadAsyncValue) {
             try {
@@ -44,9 +44,9 @@ export default class extends Controller {
                 console.error('Failed to parse events data:', e);
             }
         }
-        
+
         this.render();
-        
+
         // Load events asynchronously if enabled
         if (this.loadAsyncValue) {
             this.loadEvents();
@@ -105,7 +105,7 @@ export default class extends Controller {
     // Rendering methods
     render() {
         this.updateTitle();
-        
+
         switch (this.viewValue) {
             case 'month':
                 this.renderMonthView();
@@ -124,10 +124,10 @@ export default class extends Controller {
 
     updateTitle() {
         if (!this.hasTitleTarget) return;
-        
-        const options = { month: 'long', year: 'numeric' };
+
+        const options = {month: 'long', year: 'numeric'};
         let title = '';
-        
+
         switch (this.viewValue) {
             case 'month':
                 title = this.currentDate.toLocaleDateString(this.localeValue, options);
@@ -135,16 +135,28 @@ export default class extends Controller {
             case 'week':
                 const weekStart = this.getWeekStart(this.currentDate);
                 const weekEnd = this.getWeekEnd(this.currentDate);
-                title = `${weekStart.toLocaleDateString(this.localeValue, { month: 'short', day: 'numeric' })} - ${weekEnd.toLocaleDateString(this.localeValue, { month: 'short', day: 'numeric', year: 'numeric' })}`;
+                title = `${weekStart.toLocaleDateString(this.localeValue, {
+                    month: 'short',
+                    day: 'numeric'
+                })} - ${weekEnd.toLocaleDateString(this.localeValue, {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                })}`;
                 break;
             case 'day':
-                title = this.currentDate.toLocaleDateString(this.localeValue, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                title = this.currentDate.toLocaleDateString(this.localeValue, {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
                 break;
             case 'list':
                 title = this.currentDate.toLocaleDateString(this.localeValue, options);
                 break;
         }
-        
+
         this.titleTarget.textContent = title;
     }
 
@@ -153,9 +165,9 @@ export default class extends Controller {
         const month = this.currentDate.getMonth();
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
-        
+
         let html = '<table class="table table-bordered mb-0 calendar-month-view">';
-        
+
         // Header row (weekdays)
         html += '<thead><tr>';
         const weekdays = this.getWeekdayNames();
@@ -163,14 +175,14 @@ export default class extends Controller {
             html += `<th class="text-center p-2 bg-light">${day}</th>`;
         });
         html += '</tr></thead><tbody>';
-        
+
         // Calculate starting position
         let startingDayOfWeek = firstDay.getDay() - this.firstDayValue;
         if (startingDayOfWeek < 0) startingDayOfWeek += 7;
-        
+
         let date = new Date(firstDay);
         date.setDate(date.getDate() - startingDayOfWeek);
-        
+
         // Generate weeks
         for (let week = 0; week < 6; week++) {
             html += '<tr>';
@@ -178,38 +190,38 @@ export default class extends Controller {
                 const isCurrentMonth = date.getMonth() === month;
                 const isToday = this.isToday(date);
                 const dayEvents = this.getEventsForDate(date);
-                
+
                 if (!this.showWeekendsValue && (day === 0 || day === 6)) {
                     date.setDate(date.getDate() + 1);
                     continue;
                 }
-                
+
                 const classes = ['calendar-day', 'p-2', 'align-top'];
                 if (!isCurrentMonth) classes.push('text-muted', 'bg-light-subtle');
                 if (isToday) classes.push('bg-primary-subtle', 'border-primary');
-                
+
                 html += `<td class="${classes.join(' ')}" data-date="${this.formatDate(date)}" data-action="click->bs-calendar#handleDateClick">`;
                 html += `<div class="calendar-day-number small fw-bold mb-1">${date.getDate()}</div>`;
-                
+
                 // Render events
                 const displayLimit = this.eventLimitValue;
                 dayEvents.slice(0, displayLimit).forEach(event => {
                     html += this.renderEventBadge(event);
                 });
-                
+
                 if (dayEvents.length > displayLimit) {
                     html += `<div class="badge bg-secondary text-white w-100 mt-1 small">+${dayEvents.length - displayLimit} more</div>`;
                 }
-                
+
                 html += '</td>';
                 date.setDate(date.getDate() + 1);
             }
             html += '</tr>';
-            
+
             // Stop if we've passed the last day and filled the row
             if (date.getMonth() !== month && day === 6) break;
         }
-        
+
         html += '</tbody></table>';
         this.contentTarget.innerHTML = html;
     }
@@ -217,9 +229,9 @@ export default class extends Controller {
     renderWeekView() {
         const weekStart = this.getWeekStart(this.currentDate);
         const weekEnd = this.getWeekEnd(this.currentDate);
-        
+
         let html = '<table class="table table-bordered mb-0 calendar-week-view">';
-        
+
         // Header
         html += '<thead><tr><th class="bg-light p-2" style="width: 80px;">Time</th>';
         const date = new Date(weekStart);
@@ -230,51 +242,56 @@ export default class extends Controller {
             }
             const isToday = this.isToday(date);
             html += `<th class="text-center p-2 ${isToday ? 'bg-primary-subtle' : 'bg-light'}">`;
-            html += `<div>${date.toLocaleDateString(this.localeValue, { weekday: 'short' })}</div>`;
+            html += `<div>${date.toLocaleDateString(this.localeValue, {weekday: 'short'})}</div>`;
             html += `<div class="h5 mb-0">${date.getDate()}</div>`;
             html += '</th>';
             date.setDate(date.getDate() + 1);
         }
         html += '</tr></thead>';
-        
+
         // Body with time slots
         html += '<tbody>';
         const hours = 24;
         for (let hour = 0; hour < hours; hour++) {
             html += '<tr>';
             html += `<td class="text-center text-muted small p-2 bg-light">${this.formatHour(hour)}</td>`;
-            
+
             const slotDate = new Date(weekStart);
             for (let day = 0; day < 7; day++) {
                 if (!this.showWeekendsValue && (slotDate.getDay() === 0 || slotDate.getDay() === 6)) {
                     slotDate.setDate(slotDate.getDate() + 1);
                     continue;
                 }
-                
+
                 html += `<td class="calendar-time-slot p-1" data-date="${this.formatDate(slotDate)}" data-hour="${hour}">`;
-                
+
                 // Find events for this time slot
                 const slotEvents = this.getEventsForDateAndHour(slotDate, hour);
                 slotEvents.forEach(event => {
                     html += this.renderEventBadge(event, true);
                 });
-                
+
                 html += '</td>';
                 slotDate.setDate(slotDate.getDate() + 1);
             }
             html += '</tr>';
         }
         html += '</tbody></table>';
-        
+
         this.contentTarget.innerHTML = html;
     }
 
     renderDayView() {
         let html = '<div class="calendar-day-view">';
-        html += `<h4 class="p-3 mb-0 border-bottom">${this.currentDate.toLocaleDateString(this.localeValue, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</h4>`;
-        
+        html += `<h4 class="p-3 mb-0 border-bottom">${this.currentDate.toLocaleDateString(this.localeValue, {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        })}</h4>`;
+
         const dayEvents = this.getEventsForDate(this.currentDate);
-        
+
         if (dayEvents.length === 0) {
             html += '<div class="p-5 text-center text-muted">No events scheduled for this day</div>';
         } else {
@@ -284,7 +301,7 @@ export default class extends Controller {
             });
             html += '</div>';
         }
-        
+
         html += '</div>';
         this.contentTarget.innerHTML = html;
     }
@@ -293,27 +310,31 @@ export default class extends Controller {
         const month = this.currentDate.getMonth();
         const year = this.currentDate.getFullYear();
         const monthEvents = this.getEventsForMonth(year, month);
-        
+
         let html = '<div class="calendar-list-view">';
-        
+
         if (monthEvents.length === 0) {
             html += '<div class="p-5 text-center text-muted">No events scheduled for this month</div>';
         } else {
             // Group events by date
             const groupedEvents = this.groupEventsByDate(monthEvents);
-            
+
             html += '<div class="list-group list-group-flush">';
             Object.keys(groupedEvents).sort().forEach(dateKey => {
                 const date = new Date(dateKey);
-                html += `<div class="list-group-item bg-light fw-bold">${date.toLocaleDateString(this.localeValue, { weekday: 'long', month: 'long', day: 'numeric' })}</div>`;
-                
+                html += `<div class="list-group-item bg-light fw-bold">${date.toLocaleDateString(this.localeValue, {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric'
+                })}</div>`;
+
                 groupedEvents[dateKey].forEach(event => {
                     html += this.renderEventListItem(event);
                 });
             });
             html += '</div>';
         }
-        
+
         html += '</div>';
         this.contentTarget.innerHTML = html;
     }
@@ -335,7 +356,7 @@ export default class extends Controller {
         const startTime = event.start ? this.formatEventTime(event.start) : '';
         const endTime = event.end ? this.formatEventTime(event.end) : '';
         const timeRange = startTime && endTime ? `${startTime} - ${endTime}` : startTime;
-        
+
         return `<div class="list-group-item list-group-item-action" 
                      data-event-id="${event.id || ''}"
                      data-action="click->bs-calendar#handleEventClick"
@@ -352,14 +373,14 @@ export default class extends Controller {
     handleDateClick(event) {
         const dateStr = event.currentTarget.dataset.date;
         if (!dateStr) return;
-        
+
         this.selectedDate = new Date(dateStr);
-        
+
         if (this.hasDateClickUrlValue) {
             window.location.href = this.dateClickUrlValue.replace('{date}', dateStr);
         } else {
             // Dispatch custom event
-            this.dispatch('dateClick', { detail: { date: dateStr, dateObj: this.selectedDate } });
+            this.dispatch('dateClick', {detail: {date: dateStr, dateObj: this.selectedDate}});
         }
     }
 
@@ -367,22 +388,22 @@ export default class extends Controller {
         event.stopPropagation();
         const eventId = event.currentTarget.dataset.eventId;
         const eventData = this.events.find(e => e.id === eventId);
-        
+
         if (this.hasEventClickUrlValue) {
             window.location.href = this.eventClickUrlValue.replace('{id}', eventId);
         } else if (this.hasEventModalTarget) {
             this.showEventModal(eventData);
         } else {
             // Dispatch custom event
-            this.dispatch('eventClick', { detail: { eventId, event: eventData } });
+            this.dispatch('eventClick', {detail: {eventId, event: eventData}});
         }
     }
 
     showEventModal(event) {
         if (!event) return;
-        
+
         this.eventModalTitleTarget.textContent = event.title || 'Event Details';
-        
+
         let body = '';
         if (event.start) {
             body += `<p><strong>Start:</strong> ${new Date(event.start).toLocaleString(this.localeValue)}</p>`;
@@ -396,9 +417,9 @@ export default class extends Controller {
         if (event.location) {
             body += `<p><strong>Location:</strong> ${event.location}</p>`;
         }
-        
+
         this.eventModalBodyTarget.innerHTML = body;
-        
+
         // Show modal using Bootstrap
         const modal = new bootstrap.Modal(this.eventModalTarget);
         modal.show();
@@ -409,7 +430,7 @@ export default class extends Controller {
         try {
             const response = await fetch(this.eventUrlValue);
             if (!response.ok) throw new Error('Failed to load events');
-            
+
             this.events = await response.json();
             this.render();
         } catch (error) {
@@ -473,7 +494,7 @@ export default class extends Controller {
         const names = [];
         const date = new Date(2024, 0, this.firstDayValue); // Start from configured first day
         for (let i = 0; i < 7; i++) {
-            names.push(date.toLocaleDateString(this.localeValue, { weekday: 'short' }));
+            names.push(date.toLocaleDateString(this.localeValue, {weekday: 'short'}));
             date.setDate(date.getDate() + 1);
         }
         return names;
@@ -482,8 +503,8 @@ export default class extends Controller {
     isToday(date) {
         const today = new Date();
         return date.getDate() === today.getDate() &&
-               date.getMonth() === today.getMonth() &&
-               date.getFullYear() === today.getFullYear();
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear();
     }
 
     formatDate(date) {
@@ -501,8 +522,8 @@ export default class extends Controller {
 
     formatEventTime(dateStr) {
         const date = new Date(dateStr);
-        return date.toLocaleTimeString(this.localeValue, { 
-            hour: 'numeric', 
+        return date.toLocaleTimeString(this.localeValue, {
+            hour: 'numeric',
             minute: '2-digit',
             hour12: this.timeFormatValue === '12h'
         });

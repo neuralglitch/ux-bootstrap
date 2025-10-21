@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
@@ -25,7 +25,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
  * ```
  */
 #[AsTwigComponent(name: 'bs:activity-feed-item', template: '@NeuralGlitchUxBootstrap/components/extra/activity-feed-item.html.twig')]
-final class ActivityFeedItem extends AbstractBootstrap
+final class ActivityFeedItem extends AbstractStimulus
 {
     /**
      * Icon class (Bootstrap Icons, Font Awesome, etc.)
@@ -97,6 +97,8 @@ final class ActivityFeedItem extends AbstractBootstrap
     {
         $d = $this->config->for('activity_feed_item');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyClassDefaults($d);
 
         $this->icon ??= $d['icon'] ?? null;
@@ -112,6 +114,10 @@ final class ActivityFeedItem extends AbstractBootstrap
         $this->highlighted ??= $d['highlighted'] ?? false;
         $this->unread ??= $d['unread'] ?? false;
         $this->type ??= $d['type'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

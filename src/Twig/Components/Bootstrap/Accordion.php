@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:accordion', template: '@NeuralGlitchUxBootstrap/components/bootstrap/accordion.html.twig')]
-final class Accordion extends AbstractBootstrap
+final class Accordion extends AbstractStimulus
 {
     public ?string $id = null;
     public bool $flush = false;
@@ -17,6 +17,7 @@ final class Accordion extends AbstractBootstrap
     {
         $d = $this->config->for('accordion');
 
+        $this->applyStimulusDefaults($d);
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -27,6 +28,9 @@ final class Accordion extends AbstractBootstrap
         if (null === $this->id) {
             $this->id = $d['id'] ?? 'accordion-' . uniqid();
         }
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace NeuralGlitch\UxBootstrap\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;

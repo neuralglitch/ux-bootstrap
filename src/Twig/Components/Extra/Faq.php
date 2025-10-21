@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:faq', template: '@NeuralGlitchUxBootstrap/components/extra/faq.html.twig')]
-final class Faq extends AbstractBootstrap
+final class Faq extends AbstractStimulus
 {
     public ?string $variant = null;
 
@@ -27,6 +27,8 @@ final class Faq extends AbstractBootstrap
     {
         $d = $this->config->for('faq');
 
+        $this->applyStimulusDefaults($d);
+
         // Apply defaults from config
         $this->variant ??= $d['variant'] ?? 'accordion';
         $this->title ??= $d['title'] ?? null;
@@ -37,7 +39,11 @@ final class Faq extends AbstractBootstrap
         // Generate accordion ID if not provided
         if ($this->accordionId === null) {
             $this->accordionId = 'faq-' . uniqid();
-        }
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    }
 
         $this->applyClassDefaults($d);
 

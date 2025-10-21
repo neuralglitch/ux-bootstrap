@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:list-group-item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/list-group-item.html.twig')]
-final class ListGroupItem extends AbstractBootstrap
+final class ListGroupItem extends AbstractStimulus
 {
     use Traits\VariantTrait;
 
@@ -26,6 +26,8 @@ final class ListGroupItem extends AbstractBootstrap
     {
         $d = $this->config->for('list_group_item');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applyVariantDefaults($d);
         $this->applyClassDefaults($d);
 
@@ -40,7 +42,11 @@ final class ListGroupItem extends AbstractBootstrap
         if (null === $this->tag) {
             if ($this->href !== null) {
                 $this->tag = 'a';
-            } elseif ($this->action) {
+
+        
+        // Initialize controller with default
+        $this->initializeController();
+    } elseif ($this->action) {
                 $this->tag = 'button';
             } else {
                 $this->tag = $d['tag'] ?? 'li';

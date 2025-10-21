@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:pagination', template: '@NeuralGlitchUxBootstrap/components/bootstrap/pagination.html.twig')]
-final class Pagination extends AbstractBootstrap
+final class Pagination extends AbstractStimulus
 {
     use Traits\SizeTrait;
 
@@ -18,12 +18,18 @@ final class Pagination extends AbstractBootstrap
     {
         $d = $this->config->for('pagination');
 
+        $this->applyStimulusDefaults($d);
+
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
         $this->ariaLabel ??= $d['aria_label'] ?? 'Page navigation';
         $this->alignment ??= $d['alignment'] ?? null;
+
+        
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
