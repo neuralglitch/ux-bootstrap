@@ -9,13 +9,17 @@
                 <div class="{{ o.cardClasses }}">
                     <div class="{{ o.bodyClasses }}">
                         {% if metric.iconPosition == 'top' and metric.icon %}
-                            <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                            <div class="{{ metric.iconClasses }}">
+                                <twig:ux:icon :name="metric.icon" />
+                            </div>
                         {% endif %}
                         
                         <div class="metric-content{% if metric.iconPosition != 'top' %} d-flex align-items-center justify-content-between{% endif %}">
                             <div class="metric-main{% if metric.iconPosition == 'start' and metric.icon %} d-flex align-items-center{% endif %}">
                                 {% if metric.iconPosition == 'start' and metric.icon %}
-                                    <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                                    <div class="{{ metric.iconClasses }}">
+                                        <twig:ux:icon :name="metric.icon" />
+                                    </div>
                                 {% endif %}
                                 
                                 <div class="flex-grow-1">
@@ -35,7 +39,9 @@
                                 </div>
                                 
                                 {% if metric.iconPosition == 'end' and metric.icon %}
-                                    <div class="{{ metric.iconClasses }}">{{ metric.icon|raw }}</div>
+                                    <div class="{{ metric.iconClasses }}">
+                                        <twig:ux:icon :name="metric.icon" />
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -81,6 +87,4 @@
         {% endfor %}
     </div>
 </div>
-
 {%- endapply %}
-

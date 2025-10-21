@@ -26,8 +26,7 @@ final class MetricsGrid extends AbstractStimulus
      *     trend?: string|null,
      *     change?: string|null,
      *     description?: string|null,
-     *     sparkline?: array<int, int|float>|null
-     * }>
+     *     sparkline?: array<int, int|float>|null}>
      */
     public array $metrics = [];
     

@@ -46,25 +46,25 @@
               {# Icon display based on variant #}
               {% if feature.icon is defined %}
                 {% if o.variant == 'icon-box' %}
-                  <div class="feature-icon bg-{{ featureVariant }} bg-gradient text-white rounded-3 p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
-                    {{ feature.icon|raw }}
+                  <div class="feature-icon bg-{{ featureVariant }} bg-gradient text-white rounded-3 p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }}; font-size: {{ iconSize }};">
+                    <twig:ux:icon :name="feature.icon" />
                   </div>
                 {% elseif o.variant == 'icon-colored' %}
                   <div class="feature-icon text-{{ featureVariant }} mb-3" style="font-size: {{ iconSize }};">
-                    {{ feature.icon|raw }}
+                    <twig:ux:icon :name="feature.icon" />
                   </div>
                 {% elseif o.variant == 'bordered' %}
-                  <div class="feature-icon border border-2 border-{{ featureVariant }} rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
-                    <span class="text-{{ featureVariant }}">{{ feature.icon|raw }}</span>
+                  <div class="feature-icon border border-2 border-{{ featureVariant }} rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }}; font-size: {{ iconSize }};">
+                    <span class="text-{{ featureVariant }}"><twig:ux:icon :name="feature.icon" /></span>
                   </div>
                 {% elseif o.variant == 'shadow' %}
-                  <div class="feature-icon bg-light rounded-circle shadow-sm p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }};">
-                    <span class="text-{{ featureVariant }}">{{ feature.icon|raw }}</span>
+                  <div class="feature-icon bg-light rounded-circle shadow-sm p-3 d-inline-flex align-items-center justify-content-center mb-3" style="width: {{ iconSize }}; height: {{ iconSize }}; font-size: {{ iconSize }};">
+                    <span class="text-{{ featureVariant }}"><twig:ux:icon :name="feature.icon" /></span>
                   </div>
                 {% else %}
                   {# Default variant #}
                   <div class="feature-icon text-{{ featureVariant }} mb-3" style="font-size: {{ iconSize }};">
-                    {{ feature.icon|raw }}
+                    <twig:ux:icon :name="feature.icon" />
                   </div>
                 {% endif %}
               {% endif %}
