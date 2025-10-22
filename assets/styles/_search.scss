@@ -12,6 +12,7 @@
         background-color: var(--bs-body-bg);
         color: var(--bs-secondary);
         border-right: 0;
+        transition: border-color 0.15s ease-in-out;
         
         svg {
           opacity: 0.7;
@@ -32,6 +33,13 @@
         }
         
         &:focus ~ .input-group-text {
+          border-color: var(--bs-primary);
+        }
+      }
+      
+      // Apply primary border to prepend when input is focused
+      &:focus-within {
+        .input-group-text {
           border-color: var(--bs-primary);
         }
       }
@@ -130,13 +138,17 @@
       transition: background-color 0.15s ease-in-out;
       
       &:hover {
-        background-color: var(--bs-light);
+        background-color: var(--bs-secondary-bg);
       }
       
       &:focus {
         outline: none;
-        background-color: var(--bs-light);
+        background-color: var(--bs-secondary-bg);
         box-shadow: inset 0 0 0 2px var(--bs-primary);
+      }
+      
+      &:active {
+        background-color: var(--bs-tertiary-bg);
       }
     }
     
@@ -146,10 +158,13 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      justify-content: space-between;
       
       .search-result-type {
         font-size: 0.75rem;
         font-weight: 400;
+        margin-left: auto;
+        flex-shrink: 0;
       }
     }
     
@@ -190,10 +205,34 @@
 }
 
 // Dark mode support
+[data-bs-theme="dark"] {
+  .search-container {
+    .search-results-wrapper {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.75);
+      border-color: var(--bs-border-color);
+    }
+    
+    .search-result-link {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      
+      &:focus {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+      
+      &:active {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+    }
+  }
+}
+
+// Fallback for prefers-color-scheme
 @media (prefers-color-scheme: dark) {
   .search-container {
     .search-results-wrapper {
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.75);
     }
   }
 }

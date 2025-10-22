@@ -28,14 +28,17 @@
         list-style: none;
         padding: 0;
         margin: 0;
+    }
+    
+    // Children lists (nested)
+    &-children {
+        list-style: none;
+        padding: 0;
+        padding-left: 2rem;
+        margin: 0;
         
-        // Nested children
-        &.tree-view-children {
-            padding-left: 0;
-            
-            &.collapse:not(.show) {
-                display: none;
-            }
+        &.collapse:not(.show) {
+            display: none;
         }
     }
     

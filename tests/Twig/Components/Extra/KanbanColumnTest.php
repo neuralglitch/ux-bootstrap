@@ -15,7 +15,7 @@ final class KanbanColumnTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'kanban_column' => [
+            'kanban-column' => [
                 'title' => 'Column',
                 'description' => null,
                 'limit' => null,
@@ -246,7 +246,7 @@ final class KanbanColumnTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'kanban_column' => [
+            'kanban-column' => [
                 'title' => 'Custom Default',
                 'variant' => 'success',
                 'show_add_button' => false,

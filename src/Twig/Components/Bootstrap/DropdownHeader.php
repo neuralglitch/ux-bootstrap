@@ -20,7 +20,7 @@ final class DropdownHeader extends AbstractStimulus
         $this->applyClassDefaults($d);
         $this->label ??= $d['label'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

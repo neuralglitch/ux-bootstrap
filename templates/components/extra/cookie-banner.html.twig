@@ -1,16 +1,18 @@
 {% apply spaceless -%}
   {% set o = this.options() %}
 
+  {# Controller Wrapper #}
+  <div {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+
   {# Backdrop overlay (optional) #}
   {% if o.backdrop %}
     <div class="cookie-banner-backdrop position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-25" 
-         style="z-index: 1049;"
+         style="z-index: 1049; display: none;"
          data-bs-cookie-banner-target="backdrop"></div>
   {% endif %}
 
   {# Cookie Banner #}
   <div class="{{ o.classes }}" 
-       {{ this.renderHtmlAttributes(o.attrs) | raw }}
        style="z-index: 1050; display: none;"
        data-bs-cookie-banner-target="banner">
     
@@ -20,25 +22,25 @@
         {# Content Column #}
         <div class="col-12 col-lg-7">
           <div class="cookie-banner-content">
-            <h5 class="mb-2">{{ o.title }}</h5>
-            <p class="mb-2 mb-lg-0 text-muted">
+            <h5 class="mb-2 text-body">{{ o.title }}</h5>
+            <p class="mb-2 mb-lg-0 text-body-secondary">
               {{ o.message }}
               
               {# Policy Links #}
               {% if o.privacyUrl or o.cookiePolicyUrl %}
                 <span class="d-block d-sm-inline mt-2 mt-sm-0">
                   {% if o.privacyUrl %}
-                    <a href="{{ o.privacyUrl }}" class="text-decoration-underline" target="_blank" rel="noopener">
+                    <a href="{{ o.privacyUrl }}" class="link-primary text-decoration-underline" target="_blank" rel="noopener">
                       {{ o.privacyLinkText }}
                     </a>
                   {% endif %}
                   
                   {% if o.privacyUrl and o.cookiePolicyUrl %}
-                    <span class="mx-1">|</span>
+                    <span class="mx-1 text-body-secondary">|</span>
                   {% endif %}
                   
                   {% if o.cookiePolicyUrl %}
-                    <a href="{{ o.cookiePolicyUrl }}" class="text-decoration-underline" target="_blank" rel="noopener">
+                    <a href="{{ o.cookiePolicyUrl }}" class="link-primary text-decoration-underline" target="_blank" rel="noopener">
                       {{ o.cookiePolicyLinkText }}
                     </a>
                   {% endif %}
@@ -90,6 +92,8 @@
       </div>
     </div>
   </div>
+  
+  </div>{# Close controller wrapper #}
 
 {%- endapply %}
 

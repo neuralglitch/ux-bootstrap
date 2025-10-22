@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Spinner;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class SpinnerTest extends TestCase
 {
@@ -284,7 +285,7 @@ final class SpinnerTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Spinner($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('spinner', $method->invoke($component));

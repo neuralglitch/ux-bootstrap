@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\CommandPalette;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CommandPaletteTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class CommandPaletteTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'command_palette' => [
+            'command-palette' => [
                 'trigger' => 'Cmd+K',
                 'trigger_key' => 'k',
                 'trigger_ctrl' => false,
@@ -367,7 +368,7 @@ final class CommandPaletteTest extends TestCase
     public function testConfigDefaults(): void
     {
         $config = new Config([
-            'command_palette' => [
+            'command-palette' => [
                 'trigger' => 'Ctrl+K',
                 'trigger_key' => 'k',
                 'trigger_ctrl' => true,
@@ -396,10 +397,10 @@ final class CommandPaletteTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new CommandPalette($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('command_palette', $method->invoke($component));
+        $this->assertSame('command-palette', $method->invoke($component));
     }
 
     public function testTriggerDisplayWithAllModifiers(): void

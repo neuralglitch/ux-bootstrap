@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\NotificationBadge;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class NotificationBadgeTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class NotificationBadgeTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'notification_badge' => [
+            'notification-badge' => [
                 'variant' => 'danger',
                 'size' => 'md',
                 'position' => 'top-end',
@@ -287,7 +288,7 @@ final class NotificationBadgeTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'notification_badge' => [
+            'notification-badge' => [
                 'variant' => 'primary',
                 'size' => 'lg',
                 'position' => 'bottom-start',
@@ -343,10 +344,10 @@ final class NotificationBadgeTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new NotificationBadge($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('notification_badge', $method->invoke($component));
+        $this->assertSame('notification-badge', $method->invoke($component));
     }
 }
 

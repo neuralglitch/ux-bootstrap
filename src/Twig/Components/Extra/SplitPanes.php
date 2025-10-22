@@ -10,6 +10,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:split-panes', template: '@NeuralGlitchUxBootstrap/components/extra/split-panes.html.twig')]
 final class SplitPanes extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-split-panes';
+
     /**
      * Orientation: 'horizontal' (left/right) or 'vertical' (top/bottom)
      */
@@ -67,7 +69,7 @@ final class SplitPanes extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('split_panes');
+        $d = $this->config->for('split-panes');
 
         $this->applyStimulusDefaults($d);
 
@@ -77,14 +79,14 @@ final class SplitPanes extends AbstractStimulus
         if ($this->orientation === 'horizontal' && isset($d['orientation'])) {
             $this->orientation = $d['orientation'];
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
         $this->initialSize ??= $d['initial_size'] ?? null;
         $this->minSize ??= $d['min_size'] ?? null;
         $this->maxSize ??= $d['max_size'] ?? null;
-        
+
         // Boolean properties: config overrides default only if explicitly set
         if ($this->resizable === true && isset($d['resizable']) && $d['resizable'] === false) {
             $this->resizable = false;
@@ -95,7 +97,7 @@ final class SplitPanes extends AbstractStimulus
         if ($this->persistent === false && isset($d['persistent']) && $d['persistent'] === true) {
             $this->persistent = true;
         }
-        
+
         // Integers: use config if default value
         if ($this->dividerSize === 4 && isset($d['divider_size'])) {
             $this->dividerSize = $d['divider_size'];
@@ -103,7 +105,7 @@ final class SplitPanes extends AbstractStimulus
         if ($this->snapThreshold === 50 && isset($d['snap_threshold'])) {
             $this->snapThreshold = $d['snap_threshold'];
         }
-        
+
         $this->collapsed ??= $d['collapsed'] ?? null;
 
         // Generate ID if persistent and no ID provided
@@ -114,7 +116,7 @@ final class SplitPanes extends AbstractStimulus
 
     protected function getComponentName(): string
     {
-        return 'split_panes';
+        return 'split-panes';
     }
 
     /**

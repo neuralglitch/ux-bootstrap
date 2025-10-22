@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\FeatureGrid;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class FeatureGridTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class FeatureGridTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'feature_grid' => [
+            'feature-grid' => [
                 'columns' => 3,
                 'gap' => '4',
                 'container' => 'container',
@@ -267,7 +268,7 @@ final class FeatureGridTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'feature_grid' => [
+            'feature-grid' => [
                 'columns' => 4,
                 'gap' => '5',
                 'variant' => 'icon-box',
@@ -318,10 +319,10 @@ final class FeatureGridTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new FeatureGrid($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('feature_grid', $method->invoke($component));
+        $this->assertSame('feature-grid', $method->invoke($component));
     }
 
     public function testFeatureWithLink(): void

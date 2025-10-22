@@ -16,7 +16,7 @@ use function is_int;
 /**
  * Base class for interactive components (buttons, links, etc.)
  * that share common functionality like tooltips, popovers, icons, and state.
- * 
+ *
  * Extends AbstractStimulus for automatic Stimulus controller management.
  */
 abstract class AbstractInteraction extends AbstractStimulus
@@ -69,10 +69,10 @@ abstract class AbstractInteraction extends AbstractStimulus
         // Add tooltip/popover attributes (these may trigger controllers)
         $attrs = $this->mergeAttributes($attrs, $this->tooltipAttributes());
         $attrs = $this->mergeAttributes($attrs, $this->popoverAttributes());
-        
+
         // Add Stimulus controller attributes using new pattern
         $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
-        
+
         // Add state attributes
         $attrs = $this->mergeAttributes($attrs, $this->stateAttributesFor($this->getComponentType(), $isAnchor));
 
@@ -84,7 +84,7 @@ abstract class AbstractInteraction extends AbstractStimulus
 
         return $attrs;
     }
-    
+
     /**
      * Check if tooltips or popovers are enabled (for conditional controller attachment)
      */

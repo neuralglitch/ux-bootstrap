@@ -12,6 +12,8 @@ final class Badge extends AbstractStimulus
 {
     use VariantTrait;
 
+    public string $stimulusController = 'bs-badge';
+
     public ?string $label = null;
     public ?string $href = null;
     public ?string $target = null;
@@ -62,7 +64,7 @@ final class Badge extends AbstractStimulus
         $this->positioned = $this->positioned || ($d['positioned'] ?? false);
         $this->position ??= $d['position'] ?? null;
         $this->translate = $this->translate && ($d['translate'] ?? true);
-        
+
         // Stimulus controller properties
         $this->count ??= $d['count'] ?? null;
         $this->maxCount = $this->maxCount ?: ($d['max_count'] ?? 99);
@@ -71,7 +73,7 @@ final class Badge extends AbstractStimulus
         $this->blinking = $this->blinking || ($d['blinking'] ?? false);
         $this->hasCounter = $this->hasCounter || ($d['has_counter'] ?? false);
         $this->hasIndicator = $this->hasIndicator || ($d['has_indicator'] ?? false);
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -87,25 +89,25 @@ final class Badge extends AbstractStimulus
     protected function shouldAttachController(): bool
     {
         return $this->controllerEnabled && (
-            $this->hasCounter ||
-            $this->hasIndicator ||
-            $this->count !== null ||
-            $this->status !== null ||
-            $this->blinking
-        );
+                $this->hasCounter ||
+                $this->hasIndicator ||
+                $this->count !== null ||
+                $this->status !== null ||
+                $this->blinking
+            );
     }
-    
+
     /**
      * Override to build Badge-specific Stimulus attributes
      */
     protected function buildStimulusAttributes(): array
     {
         $attrs = $this->stimulusControllerAttributes();
-        
+
         // Only add values if controller is active
         if ($this->resolveControllers() !== '') {
             $values = [];
-            
+
             if ($this->count !== null) {
                 $values['count'] = $this->count;
             }
@@ -121,13 +123,16 @@ final class Badge extends AbstractStimulus
             if ($this->blinking) {
                 $values['blinking'] = $this->blinking;
             }
-            
+
             $attrs = array_merge($attrs, $this->stimulusValues('bs-badge', $values));
         }
-        
+
         return $attrs;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function options(): array
     {
         $isLink = $this->href !== null;

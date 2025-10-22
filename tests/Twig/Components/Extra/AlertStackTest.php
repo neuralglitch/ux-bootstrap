@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\AlertStack;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AlertStackTest extends TestCase
 {
@@ -368,7 +369,7 @@ final class AlertStackTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'alert_stack' => [
+            'alert-stack' => [
                 'position' => 'bottom-start',
                 'max_alerts' => 5,
                 'default_variant' => 'success',
@@ -400,10 +401,10 @@ final class AlertStackTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new AlertStack($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('alert_stack', $method->invoke($component));
+        $this->assertSame('alert-stack', $method->invoke($component));
     }
 
     public function testMixedAlertFormats(): void

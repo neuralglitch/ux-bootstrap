@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AbstractStimulusTest extends TestCase
 {
@@ -51,7 +53,7 @@ final class AbstractStimulusTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->controller = 'original-controller';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, []);
@@ -64,7 +66,7 @@ final class AbstractStimulusTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -80,7 +82,7 @@ final class AbstractStimulusTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->controller = 'original-controller';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -96,7 +98,7 @@ final class AbstractStimulusTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->controller = 'original-controller';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -111,7 +113,7 @@ final class AbstractStimulusTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyStimulusDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -126,7 +128,10 @@ final class AbstractStimulusTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        self::assertInstanceOf(\NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap::class, $component);
+        self::assertInstanceOf(
+            AbstractBootstrap::class,
+            $component
+        );
     }
 
     public function testInitializeControllerSetsDefault(): void
@@ -134,7 +139,7 @@ final class AbstractStimulusTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('initializeController');
         $method->setAccessible(true);
         $method->invoke($component);
@@ -148,7 +153,7 @@ final class AbstractStimulusTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->controller = 'custom-controller';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('initializeController');
         $method->setAccessible(true);
         $method->invoke($component);
@@ -161,7 +166,7 @@ final class AbstractStimulusTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getDefaultController');
         $method->setAccessible(true);
         $result = $method->invoke($component);

@@ -1,0 +1,171 @@
+/**
+ * Calendar Component Styles
+ */
+
+.calendar-container {
+    position: relative;
+    
+    // Loading spinner
+    &.loading::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2rem;
+        height: 2rem;
+        border: 3px solid rgba(var(--bs-primary-rgb), 0.2);
+        border-top-color: var(--bs-primary);
+        border-radius: 50%;
+        animation: spinner-border 0.75s linear infinite;
+        z-index: 10;
+    }
+}
+
+// Month view styles
+.calendar-month-view {
+    width: 100%;
+    
+    // Equal column widths
+    table-layout: fixed;
+    
+    // Header cells
+    thead th {
+        width: 14.285%; // 100% / 7 days
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+    
+    // Day cells
+    td.calendar-day {
+        height: 120px;
+        width: 14.285%;
+        vertical-align: top;
+        overflow: hidden;
+        
+        // Hover effect
+        &:hover {
+            background-color: rgba(var(--bs-primary-rgb), 0.05);
+        }
+    }
+    
+    // Day number
+    .calendar-day-number {
+        display: block;
+        text-align: right;
+    }
+    
+    // Event badges in day cells
+    .badge {
+        font-size: 0.7rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// Week view styles  
+.calendar-week-view {
+    // Time column
+    .calendar-time-col {
+        width: 80px;
+        text-align: right;
+        font-size: 0.875rem;
+        color: var(--bs-secondary-color);
+    }
+    
+    // Day columns
+    .calendar-day-col {
+        min-width: 100px;
+        position: relative;
+    }
+    
+    // Time slot cells (must be positioned for absolute event blocks)
+    .calendar-time-slot {
+        position: relative;
+        vertical-align: top;
+        padding: 0 !important;
+        overflow: visible !important; // Allow event blocks to overflow beyond cell boundaries
+        
+        &:hover {
+            background-color: rgba(var(--bs-primary-rgb), 0.05);
+        }
+    }
+    
+    // Event blocks (duration-based)
+    .calendar-event-block {
+        position: absolute;
+        width: calc(100% - 4px);
+        left: 2px;
+        overflow: hidden;
+        z-index: 5; // Ensure blocks render above table cells
+        transition: transform 0.1s, box-shadow 0.1s;
+        
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 20; // Higher on hover
+        }
+    }
+    
+    // Table rows must also allow overflow
+    tbody tr {
+        position: relative;
+    }
+    
+    tbody td {
+        overflow: visible !important;
+    }
+}
+
+// Day view styles
+.calendar-day-view {
+    .calendar-day-header {
+        background-color: var(--bs-body-secondary-bg);
+        padding: 1rem;
+        border-bottom: 2px solid var(--bs-border-color);
+    }
+}
+
+// List view styles
+.calendar-list-view {
+    .list-group-item {
+        &.bg-body-secondary {
+            font-weight: 600;
+        }
+    }
+}
+
+// Dark mode adjustments
+[data-bs-theme="dark"] {
+    .calendar-month-view {
+        thead th {
+            background-color: var(--bs-body-secondary-bg);
+        }
+        
+        td.calendar-day:hover {
+            background-color: rgba(var(--bs-primary-rgb), 0.1);
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 767.98px) {
+    .calendar-month-view {
+        font-size: 0.75rem;
+        
+        td.calendar-day {
+            height: 80px;
+        }
+        
+        .calendar-day-number {
+            font-size: 0.7rem;
+        }
+        
+        .badge {
+            font-size: 0.65rem;
+        }
+    }
+}
+

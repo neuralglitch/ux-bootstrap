@@ -13,39 +13,39 @@ final class Avatar extends AbstractStimulus
     // Image properties
     public ?string $src = null;
     public ?string $alt = null;
-    
+
     // Fallback content
     public ?string $initials = null;
-    
+
     // Sizing (sm, md, lg, xl, or custom pixel value like '64px')
     public ?string $size = null;
-    
+
     // Shape: circle, square, rounded
     public ?string $shape = null;
-    
+
     // Status indicator: online, offline, away, busy, null (none)
     public ?string $status = null;
-    
+
     // Border
     public bool $border = false;
     public ?string $borderColor = null; // Bootstrap color variant
-    
+
     // Background variant for initials (when no image)
     public ?string $variant = null;
-    
+
     // Link
     public ?string $href = null;
     public ?string $target = null;
-    
+
     public function mount(): void
     {
         $d = $this->config->for('avatar');
 
         $this->applyStimulusDefaults($d);
-        
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
-        
+
         // Apply component-specific defaults
         $this->size ??= $d['size'] ?? 'md';
         $this->shape ??= $d['shape'] ?? 'circle';
@@ -53,22 +53,21 @@ final class Avatar extends AbstractStimulus
         $this->border = $this->border || ($d['border'] ?? false);
         $this->borderColor ??= $d['border_color'] ?? null;
         $this->variant ??= $d['variant'] ?? null;
-        
+
         // Generate alt text from initials if not provided
         if ($this->alt === null && $this->initials !== null) {
             $this->alt = $this->initials;
+        }
 
-        
         // Initialize controller with default
         $this->initializeController();
     }
-    }
-    
+
     protected function getComponentName(): string
     {
         return 'avatar';
     }
-    
+
     /**
      * @return array<string, mixed>
      */
@@ -84,18 +83,18 @@ final class Avatar extends AbstractStimulus
             $this->href ? ['avatar-link'] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
-        
+
         // Build image classes
         $imageClasses = $this->buildClasses(
             ['avatar-img']
         );
-        
+
         // Build initials classes (for fallback)
         $initialsClasses = $this->buildClasses(
             ['avatar-initials'],
             $this->variant ? ["bg-{$this->variant}", "text-white"] : ['bg-secondary', 'text-white']
         );
-        
+
         // Build status indicator classes
         $statusClasses = null;
         if ($this->status) {
@@ -104,9 +103,9 @@ final class Avatar extends AbstractStimulus
                 ["avatar-status-{$this->status}"]
             );
         }
-        
+
         $attrs = $this->mergeAttributes([], $this->attr);
-        
+
         // Add link attributes if href is set
         $linkAttrs = [];
         if ($this->href) {
@@ -118,7 +117,7 @@ final class Avatar extends AbstractStimulus
                 }
             }
         }
-        
+
         return [
             'wrapperClasses' => $wrapperClasses,
             'imageClasses' => $imageClasses,
@@ -133,7 +132,7 @@ final class Avatar extends AbstractStimulus
             'hasStatus' => $this->status !== null,
         ];
     }
-    
+
     /**
      * @return array<string>
      */
@@ -148,10 +147,10 @@ final class Avatar extends AbstractStimulus
             'xl' => 'avatar-xl',
             'xxl' => 'avatar-xxl',
         ];
-        
+
         return isset($sizeMap[$this->size]) ? [$sizeMap[$this->size]] : [];
     }
-    
+
     /**
      * @return array<string>
      */
@@ -162,10 +161,10 @@ final class Avatar extends AbstractStimulus
             'square' => 'rounded-0',
             'rounded' => 'rounded',
         ];
-        
+
         return isset($shapeMap[$this->shape]) ? [$shapeMap[$this->shape]] : [];
     }
-    
+
     /**
      * Get inline styles for custom size
      */
@@ -175,14 +174,14 @@ final class Avatar extends AbstractStimulus
         if ($this->size === null) {
             return null;
         }
-        
+
         $predefinedSizes = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
-        
+
         if (!in_array($this->size, $predefinedSizes, true)) {
             // Assume it's a custom value like '64px' or '3rem'
             return "width: {$this->size}; height: {$this->size};";
         }
-        
+
         return null;
     }
 }

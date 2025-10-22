@@ -13,7 +13,7 @@ final class StateTraitTest extends TestCase
     {
         return new class {
             use StateTrait;
-            
+
             /**
              * @param array<string, mixed> $defaults
              */
@@ -21,7 +21,7 @@ final class StateTraitTest extends TestCase
             {
                 $this->applyStateDefaults($defaults);
             }
-            
+
             /**
              * @return array<int, string>
              */
@@ -29,7 +29,7 @@ final class StateTraitTest extends TestCase
             {
                 return $this->stateClassesFor($type);
             }
-            
+
             /**
              * @return array<string, mixed>
              */
@@ -91,7 +91,7 @@ final class StateTraitTest extends TestCase
         $obj->block = false;
         $obj->active = false;
         $obj->disabled = false;
-        
+
         $obj->testApplyStateDefaults([
             'block' => true,
             'active' => true,

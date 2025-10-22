@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Testimonial;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class TestimonialTest extends TestCase
 {
@@ -155,7 +156,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->alignment = 'left';
         $component->mount();
-        
+
         $this->assertSame('text-start', $component->getAlignmentClass());
     }
 
@@ -164,7 +165,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->alignment = 'center';
         $component->mount();
-        
+
         $this->assertSame('text-center', $component->getAlignmentClass());
     }
 
@@ -173,7 +174,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->alignment = 'right';
         $component->mount();
-        
+
         $this->assertSame('text-end', $component->getAlignmentClass());
     }
 
@@ -182,7 +183,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->columns = 2;
         $component->mount();
-        
+
         $this->assertSame('col-md-6', $component->getColumnClass());
     }
 
@@ -191,7 +192,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->columns = 3;
         $component->mount();
-        
+
         $this->assertSame('col-md-6 col-lg-4', $component->getColumnClass());
     }
 
@@ -200,7 +201,7 @@ final class TestimonialTest extends TestCase
         $component = new Testimonial($this->config);
         $component->columns = 4;
         $component->mount();
-        
+
         $this->assertSame('col-md-6 col-lg-3', $component->getColumnClass());
     }
 
@@ -264,9 +265,9 @@ final class TestimonialTest extends TestCase
     {
         $component = new Testimonial($this->config);
         $component->mount();
-        
+
         $starsHtml = $component->renderStars(5);
-        
+
         $this->assertStringContainsString('text-warning', $starsHtml);
         $this->assertStringContainsString('bi-star-fill', $starsHtml);
     }
@@ -275,9 +276,9 @@ final class TestimonialTest extends TestCase
     {
         $component = new Testimonial($this->config);
         $component->mount();
-        
+
         $starsHtml = $component->renderStars(3);
-        
+
         $this->assertStringContainsString('bi-star-fill', $starsHtml);
         $this->assertStringContainsString('bi-star', $starsHtml);
     }
@@ -295,7 +296,7 @@ final class TestimonialTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Testimonial($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('testimonial', $method->invoke($component));

@@ -13,7 +13,7 @@ final class VariantTraitTest extends TestCase
     {
         return new class {
             use VariantTrait;
-            
+
             /**
              * @param array<string, mixed> $defaults
              */
@@ -21,7 +21,7 @@ final class VariantTraitTest extends TestCase
             {
                 $this->applyVariantDefaults($defaults);
             }
-            
+
             /**
              * @return array<int, string>
              */

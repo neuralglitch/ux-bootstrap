@@ -1,0 +1,60 @@
+// Rating Component Styles
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+}
+
+.rating-items {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.rating-item {
+  color: currentColor;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+// Button styling for interactive ratings
+.rating-item-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  
+  &:hover {
+    transform: scale(1.2);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Size variants
+.rating-sm .rating-item {
+  font-size: 1rem;
+}
+
+.rating-lg .rating-item {
+  font-size: 1.75rem;
+}
+
+// Read-only ratings (no hover effects)
+.rating-readonly .rating-item-button {
+  cursor: default;
+  pointer-events: none;
+}
+
+// Text labels
+.rating-text,
+.rating-value,
+.rating-count {
+  font-size: 0.875rem;
+  color: var(--bs-secondary-color);
+}
+
+

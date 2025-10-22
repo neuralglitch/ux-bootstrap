@@ -10,6 +10,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:code-block', template: '@NeuralGlitchUxBootstrap/components/extra/code-block.html.twig')]
 final class CodeBlock extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-code-block';
+
     public ?string $language = null;
     public ?string $title = null;
     public ?string $filename = null;
@@ -23,7 +25,7 @@ final class CodeBlock extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('code_block');
+        $d = $this->config->for('code-block');
 
         $this->applyStimulusDefaults($d);
 
@@ -40,14 +42,14 @@ final class CodeBlock extends AbstractStimulus
         $this->wrapLines = $this->wrapLines || ($d['wrap_lines'] ?? false);
         $this->code ??= $d['code'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'code_block';
+        return 'code-block';
     }
 
     /**
@@ -73,7 +75,12 @@ final class CodeBlock extends AbstractStimulus
             $this->language ? ["language-{$this->language}"] : []
         );
 
-        $attrs = $this->mergeAttributes([], $this->attr);
+        // Add Stimulus controller attributes if copy button is enabled
+        $attrs = [];
+        if ($this->copyButton) {
+            $attrs = $this->stimulusControllerAttributes();
+        }
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         $preStyles = [];
         if ($this->maxHeight > 0) {

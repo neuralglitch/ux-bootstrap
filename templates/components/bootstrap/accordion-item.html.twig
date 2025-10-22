@@ -2,8 +2,6 @@
 
   {% set o = this.options() %}
 
-  {% dump(o) %}
-
   {# Auto-detect parent accordion ID from context if not explicitly set #}
   {% set parent_id = o.parentId ?? (accordion_parent_id is defined ? accordion_parent_id : null) %}
   {% set always_open = accordion_always_open is defined ? accordion_always_open : false %}

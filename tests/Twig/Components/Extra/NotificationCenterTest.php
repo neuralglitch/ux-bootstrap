@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\NotificationCenter;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class NotificationCenterTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class NotificationCenterTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'notification_center' => [
+            'notification-center' => [
                 'variant' => 'dropdown',
                 'title' => 'Notifications',
                 'empty_message' => 'No notifications',
@@ -350,7 +351,7 @@ final class NotificationCenterTest extends TestCase
     public function testConfigDefaults(): void
     {
         $customConfig = new Config([
-            'notification_center' => [
+            'notification-center' => [
                 'variant' => 'offcanvas',
                 'title' => 'Custom Title',
                 'unread_count' => 3,
@@ -373,10 +374,10 @@ final class NotificationCenterTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new NotificationCenter($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('notification_center', $method->invoke($component));
+        $this->assertSame('notification-center', $method->invoke($component));
     }
 }
 

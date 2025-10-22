@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Calendar;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CalendarTest extends TestCase
 {
@@ -472,7 +473,7 @@ final class CalendarTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Calendar($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('calendar', $method->invoke($component));

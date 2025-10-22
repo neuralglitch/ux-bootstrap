@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Tour;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class TourTest extends TestCase
 {
@@ -415,7 +416,7 @@ final class TourTest extends TestCase
         $this->assertSame('Weiter', $options['nextLabel']);
         $this->assertSame('Zurück', $options['prevLabel']);
         $this->assertSame('dark', $options['popoverVariant']);
-        
+
         // Boolean values use component defaults (true), not config defaults
         $this->assertTrue($component->showProgress); // Component default
         $this->assertTrue($component->keyboard); // Component default
@@ -487,7 +488,7 @@ final class TourTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Tour($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('tour', $method->invoke($component));

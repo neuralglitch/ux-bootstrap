@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Card;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CardTest extends TestCase
 {
@@ -78,7 +79,7 @@ final class CardTest extends TestCase
     {
         $card = $this->createCard();
 
-        $reflection = new \ReflectionClass($card);
+        $reflection = new ReflectionClass($card);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

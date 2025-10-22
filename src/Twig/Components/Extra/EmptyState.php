@@ -40,7 +40,7 @@ final class EmptyState extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('empty_state');
+        $d = $this->config->for('empty-state');
 
         $this->applyStimulusDefaults($d);
 
@@ -67,14 +67,14 @@ final class EmptyState extends AbstractStimulus
         $this->container ??= $d['container'] ?? 'container';
         $this->centered = $this->centered && ($d['centered'] ?? true);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'empty_state';
+        return 'empty-state';
     }
 
     /**

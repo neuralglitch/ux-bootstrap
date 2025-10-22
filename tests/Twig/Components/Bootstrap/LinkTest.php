@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Link;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class LinkTest extends TestCase
 {
@@ -69,7 +70,7 @@ final class LinkTest extends TestCase
     {
         $link = $this->createLink();
 
-        $reflection = new \ReflectionClass($link);
+        $reflection = new ReflectionClass($link);
         $method = $reflection->getMethod('getComponentType');
         $method->setAccessible(true);
 

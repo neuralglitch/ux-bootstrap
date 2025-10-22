@@ -108,13 +108,28 @@ export default class extends Controller {
 
         // Check if trigger shortcut matches
         const isCorrectKey = key.toLowerCase() === this.triggerKeyValue.toLowerCase();
-        const isCorrectModifiers =
-            (this.triggerCtrlValue ? ctrlKey : !ctrlKey || !this.triggerMetaValue) &&
-            (this.triggerMetaValue ? metaKey : !metaKey || !this.triggerCtrlValue) &&
-            (this.triggerShiftValue ? shiftKey : !shiftKey) &&
-            (this.triggerAltValue ? altKey : !altKey);
+        
+        // Check modifiers - support EITHER Ctrl OR Meta (not both)
+        let modifiersMatch = true;
+        
+        // If both Ctrl and Meta are configured, allow either one (cross-platform support)
+        if (this.triggerCtrlValue && this.triggerMetaValue) {
+            modifiersMatch = (ctrlKey || metaKey) && !shiftKey && !altKey;
+        } else {
+            // Otherwise check each modifier individually
+            if (this.triggerCtrlValue && !ctrlKey) modifiersMatch = false;
+            if (this.triggerMetaValue && !metaKey) modifiersMatch = false;
+            if (this.triggerShiftValue && !shiftKey) modifiersMatch = false;
+            if (this.triggerAltValue && !altKey) modifiersMatch = false;
+            
+            // Also ensure unwanted modifiers are NOT pressed
+            if (!this.triggerCtrlValue && ctrlKey && !this.triggerMetaValue) modifiersMatch = false;
+            if (!this.triggerMetaValue && metaKey && !this.triggerCtrlValue) modifiersMatch = false;
+            if (!this.triggerShiftValue && shiftKey) modifiersMatch = false;
+            if (!this.triggerAltValue && altKey) modifiersMatch = false;
+        }
 
-        if (isCorrectKey && isCorrectModifiers) {
+        if (isCorrectKey && modifiersMatch) {
             event.preventDefault();
             this.open();
         }
@@ -529,6 +544,10 @@ export default class extends Controller {
 
     close() {
         if (this.modal) {
+            // Blur input before hiding to prevent aria-hidden focus conflict
+            if (this.hasInputTarget && document.activeElement === this.inputTarget) {
+                this.inputTarget.blur();
+            }
             this.modal.hide();
         }
     }

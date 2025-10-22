@@ -11,6 +11,8 @@ final class ButtonGroup extends AbstractStimulus
 {
     use Traits\SizeTrait;
 
+    public string $stimulusController = 'bs-button-group';
+
     /**
      * Vertical orientation - stacks buttons vertically instead of horizontally
      */
@@ -47,7 +49,7 @@ final class ButtonGroup extends AbstractStimulus
         $this->ariaLabel ??= $d['aria_label'] ?? null;
         $this->ariaLabelledby ??= $d['aria_labelledby'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

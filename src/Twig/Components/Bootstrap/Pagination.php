@@ -27,7 +27,7 @@ final class Pagination extends AbstractStimulus
         $this->ariaLabel ??= $d['aria_label'] ?? 'Page navigation';
         $this->alignment ??= $d['alignment'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

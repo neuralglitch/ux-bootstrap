@@ -194,7 +194,7 @@ class SearchService
     protected function discoverSearchDirectories(): array
     {
         $templatesDir = $this->projectDir . '/templates';
-        
+
         if (!is_dir($templatesDir)) {
             return [];
         }
@@ -210,22 +210,22 @@ class SearchService
 
         foreach ($finder as $dir) {
             $dirName = $dir->getFilename();
-            
+
             // Skip if directory name starts with underscore
             if (str_starts_with($dirName, '_')) {
                 continue;
             }
-            
+
             // Skip if in excluded list
             if (in_array($dirName, $excluded, true)) {
                 continue;
             }
-            
+
             // Skip if contains ignore file
             if (file_exists($dir->getPathname() . '/' . $ignoreFileName)) {
                 continue;
             }
-            
+
             $directories[$dirName] = 'templates/' . $dirName;
         }
 

@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:progress', template: '@NeuralGlitchUxBootstrap/components/bootstrap/progress.html.twig')]
 final class Progress extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-progress';
+
     /** Current progress value (0-100 by default) */
     public int|float|null $value = null;
 
@@ -61,7 +63,7 @@ final class Progress extends AbstractStimulus
         // Normalize value to be within min-max range
         $this->value = max($this->min, min($this->max, $this->value));
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -100,9 +102,9 @@ final class Progress extends AbstractStimulus
         // Wrapper attributes
         $wrapperAttrs = [
             'role' => 'progressbar',
-            'aria-valuenow' => (string) $this->value,
-            'aria-valuemin' => (string) $this->min,
-            'aria-valuemax' => (string) $this->max,
+            'aria-valuenow' => (string)$this->value,
+            'aria-valuemin' => (string)$this->min,
+            'aria-valuemax' => (string)$this->max,
         ];
 
         if ($this->ariaLabel) {

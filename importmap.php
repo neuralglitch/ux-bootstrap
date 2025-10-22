@@ -47,6 +47,9 @@ return [
     '@neuralglitch/ux-bootstrap/controllers/bs_cookie_banner_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_cookie_banner_controller.js',
     ],
+    '@neuralglitch/ux-bootstrap/controllers/bs_data_table_controller.js' => [
+        'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_data_table_controller.js',
+    ],
     '@neuralglitch/ux-bootstrap/controllers/bs_dropdown_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_dropdown_controller.js',
     ],

@@ -37,27 +37,27 @@ final class ListGroupItem extends AbstractStimulus
         $this->disabled = $this->disabled || ($d['disabled'] ?? false);
         $this->target ??= $d['target'] ?? null;
         $this->rel ??= $d['rel'] ?? null;
-        
+
         // Auto-determine tag if not specified
         if (null === $this->tag) {
             if ($this->href !== null) {
                 $this->tag = 'a';
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    } elseif ($this->action) {
+
+                // Initialize controller with default
+                $this->initializeController();
+            } elseif ($this->action) {
                 $this->tag = 'button';
             } else {
                 $this->tag = $d['tag'] ?? 'li';
             }
         }
-        
+
         // Auto-enable action class for links and buttons
         if (($this->tag === 'a' || $this->tag === 'button') && !$this->action) {
             $this->action = true;
         }
-        
+
         // Set aria-current for active items
         if ($this->active && null === $this->ariaCurrent) {
             $this->ariaCurrent = 'true';
@@ -84,25 +84,25 @@ final class ListGroupItem extends AbstractStimulus
         );
 
         $attrs = [];
-        
+
         // Add href for links
         if ($this->tag === 'a' && $this->href !== null) {
             $attrs['href'] = $this->href;
-            
+
             if ($this->target) {
                 $attrs['target'] = $this->target;
             }
-            
+
             if ($this->rel) {
                 $attrs['rel'] = $this->rel;
             }
         }
-        
+
         // Add button attributes
         if ($this->tag === 'button') {
             $attrs['type'] = 'button';
         }
-        
+
         // Add disabled attributes
         if ($this->disabled) {
             if ($this->tag === 'button') {
@@ -111,12 +111,12 @@ final class ListGroupItem extends AbstractStimulus
                 $attrs['aria-disabled'] = 'true';
             }
         }
-        
+
         // Add aria-current for active items
         if ($this->ariaCurrent) {
             $attrs['aria-current'] = $this->ariaCurrent;
         }
-        
+
         // Add aria-label if provided
         if ($this->ariaLabel) {
             $attrs['aria-label'] = $this->ariaLabel;

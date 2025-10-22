@@ -2,26 +2,31 @@
 
   {% set o = this.options() %}
 
-  {# Lightbox gallery wrapper - hidden by default #}
-  <div class="lightbox-gallery d-none">
+  {# Main controller wrapper #}
+  <div {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+
+  {# Lightbox gallery wrapper - show thumbnails #}
+  <div class="lightbox-gallery d-flex flex-wrap gap-2 mb-3">
     {% for image in o.images %}
       <a href="{{ image.src }}"
          data-lightbox="{{ o.id }}"
+         data-index="{{ loop.index0 }}"
          {% if image.thumbnail is defined %}data-thumbnail="{{ image.thumbnail }}"{% endif %}
          {% if image.caption is defined %}data-caption="{{ image.caption }}"{% endif %}
          {% if image.alt is defined %}data-alt="{{ image.alt }}"{% endif %}
          data-bs-lightbox-target="trigger"
-         data-action="click->bs-lightbox#open">
+         data-action="click->bs-lightbox#open"
+         class="lightbox-thumbnail-link">
         <img src="{{ image.thumbnail ?? image.src }}"
              alt="{{ image.alt ?? 'Image ' ~ (loop.index) }}"
-             class="lightbox-thumbnail">
+             class="lightbox-thumbnail img-thumbnail"
+             style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;">
       </a>
     {% endfor %}
   </div>
 
   {# Lightbox modal overlay #}
   <div class="{{ o.classes }}"
-       {{ this.renderHtmlAttributes(o.attrs) | raw }}
        style="display: none;"
        data-bs-lightbox-target="modal"
        role="dialog"
@@ -31,9 +36,7 @@
     {# Backdrop #}
     <div class="lightbox-backdrop"
          data-bs-lightbox-target="backdrop"
-         {% if o.attrs['data-bs-lightbox-close-on-backdrop-value'] == 'true' %}
-         data-action="click->bs-lightbox#close"
-         {% endif %}></div>
+         data-action="click->bs-lightbox#close"></div>
 
     {# Main content #}
     <div class="lightbox-content" data-bs-lightbox-target="content">
@@ -41,9 +44,10 @@
       {# Close button #}
       {% if o.showClose %}
         <button type="button"
-                class="lightbox-close btn-close btn-close-white"
+                class="lightbox-close"
                 data-action="click->bs-lightbox#close"
                 aria-label="Close">
+          <twig:ux:icon name="bi:x-lg" class="text-white" width="20" height="20" />
         </button>
       {% endif %}
 
@@ -143,6 +147,8 @@
       {% endif %}
     </div>
   </div>
+  
+  </div>{# Close controller wrapper #}
 
 {%- endapply %}
 

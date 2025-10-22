@@ -79,10 +79,10 @@ final class NavItem extends AbstractStimulus
         if ($this->tag === 'a' && $this->href === null && !$this->disabled) {
             $this->tag = 'button';
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
     }
 
     protected function getComponentName(): string

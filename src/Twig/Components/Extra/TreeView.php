@@ -9,17 +9,19 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
  * TreeView Component
- * 
+ *
  * Hierarchical tree structure for file browsers, category trees,
  * organization charts, and menu editors.
  */
 #[AsTwigComponent(name: 'bs:tree-view', template: '@NeuralGlitchUxBootstrap/components/extra/tree-view.html.twig')]
 final class TreeView extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-tree-view';
+
     /**
      * Tree data structure
      * Each item should have: id, label, children (optional), icon (optional), expanded (optional)
-     * 
+     *
      * @var array<int, array<string, mixed>>
      */
     public array $items = [];
@@ -121,14 +123,14 @@ final class TreeView extends AbstractStimulus
 
     /**
      * Initially selected item IDs
-     * 
+     *
      * @var array<string>
      */
     public array $selectedIds = [];
 
     public function mount(): void
     {
-        $d = $this->config->for('tree_view');
+        $d = $this->config->for('tree-view');
 
         $this->applyStimulusDefaults($d);
 
@@ -137,24 +139,24 @@ final class TreeView extends AbstractStimulus
         $this->selectable = $this->selectable || ($d['selectable'] ?? false);
         $this->multiSelect = $this->multiSelect || ($d['multi_select'] ?? false);
         $this->showIcons = $this->showIcons && ($d['show_icons'] ?? true);
-        
+
         // Use null coalescing for icon properties to respect component-level changes
         if ($this->defaultIcon === 'bi-file-earmark') {
             $this->defaultIcon = $d['default_icon'] ?? $this->defaultIcon;
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
         if ($this->folderIcon === 'bi-folder') {
             $this->folderIcon = $d['folder_icon'] ?? $this->folderIcon;
         }
         if ($this->folderOpenIcon === 'bi-folder-open') {
             $this->folderOpenIcon = $d['folder_open_icon'] ?? $this->folderOpenIcon;
         }
-        
+
         $this->showExpandIcons = $this->showExpandIcons && ($d['show_expand_icons'] ?? true);
-        
+
         // Use null coalescing for expand/collapse icon properties
         if ($this->expandIcon === 'bi-chevron-right') {
             $this->expandIcon = $d['expand_icon'] ?? $this->expandIcon;
@@ -162,7 +164,7 @@ final class TreeView extends AbstractStimulus
         if ($this->collapseIcon === 'bi-chevron-down') {
             $this->collapseIcon = $d['collapse_icon'] ?? $this->collapseIcon;
         }
-        
+
         $this->expandAll = $this->expandAll || ($d['expand_all'] ?? false);
         $this->collapseAll = $this->collapseAll || ($d['collapse_all'] ?? false);
         $this->keyboard = $this->keyboard && ($d['keyboard'] ?? true);
@@ -176,7 +178,7 @@ final class TreeView extends AbstractStimulus
 
     protected function getComponentName(): string
     {
-        return 'tree_view';
+        return 'tree-view';
     }
 
     /**
@@ -244,7 +246,7 @@ final class TreeView extends AbstractStimulus
 
     /**
      * Process items to add default expanded state
-     * 
+     *
      * @param array<int, array<string, mixed>> $items
      * @return array<int, array<string, mixed>>
      */

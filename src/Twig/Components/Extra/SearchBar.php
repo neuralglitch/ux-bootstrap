@@ -36,7 +36,7 @@ final class SearchBar extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -45,7 +45,7 @@ final class SearchBar extends AbstractStimulus
     {
         return 'searchbar';
     }
-    
+
     /**
      * Override default controller name to match registered controller
      * Component name is 'searchbar' but controller is 'bs-search' (shorter)
@@ -54,14 +54,14 @@ final class SearchBar extends AbstractStimulus
     {
         return 'bs-search';
     }
-    
+
     /**
      * Override to build SearchBar-specific Stimulus attributes
      */
     protected function buildStimulusAttributes(): array
     {
         $attrs = $this->stimulusControllerAttributes();
-        
+
         // Add SearchBar-specific values
         if ($this->resolveControllers() !== '') {
             $attrs = array_merge($attrs, $this->stimulusValues('bs-search', [
@@ -70,7 +70,7 @@ final class SearchBar extends AbstractStimulus
                 'debounce' => $this->debounce,
             ]));
         }
-        
+
         return $attrs;
     }
 

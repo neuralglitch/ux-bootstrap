@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
+use DateInterval;
+use DateTime;
+use DateTimeInterface;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
@@ -95,7 +98,7 @@ final class CommentThread extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('comment_thread');
+        $d = $this->config->for('comment-thread');
 
         $this->applyStimulusDefaults($d);
 
@@ -115,14 +118,14 @@ final class CommentThread extends AbstractStimulus
         $this->defaultCollapsed ??= $d['default_collapsed'] ?? false;
         $this->containerClass ??= $d['container_class'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'comment_thread';
+        return 'comment-thread';
     }
 
     /**
@@ -133,7 +136,7 @@ final class CommentThread extends AbstractStimulus
         $compact = $this->compact ?? false;
         $showThreadLines = $this->showThreadLines ?? true;
         $collapsible = $this->collapsible ?? true;
-        
+
         $classes = $this->buildClasses(
             ['comment-thread'],
             $compact ? ['comment-thread-compact'] : [],
@@ -167,15 +170,15 @@ final class CommentThread extends AbstractStimulus
     /**
      * Format timestamp based on date format setting
      */
-    public function formatDate(string|\DateTimeInterface $timestamp): string
+    public function formatDate(string|DateTimeInterface $timestamp): string
     {
         if (is_string($timestamp)) {
-            $date = new \DateTime($timestamp);
+            $date = new DateTime($timestamp);
         } else {
             $date = $timestamp;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         $diff = $now->diff($date);
 
         if ($this->dateFormat === 'relative') {
@@ -193,7 +196,7 @@ final class CommentThread extends AbstractStimulus
     /**
      * Get relative time string
      */
-    private function getRelativeTime(\DateInterval $diff): string
+    private function getRelativeTime(DateInterval $diff): string
     {
         if ($diff->y > 0) {
             return $diff->y . ' year' . ($diff->y > 1 ? 's' : '') . ' ago';
@@ -215,7 +218,7 @@ final class CommentThread extends AbstractStimulus
 
     /**
      * Check if comment author should be highlighted
-     * 
+     *
      * @param array<string, mixed> $comment
      */
     public function isAuthor(array $comment): bool
@@ -233,7 +236,7 @@ final class CommentThread extends AbstractStimulus
     public function canReply(int $currentDepth): bool
     {
         $maxDepth = $this->maxDepth ?? 3;
-        
+
         if ($maxDepth === 0) {
             return true; // unlimited
         }
@@ -247,7 +250,7 @@ final class CommentThread extends AbstractStimulus
     public function getAvatarSizeClass(): string
     {
         $size = $this->avatarSize ?? 'md';
-        
+
         return match ($size) {
             'sm' => 'avatar-sm',
             'lg' => 'avatar-lg',

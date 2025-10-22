@@ -7,13 +7,14 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\ComparisonTable;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ComparisonTableTest extends TestCase
 {
     /** @param array<string, mixed> $config */
     private function createConfig(array $config = []): Config
     {
-        return new Config(['comparison_table' => $config]);
+        return new Config(['comparison-table' => $config]);
     }
 
     private function createComparisonTable(?Config $config = null): ComparisonTable
@@ -80,11 +81,11 @@ final class ComparisonTableTest extends TestCase
     {
         $table = $this->createComparisonTable();
 
-        $reflection = new \ReflectionClass($table);
+        $reflection = new ReflectionClass($table);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 
-        self::assertSame('comparison_table', $method->invoke($table));
+        self::assertSame('comparison-table', $method->invoke($table));
     }
 
     public function testOptionsReturnsCorrectStructure(): void
@@ -183,7 +184,9 @@ final class ComparisonTableTest extends TestCase
 
         $options = $table->options();
 
-        self::assertStringContainsString('text-center', $options['tableClasses']);
+        // Centered is now handled via CSS in _comparison_table.scss, not via Bootstrap classes
+        self::assertTrue($table->centered);
+        self::assertStringContainsString('table', $options['tableClasses']);
     }
 
     public function testOptionsIncludesCustomClass(): void

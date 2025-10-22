@@ -12,6 +12,8 @@ final class Alert extends AbstractStimulus
 {
     use VariantTrait;
 
+    public string $stimulusController = 'bs-alert';
+
     public ?string $message = null;
     public bool $dismissible = false;
     public bool $fade = true;
@@ -35,11 +37,11 @@ final class Alert extends AbstractStimulus
         $this->autoHide = $this->autoHide || ($d['auto_hide'] ?? false);
         $this->autoHideDelay = $this->autoHideDelay ?: ($d['auto_hide_delay'] ?? 5000);
         $this->role = $this->role ?: ($d['role'] ?? 'alert');
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
-    
+
     /**
      * Override to conditionally attach controller only when auto-hide is enabled
      */
@@ -47,14 +49,14 @@ final class Alert extends AbstractStimulus
     {
         return $this->controllerEnabled && $this->autoHide;
     }
-    
+
     /**
      * Override to build Alert-specific Stimulus attributes
      */
     protected function buildStimulusAttributes(): array
     {
         $attrs = $this->stimulusControllerAttributes();
-        
+
         // Only add values if controller is active
         if ($this->resolveControllers() !== '') {
             $attrs = array_merge($attrs, $this->stimulusValues('bs-alert', [
@@ -62,7 +64,7 @@ final class Alert extends AbstractStimulus
                 'autoHideDelay' => $this->autoHideDelay,
             ]));
         }
-        
+
         return $attrs;
     }
 

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Stat;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class StatTest extends TestCase
 {
@@ -163,7 +164,8 @@ final class StatTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('start', $options['iconPosition']);
-        $this->assertStringContainsString('me-2', $options['iconClasses']);
+        $this->assertStringContainsString('me-3', $options['iconClasses']);
+        $this->assertStringContainsString('px-2', $options['iconClasses']);
     }
 
     public function testIconPositionEnd(): void
@@ -175,7 +177,8 @@ final class StatTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('end', $options['iconPosition']);
-        $this->assertStringContainsString('ms-2', $options['iconClasses']);
+        $this->assertStringContainsString('ms-3', $options['iconClasses']);
+        $this->assertStringContainsString('px-2', $options['iconClasses']);
     }
 
     public function testIconPositionTop(): void
@@ -187,7 +190,8 @@ final class StatTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('top', $options['iconPosition']);
-        $this->assertStringContainsString('mb-2', $options['iconClasses']);
+        $this->assertStringContainsString('mb-3', $options['iconClasses']);
+        $this->assertStringContainsString('px-3', $options['iconClasses']);
         $this->assertStringContainsString('d-flex', $options['bodyClasses']);
         $this->assertStringContainsString('flex-column', $options['bodyClasses']);
     }
@@ -355,7 +359,7 @@ final class StatTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Stat($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('stat', $method->invoke($component));

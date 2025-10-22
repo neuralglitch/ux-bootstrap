@@ -23,9 +23,9 @@ final class NeuralGlitchUxBootstrapExtension extends Extension
 
         // Register configuration as parameter
         $container->setParameter('neuralglitch.ux_bootstrap', $config);
-        
+
         // Load services
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.yaml');
     }
 }

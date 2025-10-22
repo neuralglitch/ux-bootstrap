@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Alert;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AlertTest extends TestCase
 {
@@ -145,11 +146,11 @@ final class AlertTest extends TestCase
     public function testGetComponentName(): void
     {
         $alert = $this->createAlert();
-        
-        $reflection = new \ReflectionClass($alert);
+
+        $reflection = new ReflectionClass($alert);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
-        
+
         self::assertSame('alert', $method->invoke($alert));
     }
 

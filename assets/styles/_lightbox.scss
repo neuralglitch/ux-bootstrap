@@ -52,15 +52,26 @@
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  background: rgba(0, 0, 0, 0.7) !important; // Dark background so white icon is visible
+  border: none !important;
   border-radius: 0.25rem;
-  opacity: 0.8;
+  opacity: 0.9;
   transition: opacity 0.2s, background-color 0.2s;
+  filter: none !important; // Override Bootstrap filter
+  box-shadow: none !important; // Remove any box-shadow
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: rgba(0, 0, 0, 0.9) !important;
   }
 
   @media (max-width: 768px) {
@@ -109,17 +120,28 @@
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  background: rgba(0, 0, 0, 0.7) !important; // Match close button
+  border: none !important;
   border-radius: 0.25rem;
   color: white;
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.9; // Match close button
   transition: opacity 0.2s, background-color 0.2s;
+  filter: none !important; // Override Bootstrap filter
+  box-shadow: none !important;
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9) !important; // Match close button hover
+  }
+  
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: rgba(0, 0, 0, 0.9) !important;
   }
 
   svg {
@@ -184,19 +206,30 @@
   width: 3rem;
   height: 3rem;
   padding: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  background: rgba(0, 0, 0, 0.7) !important; // Match close button
+  border: none !important;
   border-radius: 50%;
   color: white;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.9; // Match close button
   transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
   z-index: 10;
+  filter: none !important; // Override Bootstrap filter
+  box-shadow: none !important;
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9) !important; // Match close button hover
     transform: translateY(-50%) scale(1.1);
+  }
+  
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: rgba(0, 0, 0, 0.9) !important;
   }
 
   svg {

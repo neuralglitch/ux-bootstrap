@@ -43,21 +43,25 @@
 .badge-top-start {
     top: 0;
     left: 0;
+    transform: translate(-50%, -50%);
 }
 
 .badge-top-end {
     top: 0;
     right: 0;
+    transform: translate(50%, -50%);
 }
 
 .badge-bottom-start {
     bottom: 0;
     left: 0;
+    transform: translate(-50%, 50%);
 }
 
 .badge-bottom-end {
     bottom: 0;
     right: 0;
+    transform: translate(50%, 50%);
 }
 
 /* Pulse Animation */

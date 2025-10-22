@@ -13,7 +13,7 @@
 
 {# Default single testimonial content #}
 {% set default_single_testimonial %}
-  <div class="card border-0 shadow-sm h-100">
+  <div class="card shadow-sm h-100">
     <div class="card-body p-4 {{ this.getAlignmentClass() }}">
       {% if o.rating %}
         {{ this.renderStars(o.rating)|raw }}
@@ -74,7 +74,7 @@
           {% if has_custom_content %}
             {{ slot_content|raw }}
           {% else %}
-            <div class="card border-0 shadow-lg">
+            <div class="card shadow-lg">
               <div class="card-body p-5 text-center">
                 {% if o.rating %}
                   <div class="mb-3">

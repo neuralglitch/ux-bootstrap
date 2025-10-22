@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Stepper;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class StepperTest extends TestCase
 {
@@ -366,7 +367,7 @@ final class StepperTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Stepper($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('stepper', $method->invoke($component));

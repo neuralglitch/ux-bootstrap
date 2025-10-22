@@ -29,8 +29,7 @@ final class SearchTestCommand extends Command
     {
         $this
             ->addArgument('query', InputArgument::OPTIONAL, 'Search query to test')
-            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Maximum number of results', 10)
-        ;
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Maximum number of results', 10);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -39,7 +38,7 @@ final class SearchTestCommand extends Command
         $io->title('UX Bootstrap Search Service Test');
 
         $query = $input->getArgument('query');
-        $limit = (int) $input->getOption('limit');
+        $limit = (int)$input->getOption('limit');
 
         if ($query) {
             // Test specific query
@@ -100,11 +99,13 @@ final class SearchTestCommand extends Command
         foreach ($testQueries as $query) {
             $results = $this->searchService->search($query, $limit);
 
-            $io->writeln(sprintf(
-                'Query: <info>%-20s</info> → Found <comment>%d</comment> result(s)',
-                '"' . $query . '"',
-                count($results)
-            ));
+            $io->writeln(
+                sprintf(
+                    'Query: <info>%-20s</info> → Found <comment>%d</comment> result(s)',
+                    '"' . $query . '"',
+                    count($results)
+                )
+            );
 
             if ($results !== [] && $io->isVerbose()) {
                 foreach (array_slice($results, 0, 3) as $result) {

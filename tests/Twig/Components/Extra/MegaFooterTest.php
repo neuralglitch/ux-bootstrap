@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\MegaFooter;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class MegaFooterTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class MegaFooterTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'mega_footer' => [
+            'mega-footer' => [
                 'variant' => 'default',
                 'brand_name' => null,
                 'brand_logo' => null,
@@ -125,7 +126,7 @@ final class MegaFooterTest extends TestCase
     public function testSocialLinksFromConfig(): void
     {
         $config = new Config([
-            'mega_footer' => [
+            'mega-footer' => [
                 'variant' => 'default',
                 'social_links' => [
                     ['icon' => 'bi-linkedin', 'href' => 'https://linkedin.com', 'label' => 'LinkedIn'],
@@ -290,7 +291,7 @@ final class MegaFooterTest extends TestCase
     public function testConfigDefaults(): void
     {
         $config = new Config([
-            'mega_footer' => [
+            'mega-footer' => [
                 'variant' => 'minimal',
                 'brand_name' => 'Default Brand',
                 'background_color' => 'body-tertiary',
@@ -328,10 +329,10 @@ final class MegaFooterTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new MegaFooter($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('mega_footer', $method->invoke($component));
+        $this->assertSame('mega-footer', $method->invoke($component));
     }
 
     public function testCombinedOptions(): void
@@ -379,7 +380,7 @@ final class MegaFooterTest extends TestCase
     public function testAttrMergingFromConfig(): void
     {
         $config = new Config([
-            'mega_footer' => [
+            'mega-footer' => [
                 'variant' => 'default',
                 'brand_name' => null,
                 'brand_logo' => null,

@@ -62,6 +62,12 @@ export default class extends Controller {
         event.preventDefault();
         event.stopPropagation();
 
+        // Clear search first
+        if (this.hasSearchTarget) {
+            this.searchTarget.value = '';
+            this.search({ target: this.searchTarget });
+        }
+
         this.checkboxTargets.forEach(checkbox => {
             if (!checkbox.disabled) {
                 checkbox.checked = true;
@@ -80,6 +86,12 @@ export default class extends Controller {
     clearAll(event) {
         event.preventDefault();
         event.stopPropagation();
+
+        // Clear search first
+        if (this.hasSearchTarget) {
+            this.searchTarget.value = '';
+            this.search({ target: this.searchTarget });
+        }
 
         this.checkboxTargets.forEach(checkbox => {
             if (!checkbox.disabled) {

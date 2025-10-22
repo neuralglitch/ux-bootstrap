@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Badge;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class BadgeTest extends TestCase
 {
@@ -94,7 +95,7 @@ final class BadgeTest extends TestCase
     {
         $badge = $this->createBadge();
 
-        $reflection = new \ReflectionClass($badge);
+        $reflection = new ReflectionClass($badge);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

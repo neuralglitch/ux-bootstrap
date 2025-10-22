@@ -98,7 +98,7 @@ final class Skeleton extends AbstractStimulus
         $this->rounded ??= is_string($d['rounded'] ?? null) ? $d['rounded'] : null;
         $this->tag ??= is_string($d['tag'] ?? null) ? $d['tag'] : 'div';
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -114,7 +114,7 @@ final class Skeleton extends AbstractStimulus
     public function options(): array
     {
         $baseClasses = ['placeholder-glow'];
-        
+
         if ($this->animation === 'wave') {
             $baseClasses = ['placeholder-wave'];
         } elseif ($this->animation === 'none') {
@@ -152,7 +152,7 @@ final class Skeleton extends AbstractStimulus
 
     /**
      * Generate skeleton structure based on type
-     * 
+     *
      * @return array<string, mixed>
      */
     private function generateStructure(): array

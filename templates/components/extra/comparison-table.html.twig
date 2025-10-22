@@ -1,15 +1,13 @@
 {# templates/components/extra/comparison-table.html.twig #}
 {# Comparison Table Component for feature comparisons #}
 
-{% apply spaceless -%}
-
 {% set o = this.options() %}
 
 {# Capture custom content slot #}
 {% set slot_content %}{% block content %}{% endblock %}{% endset %}
 {% set has_custom_content = slot_content is not empty and slot_content|trim != '' %}
 
-<section class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+<section class="comparison-table {{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
   <div class="{{ o.container }}">
     {# Title and Description #}
     {% if o.title or o.description %}
@@ -35,15 +33,15 @@
               <div class="card h-100 {% if loop.index0 == o.highlightColumn %}border-primary border-2 shadow{% endif %}">
                 <div class="card-header text-center {% if column.variant %}bg-{{ column.variant }} text-white{% endif %}">
                   <h4 class="mb-0">{{ column.title ?? 'Plan ' ~ loop.index }}</h4>
-                  {% if column.badge %}
+                  {% if column.badge is defined and column.badge %}
                     <span class="badge bg-{{ column.badge_variant ?? 'warning' }} mt-2">{{ column.badge }}</span>
                   {% endif %}
                 </div>
                 <div class="card-body">
-                  {% if column.price %}
+                  {% if column.price is defined and column.price %}
                     <div class="text-center mb-4">
                       <h3 class="display-5">{{ column.price }}</h3>
-                      {% if column.period %}
+                      {% if column.period is defined and column.period %}
                         <p class="text-muted">{{ column.period }}</p>
                       {% endif %}
                     </div>
@@ -53,12 +51,14 @@
                       <li class="mb-2">
                         <strong>{{ feature.feature }}:</strong> 
                         {% set value = feature.values[loop.parent.index0] ?? o.emptyText %}
-                        {% if o.showCheckmarks and (value == true or value == 'true' or value == '✓') %}
-                          <span class="text-success">{{ o.checkIcon }}</span>
-                        {% elseif o.showCheckmarks and (value == false or value == 'false' or value == '✗') %}
-                          <span class="text-danger">{{ o.uncheckIcon }}</span>
+                        {% if value is same as(true) or value == 'true' %}
+                          <span class="text-success fs-5"><twig:ux:icon name="bi:check-circle-fill" /></span>
+                        {% elseif value is same as(false) or value == 'false' %}
+                          <span class="text-danger fs-5"><twig:ux:icon name="bi:x-circle-fill" /></span>
+                        {% elseif value is not null %}
+                          <span>{{ value }}</span>
                         {% else %}
-                          {{ value }}
+                          <span>{{ o.emptyText }}</span>
                         {% endif %}
                       </li>
                     {% endfor %}
@@ -90,23 +90,25 @@
                   <th scope="row">
                     <div>
                       {{ column.title ?? 'Plan ' ~ loop.index }}
-                      {% if column.badge %}
+                      {% if column.badge is defined and column.badge %}
                         <span class="badge bg-{{ column.badge_variant ?? 'warning' }} ms-2">{{ column.badge }}</span>
                       {% endif %}
                     </div>
-                    {% if column.price %}
-                      <div class="small text-muted">{{ column.price }}{% if column.period %}/{{ column.period }}{% endif %}</div>
+                    {% if column.price is defined and column.price %}
+                      <div class="small text-muted">{{ column.price }}{% if column.period is defined and column.period %}/{{ column.period }}{% endif %}</div>
                     {% endif %}
                   </th>
                   {% for feature in o.features %}
                     <td>
                       {% set value = feature.values[loop.parent.index0] ?? o.emptyText %}
-                      {% if o.showCheckmarks and (value == true or value == 'true' or value == '✓') %}
-                        <span class="text-success">{{ o.checkIcon }}</span>
-                      {% elseif o.showCheckmarks and (value == false or value == 'false' or value == '✗') %}
-                        <span class="text-danger">{{ o.uncheckIcon }}</span>
+                      {% if value is same as(true) or value == 'true' %}
+                        <span class="text-success fs-5"><twig:ux:icon name="bi:check-circle-fill" /></span>
+                      {% elseif value is same as(false) or value == 'false' %}
+                        <span class="text-danger fs-5"><twig:ux:icon name="bi:x-circle-fill" /></span>
+                      {% elseif value is not null %}
+                        <span>{{ value }}</span>
                       {% else %}
-                        {{ value }}
+                        <span>{{ o.emptyText }}</span>
                       {% endif %}
                     </td>
                   {% endfor %}
@@ -124,15 +126,15 @@
               <tr>
                 <th scope="col">Feature</th>
                 {% for column in o.columns %}
-                  <th scope="col" {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
-                    <div class="d-flex flex-column align-items-center">
-                      {{ column.title ?? 'Plan ' ~ loop.index }}
-                      {% if column.badge %}
-                        <span class="badge bg-{{ column.badge_variant ?? 'warning' }} mt-2">{{ column.badge }}</span>
-                      {% endif %}
-                      {% if column.price %}
+                  <th scope="col" {% if loop.index0 == o.highlightColumn %}class="table-primary position-relative"{% else %}class="position-relative"{% endif %} style="padding-top: {% if column.badge is defined and column.badge %}2.5rem{% else %}1rem{% endif %}; vertical-align: bottom;">
+                    {% if column.badge is defined and column.badge %}
+                      <span class="badge bg-{{ column.badge_variant ?? 'warning' }}">{{ column.badge }}</span>
+                    {% endif %}
+                    <div class="d-flex flex-column align-items-center justify-content-end">
+                      <span>{{ column.title ?? ('Plan ' ~ loop.index) }}</span>
+                      {% if column.price is defined and column.price %}
                         <div class="h4 mb-0 mt-2">{{ column.price }}</div>
-                        {% if column.period %}
+                        {% if column.period is defined and column.period %}
                           <small class="text-muted">per {{ column.period }}</small>
                         {% endif %}
                       {% endif %}
@@ -145,20 +147,21 @@
               {% for feature in o.features %}
                 <tr>
                   <th scope="row">
-                    {{ feature.feature }}
+                    <span>{{ feature.feature }}</span>
                     {% if feature.description %}
                       <br><small class="text-muted fw-normal">{{ feature.description }}</small>
                     {% endif %}
                   </th>
                   {% for value in feature.values %}
                     <td {% if loop.index0 == o.highlightColumn %}class="table-primary"{% endif %}>
-                      {% set val = value ?? o.emptyText %}
-                      {% if o.showCheckmarks and (val == true or val == 'true' or val == '✓') %}
-                        <span class="text-success fs-5">{{ o.checkIcon }}</span>
-                      {% elseif o.showCheckmarks and (val == false or val == 'false' or val == '✗') %}
-                        <span class="text-danger">{{ o.uncheckIcon }}</span>
+                      {% if value is same as(true) or value == 'true' %}
+                        <span class="text-success fs-5"><twig:ux:icon name="bi:check-circle-fill" /></span>
+                      {% elseif value is same as(false) or value == 'false' %}
+                        <span class="text-danger fs-5"><twig:ux:icon name="bi:x-circle-fill" /></span>
+                      {% elseif value is not null %}
+                        <span>{{ value }}</span>
                       {% else %}
-                        {{ val }}
+                        <span>{{ o.emptyText }}</span>
                       {% endif %}
                     </td>
                   {% endfor %}
@@ -185,6 +188,3 @@
     {% endif %}
   </div>
 </section>
-
-{%- endapply %}
-

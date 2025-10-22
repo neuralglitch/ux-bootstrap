@@ -14,21 +14,22 @@ final class Calendar extends AbstractBootstrap
     public string $view;  // 'month' | 'week' | 'day' | 'list'
     public string $locale;
     public bool $showWeekNumbers;
-    
+
     // Navigation
     public bool $showNavigation;
     public bool $showTodayButton;
     public bool $showViewSwitcher;
-    
+
     // Date configuration
     public ?string $initialDate = null;  // Y-m-d format, defaults to today
     public int $firstDayOfWeek;  // 0=Sunday, 1=Monday
-    
+
     // Event configuration
+    /** @var array<string, mixed> */
     public array $events = [];  // Array of event objects
     public string $eventUrl;  // URL for AJAX event loading
     public bool $loadEventsAsync;
-    
+
     // Display options
     public bool $showHeader;
     public bool $showWeekends;
@@ -38,21 +39,23 @@ final class Calendar extends AbstractBootstrap
     public string $slotDuration;  // Duration of time slots
     public string $slotMinTime;  // Start time of day
     public string $slotMaxTime;  // End time of day
-    
+
     // Event actions
     public bool $allowEventClick;
     public bool $allowDateClick;
     public ?string $eventClickUrl = null;  // URL pattern for event clicks
     public ?string $dateClickUrl = null;   // URL pattern for date clicks
-    
+
     // Styling
     public string $height;  // 'auto' | specific height like '600px'
     public string $headerToolbar;  // 'default' | 'minimal' | 'none'
-    
+
     // Advanced
     public bool $editable;  // Allow drag-and-drop
     public bool $selectable;  // Allow date range selection
+    /** @var array<string, mixed> */
     public array $businessHours = [];  // Define business hours
+    /** @var array<int> */
     public array $hiddenDays = [];  // Days to hide (0-6)
 
     public function mount(): void
@@ -69,7 +72,7 @@ final class Calendar extends AbstractBootstrap
         if (!isset($this->showWeekNumbers)) {
             $this->showWeekNumbers = $d['show_week_numbers'] ?? false;
         }
-        
+
         // Navigation
         if (!isset($this->showNavigation)) {
             $this->showNavigation = $d['show_navigation'] ?? true;
@@ -80,13 +83,13 @@ final class Calendar extends AbstractBootstrap
         if (!isset($this->showViewSwitcher)) {
             $this->showViewSwitcher = $d['show_view_switcher'] ?? true;
         }
-        
+
         // Date configuration
         $this->initialDate ??= $d['initial_date'] ?? null;
         if (!isset($this->firstDayOfWeek)) {
             $this->firstDayOfWeek = $d['first_day_of_week'] ?? 0;
         }
-        
+
         // Event configuration
         if (!isset($this->eventUrl)) {
             $this->eventUrl = $d['event_url'] ?? '/calendar/events';
@@ -94,7 +97,7 @@ final class Calendar extends AbstractBootstrap
         if (!isset($this->loadEventsAsync)) {
             $this->loadEventsAsync = $d['load_events_async'] ?? false;
         }
-        
+
         // Display options
         if (!isset($this->showHeader)) {
             $this->showHeader = $d['show_header'] ?? true;
@@ -120,7 +123,7 @@ final class Calendar extends AbstractBootstrap
         if (!isset($this->slotMaxTime)) {
             $this->slotMaxTime = $d['slot_max_time'] ?? '24:00:00';
         }
-        
+
         // Event actions
         if (!isset($this->allowEventClick)) {
             $this->allowEventClick = $d['allow_event_click'] ?? true;
@@ -130,7 +133,7 @@ final class Calendar extends AbstractBootstrap
         }
         $this->eventClickUrl ??= $d['event_click_url'] ?? null;
         $this->dateClickUrl ??= $d['date_click_url'] ?? null;
-        
+
         // Styling
         if (!isset($this->height)) {
             $this->height = $d['height'] ?? 'auto';
@@ -138,7 +141,7 @@ final class Calendar extends AbstractBootstrap
         if (!isset($this->headerToolbar)) {
             $this->headerToolbar = $d['header_toolbar'] ?? 'default';
         }
-        
+
         // Advanced
         if (!isset($this->editable)) {
             $this->editable = $d['editable'] ?? false;

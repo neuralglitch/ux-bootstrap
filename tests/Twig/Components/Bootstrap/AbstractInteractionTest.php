@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractInteraction;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AbstractInteractionTest extends TestCase
 {
@@ -62,7 +63,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, []);
@@ -77,7 +78,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -94,7 +95,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -113,7 +114,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -132,7 +133,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -151,7 +152,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -166,7 +167,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -181,7 +182,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyCommonDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
@@ -196,7 +197,7 @@ final class AbstractInteractionTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, false);
@@ -212,7 +213,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->ariaLabel = 'Test Label';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, false);
@@ -227,7 +228,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->tooltip = 'Tooltip text';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, false);
@@ -243,7 +244,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->disabled = true;
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, false);
@@ -261,7 +262,7 @@ final class AbstractInteractionTest extends TestCase
             'data-test' => 'value',
         ];
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, false);
@@ -278,7 +279,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->disabled = true;
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildCommonAttributes');
         $method->setAccessible(true);
         $attrs = $method->invoke($component, true);
@@ -290,7 +291,7 @@ final class AbstractInteractionTest extends TestCase
 
     public function testGetComponentTypeIsAbstract(): void
     {
-        $reflection = new \ReflectionClass(AbstractInteraction::class);
+        $reflection = new ReflectionClass(AbstractInteraction::class);
         $method = $reflection->getMethod('getComponentType');
 
         self::assertTrue($method->isAbstract());

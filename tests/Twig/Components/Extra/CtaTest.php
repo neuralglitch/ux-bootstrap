@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Cta;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CtaTest extends TestCase
 {
@@ -334,7 +335,7 @@ final class CtaTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Cta($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('cta', $method->invoke($component));

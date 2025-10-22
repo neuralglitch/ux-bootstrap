@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\CookieBanner;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CookieBannerTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class CookieBannerTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'cookie_banner' => [
+            'cookie-banner' => [
                 'position' => 'bottom',
                 'title' => 'We use cookies',
                 'message' => 'We use cookies to ensure you get the best experience on our website.',
@@ -285,7 +286,7 @@ final class CookieBannerTest extends TestCase
         $options = $component->options();
 
         $this->assertArrayHasKey('data-controller', $options['attrs']);
-        $this->assertSame('bs-cookie_banner', $options['attrs']['data-controller']);
+        $this->assertSame('bs-cookie-banner', $options['attrs']['data-controller']);
     }
 
     public function testCustomClasses(): void
@@ -318,16 +319,16 @@ final class CookieBannerTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new CookieBanner($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('cookie_banner', $method->invoke($component));
+        $this->assertSame('cookie-banner', $method->invoke($component));
     }
 
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'cookie_banner' => [
+            'cookie-banner' => [
                 'position' => 'top-fixed',
                 'title' => 'Cookie Notice',
                 'accept_variant' => 'success',

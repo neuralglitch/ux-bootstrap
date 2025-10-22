@@ -45,12 +45,8 @@ final class Rating extends AbstractStimulus
         // Apply defaults from config
         // For properties with defaults, only apply config if value hasn't been explicitly changed from default
         if (isset($d['value']) && is_numeric($d['value']) && $this->value === 0.0) {
-            $this->value = (float) $d['value'];
-
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+            $this->value = (float)$d['value'];
+        }
         if (isset($d['max']) && is_int($d['max']) && $this->max === 5) {
             $this->max = $d['max'];
         }
@@ -66,7 +62,7 @@ final class Rating extends AbstractStimulus
         if (isset($d['text_position']) && is_string($d['text_position']) && $this->textPosition === 'end') {
             $this->textPosition = $d['text_position'];
         }
-        
+
         // Boolean properties
         $this->readonly = $this->readonly || (is_bool($d['readonly'] ?? false) && ($d['readonly'] ?? false));
         $this->halfStars = $this->halfStars || (is_bool($d['half_stars'] ?? false) && ($d['half_stars'] ?? false));
@@ -74,7 +70,7 @@ final class Rating extends AbstractStimulus
         $this->showCount = $this->showCount || (is_bool($d['show_count'] ?? false) && ($d['show_count'] ?? false));
         $this->showText = $this->showText || (is_bool($d['show_text'] ?? false) && ($d['show_text'] ?? false));
         $this->ariaLive = $this->ariaLive || (is_bool($d['aria_live'] ?? false) && ($d['aria_live'] ?? false));
-        
+
         // Nullable properties
         if (array_key_exists('variant', $d) && (is_string($d['variant']) || $d['variant'] === null)) {
             $this->variant ??= $d['variant'];
@@ -86,6 +82,9 @@ final class Rating extends AbstractStimulus
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -241,7 +240,7 @@ final class Rating extends AbstractStimulus
     {
         $ratingText = $this->halfStars
             ? number_format($this->value, 1)
-            : (string) (int) $this->value;
+            : (string)(int)$this->value;
 
         return "Rating: {$ratingText} out of {$this->max}";
     }

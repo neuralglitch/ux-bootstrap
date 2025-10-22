@@ -39,10 +39,10 @@ final class CarouselItem extends AbstractStimulus
         if ($this->imgClass === 'd-block w-100') {
             $this->imgClass = $d['img_class'] ?? 'd-block w-100';
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
     }
 
     protected function getComponentName(): string
@@ -62,9 +62,9 @@ final class CarouselItem extends AbstractStimulus
         );
 
         $attrs = [];
-        
+
         if ($this->interval !== null) {
-            $attrs['data-bs-interval'] = (string) $this->interval;
+            $attrs['data-bs-interval'] = (string)$this->interval;
         }
 
         $attrs = $this->mergeAttributes($attrs, $this->attr);

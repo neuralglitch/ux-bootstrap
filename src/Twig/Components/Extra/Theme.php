@@ -13,12 +13,14 @@ final class Theme extends AbstractStimulus
 {
     use VariantTrait;
 
+    public string $stimulusController = 'bs-theme';
+
     public ?string $initial = null;
     public ?string $mode = null;
 
     public function mount(): void
     {
-        $d = $this->config->for('theme_toggle');
+        $d = $this->config->for('theme-toggle');
 
         $this->applyStimulusDefaults($d);
         $this->applyVariantDefaults($d);
@@ -28,7 +30,7 @@ final class Theme extends AbstractStimulus
         if ($this->mode === null && isset($d['mode'])) {
             $this->mode = (string)$d['mode'];
         }
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -50,7 +52,7 @@ final class Theme extends AbstractStimulus
 
         // Build Stimulus attributes using new pattern
         $attrs = $this->buildStimulusAttributes();
-        
+
         // Merge with custom attributes
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 

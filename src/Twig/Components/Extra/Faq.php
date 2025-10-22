@@ -40,10 +40,10 @@ final class Faq extends AbstractStimulus
         if ($this->accordionId === null) {
             $this->accordionId = 'faq-' . uniqid();
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
 
         $this->applyClassDefaults($d);
 

@@ -10,6 +10,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:tour', template: '@NeuralGlitchUxBootstrap/components/extra/tour.html.twig')]
 final class Tour extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-tour';
+
     // Tour identification
     public ?string $tourId = null;
 
@@ -65,7 +67,7 @@ final class Tour extends AbstractStimulus
         // Note: For boolean properties, we can't use ??= or || because they don't distinguish
         // between "false" and "not set". Since Twig components always initialize properties
         // to their declared defaults, we just keep the current values.
-        
+
         // Apply label defaults (only if not set)
         $this->nextLabel ??= $d['next_label'] ?? 'Next';
         $this->prevLabel ??= $d['prev_label'] ?? 'Previous';
@@ -83,10 +85,10 @@ final class Tour extends AbstractStimulus
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
     }
 
     protected function getComponentName(): string
@@ -131,16 +133,25 @@ final class Tour extends AbstractStimulus
             'steps' => $this->steps,
             'showProgress' => $this->showProgress,
             'showStepNumbers' => $this->showStepNumbers,
+            'keyboard' => $this->keyboard,
+            'backdrop' => $this->backdrop,
+            'highlight' => $this->highlight,
+            'scrollToElement' => $this->scrollToElement,
             'showPrevButton' => $this->showPrevButton,
             'showNextButton' => $this->showNextButton,
             'showSkipButton' => $this->showSkipButton,
             'showFinishButton' => $this->showFinishButton,
+            'allowClickThrough' => $this->allowClickThrough,
             'nextLabel' => $this->nextLabel,
             'prevLabel' => $this->prevLabel,
             'skipLabel' => $this->skipLabel,
             'finishLabel' => $this->finishLabel,
             'closeLabel' => $this->closeLabel,
             'popoverVariant' => $this->popoverVariant,
+            'popoverPlacement' => $this->popoverPlacement,
+            'popoverWidth' => $this->popoverWidth,
+            'highlightPadding' => $this->highlightPadding,
+            'highlightBorderRadius' => $this->highlightBorderRadius,
             'classes' => $classes,
             'attrs' => $attrs,
         ];

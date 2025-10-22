@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\ListGroupItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ListGroupItemTest extends TestCase
 {
@@ -279,7 +280,7 @@ final class ListGroupItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new ListGroupItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('list_group_item', $method->invoke($component));

@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:collapse', template: '@NeuralGlitchUxBootstrap/components/bootstrap/collapse.html.twig')]
 final class Collapse extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-collapse';
+
     public ?string $id = null;
     public ?bool $show = null;
     public ?bool $horizontal = null;
@@ -26,7 +28,7 @@ final class Collapse extends AbstractStimulus
         $this->horizontal ??= $d['horizontal'] ?? false;
         $this->parent ??= $d['parent'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

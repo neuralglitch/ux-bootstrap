@@ -16,6 +16,10 @@ export default class extends Controller {
     };
 
     connect() {
+        // Ensure value has # prefix
+        if (this.valueValue && !this.valueValue.startsWith('#')) {
+            this.valueValue = '#' + this.valueValue;
+        }
         this.updateUI(this.valueValue);
     }
 
@@ -68,6 +72,11 @@ export default class extends Controller {
      * Update all UI elements to reflect the current color
      */
     updateUI(color) {
+        // Ensure color has # prefix
+        if (color && !color.startsWith('#')) {
+            color = '#' + color;
+        }
+        
         // Update hidden input (for form submission)
         if (this.hasHiddenInputTarget) {
             this.hiddenInputTarget.value = color || '';
@@ -83,7 +92,7 @@ export default class extends Controller {
             }
         }
 
-        // Update native color picker
+        // Update native color picker (must have # prefix)
         if (this.hasPickerTarget && color) {
             this.pickerTarget.value = color;
         }

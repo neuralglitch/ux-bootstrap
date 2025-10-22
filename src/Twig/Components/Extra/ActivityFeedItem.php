@@ -95,7 +95,7 @@ final class ActivityFeedItem extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('activity_feed_item');
+        $d = $this->config->for('activity-feed-item');
 
         $this->applyStimulusDefaults($d);
 
@@ -115,16 +115,19 @@ final class ActivityFeedItem extends AbstractStimulus
         $this->unread ??= $d['unread'] ?? false;
         $this->type ??= $d['type'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'activity_feed_item';
+        return 'activity-feed-item';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function options(): array
     {
         $classes = $this->buildClasses(

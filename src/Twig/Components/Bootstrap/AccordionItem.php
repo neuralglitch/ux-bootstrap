@@ -13,34 +13,25 @@ final class AccordionItem extends AbstractStimulus
     public ?string $targetId = null;
     public ?string $parentId = null;
     public bool $show = false;
-    public bool $collapsed = true;
 
     public function mount(): void
     {
-        $d = $this->config->for('accordion_item');
+        $d = $this->config->for('accordion-item');
 
         $this->applyStimulusDefaults($d);
-
         $this->applyClassDefaults($d);
 
-        // Apply defaults from config
-        $this->header ??= $d['header'] ?? null;
+        // Apply config defaults
         $this->show = $this->show || ($d['show'] ?? false);
-        $this->collapsed = !$this->show;
-        
-        // Generate unique IDs if not provided
-        if (null === $this->targetId) {
-            $this->targetId = $d['target_id'] ?? 'collapse-' . uniqid();
+        $this->header ??= $d['header'] ?? null;
+        $this->targetId ??= $d['target_id'] ?? 'collapse-' . uniqid();
 
-        
-        // Initialize controller with default
         $this->initializeController();
-    }
     }
 
     protected function getComponentName(): string
     {
-        return 'accordion_item';
+        return 'accordion-item';
     }
 
     /**
@@ -48,6 +39,9 @@ final class AccordionItem extends AbstractStimulus
      */
     public function options(): array
     {
+        // Collapsed is ALWAYS the inverse of show (calculated dynamically)
+        $collapsed = !$this->show;
+
         $itemClasses = $this->buildClasses(
             ['accordion-item'],
             $this->class ? explode(' ', trim($this->class)) : []
@@ -55,7 +49,7 @@ final class AccordionItem extends AbstractStimulus
 
         $buttonClasses = $this->buildClasses(
             ['accordion-button'],
-            $this->collapsed ? ['collapsed'] : []
+            $collapsed ? ['collapsed'] : []
         );
 
         $collapseClasses = $this->buildClasses(
@@ -70,7 +64,7 @@ final class AccordionItem extends AbstractStimulus
             'targetId' => $this->targetId,
             'parentId' => $this->parentId,
             'show' => $this->show,
-            'collapsed' => $this->collapsed,
+            'collapsed' => $collapsed,
             'itemClasses' => $itemClasses,
             'buttonClasses' => $buttonClasses,
             'collapseClasses' => $collapseClasses,

@@ -70,6 +70,11 @@
             "fetch": "eager",
             "enabled": true
         },
+        "bs-data-table": {
+            "main": "controllers/bs_data_table_controller.js",
+            "fetch": "lazy",
+            "enabled": true
+        },
         "bs-dropdown": {
             "main": "controllers/bs_dropdown_controller.js",
             "fetch": "eager",

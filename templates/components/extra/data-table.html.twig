@@ -1,9 +1,28 @@
 {% apply spaceless -%}
   {% set o = this.options() %}
   
+  {# Main controller wrapper #}
+  <div {{ this.renderHtmlAttributes(o.controllerAttrs) | raw }}>
+  
   {# Wrapper container #}
   {% if o.containerClasses %}
     <div class="{{ o.containerClasses }}">
+  {% endif %}
+
+  {# Search and controls bar #}
+  {% if o.sortable or o.selectable %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="flex-grow-1 me-3" style="max-width: 300px;">
+        <input 
+          type="search" 
+          class="form-control" 
+          placeholder="Search..." 
+          data-bs-data-table-target="search"
+          data-action="input->bs-data-table#search"
+        >
+      </div>
+      <div class="text-muted small" data-bs-data-table-target="info"></div>
+    </div>
   {% endif %}
 
   {# Optional card wrapper #}
@@ -21,7 +40,7 @@
       {% endif %}
       <div class="card-body{{ o.isEmpty and o.showEmptyState ? ' p-0' : '' }}">
   {% elseif o.wrapperClasses %}
-    <div class="{{ o.wrapperClasses }}">
+    <div class="card{{ o.wrapperClasses }}">
   {% endif %}
 
   {# Responsive wrapper #}
@@ -30,7 +49,7 @@
   {% endif %}
 
   {# Table #}
-  <table class="{{ o.tableClasses }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
+  <table class="{{ o.tableClasses }}" data-bs-data-table-target="table" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     
     {# Caption #}
     {% if o.captionText %}
@@ -46,7 +65,13 @@
           {% if o.selectable %}
             <th scope="col" style="width: 40px;">
               {% if o.selectAll %}
-                <input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all rows">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  data-bs-data-table-target="selectAll"
+                  data-action="change->bs-data-table#toggleSelectAll"
+                  aria-label="Select all rows"
+                >
               {% endif %}
             </th>
           {% endif %}
@@ -62,11 +87,17 @@
               scope="col"
               {% if column.headerClass %} class="{{ column.headerClass }}"{% endif %}
               {% if column.align %} class="text-{{ column.align }}"{% endif %}
+              {% if o.sortable and column.sortable %}data-sortable data-column="{{ loop.index0 }}"{% endif %}
             >
-              {% if o.sortable and column.sortable and o.sortBaseUrl %}
-                <a href="{{ this.getSortUrl(column.key) }}" class="text-decoration-none text-reset">
+              {% if o.sortable and column.sortable %}
+                <a 
+                  href="#" 
+                  class="text-decoration-none text-reset" 
+                  data-action="click->bs-data-table#sort"
+                  data-column="{{ loop.index0 }}"
+                >
                   {{ column.label }}
-                  <span class="ms-1">{{ this.getSortIcon(column.key) }}</span>
+                  <span class="sort-icon ms-1">⇅</span>
                 </a>
               {% else %}
                 {{ column.label }}
@@ -84,7 +115,7 @@
     {% endif %}
 
     {# Table Body #}
-    <tbody>
+    <tbody data-bs-data-table-target="tbody">
       {% if o.isEmpty and o.showEmptyState %}
         {# Empty state #}
         <tr>
@@ -165,6 +196,11 @@
     </div>
   {% endif %}
 
+  {# Pagination #}
+  {% if o.sortable or o.selectable %}
+    <div class="d-flex justify-content-center mt-3" data-bs-data-table-target="pagination"></div>
+  {% endif %}
+
   {# Close card wrapper #}
   {% if o.cardWrapper %}
       </div>
@@ -177,6 +213,8 @@
   {% if o.containerClasses %}
     </div>
   {% endif %}
+  
+  </div>{# Close main controller wrapper #}
 
 {%- endapply %}
 

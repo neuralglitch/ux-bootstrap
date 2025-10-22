@@ -27,16 +27,16 @@ final class ListGroup extends AbstractStimulus
         $this->flush = $this->flush || ($d['flush'] ?? false);
         $this->numbered = $this->numbered || ($d['numbered'] ?? false);
         $this->horizontal ??= $d['horizontal'] ?? null;
-        
+
         // Auto-determine tag if not specified
         if (null === $this->tag) {
             $this->tag = $this->numbered ? 'ol' : ($d['tag'] ?? 'ul');
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
-        
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
+
         // Generate unique ID if not provided
         if (null === $this->id) {
             $this->id = $d['id'] ?? null;
@@ -62,7 +62,7 @@ final class ListGroup extends AbstractStimulus
         );
 
         $attrs = [];
-        
+
         if ($this->id) {
             $attrs['id'] = $this->id;
         }

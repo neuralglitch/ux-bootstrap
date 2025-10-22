@@ -17,12 +17,12 @@
             {% if o.showMarkAllRead or o.showClearAll %}
               <div class="notification-center-actions">
                 {% if o.showMarkAllRead %}
-                  <button type="button" class="btn btn-sm btn-link" data-action="{{ this.stimulusController }}#markAllRead">
+                  <button type="button" class="btn btn-sm btn-link" data-action="bs-notification-center#markAllRead">
                     Mark all read
                   </button>
                 {% endif %}
                 {% if o.showClearAll %}
-                  <button type="button" class="btn btn-sm btn-link text-danger" data-action="{{ this.stimulusController }}#clearAll">
+                  <button type="button" class="btn btn-sm btn-link text-danger" data-action="bs-notification-center#clearAll">
                     Clear all
                   </button>
                 {% endif %}
@@ -31,7 +31,7 @@
           </div>
         {% endif %}
         
-        <div class="notification-center-body" data-{{ this.stimulusController }}-target="notificationList">
+        <div class="notification-center-body" data-bs-notification-center-target="notificationList">
           {% if has_notifications %}
             {{ notifications|raw }}
           {% else %}
@@ -57,15 +57,15 @@
                 data-bs-toggle="dropdown" 
                 data-bs-auto-close="outside"
                 aria-expanded="false"
-                data-{{ this.stimulusController }}-target="trigger">
+                data-bs-notification-center-target="trigger">
           {% if o.triggerIcon %}
-            <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+            <span class="notification-icon"><twig:ux:icon :name="o.triggerIcon" /></span>
           {% endif %}
           {% if not o.triggerIconOnly and o.triggerLabel %}
             <span class="ms-2">{{ o.triggerLabel }}</span>
           {% endif %}
           {% if o.showBadge and o.unreadCount > 0 %}
-            <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+            <span class="{{ o.badgeClasses }}" data-bs-notification-center-target="badge">
               {{ o.unreadCount }}
             </span>
           {% endif %}
@@ -82,7 +82,7 @@
             {% if o.showMarkAllRead or o.showClearAll %}
               <div class="notification-actions">
                 {% if o.showMarkAllRead %}
-                  <button type="button" class="btn btn-sm btn-link p-0" data-action="{{ this.stimulusController }}#markAllRead">
+                  <button type="button" class="btn btn-sm btn-link p-0" data-action="bs-notification-center#markAllRead">
                     Mark all read
                   </button>
                 {% endif %}
@@ -93,7 +93,7 @@
           <div class="dropdown-divider"></div>
           
           {# Notification list #}
-          <div class="notification-list" data-{{ this.stimulusController }}-target="notificationList">
+          <div class="notification-list" data-bs-notification-center-target="notificationList">
             {% if has_notifications %}
               {{ notifications|raw }}
             {% else %}
@@ -121,15 +121,15 @@
               data-bs-toggle="offcanvas" 
               data-bs-target="#{{ o.menuId }}"
               aria-controls="{{ o.menuId }}"
-              data-{{ this.stimulusController }}-target="trigger">
+              data-bs-notification-center-target="trigger">
         {% if o.triggerIcon %}
-          <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+          <span class="notification-icon"><twig:ux:icon :name="o.triggerIcon" /></span>
         {% endif %}
         {% if not o.triggerIconOnly and o.triggerLabel %}
           <span class="ms-2">{{ o.triggerLabel }}</span>
         {% endif %}
         {% if o.showBadge and o.unreadCount > 0 %}
-          <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+          <span class="{{ o.badgeClasses }}" data-bs-notification-center-target="badge">
             {{ o.unreadCount }}
           </span>
         {% endif %}
@@ -149,19 +149,19 @@
         {% if o.showMarkAllRead or o.showClearAll %}
           <div class="offcanvas-actions px-3 pb-2 d-flex gap-2">
             {% if o.showMarkAllRead %}
-              <button type="button" class="btn btn-sm btn-outline-secondary" data-action="{{ this.stimulusController }}#markAllRead">
+              <button type="button" class="btn btn-sm btn-outline-secondary" data-action="bs-notification-center#markAllRead">
                 Mark all read
               </button>
             {% endif %}
             {% if o.showClearAll %}
-              <button type="button" class="btn btn-sm btn-outline-danger" data-action="{{ this.stimulusController }}#clearAll">
+              <button type="button" class="btn btn-sm btn-outline-danger" data-action="bs-notification-center#clearAll">
                 Clear all
               </button>
             {% endif %}
           </div>
         {% endif %}
         
-        <div class="offcanvas-body p-0" data-{{ this.stimulusController }}-target="notificationList">
+        <div class="offcanvas-body p-0" data-bs-notification-center-target="notificationList">
           {% if has_notifications %}
             {{ notifications|raw }}
           {% else %}
@@ -185,15 +185,15 @@
               class="{{ o.triggerClasses }}" 
               data-bs-toggle="modal" 
               data-bs-target="#{{ o.menuId }}"
-              data-{{ this.stimulusController }}-target="trigger">
+              data-bs-notification-center-target="trigger">
         {% if o.triggerIcon %}
-          <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+          <span class="notification-icon"><twig:ux:icon :name="o.triggerIcon" /></span>
         {% endif %}
         {% if not o.triggerIconOnly and o.triggerLabel %}
           <span class="ms-2">{{ o.triggerLabel }}</span>
         {% endif %}
         {% if o.showBadge and o.unreadCount > 0 %}
-          <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+          <span class="{{ o.badgeClasses }}" data-bs-notification-center-target="badge">
             {{ o.unreadCount }}
           </span>
         {% endif %}
@@ -214,19 +214,19 @@
             {% if o.showMarkAllRead or o.showClearAll %}
               <div class="modal-actions px-3 py-2 border-bottom d-flex gap-2">
                 {% if o.showMarkAllRead %}
-                  <button type="button" class="btn btn-sm btn-outline-secondary" data-action="{{ this.stimulusController }}#markAllRead">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-action="bs-notification-center#markAllRead">
                     Mark all read
                   </button>
                 {% endif %}
                 {% if o.showClearAll %}
-                  <button type="button" class="btn btn-sm btn-outline-danger" data-action="{{ this.stimulusController }}#clearAll">
+                  <button type="button" class="btn btn-sm btn-outline-danger" data-action="bs-notification-center#clearAll">
                     Clear all
                   </button>
                 {% endif %}
               </div>
             {% endif %}
             
-            <div class="modal-body p-0" data-{{ this.stimulusController }}-target="notificationList">
+            <div class="modal-body p-0" data-bs-notification-center-target="notificationList">
               {% if has_notifications %}
                 {{ notifications|raw }}
               {% else %}
@@ -254,15 +254,15 @@
                 data-bs-toggle="dropdown" 
                 data-bs-auto-close="outside"
                 aria-expanded="false"
-                data-{{ this.stimulusController }}-target="trigger">
+                data-bs-notification-center-target="trigger">
           {% if o.triggerIcon %}
-            <span class="notification-icon">{{ o.triggerIcon|raw }}</span>
+            <span class="notification-icon"><twig:ux:icon :name="o.triggerIcon" /></span>
           {% endif %}
           {% if not o.triggerIconOnly and o.triggerLabel %}
             <span class="ms-2">{{ o.triggerLabel }}</span>
           {% endif %}
           {% if o.showBadge and o.unreadCount > 0 %}
-            <span class="{{ o.badgeClasses }}" data-{{ this.stimulusController }}-target="badge">
+            <span class="{{ o.badgeClasses }}" data-bs-notification-center-target="badge">
               {{ o.unreadCount }}
             </span>
           {% endif %}
@@ -277,7 +277,7 @@
           <div class="dropdown-header d-flex justify-content-between align-items-center">
             <h6 class="mb-0">{{ o.title }}</h6>
             {% if o.showMarkAllRead %}
-              <button type="button" class="btn btn-sm btn-link p-0" data-action="{{ this.stimulusController }}#markAllRead">
+              <button type="button" class="btn btn-sm btn-link p-0" data-action="bs-notification-center#markAllRead">
                 Mark all read
               </button>
             {% endif %}
@@ -285,7 +285,7 @@
           
           <div class="dropdown-divider"></div>
           
-          <div class="notification-list" data-{{ this.stimulusController }}-target="notificationList">
+          <div class="notification-list" data-bs-notification-center-target="notificationList">
             {% if has_notifications %}
               {{ notifications|raw }}
             {% else %}

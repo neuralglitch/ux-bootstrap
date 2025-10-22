@@ -8,6 +8,7 @@ use NeuralGlitch\UxBootstrap\Command\SearchTestCommand;
 use NeuralGlitch\UxBootstrap\Service\Search\SearchService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 final class SearchTestCommandTest extends TestCase
@@ -193,7 +194,7 @@ final class SearchTestCommandTest extends TestCase
         $command = $this->createCommand();
         $tester = new CommandTester($command);
 
-        $tester->execute([], ['verbosity' => \Symfony\Component\Console\Output\OutputInterface::VERBOSITY_VERBOSE]);
+        $tester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $display = $tester->getDisplay();
         self::assertNotEmpty($display);
@@ -202,7 +203,7 @@ final class SearchTestCommandTest extends TestCase
     public function testExecuteTruncatesLongDescriptions(): void
     {
         $longDescription = str_repeat('A very long description that should be truncated. ', 10);
-        
+
         $searchService = $this->createMock(SearchService::class);
         $searchService->method('search')->willReturn([
             [

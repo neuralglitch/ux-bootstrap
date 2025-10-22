@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\NavItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class NavItemTest extends TestCase
 {
@@ -228,7 +229,7 @@ final class NavItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new NavItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('nav_item', $method->invoke($component));

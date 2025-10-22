@@ -9,6 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:navbar', template: '@NeuralGlitchUxBootstrap/components/bootstrap/navbar.html.twig')]
 final class Navbar extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-navbar';
 
     /** Brand text or HTML */
     public ?string $brand = null;
@@ -250,7 +251,7 @@ final class Navbar extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

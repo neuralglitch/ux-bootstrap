@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Rating;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class RatingTest extends TestCase
 {
@@ -123,7 +124,7 @@ final class RatingTest extends TestCase
         $options = $component->options();
 
         $this->assertTrue($options['halfStars']);
-        
+
         // Check that we have half-star item
         $halfStarItems = array_filter($options['items'], fn($item) => $item['state'] === 'half');
         $this->assertNotEmpty($halfStarItems);
@@ -158,7 +159,7 @@ final class RatingTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('danger', $options['variant']);
-        
+
         // Check filled items have the variant color
         $filledItems = array_filter($options['items'], fn($item) => $item['state'] === 'filled');
         foreach ($filledItems as $item) {
@@ -175,7 +176,7 @@ final class RatingTest extends TestCase
         $options = $component->options();
 
         $this->assertSame('light', $options['emptyVariant']);
-        
+
         // Check empty items have the empty variant color
         $emptyItems = array_filter($options['items'], fn($item) => $item['state'] === 'empty');
         foreach ($emptyItems as $item) {
@@ -300,12 +301,12 @@ final class RatingTest extends TestCase
         $options = $component->options();
 
         $this->assertCount(5, $options['items']);
-        
+
         // Check first 3 are filled
         $this->assertSame('filled', $options['items'][0]['state']);
         $this->assertSame('filled', $options['items'][1]['state']);
         $this->assertSame('filled', $options['items'][2]['state']);
-        
+
         // Check last 2 are empty
         $this->assertSame('empty', $options['items'][3]['state']);
         $this->assertSame('empty', $options['items'][4]['state']);
@@ -384,7 +385,7 @@ final class RatingTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Rating($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('rating', $method->invoke($component));

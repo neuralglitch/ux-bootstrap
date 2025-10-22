@@ -10,6 +10,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:cookie-banner', template: '@NeuralGlitchUxBootstrap/components/extra/cookie-banner.html.twig')]
 final class CookieBanner extends AbstractStimulus
 {
+    // Stimulus controller
+    public string $stimulusController = 'bs-cookie-banner';
+
     // Position
     public ?string $position = null; // 'top' | 'bottom' | 'top-fixed' | 'bottom-fixed'
 
@@ -47,7 +50,7 @@ final class CookieBanner extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('cookie_banner');
+        $d = $this->config->for('cookie-banner');
 
         $this->applyStimulusDefaults($d);
 
@@ -82,29 +85,14 @@ final class CookieBanner extends AbstractStimulus
         $this->variant ??= $d['variant'] ?? 'light';
         $this->shadow ??= $d['shadow'] ?? 'shadow-lg';
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'cookie_banner';
-    }
-    
-    protected function buildStimulusAttributes(): array
-    {
-        $attrs = $this->stimulusControllerAttributes();
-        
-        if ($this->resolveControllers() !== '') {
-            $attrs = array_merge($attrs, [
-                'data-bs-cookie-banner-cookie-name-value' => $this->cookieName,
-                'data-bs-cookie-banner-expiry-days-value' => (string)$this->expiryDays,
-                'data-bs-cookie-banner-backdrop-value' => $this->backdrop ? 'true' : 'false',
-            ]);
-        }
-        
-        return $attrs;
+        return 'cookie-banner';
     }
 
     /**
@@ -113,13 +101,17 @@ final class CookieBanner extends AbstractStimulus
     public function options(): array
     {
         $classes = $this->buildClasses(
-            ['cookie-banner', "bg-{$this->variant}", $this->shadow],
+            ['cookie-banner', "bg-{$this->variant}", 'text-body', 'border-top', $this->shadow],
             $this->getPositionClasses(),
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->buildStimulusAttributes();
-        $attrs = $this->mergeAttributes($attrs, $this->attr);
+        $attrs = $this->mergeAttributes([
+            'data-controller' => $this->stimulusController,
+            'data-bs-cookie-banner-cookie-name-value' => $this->cookieName,
+            'data-bs-cookie-banner-expiry-days-value' => (string)$this->expiryDays,
+            'data-bs-cookie-banner-backdrop-value' => $this->backdrop ? 'true' : 'false',
+        ], $this->attr);
 
         return [
             'classes' => $classes,

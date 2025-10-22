@@ -9,7 +9,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 /**
  * NotificationBadge Component
- * 
+ *
  * A small indicator badge for showing notifications, counts, or status on elements
  * like nav items, avatars, buttons, and icons.
  */
@@ -68,7 +68,7 @@ final class NotificationBadge extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('notification_badge');
+        $d = $this->config->for('notification-badge');
 
         $this->applyStimulusDefaults($d);
 
@@ -85,14 +85,14 @@ final class NotificationBadge extends AbstractStimulus
         $this->max ??= $d['max'] ?? null;
         $this->inline = $this->inline || ($d['inline'] ?? false);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'notification_badge';
+        return 'notification-badge';
     }
 
     /**
@@ -112,7 +112,7 @@ final class NotificationBadge extends AbstractStimulus
             ['badge', "text-bg-{$variant}"],
             $this->pill ? ['rounded-pill'] : [],
             $this->dot ? ['p-1'] : [],
-            !$this->inline ? ['position-absolute', "translate-middle", "badge-{$position}"] : [],
+            !$this->inline ? ['position-absolute', "badge-{$position}"] : [],
             $this->bordered ? ['border', 'border-light'] : [],
             [$this->getSizeClass()],
             $this->pulse ? ['badge-pulse'] : [],
@@ -149,7 +149,7 @@ final class NotificationBadge extends AbstractStimulus
 
         // If max is set and content is numeric
         if ($this->max !== null && is_numeric($this->content)) {
-            $num = (int) $this->content;
+            $num = (int)$this->content;
             if ($num > $this->max) {
                 return $this->max . '+';
             }

@@ -10,6 +10,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:sidebar', template: '@NeuralGlitchUxBootstrap/components/extra/sidebar.html.twig')]
 final class Sidebar extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-sidebar';
+
     // Layout variants
     public string $variant = 'fixed';           // 'fixed' | 'collapsible' | 'overlay' | 'push' | 'mini'
 
@@ -60,10 +62,10 @@ final class Sidebar extends AbstractStimulus
         if ($this->variant === 'fixed' && isset($d['variant'])) {
             $this->variant = $d['variant'];
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
         if ($this->position === 'left' && isset($d['position'])) {
             $this->position = $d['position'];
         }
@@ -110,7 +112,7 @@ final class Sidebar extends AbstractStimulus
 
         // Apply Stimulus defaults
         $this->applyStimulusDefaults($d);
-        
+
         // Initialize controller with default
         $this->initializeController();
 
@@ -152,7 +154,7 @@ final class Sidebar extends AbstractStimulus
         $style = [
             '--ux-sidebar-width' => $this->width,
             '--ux-sidebar-mini-width' => $this->miniWidth,
-            '--ux-sidebar-z-index' => (string) $this->zIndex,
+            '--ux-sidebar-z-index' => (string)$this->zIndex,
             '--ux-sidebar-transition-duration' => "{$this->transitionDuration}ms",
         ];
 

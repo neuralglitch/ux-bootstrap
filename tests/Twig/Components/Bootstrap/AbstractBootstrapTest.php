@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AbstractBootstrapTest extends TestCase
 {
@@ -52,7 +53,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = 'user-class';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, []);
@@ -66,7 +67,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = 'user-class';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => 'config-class']);
@@ -80,7 +81,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = '';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => 'config-class']);
@@ -94,7 +95,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = '  ';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => 'config-class']);
@@ -108,7 +109,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = '  user-class  ';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => '  config-class  ']);
@@ -126,7 +127,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = 'user-class';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => 123]); // Not a string
@@ -140,7 +141,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
         $component->class = 'user-class';
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('applyClassDefaults');
         $method->setAccessible(true);
         $method->invoke($component, ['class' => '']);
@@ -153,7 +154,7 @@ final class AbstractBootstrapTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildClasses');
         $method->setAccessible(true);
 
@@ -167,7 +168,7 @@ final class AbstractBootstrapTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildClasses');
         $method->setAccessible(true);
 
@@ -181,7 +182,7 @@ final class AbstractBootstrapTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildClasses');
         $method->setAccessible(true);
 
@@ -195,7 +196,7 @@ final class AbstractBootstrapTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildClasses');
         $method->setAccessible(true);
 
@@ -209,7 +210,7 @@ final class AbstractBootstrapTest extends TestCase
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('buildClasses');
         $method->setAccessible(true);
 
@@ -220,7 +221,7 @@ final class AbstractBootstrapTest extends TestCase
 
     public function testGetComponentNameIsAbstract(): void
     {
-        $reflection = new \ReflectionClass(AbstractBootstrap::class);
+        $reflection = new ReflectionClass(AbstractBootstrap::class);
         $method = $reflection->getMethod('getComponentName');
 
         self::assertTrue($method->isAbstract());
@@ -232,7 +233,7 @@ final class AbstractBootstrapTest extends TestCase
         $component = $this->createTestComponent($config);
 
         // Access protected config property via reflection
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $property = $reflection->getProperty('config');
         $property->setAccessible(true);
         $configValue = $property->getValue($component);

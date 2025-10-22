@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\DropdownItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class DropdownItemTest extends TestCase
 {
@@ -203,7 +204,7 @@ final class DropdownItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new DropdownItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('dropdown_item', $method->invoke($component));

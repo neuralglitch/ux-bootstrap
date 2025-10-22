@@ -57,7 +57,7 @@
     {% endif %}
 
     {# Code block #}
-    <pre class="{{ o.preClasses }}"{% if o.preStyles %} style="{{ o.preStyles }}"{% endif %} data-bs-code-block-target="pre"><code class="{{ o.codeClasses }}" data-bs-code-block-target="code">{{ code_content|raw }}</code></pre>
+    <pre class="{{ o.preClasses }}"{% if o.preStyles %} style="{{ o.preStyles }}"{% endif %} data-bs-code-block-target="pre"><code class="{{ o.codeClasses }}" data-bs-code-block-target="code">{{ code_content|e }}</code></pre>
 
   </div>
 

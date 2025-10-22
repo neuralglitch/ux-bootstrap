@@ -13,24 +13,24 @@ final class IconTraitTest extends TestCase
     {
         return new class {
             use IconTrait;
-            
+
             public ?string $size = null; // For effectiveIconGap test
-            
+
             public function testHasIconStart(): bool
             {
                 return $this->hasIconStart();
             }
-            
+
             public function testHasIconEnd(): bool
             {
                 return $this->hasIconEnd();
             }
-            
+
             public function testEffectiveIconGap(): int
             {
                 return $this->effectiveIconGap();
             }
-            
+
             /**
              * @return array<string, array<int, string>>
              */
@@ -38,7 +38,7 @@ final class IconTraitTest extends TestCase
             {
                 return $this->iconSpacingClasses($context);
             }
-            
+
             /**
              * @param array<string, mixed> $attrs
              * @return array<string, mixed>
@@ -47,12 +47,12 @@ final class IconTraitTest extends TestCase
             {
                 return $this->applyIconOnlyAria($attrs, $visibleLabel, $ariaLabel);
             }
-            
+
             public function testEffectiveIconSize(): string
             {
                 return $this->effectiveIconSize();
             }
-            
+
             public function testToIntOrNull(int|string|null $v): ?int
             {
                 return $this->toIntOrNull($v);

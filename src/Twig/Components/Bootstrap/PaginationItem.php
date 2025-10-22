@@ -29,7 +29,7 @@ final class PaginationItem extends AbstractStimulus
         $this->disabled = $this->disabled || ($d['disabled'] ?? false);
         $this->ariaCurrent ??= $d['aria_current'] ?? 'page';
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -56,7 +56,7 @@ final class PaginationItem extends AbstractStimulus
         $itemAttrs = $this->mergeAttributes([], $this->attr);
 
         $linkAttrs = [];
-        
+
         if ($this->href) {
             $linkAttrs['href'] = $this->href;
         }

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\ActivityFeedItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ActivityFeedItemTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class ActivityFeedItemTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'activity_feed_item' => [
+            'activity-feed-item' => [
                 'icon' => null,
                 'avatar' => null,
                 'icon_variant' => 'primary',
@@ -207,7 +208,7 @@ final class ActivityFeedItemTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'activity_feed_item' => [
+            'activity-feed-item' => [
                 'icon' => 'bi-bell',
                 'avatar' => null,
                 'icon_variant' => 'warning',
@@ -239,10 +240,10 @@ final class ActivityFeedItemTest extends TestCase
     public function testComponentNameMethod(): void
     {
         $component = new ActivityFeedItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('activity_feed_item', $method->invoke($component));
+        $this->assertSame('activity-feed-item', $method->invoke($component));
     }
 
     public function testCombinedOptions(): void

@@ -12,6 +12,8 @@ final class Toast extends AbstractStimulus
 {
     use VariantTrait;
 
+    public string $stimulusController = 'bs-toast';
+
     public ?string $message = null;
     public ?string $title = null;
     public bool $header = true;
@@ -37,7 +39,7 @@ final class Toast extends AbstractStimulus
         $this->delay = $this->delay ?: ($d['delay'] ?? 5000);
         $this->animation = $this->animation && ($d['animation'] ?? true);
         $this->position = $this->position ?: ($d['position'] ?? 'top-0 end-0');
-        
+
         // Initialize controller with default (Toast always has a controller)
         $this->initializeController();
     }

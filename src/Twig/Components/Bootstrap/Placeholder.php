@@ -60,7 +60,7 @@ final class Placeholder extends AbstractStimulus
         $this->tag = $this->tag !== 'span' ? $this->tag : ($d['tag'] ?? 'span');
         $this->ariaHidden = $this->ariaHidden !== true ? $this->ariaHidden : ($d['aria_hidden'] ?? true);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
@@ -85,7 +85,7 @@ final class Placeholder extends AbstractStimulus
         );
 
         $attrs = [];
-        
+
         if ($this->ariaHidden) {
             $attrs['aria-hidden'] = 'true';
         }

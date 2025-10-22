@@ -29,7 +29,7 @@ final class Spinner extends AbstractStimulus
         $this->label ??= $d['label'] ?? 'Loading...';
         $this->role ??= $d['role'] ?? 'status';
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

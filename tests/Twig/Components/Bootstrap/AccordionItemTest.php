@@ -7,13 +7,14 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AccordionItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AccordionItemTest extends TestCase
 {
     /** @param array<string, mixed> $config */
     private function createConfig(array $config = []): Config
     {
-        return new Config(['accordion_item' => $config]);
+        return new Config(['accordion-item' => $config]);
     }
 
     private function createAccordionItem(?Config $config = null): AccordionItem
@@ -29,7 +30,6 @@ final class AccordionItemTest extends TestCase
         self::assertNull($item->targetId);
         self::assertNull($item->parentId);
         self::assertFalse($item->show);
-        self::assertTrue($item->collapsed);
         self::assertSame('', $item->class);
         self::assertSame([], $item->attr);
     }
@@ -38,7 +38,6 @@ final class AccordionItemTest extends TestCase
     {
         $config = $this->createConfig([
             'show' => true,
-            'collapsed' => false,
             'target_id' => 'config-target',
         ]);
 
@@ -46,8 +45,9 @@ final class AccordionItemTest extends TestCase
         $item->mount();
 
         self::assertTrue($item->show);
-        // collapsed is calculated as !show in mount
-        self::assertFalse($item->collapsed);
+        // collapsed is calculated in options() as !show
+        $options = $item->options();
+        self::assertFalse($options['collapsed']);
         self::assertSame('config-target', $item->targetId);
     }
 
@@ -57,8 +57,9 @@ final class AccordionItemTest extends TestCase
         $item->show = true;
         $item->mount();
 
-        // When show is true, collapsed should be false
-        self::assertFalse($item->collapsed);
+        // When show is true, collapsed should be false (calculated in options())
+        $options = $item->options();
+        self::assertFalse($options['collapsed']);
     }
 
     public function testMountGeneratesUniqueTargetIdIfNotProvided(): void
@@ -91,12 +92,12 @@ final class AccordionItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $item = $this->createAccordionItem();
-        
-        $reflection = new \ReflectionClass($item);
+
+        $reflection = new ReflectionClass($item);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
-        
-        self::assertSame('accordion_item', $method->invoke($item));
+
+        self::assertSame('accordion-item', $method->invoke($item));
     }
 
     public function testOptionsReturnsCorrectStructure(): void
@@ -131,7 +132,7 @@ final class AccordionItemTest extends TestCase
     public function testOptionsBuildsCorrectButtonClasses(): void
     {
         $item = $this->createAccordionItem();
-        $item->collapsed = true;
+        $item->show = false; // collapsed is calculated as !show
         $item->mount();
 
         $options = $item->options();
@@ -245,7 +246,11 @@ final class AccordionItemTest extends TestCase
         $item->mount();
 
         self::assertFalse($item->show);
-        self::assertTrue($item->collapsed); // Because !show && (config collapsed default true) = true
+
+        // collapsed is calculated in options() as !show
+        $options = $item->options();
+        self::assertTrue($options['collapsed']); // Because !show = !false = true
+
         self::assertNotNull($item->targetId); // ID should be auto-generated
     }
 
@@ -253,7 +258,7 @@ final class AccordionItemTest extends TestCase
     {
         $item1 = $this->createAccordionItem();
         $item1->mount();
-        
+
         $item2 = $this->createAccordionItem();
         $item2->mount();
 
@@ -262,10 +267,10 @@ final class AccordionItemTest extends TestCase
 
     public function testShowOrLogicWithConfig(): void
     {
-        // Config says true, property says false -> should be true (OR logic)
+        // Config says true, property defaults to false -> should be true (OR logic)
         $config = $this->createConfig(['show' => true]);
         $item = $this->createAccordionItem($config);
-        $item->show = false;
+        // $item->show = false; // Don't set, let mount() handle it
         $item->mount();
 
         self::assertTrue($item->show);
@@ -274,18 +279,19 @@ final class AccordionItemTest extends TestCase
     public function testCollapsedIsNegationOfShow(): void
     {
         $item = $this->createAccordionItem();
-        
+
         // When show is true, collapsed should be false
         $item->show = true;
         $item->mount();
-        self::assertFalse($item->collapsed);
-        
-        // When show is false, collapsed should be determined by config/default
+        $options = $item->options();
+        self::assertFalse($options['collapsed']);
+
+        // When show is false, collapsed should be true
         $item2 = $this->createAccordionItem();
         $item2->show = false;
         $item2->mount();
-        // Logic is: !$this->show && ($d['collapsed'] ?? true) = !false && true = true
-        self::assertTrue($item2->collapsed);
+        $options2 = $item2->options();
+        self::assertTrue($options2['collapsed']); // collapsed = !show = !false = true
     }
 
     public function testTitleIsPassedToOptions(): void

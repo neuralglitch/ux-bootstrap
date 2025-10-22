@@ -2,20 +2,45 @@
 
 {% set o = this.options() %}
 
+{% macro renderItem(item, level, options) %}
+    <li class="tree-view-item" data-tree-item-id="{{ item.id }}" data-item-id="{{ item.id }}" {% if item.expanded is defined and item.expanded %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
+        <div class="tree-view-node d-flex align-items-center gap-2 py-1 px-2">
+            <span class="tree-toggle-wrapper" style="width: 1.5rem; display: inline-flex; align-items: center; justify-content: center;">
+                {% if item.children is defined and item.children is not empty %}
+                    <button type="button" class="btn btn-sm btn-link p-0 tree-toggle text-body" data-action="click->bs-tree-view#toggle" style="width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <twig:ux:icon name="bi:chevron-right" class="tree-chevron tree-chevron-collapsed" style="width: 12px; height: 12px; display: none;" />
+                        <twig:ux:icon name="bi:chevron-down" class="tree-chevron tree-chevron-expanded" style="width: 12px; height: 12px; display: none;" />
+                    </button>
+                {% endif %}
+            </span>
+            
+            {% if options.showIcons and item.icon is defined %}
+                <twig:ux:icon :name="item.icon" />
+            {% endif %}
+            
+            <span class="flex-grow-1">{{ item.label }}</span>
+        </div>
+        
+        {% if item.children is defined and item.children is not empty %}
+            <ul class="tree-view-children" {% if not (item.expanded is defined and item.expanded) %}style="display: none;"{% endif %}>
+                {% for child in item.children %}
+                    {{ _self.renderItem(child, level + 1, options) }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
 <div class="{{ o.classes }}" {{ this.renderHtmlAttributes(o.attrs) | raw }}>
     {% if o.items is not empty %}
-        <ul class="tree-view-list" role="group">
+        <ul class="tree-view-list list-unstyled" role="group">
             {% for item in o.items %}
-                {{ include('components/extra/tree-view-item.html.twig', {
-                    item: item,
-                    level: 0,
-                    options: o
-                }) }}
+                {{ _self.renderItem(item, 0, o) }}
             {% endfor %}
         </ul>
     {% else %}
         <div class="tree-view-empty text-muted py-3 text-center">
-            <i class="bi bi-folder2-open fs-1"></i>
+            <twig:ux:icon name="bi:folder2-open" class="fs-1" />
             <p class="mb-0 mt-2">No items to display</p>
         </div>
     {% endif %}

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Faq;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class FaqTest extends TestCase
 {
@@ -294,7 +295,7 @@ final class FaqTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Faq($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('faq', $method->invoke($component));

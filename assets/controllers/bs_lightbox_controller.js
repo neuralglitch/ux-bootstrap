@@ -70,8 +70,8 @@ export default class extends Controller {
             this.boundWheel = this.handleWheel.bind(this);
         }
 
-        // Auto-open if trigger is clicked
-        this.element.style.display = 'none';
+        // Modal is hidden by default in template
+        // Gallery thumbnails should remain visible
     }
 
     disconnect() {
@@ -87,10 +87,33 @@ export default class extends Controller {
 
         if (this.hasTriggerTarget) {
             this.triggerTargets.forEach((trigger) => {
+                const src = trigger.href || trigger.dataset.src;
+                let caption = trigger.dataset.caption || '';
+                
+                // If no caption provided, extract from URL path/filename
+                if (!caption && src) {
+                    try {
+                        const url = new URL(src, window.location.origin);
+                        const pathname = url.pathname;
+                        const parts = pathname.split('/').filter(p => p);
+                        const filename = parts[parts.length - 1];
+                        
+                        // If it looks like a real filename (has extension), use it
+                        if (filename && filename.includes('.')) {
+                            caption = filename;
+                        } else if (parts.length > 0) {
+                            // Otherwise, use last path segment
+                            caption = parts.join('/');
+                        }
+                    } catch (e) {
+                        caption = '';
+                    }
+                }
+                
                 images.push({
-                    src: trigger.href || trigger.dataset.src,
+                    src: src,
                     alt: trigger.dataset.alt || trigger.querySelector('img')?.alt || '',
-                    caption: trigger.dataset.caption || '',
+                    caption: caption,
                     thumbnail: trigger.dataset.thumbnail || trigger.querySelector('img')?.src || ''
                 });
             });

@@ -15,6 +15,7 @@ import BsCollapseController from '@neuralglitch/ux-bootstrap/controllers/bs_coll
 import BsColorPickerController from '@neuralglitch/ux-bootstrap/controllers/bs_color_picker_controller.js';
 import BsCommandPaletteController from '@neuralglitch/ux-bootstrap/controllers/bs_command_palette_controller.js';
 import BsCookieBannerController from '@neuralglitch/ux-bootstrap/controllers/bs_cookie_banner_controller.js';
+import BsDataTableController from '@neuralglitch/ux-bootstrap/controllers/bs_data_table_controller.js';
 import BsDropdownController from '@neuralglitch/ux-bootstrap/controllers/bs_dropdown_controller.js';
 import BsDropdownMultiController from '@neuralglitch/ux-bootstrap/controllers/bs_dropdown_multi_controller.js';
 import BsKanbanController from '@neuralglitch/ux-bootstrap/controllers/bs_kanban_controller.js';
@@ -55,6 +56,7 @@ export function registerUxBootstrapControllers(app) {
     app.register('bs-color-picker', BsColorPickerController);
     app.register('bs-command-palette', BsCommandPaletteController);
     app.register('bs-cookie-banner', BsCookieBannerController);
+    app.register('bs-data-table', BsDataTableController);
     app.register('bs-dropdown', BsDropdownController);
     app.register('bs-dropdown-multi', BsDropdownMultiController);
     app.register('bs-kanban', BsKanbanController);

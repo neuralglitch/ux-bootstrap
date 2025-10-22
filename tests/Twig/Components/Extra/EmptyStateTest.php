@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\EmptyState;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class EmptyStateTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class EmptyStateTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'empty_state' => [
+            'empty-state' => [
                 'title' => 'No items found',
                 'description' => null,
                 'icon' => null,
@@ -287,7 +288,7 @@ final class EmptyStateTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'empty_state' => [
+            'empty-state' => [
                 'title' => 'No data available',
                 'description' => 'Default description',
                 'variant' => 'info',
@@ -326,10 +327,10 @@ final class EmptyStateTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new EmptyState($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('empty_state', $method->invoke($component));
+        $this->assertSame('empty-state', $method->invoke($component));
     }
 
     public function testCompleteExample(): void

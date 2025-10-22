@@ -72,7 +72,7 @@ final class TimelineItem extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('timeline_item');
+        $d = $this->config->for('timeline-item');
 
         $this->applyStimulusDefaults($d);
 
@@ -89,15 +89,15 @@ final class TimelineItem extends AbstractStimulus
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
     }
 
     protected function getComponentName(): string
     {
-        return 'timeline_item';
+        return 'timeline-item';
     }
 
     /**

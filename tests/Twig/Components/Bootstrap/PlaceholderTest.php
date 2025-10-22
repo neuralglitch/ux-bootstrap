@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Placeholder;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class PlaceholderTest extends TestCase
 {
@@ -244,7 +245,7 @@ final class PlaceholderTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Placeholder($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('placeholder', $method->invoke($component));

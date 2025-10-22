@@ -13,7 +13,7 @@ final class PopoverTraitTest extends TestCase
     {
         return new class {
             use PopoverTrait;
-            
+
             /**
              * @param array<string, mixed> $defaults
              */
@@ -21,7 +21,7 @@ final class PopoverTraitTest extends TestCase
             {
                 $this->applyPopoverDefaults($defaults);
             }
-            
+
             /**
              * @return array<string, mixed>
              */

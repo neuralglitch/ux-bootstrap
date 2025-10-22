@@ -7,13 +7,14 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Theme;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ThemeTest extends TestCase
 {
     /** @param array<string, mixed> $config */
     private function createConfig(array $config = []): Config
     {
-        return new Config(['theme_toggle' => $config]);
+        return new Config(['theme-toggle' => $config]);
     }
 
     private function createTheme(?Config $config = null): Theme
@@ -53,7 +54,7 @@ final class ThemeTest extends TestCase
     {
         $theme = $this->createTheme();
 
-        $reflection = new \ReflectionClass($theme);
+        $reflection = new ReflectionClass($theme);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

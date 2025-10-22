@@ -67,7 +67,7 @@ final class ActivityFeed extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('activity_feed');
+        $d = $this->config->for('activity-feed');
 
         $this->applyStimulusDefaults($d);
 
@@ -76,18 +76,18 @@ final class ActivityFeed extends AbstractStimulus
         $this->mode ??= $d['mode'] ?? 'default';
         $this->showTimestamps ??= $d['show_timestamps'] ?? true;
         $this->showIcons ??= $d['show_icons'] ?? true;
-        
+
         // Handle border: if explicitly set in config (even to null), use that value
         if ($this->border === null && array_key_exists('border', $d)) {
             $this->border = $d['border'];
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    } elseif ($this->border === null) {
+
+            // Initialize controller with default
+            $this->initializeController();
+        } elseif ($this->border === null) {
             $this->border = 'start';
         }
-        
+
         $this->groupByDate ??= $d['group_by_date'] ?? false;
         $this->maxHeight ??= $d['max_height'] ?? null;
         $this->tag ??= $d['tag'] ?? 'div';
@@ -95,9 +95,12 @@ final class ActivityFeed extends AbstractStimulus
 
     protected function getComponentName(): string
     {
-        return 'activity_feed';
+        return 'activity-feed';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function options(): array
     {
         $classes = $this->buildClasses(

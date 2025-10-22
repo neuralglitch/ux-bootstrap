@@ -11,16 +11,21 @@
 // Component-specific enhancements
 @import "./activity_feed";
 @import "./avatar";
+@import "./badge_controller";
+@import "./calendar";
+@import "./code_block";
 @import "./color_picker";
 @import "./command_palette";
 @import "./comment_thread";
+@import "./comparison_table";
 @import "./kanban";
-@import "./search";
+@import "./lightbox";
 @import "./navbar";
 @import "./notification_badge";
-@import "./timeline";
-@import "./lightbox";
+@import "./rating";
+@import "./search";
 @import "./sidebar";
 @import "./split_panes";
+@import "./timeline";
 @import "./tour";
-@import "./tree-view";
+@import "./tree_view";

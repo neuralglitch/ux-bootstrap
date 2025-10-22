@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Timeline;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class TimelineTest extends TestCase
 {
@@ -282,7 +283,7 @@ final class TimelineTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Timeline($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('timeline', $method->invoke($component));

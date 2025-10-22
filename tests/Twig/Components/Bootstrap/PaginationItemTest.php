@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\PaginationItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class PaginationItemTest extends TestCase
 {
@@ -219,7 +220,7 @@ final class PaginationItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new PaginationItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('pagination_item', $method->invoke($component));

@@ -33,6 +33,31 @@ export default class extends Controller {
         if (this.selectableValue && this.hasSelectedIdsValue) {
             this.initializeSelection();
         }
+        
+        // Initialize chevron icons based on expanded state
+        this.initializeChevrons();
+    }
+    
+    /**
+     * Initialize chevron icon visibility based on aria-expanded state
+     */
+    initializeChevrons() {
+        const items = this.element.querySelectorAll('.tree-view-item');
+        items.forEach(item => {
+            const isExpanded = item.getAttribute('aria-expanded') === 'true';
+            const toggle = item.querySelector('.tree-toggle');
+            if (!toggle) return;
+            
+            const collapsedIcon = toggle.querySelector('.tree-chevron-collapsed');
+            const expandedIcon = toggle.querySelector('.tree-chevron-expanded');
+            
+            if (collapsedIcon) {
+                collapsedIcon.style.display = isExpanded ? 'none' : '';
+            }
+            if (expandedIcon) {
+                expandedIcon.style.display = isExpanded ? '' : 'none';
+            }
+        });
     }
 
     disconnect() {
@@ -57,28 +82,34 @@ export default class extends Controller {
     }
 
     /**
+     * Toggle node expansion (alias for backwards compatibility)
+     */
+    toggle(event) {
+        this.toggleNode(event);
+    }
+
+    /**
      * Toggle node expansion
      */
     toggleNode(event) {
         const button = event.currentTarget;
         const item = button.closest('.tree-view-item');
         const children = item.querySelector('.tree-view-children');
-        const icon = button.querySelector('i');
+        const collapsedIcon = button.querySelector('.tree-chevron-collapsed');
+        const expandedIcon = button.querySelector('.tree-chevron-expanded');
 
         if (!children) return;
 
-        const isExpanded = !children.classList.contains('collapse');
+        const isExpanded = children.style.display !== 'none';
 
         if (isExpanded) {
             // Collapse
-            children.classList.add('collapse');
+            children.style.display = 'none';
             item.setAttribute('aria-expanded', 'false');
-
-            // Update icon
-            if (icon) {
-                icon.classList.remove(this.getCollapseIcon());
-                icon.classList.add(this.getExpandIcon());
-            }
+            
+            // Toggle icons
+            if (collapsedIcon) collapsedIcon.style.display = '';
+            if (expandedIcon) expandedIcon.style.display = 'none';
 
             // Fire callback
             if (this.hasOnCollapseValue) {
@@ -88,14 +119,12 @@ export default class extends Controller {
             }
         } else {
             // Expand
-            children.classList.remove('collapse');
+            children.style.display = '';
             item.setAttribute('aria-expanded', 'true');
-
-            // Update icon
-            if (icon) {
-                icon.classList.remove(this.getExpandIcon());
-                icon.classList.add(this.getCollapseIcon());
-            }
+            
+            // Toggle icons
+            if (collapsedIcon) collapsedIcon.style.display = 'none';
+            if (expandedIcon) expandedIcon.style.display = '';
 
             // Update folder icon if present
             const folderIcon = item.querySelector('.tree-view-icon i');

@@ -10,6 +10,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent('bs:command-palette', template: '@NeuralGlitchUxBootstrap/components/extra/command-palette.html.twig')]
 final class CommandPalette extends AbstractStimulus
 {
+    // Stimulus controller
+    public string $stimulusController = 'bs-command-palette';
+
     // Trigger
     public ?string $trigger = null;
     public ?string $triggerKey = null;
@@ -46,7 +49,7 @@ final class CommandPalette extends AbstractStimulus
 
     // Categories/Groups
     public bool $grouped = true;
-    
+
     /**
      * @var array<int, string>
      */
@@ -54,7 +57,7 @@ final class CommandPalette extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('command_palette');
+        $d = $this->config->for('command-palette');
 
         $this->applyStimulusDefaults($d);
 
@@ -94,18 +97,22 @@ final class CommandPalette extends AbstractStimulus
 
         // Groups
         $this->grouped = $this->grouped && ($d['grouped'] ?? true);
-        $this->defaultGroups = !empty($this->defaultGroups) ? $this->defaultGroups : ($d['default_groups'] ?? ['Quick Actions', 'Navigation', 'Admin']);
+        $this->defaultGroups = !empty($this->defaultGroups) ? $this->defaultGroups : ($d['default_groups'] ?? [
+            'Quick Actions',
+            'Navigation',
+            'Admin'
+        ]);
 
         $this->applyClassDefaults($d);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'command_palette';
+        return 'command-palette';
     }
 
     /**
@@ -143,6 +150,18 @@ final class CommandPalette extends AbstractStimulus
         $triggerDisplay = $this->formatTriggerDisplay();
 
         $attrs = $this->mergeAttributes([
+            'data-controller' => $this->stimulusController,
+            'data-bs-command-palette-trigger-key-value' => $this->triggerKey,
+            'data-bs-command-palette-trigger-ctrl-value' => $this->triggerCtrl ? 'true' : 'false',
+            'data-bs-command-palette-trigger-meta-value' => $this->triggerMeta ? 'true' : 'false',
+            'data-bs-command-palette-trigger-shift-value' => $this->triggerShift ? 'true' : 'false',
+            'data-bs-command-palette-trigger-alt-value' => $this->triggerAlt ? 'true' : 'false',
+            'data-bs-command-palette-search-url-value' => $this->searchUrl,
+            'data-bs-command-palette-min-chars-value' => (string)$this->minChars,
+            'data-bs-command-palette-debounce-value' => (string)$this->debounce,
+            'data-bs-command-palette-close-on-select-value' => $this->closeOnSelect ? 'true' : 'false',
+            'data-bs-command-palette-close-on-escape-value' => $this->closeOnEscape ? 'true' : 'false',
+            'data-bs-command-palette-close-on-backdrop-value' => $this->closeOnBackdrop ? 'true' : 'false',
             'tabindex' => '-1',
             'role' => 'dialog',
             'aria-label' => 'Command Palette',

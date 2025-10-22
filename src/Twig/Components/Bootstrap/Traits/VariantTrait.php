@@ -28,7 +28,7 @@ trait VariantTrait
         if ($type === 'link' && $this->variant === null) {
             return [];
         }
-        
+
         $v = $this->variant ?? 'primary';
 
         return match ($type) {

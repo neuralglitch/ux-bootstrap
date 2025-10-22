@@ -10,7 +10,7 @@
                     <div class="{{ o.bodyClasses }}">
                         {% if metric.iconPosition == 'top' and metric.icon %}
                             <div class="{{ metric.iconClasses }}">
-                                <twig:ux:icon :name="metric.icon" />
+                                <twig:ux:icon :name="metric.icon" width="64" height="64" />
                             </div>
                         {% endif %}
                         
@@ -18,7 +18,7 @@
                             <div class="metric-main{% if metric.iconPosition == 'start' and metric.icon %} d-flex align-items-center{% endif %}">
                                 {% if metric.iconPosition == 'start' and metric.icon %}
                                     <div class="{{ metric.iconClasses }}">
-                                        <twig:ux:icon :name="metric.icon" />
+                                        <twig:ux:icon :name="metric.icon" width="48" height="48" />
                                     </div>
                                 {% endif %}
                                 
@@ -40,7 +40,7 @@
                                 
                                 {% if metric.iconPosition == 'end' and metric.icon %}
                                     <div class="{{ metric.iconClasses }}">
-                                        <twig:ux:icon :name="metric.icon" />
+                                        <twig:ux:icon :name="metric.icon" width="48" height="48" />
                                     </div>
                                 {% endif %}
                             </div>

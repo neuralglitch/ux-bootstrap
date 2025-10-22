@@ -13,6 +13,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:breadcrumbs', template: '@NeuralGlitchUxBootstrap/components/bootstrap/breadcrumbs.html.twig')]
 final class Breadcrumbs extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-breadcrumbs';
+
     /**
      * @var array<int, array<string, string|bool|null>>|null
      */
@@ -106,11 +108,11 @@ final class Breadcrumbs extends AbstractStimulus
         if ($this->autoGenerate && $this->items === null) {
             $this->generateBreadcrumbs();
         }
-        
+
         // Initialize controller with default
         $this->initializeController();
     }
-    
+
     /**
      * Override to conditionally attach controller only when auto-collapse is enabled
      */
@@ -118,14 +120,14 @@ final class Breadcrumbs extends AbstractStimulus
     {
         return $this->controllerEnabled && $this->autoCollapse;
     }
-    
+
     /**
      * Override to build Breadcrumbs-specific Stimulus attributes
      */
     protected function buildStimulusAttributes(): array
     {
         $attrs = $this->stimulusControllerAttributes();
-        
+
         // Only add values if controller is active
         if ($this->resolveControllers() !== '') {
             $attrs = array_merge($attrs, $this->stimulusValues('bs-breadcrumbs', [
@@ -133,7 +135,7 @@ final class Breadcrumbs extends AbstractStimulus
                 'collapseThreshold' => $this->collapseThreshold,
             ]));
         }
-        
+
         return $attrs;
     }
 
@@ -150,12 +152,12 @@ final class Breadcrumbs extends AbstractStimulus
         if ($this->showHome) {
             try {
                 $homeUrl = $this->router->generate($this->homeRoute, $this->homeRouteParams);
-                
+
                 // Check if we're currently on the home page
                 $request = $this->requestStack->getCurrentRequest();
                 $currentPath = $request ? $request->getPathInfo() : null;
                 $isCurrentlyHome = $currentPath === $homeUrl || $currentPath === rtrim($homeUrl, '/');
-                
+
                 $items[] = [
                     'label' => $this->homeLabel,
                     'url' => $isCurrentlyHome ? null : $homeUrl,

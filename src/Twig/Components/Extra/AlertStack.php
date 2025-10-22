@@ -10,6 +10,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:alert-stack', template: '@NeuralGlitchUxBootstrap/components/extra/alert-stack.html.twig')]
 final class AlertStack extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-alert-stack';
+
     /**
      * Alerts to display. Each alert should be an array with keys:
      * - message (string): Alert message content
@@ -71,16 +73,16 @@ final class AlertStack extends AbstractStimulus
      * Whether to load flash messages automatically from session
      */
     public bool $autoLoadFlashMessages = false;
-    
+
     protected function getComponentName(): string
     {
-        return 'alert_stack';
+        return 'alert-stack';
     }
-    
+
     protected function buildStimulusAttributes(): array
     {
         $attrs = $this->stimulusControllerAttributes();
-        
+
         if ($this->resolveControllers() !== '') {
             $attrs = array_merge($attrs, [
                 'data-bs-alert-stack-auto-hide-value' => $this->autoHide ? 'true' : 'false',
@@ -88,13 +90,13 @@ final class AlertStack extends AbstractStimulus
                 'data-bs-alert-stack-max-alerts-value' => (string)$this->maxAlerts,
             ]);
         }
-        
+
         return $attrs;
     }
 
     public function mount(): void
     {
-        $d = $this->config->for('alert_stack');
+        $d = $this->config->for('alert-stack');
 
         $this->applyStimulusDefaults($d);
         $this->applyClassDefaults($d);
@@ -103,7 +105,7 @@ final class AlertStack extends AbstractStimulus
         if ($this->position === 'top-end' && isset($d['position'])) {
             $this->position = $d['position'];
         }
-        
+
         $this->maxAlerts = $this->maxAlerts ?: ($d['max_alerts'] ?? 0);
         if ($this->defaultVariant === 'info' && isset($d['default_variant'])) {
             $this->defaultVariant = $d['default_variant'];
@@ -115,7 +117,7 @@ final class AlertStack extends AbstractStimulus
         $this->zIndex = $this->zIndex === 1080 ? ($d['z_index'] ?? 1080) : $this->zIndex;
         $this->gap = $this->gap === 0.75 ? ($d['gap'] ?? 0.75) : $this->gap;
         $this->autoLoadFlashMessages = $this->autoLoadFlashMessages || ($d['auto_load_flash_messages'] ?? false);
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

@@ -13,14 +13,30 @@
     <span class="rating-items" aria-hidden="true">
       {% for item in o.items %}
         {% if o.readonly %}
-          <span class="{{ item.classes }}" data-rating-index="{{ item.index }}">{{ item.icon|raw }}</span>
+          <span class="{{ item.classes }}" data-rating-index="{{ item.index }}">
+            {% if item.state == 'filled' %}
+              <twig:ux:icon name="bi:star-fill" />
+            {% elseif item.state == 'half' %}
+              <twig:ux:icon name="bi:star-half" />
+            {% else %}
+              <twig:ux:icon name="bi:star" />
+            {% endif %}
+          </span>
         {% else %}
           <button
             type="button"
             class="{{ item.classes }} rating-item-button"
             data-rating-index="{{ item.index }}"
             aria-label="Rate {{ item.index }} out of {{ o.max }}"
-          >{{ item.icon|raw }}</button>
+          >
+            {% if item.state == 'filled' %}
+              <twig:ux:icon name="bi:star-fill" />
+            {% elseif item.state == 'half' %}
+              <twig:ux:icon name="bi:star-half" />
+            {% else %}
+              <twig:ux:icon name="bi:star" />
+            {% endif %}
+          </button>
         {% endif %}
       {% endfor %}
     </span>

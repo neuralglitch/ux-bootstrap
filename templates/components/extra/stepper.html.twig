@@ -47,16 +47,30 @@
 
           {# Step marker/indicator #}
           <div class="stepper__marker">
+            {% set markerContent %}
+              {% if o.style == 'icon' and step.icon %}
+                {{ step.icon|raw }}
+              {% elseif step.state == 'completed' and o.completedIcon %}
+                {{ o.completedIcon|raw }}
+              {% elseif step.state == 'active' and o.activeIcon %}
+                {{ o.activeIcon|raw }}
+              {% elseif step.state == 'pending' and o.pendingIcon %}
+                {{ o.pendingIcon|raw }}
+              {% else %}
+                {{ step.number }}
+              {% endif %}
+            {% endset %}
+            
             {% if step.clickable and step.href %}
               <a href="{{ step.href }}" 
                  class="stepper__marker-content stepper__marker-content--clickable badge rounded-circle bg-{{ step.variant }}"
                  aria-current="{{ step.state == 'active' ? 'step' : 'false' }}">
-                {{ block('step_marker_inner') }}
+                {{ markerContent|trim|raw }}
               </a>
             {% else %}
               <div class="stepper__marker-content badge rounded-circle bg-{{ step.variant }}"
                    aria-current="{{ step.state == 'active' ? 'step' : 'false' }}">
-                {{ block('step_marker_inner') }}
+                {{ markerContent|trim|raw }}
               </div>
             {% endif %}
           </div>
@@ -84,21 +98,6 @@
             </div>
           {% endif %}
         </div>
-
-        {# Define step marker inner content block #}
-        {% block step_marker_inner %}
-          {% if o.style == 'icon' and step.icon %}
-            {{ step.icon|raw }}
-          {% elseif step.state == 'completed' and o.completedIcon %}
-            {{ o.completedIcon|raw }}
-          {% elseif step.state == 'active' and o.activeIcon %}
-            {{ o.activeIcon|raw }}
-          {% elseif step.state == 'pending' and o.pendingIcon %}
-            {{ o.pendingIcon|raw }}
-          {% else %}
-            {{ step.number }}
-          {% endif %}
-        {% endblock %}
       {% endfor %}
     </div>
   {% endif %}

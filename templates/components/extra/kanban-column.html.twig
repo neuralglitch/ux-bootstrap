@@ -73,11 +73,26 @@
       <button 
         class="btn btn-sm btn-link text-decoration-none w-100 text-start" 
         type="button"
-        data-action="kanban#addCard">
+        data-action="click->bs-kanban#addCard"
+        data-column-id="{{ o.attrs.id }}">
         <span class="me-1">+</span> {{ o.add_button_label }}
       </button>
     </div>
   {% endif %}
+  
+  {# Hidden template card for dynamic addition #}
+  <template class="d-none" data-kanban-card-template>
+    <div class="card mb-2 kanban-card shadow-sm">
+      <div class="card-body p-3">
+        <input type="text" class="form-control form-control-sm mb-2" placeholder="Card title..." data-card-title>
+        <textarea class="form-control form-control-sm mb-3" rows="2" placeholder="Description (optional)..." data-card-description></textarea>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-success" data-action="click->bs-kanban#saveCard">Save</button>
+          <button class="btn btn-sm btn-secondary" data-action="click->bs-kanban#cancelCard">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </template>
   
 </div>
 

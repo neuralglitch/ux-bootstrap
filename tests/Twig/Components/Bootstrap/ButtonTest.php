@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Button;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ButtonTest extends TestCase
 {
@@ -64,7 +65,7 @@ final class ButtonTest extends TestCase
     {
         $button = $this->createButton();
 
-        $reflection = new \ReflectionClass($button);
+        $reflection = new ReflectionClass($button);
         $method = $reflection->getMethod('getComponentType');
         $method->setAccessible(true);
 

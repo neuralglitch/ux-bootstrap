@@ -1,0 +1,113 @@
+/**
+ * Comparison Table Styles
+ * 
+ * Styles for the ComparisonTable component that provides
+ * pricing/feature comparison layouts
+ */
+
+/* Card variant spacing */
+.comparison-table-cards .col {
+    min-width: 280px;
+}
+
+/* Highlighted column */
+.table-primary {
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: inherit !important; /* Don't change text color */
+}
+
+/* Badge positioning in comparison table headers */
+.comparison-table thead th .badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+/* Dark mode: reduce brightness of highlighted column */
+[data-bs-theme="dark"] .table-primary {
+    background-color: rgba(var(--bs-primary-rgb), 0.15);
+    color: inherit !important; /* Don't change text color */
+}
+
+/* Table hover state */
+.table-hover tbody tr:hover {
+    background-color: rgba(var(--bs-emphasis-color-rgb), 0.075);
+}
+
+/* Dark mode: reduce brightness of hover state */
+[data-bs-theme="dark"] .table-hover tbody tr:hover {
+    background-color: rgba(var(--bs-emphasis-color-rgb), 0.05);
+}
+
+/* Hover state on highlighted column - override to maintain visibility */
+.table-hover tbody tr:hover .table-primary {
+    background-color: rgba(var(--bs-primary-rgb), 0.25);
+    color: var(--bs-emphasis-color) !important;
+}
+
+[data-bs-theme="dark"] .table-hover tbody tr:hover .table-primary {
+    background-color: rgba(var(--bs-primary-rgb), 0.35);
+    color: var(--bs-dark) !important;
+}
+
+/* Sticky header support */
+.comparison-table .sticky-top {
+    top: 0;
+    z-index: 1020;
+}
+
+/* Responsive table improvements */
+.comparison-table .table-responsive {
+    overflow-x: auto;
+}
+
+/* Card variant enhancements */
+.comparison-table-cards .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.comparison-table-cards .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Featured/highlighted card */
+.comparison-table-cards .card.border-primary {
+    border-width: 2px;
+}
+
+/* Price display */
+.comparison-table .h4 {
+    font-weight: 600;
+}
+
+/* Feature list styling */
+.comparison-table .table td,
+.comparison-table .table th {
+    vertical-align: middle;
+    padding: 1rem;
+}
+
+/* Center-align value columns but not feature names */
+.comparison-table .table thead th:not(:first-child),
+.comparison-table .table tbody td {
+    text-align: center;
+}
+
+.comparison-table .table tbody th {
+    text-align: left;
+}
+
+/* Checkmark/X icons alignment */
+.comparison-table .table td svg {
+    vertical-align: middle;
+}
+
+/* Horizontal variant specific styles */
+.comparison-table-horizontal .table th[scope="row"] {
+    min-width: 200px;
+    font-weight: 600;
+}
+

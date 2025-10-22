@@ -14,11 +14,11 @@ final class KanbanCard extends AbstractStimulus
     public ?string $title = null;
     public ?string $description = null;
     public ?string $label = null; // Fallback if no content provided
-    
+
     // Identification
     public ?string $id = null;
     public ?string $card_id = null; // Business/data ID for the card
-    
+
     // Metadata
     public ?string $badge = null; // Badge text (e.g., priority, status)
     public ?string $badge_variant = 'secondary'; // Badge color variant
@@ -26,28 +26,28 @@ final class KanbanCard extends AbstractStimulus
     public ?string $avatar_alt = null;
     public ?string $footer_text = null; // Due date, timestamp, etc.
     public ?string $icon = null; // Icon HTML in header
-    
+
     // Styling
     public ?string $variant = null; // null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
     public bool $shadow = true;
     public bool $hover_effect = true;
-    
+
     // Features
     public bool $clickable = false; // Make entire card clickable
     public ?string $href = null; // Link destination if clickable
     public bool $show_drag_handle = true; // Show drag handle icon
-    
+
     // State
     public bool $draggable = true; // Can be dragged
     public ?string $priority = null; // 'low' | 'medium' | 'high' | 'urgent'
     public ?string $status = null; // Custom status indicator
-    
+
     public function mount(): void
     {
-        $d = $this->config->for('kanban_card');
+        $d = $this->config->for('kanban-card');
 
         $this->applyStimulusDefaults($d);
-        
+
         // Apply defaults - config takes precedence over component defaults
         $this->title = $d['title'] ?? $this->title;
         $this->description = $d['description'] ?? $this->description;
@@ -67,34 +67,33 @@ final class KanbanCard extends AbstractStimulus
         $this->draggable = $d['draggable'] ?? $this->draggable;
         $this->priority = $d['priority'] ?? $this->priority;
         $this->status = $d['status'] ?? $this->status;
-        
+
         // Generate ID if not provided
         if (!$this->id) {
             $this->id = 'kanban-card-' . uniqid();
+        }
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
-        
         // Auto-detect clickable from href
         if ($this->href !== null && $this->href !== '') {
             $this->clickable = true;
         }
-        
+
         $this->applyClassDefaults($d);
-        
+
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
-    
+
     protected function getComponentName(): string
     {
-        return 'kanban_card';
+        return 'kanban-card';
     }
-    
+
     /**
      * @return array<string, mixed>
      */
@@ -109,7 +108,7 @@ final class KanbanCard extends AbstractStimulus
             $this->priority ? ["kanban-card-priority-{$this->priority}"] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
-        
+
         $attrs = $this->mergeAttributes(
             [
                 'id' => $this->id,
@@ -119,10 +118,10 @@ final class KanbanCard extends AbstractStimulus
             ],
             $this->attr
         );
-        
+
         // Remove null attributes
         $attrs = array_filter($attrs, fn($value) => $value !== null);
-        
+
         return [
             'title' => $this->title,
             'description' => $this->description,

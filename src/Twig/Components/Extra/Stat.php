@@ -14,33 +14,33 @@ final class Stat extends AbstractStimulus
     public string|int|float|null $value = null;
     public ?string $label = null;
     public ?string $variant = null;
-    
+
     // Icon
     public ?string $icon = null;
     public string $iconPosition = 'start'; // 'start' | 'end' | 'top'
-    
+
     // Trend indicator
     public ?string $trend = null; // 'up' | 'down' | 'neutral'
     public ?string $change = null; // e.g., "+12%" or "-5%"
-    
+
     // Additional info
     public ?string $description = null;
-    
+
     // Layout
     public ?string $size = null; // 'sm' | 'default' | 'lg'
     public bool $border = false;
     public bool $shadow = false;
     public ?string $textAlign = null; // 'start' | 'center' | 'end'
-    
+
     public function mount(): void
     {
         $d = $this->config->for('stat');
 
         $this->applyStimulusDefaults($d);
-        
+
         // Apply base class defaults
         $this->applyClassDefaults($d);
-        
+
         // Apply component-specific defaults
         $this->value ??= $d['value'] ?? '0';
         $this->label ??= $d['label'] ?? 'Statistic';
@@ -55,16 +55,15 @@ final class Stat extends AbstractStimulus
         $this->shadow = $this->shadow || ($d['shadow'] ?? false);
         $this->textAlign ??= $d['text_align'] ?? 'start';
 
-        
         // Initialize controller with default
         $this->initializeController();
     }
-    
+
     protected function getComponentName(): string
     {
         return 'stat';
     }
-    
+
     /**
      * @return array<string, mixed>
      */
@@ -75,7 +74,7 @@ final class Stat extends AbstractStimulus
         $textAlign = $this->textAlign ?? 'start';
         $value = $this->value ?? '0';
         $label = $this->label ?? 'Statistic';
-        
+
         // Build card classes
         $cardClasses = $this->buildClasses(
             ['card', 'stat-card'],
@@ -84,7 +83,7 @@ final class Stat extends AbstractStimulus
             $this->variant ? ["border-{$this->variant}"] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
-        
+
         // Build card body classes
         $bodyClasses = $this->buildClasses(
             ['card-body'],
@@ -92,31 +91,34 @@ final class Stat extends AbstractStimulus
             $textAlign !== 'start' ? ["text-{$textAlign}"] : [],
             $this->iconPosition === 'top' ? ['d-flex', 'flex-column', 'align-items-center'] : []
         );
-        
+
         // Build value classes
         $valueClasses = $this->buildClasses(
             ['stat-value', 'fs-2', 'fw-bold', 'mb-1'],
             $this->variant ? ["text-{$this->variant}"] : [],
             $size === 'sm' ? ['fs-4'] : ($size === 'lg' ? ['fs-1'] : [])
         );
-        
+
         // Build label classes
         $labelClasses = $this->buildClasses(
             ['stat-label', 'text-muted', 'mb-0'],
             $size === 'sm' ? ['small'] : []
         );
-        
+
         // Build icon classes
         $iconClasses = [];
         if ($this->icon) {
             $iconClasses = $this->buildClasses(
                 ['stat-icon'],
                 $this->variant ? ["text-{$this->variant}"] : ['text-muted'],
-                $this->iconPosition === 'top' ? ['mb-2', 'fs-1'] : ($this->iconPosition === 'end' ? ['ms-2'] : ['me-2']),
+                $this->iconPosition === 'top' ? ['mb-3', 'px-3'] : ($this->iconPosition === 'end' ? [
+                    'ms-3',
+                    'px-2'
+                ] : ['me-3', 'px-2']),
                 $size === 'sm' ? ['fs-5'] : ($size === 'lg' ? ['fs-1'] : ['fs-3'])
             );
         }
-        
+
         // Build trend classes
         $trendClasses = [];
         $trendIcon = null;
@@ -127,27 +129,27 @@ final class Stat extends AbstractStimulus
                 'neutral' => 'secondary',
                 default => 'secondary',
             };
-            
+
             $trendIcon = match ($this->trend) {
                 'up' => '↑',
                 'down' => '↓',
                 'neutral' => '→',
                 default => '→',
             };
-            
+
             $trendClasses = $this->buildClasses(
                 ['stat-trend', 'badge', "text-bg-{$trendVariant}", 'ms-2'],
                 $this->size === 'sm' ? ['badge-sm'] : []
             );
         }
-        
+
         // Build description classes
         $descriptionClasses = $this->buildClasses(
             ['stat-description', 'text-muted', 'small', 'mt-1']
         );
-        
+
         $attrs = $this->mergeAttributes([], $this->attr);
-        
+
         return [
             'value' => $value,
             'label' => $label,

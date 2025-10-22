@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Avatar;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AvatarTest extends TestCase
 {
@@ -408,7 +409,7 @@ final class AvatarTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Avatar($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('avatar', $method->invoke($component));

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Progress;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ProgressTest extends TestCase
 {
@@ -279,7 +280,7 @@ final class ProgressTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Progress($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('progress', $method->invoke($component));

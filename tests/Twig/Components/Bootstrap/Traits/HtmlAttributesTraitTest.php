@@ -13,7 +13,7 @@ final class HtmlAttributesTraitTest extends TestCase
     {
         return new class {
             use HtmlAttributesTrait;
-            
+
             /**
              * @param array<string, mixed> $base
              * @param array<string, mixed> $extra
@@ -23,7 +23,7 @@ final class HtmlAttributesTraitTest extends TestCase
             {
                 return $this->mergeAttributes($base, $extra);
             }
-            
+
             /**
              * @param array<string, mixed> $attributes
              */

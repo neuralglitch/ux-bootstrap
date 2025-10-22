@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:carousel', template: '@NeuralGlitchUxBootstrap/components/bootstrap/carousel.html.twig')]
 final class Carousel extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-carousel';
+
     // Carousel ID (required for controls and indicators)
     public ?string $id = null;
 
@@ -55,10 +57,10 @@ final class Carousel extends AbstractStimulus
         if ($this->pause === 'hover') {
             $this->pause = $d['pause'] ?? 'hover';
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
         $this->touch = $this->touch && ($d['touch'] ?? true);
         $this->wrap = $this->wrap && ($d['wrap'] ?? true);
 
@@ -91,7 +93,7 @@ final class Carousel extends AbstractStimulus
         }
 
         if ($this->interval !== 5000) {
-            $dataAttrs['data-bs-interval'] = (string) $this->interval;
+            $dataAttrs['data-bs-interval'] = (string)$this->interval;
         }
 
         if (!$this->keyboard) {

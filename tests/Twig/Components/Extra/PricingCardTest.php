@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\PricingCard;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class PricingCardTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class PricingCardTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'pricing_card' => [
+            'pricing-card' => [
                 'plan_name' => 'Free',
                 'plan_description' => null,
                 'price' => '0',
@@ -52,7 +53,7 @@ final class PricingCardTest extends TestCase
         $this->assertStringContainsString('card', $options['classes']);
         $this->assertStringContainsString('h-100', $options['classes']);
         $this->assertStringContainsString('text-center', $options['classes']);
-        $this->assertSame('Free', $options['planName']);
+        $this->assertSame('Free', $options['plan']);
         $this->assertSame('0', $options['price']);
         $this->assertSame('$', $options['currency']);
         $this->assertSame('month', $options['period']);
@@ -63,11 +64,11 @@ final class PricingCardTest extends TestCase
     public function testPlanNameOption(): void
     {
         $component = new PricingCard($this->config);
-        $component->planName = 'Enterprise';
+        $component->plan = 'Enterprise';
         $component->mount();
         $options = $component->options();
 
-        $this->assertSame('Enterprise', $options['planName']);
+        $this->assertSame('Enterprise', $options['plan']);
     }
 
     public function testPlanDescriptionOption(): void
@@ -297,8 +298,8 @@ final class PricingCardTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'pricing_card' => [
-                'plan_name' => 'Starter',
+            'pricing-card' => [
+                'plan' => 'Starter',
                 'price' => '19',
                 'currency' => '€',
                 'period' => 'year',
@@ -315,7 +316,7 @@ final class PricingCardTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertSame('Starter', $options['planName']);
+        $this->assertSame('Starter', $options['plan']);
         $this->assertSame('19', $options['price']);
         $this->assertSame('€', $options['currency']);
         $this->assertSame('year', $options['period']);
@@ -329,10 +330,10 @@ final class PricingCardTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new PricingCard($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('pricing_card', $method->invoke($component));
+        $this->assertSame('pricing-card', $method->invoke($component));
     }
 
     public function testEmptyFeaturesArray(): void

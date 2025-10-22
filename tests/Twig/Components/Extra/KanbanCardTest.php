@@ -15,7 +15,7 @@ final class KanbanCardTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'kanban_card' => [
+            'kanban-card' => [
                 'title' => null,
                 'description' => null,
                 'label' => null,
@@ -307,7 +307,7 @@ final class KanbanCardTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'kanban_card' => [
+            'kanban-card' => [
                 'shadow' => false,
                 'hover_effect' => false,
                 'badge_variant' => 'primary',

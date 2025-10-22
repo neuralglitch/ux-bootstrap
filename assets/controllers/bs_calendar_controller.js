@@ -166,13 +166,13 @@ export default class extends Controller {
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
 
-        let html = '<table class="table table-bordered mb-0 calendar-month-view">';
+        let html = '<table class="table table-bordered mb-0 calendar-month-view" style="table-layout: fixed;">';
 
         // Header row (weekdays)
         html += '<thead><tr>';
         const weekdays = this.getWeekdayNames();
         weekdays.forEach(day => {
-            html += `<th class="text-center p-2 bg-light">${day}</th>`;
+            html += `<th class="text-center p-2 bg-body-secondary">${day}</th>`;
         });
         html += '</tr></thead><tbody>';
 
@@ -186,7 +186,9 @@ export default class extends Controller {
         // Generate weeks
         for (let week = 0; week < 6; week++) {
             html += '<tr>';
+            let lastDayOfWeek = 0;
             for (let day = 0; day < 7; day++) {
+                lastDayOfWeek = day;
                 const isCurrentMonth = date.getMonth() === month;
                 const isToday = this.isToday(date);
                 const dayEvents = this.getEventsForDate(date);
@@ -219,7 +221,7 @@ export default class extends Controller {
             html += '</tr>';
 
             // Stop if we've passed the last day and filled the row
-            if (date.getMonth() !== month && day === 6) break;
+            if (date.getMonth() !== month && lastDayOfWeek === 6) break;
         }
 
         html += '</tbody></table>';
@@ -233,7 +235,7 @@ export default class extends Controller {
         let html = '<table class="table table-bordered mb-0 calendar-week-view">';
 
         // Header
-        html += '<thead><tr><th class="bg-light p-2" style="width: 80px;">Time</th>';
+        html += '<thead><tr><th class="bg-body-secondary p-2" style="width: 80px;">Time</th>';
         const date = new Date(weekStart);
         for (let i = 0; i < 7; i++) {
             if (!this.showWeekendsValue && (date.getDay() === 0 || date.getDay() === 6)) {
@@ -241,7 +243,7 @@ export default class extends Controller {
                 continue;
             }
             const isToday = this.isToday(date);
-            html += `<th class="text-center p-2 ${isToday ? 'bg-primary-subtle' : 'bg-light'}">`;
+            html += `<th class="text-center p-2 ${isToday ? 'bg-primary-subtle' : 'bg-body-secondary'}">`;
             html += `<div>${date.toLocaleDateString(this.localeValue, {weekday: 'short'})}</div>`;
             html += `<div class="h5 mb-0">${date.getDate()}</div>`;
             html += '</th>';
@@ -252,9 +254,11 @@ export default class extends Controller {
         // Body with time slots
         html += '<tbody>';
         const hours = 24;
+        const hourHeight = 60; // pixels per hour
+        
         for (let hour = 0; hour < hours; hour++) {
             html += '<tr>';
-            html += `<td class="text-center text-muted small p-2 bg-light">${this.formatHour(hour)}</td>`;
+            html += `<td class="text-center text-muted small p-2 bg-body-secondary" style="height: ${hourHeight}px;">${this.formatHour(hour)}</td>`;
 
             const slotDate = new Date(weekStart);
             for (let day = 0; day < 7; day++) {
@@ -263,12 +267,12 @@ export default class extends Controller {
                     continue;
                 }
 
-                html += `<td class="calendar-time-slot p-1" data-date="${this.formatDate(slotDate)}" data-hour="${hour}">`;
+                html += `<td class="calendar-time-slot position-relative p-0" style="height: ${hourHeight}px;" data-date="${this.formatDate(slotDate)}" data-hour="${hour}">`;
 
-                // Find events for this time slot
-                const slotEvents = this.getEventsForDateAndHour(slotDate, hour);
+                // Find events that START in this hour slot
+                const slotEvents = this.getEventsStartingInHour(slotDate, hour);
                 slotEvents.forEach(event => {
-                    html += this.renderEventBadge(event, true);
+                    html += this.renderWeekEventBlock(event, hourHeight);
                 });
 
                 html += '</td>';
@@ -322,7 +326,7 @@ export default class extends Controller {
             html += '<div class="list-group list-group-flush">';
             Object.keys(groupedEvents).sort().forEach(dateKey => {
                 const date = new Date(dateKey);
-                html += `<div class="list-group-item bg-light fw-bold">${date.toLocaleDateString(this.localeValue, {
+                html += `<div class="list-group-item bg-body-secondary fw-bold">${date.toLocaleDateString(this.localeValue, {
                     weekday: 'long',
                     month: 'long',
                     day: 'numeric'
@@ -341,14 +345,36 @@ export default class extends Controller {
 
     // Event rendering helpers
     renderEventBadge(event, showTime = false) {
-        const color = event.color || 'primary';
+        const color = event.color || event.classNames?.[0]?.replace('bg-', '') || 'primary';
         const time = showTime && event.start ? this.formatEventTime(event.start) : '';
+        const duration = this.getEventDuration(event);
+        const durationText = duration ? ` (${duration})` : '';
+        
         return `<div class="badge bg-${color} text-white w-100 mt-1 small text-truncate" 
                      data-event-id="${event.id || ''}" 
                      data-action="click->bs-calendar#handleEventClick"
                      style="cursor: pointer;">
-                  ${time}${time ? ' ' : ''}${event.title || 'Untitled'}
+                  ${time}${time ? ' ' : ''}${event.title || 'Untitled'}${durationText}
                 </div>`;
+    }
+    
+    /**
+     * Calculate event duration in hours
+     */
+    getEventDuration(event) {
+        if (!event.start || !event.end) return null;
+        
+        const start = new Date(event.start);
+        const end = new Date(event.end);
+        const diffMs = end - start;
+        const diffHours = Math.round(diffMs / (1000 * 60 * 60) * 10) / 10; // Round to 1 decimal
+        
+        if (diffHours < 1) {
+            const diffMinutes = Math.round(diffMs / (1000 * 60));
+            return `${diffMinutes}min`;
+        }
+        
+        return `${diffHours}h`;
     }
 
     renderEventListItem(event) {
@@ -454,6 +480,49 @@ export default class extends Controller {
             const eventDate = new Date(event.start);
             return this.formatDate(eventDate) === dateStr && eventDate.getHours() === hour;
         });
+    }
+    
+    getEventsStartingInHour(date, hour) {
+        const dateStr = this.formatDate(date);
+        return this.events.filter(event => {
+            if (!event.start) return false;
+            const eventDate = new Date(event.start);
+            return this.formatDate(eventDate) === dateStr && eventDate.getHours() === hour;
+        });
+    }
+    
+    /**
+     * Render event as a block with height corresponding to duration (for week view)
+     */
+    renderWeekEventBlock(event, hourHeight) {
+        if (!event.start) return '';
+        
+        const color = event.color || event.classNames?.[0]?.replace('bg-', '') || 'primary';
+        const startDate = new Date(event.start);
+        const startMinutes = startDate.getMinutes();
+        const topOffset = (startMinutes / 60) * hourHeight;
+        
+        // Calculate height based on duration
+        let height = hourHeight; // default 1 hour
+        if (event.end) {
+            const endDate = new Date(event.end);
+            const durationMs = endDate - startDate;
+            const durationHours = durationMs / (1000 * 60 * 60);
+            height = durationHours * hourHeight;
+        }
+        
+        const startTime = this.formatEventTime(event.start);
+        const endTime = event.end ? this.formatEventTime(event.end) : '';
+        const duration = this.getEventDuration(event);
+        
+        return `<div class="calendar-event-block bg-${color} text-white p-1 position-absolute w-100" 
+                     data-event-id="${event.id || ''}" 
+                     data-action="click->bs-calendar#handleEventClick"
+                     style="top: ${topOffset}px; height: ${height}px; cursor: pointer; overflow: hidden; font-size: 0.75rem; line-height: 1.2; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2);">
+                  <div class="fw-bold text-truncate">${event.title || 'Untitled'}</div>
+                  <div class="small text-truncate opacity-75">${startTime}${endTime ? ' - ' + endTime : ''}</div>
+                  ${duration && height > 40 ? `<div class="small opacity-50">${duration}</div>` : ''}
+                </div>`;
     }
 
     getEventsForMonth(year, month) {

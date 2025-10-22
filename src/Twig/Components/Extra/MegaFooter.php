@@ -42,7 +42,7 @@ final class MegaFooter extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('mega_footer');
+        $d = $this->config->for('mega-footer');
 
         $this->applyStimulusDefaults($d);
 
@@ -57,10 +57,10 @@ final class MegaFooter extends AbstractStimulus
         if (empty($this->socialLinks) && isset($d['social_links']) && is_array($d['social_links'])) {
             $this->socialLinks = $d['social_links'];
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
 
         // Copyright
         $this->copyrightText ??= $d['copyright_text'] ?? null;
@@ -88,7 +88,7 @@ final class MegaFooter extends AbstractStimulus
 
     protected function getComponentName(): string
     {
-        return 'mega_footer';
+        return 'mega-footer';
     }
 
     /**

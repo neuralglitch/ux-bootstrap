@@ -31,7 +31,6 @@ final class DropdownItem extends AbstractInteraction
 
         // Initialize controller with default
         $this->initializeController();
-        
         // Note: tag detection moved to options() since href might be set after mount
     }
 
@@ -44,7 +43,7 @@ final class DropdownItem extends AbstractInteraction
     {
         return 'dropdown_item';
     }
-    
+
     /**
      * Override to conditionally attach tooltip/popover controllers
      * DropdownItem attaches controllers when tooltip or popover is configured
@@ -53,37 +52,37 @@ final class DropdownItem extends AbstractInteraction
     {
         return $this->controllerEnabled && $this->hasTooltipOrPopover();
     }
-    
+
     /**
      * Override to attach appropriate universal controllers
      */
     protected function buildStimulusAttributes(): array
     {
         $attrs = [];
-        
+
         // Build list of controllers to attach
         $controllers = [];
-        
+
         // Add tooltip controller if tooltip is configured
         if ($this->tooltip !== null) {
             $controllers[] = 'bs-tooltip';
         }
-        
+
         // Add popover controller if popover is configured
         if ($this->popover !== null) {
             $controllers[] = 'bs-popover';
         }
-        
+
         // Add any additional controllers from the controller property
         if ($this->controller !== '') {
             $controllers[] = $this->controller;
         }
-        
+
         // Build data-controller attribute if we have controllers
         if (!empty($controllers)) {
             $attrs['data-controller'] = implode(' ', array_unique($controllers));
         }
-        
+
         return $attrs;
     }
 

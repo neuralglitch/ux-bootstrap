@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Toast;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ToastTest extends TestCase
 {
@@ -75,7 +76,7 @@ final class ToastTest extends TestCase
     {
         $toast = $this->createToast();
 
-        $reflection = new \ReflectionClass($toast);
+        $reflection = new ReflectionClass($toast);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

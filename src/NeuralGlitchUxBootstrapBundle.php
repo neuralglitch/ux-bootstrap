@@ -8,16 +8,18 @@ use NeuralGlitch\UxBootstrap\DependencyInjection\NeuralGlitchUxBootstrapExtensio
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+use function dirname;
+
 /**
  * Bootstrap 5.3 Twig Components & Stimulus Controllers Bundle
- * 
+ *
  * Provides a complete set of reusable Bootstrap components for Symfony applications.
  */
 final class NeuralGlitchUxBootstrapBundle extends Bundle
 {
     public function getPath(): string
     {
-        return \dirname(__DIR__);
+        return dirname(__DIR__);
     }
 
     public function getContainerExtension(): ExtensionInterface

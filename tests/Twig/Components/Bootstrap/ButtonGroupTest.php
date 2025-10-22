@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\ButtonGroup;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ButtonGroupTest extends TestCase
 {
@@ -200,7 +201,7 @@ final class ButtonGroupTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new ButtonGroup($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('button_group', $method->invoke($component));

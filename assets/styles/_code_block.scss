@@ -1,0 +1,71 @@
+// Code Block Component Styles
+
+.code-block {
+  position: relative;
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  overflow: hidden;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: var(--bs-secondary-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  font-size: 0.875rem;
+}
+
+.code-block-header-minimal {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+}
+
+.code-block-title,
+.code-block-filename {
+  font-weight: 600;
+  color: var(--bs-body-color);
+}
+
+.code-block-language {
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.code-block-copy {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  
+  svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 0.25rem;
+  }
+}
+
+.code-block-pre {
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--bs-tertiary-bg);
+  overflow-x: auto;
+}
+
+.code-block-scrollable {
+  overflow-y: auto;
+}
+
+.code-block-code {
+  display: block;
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  white-space: pre;
+}
+

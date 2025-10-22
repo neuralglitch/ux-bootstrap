@@ -23,7 +23,7 @@ final class TabPane extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('tab_pane');
+        $d = $this->config->for('tab-pane');
 
         $this->applyStimulusDefaults($d);
 
@@ -34,11 +34,7 @@ final class TabPane extends AbstractStimulus
         // Generate ID if not provided
         if (!$this->id && $this->title) {
             $this->id = 'tab-' . preg_replace('/[^a-z0-9]+/', '-', strtolower($this->title));
-
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+        }
 
         // Auto-generate labelledBy if not provided
         if (!$this->labelledBy && $this->id) {
@@ -51,11 +47,14 @@ final class TabPane extends AbstractStimulus
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
     {
-        return 'tab_pane';
+        return 'tab-pane';
     }
 
     /**

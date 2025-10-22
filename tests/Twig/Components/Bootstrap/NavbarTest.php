@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Navbar;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class NavbarTest extends TestCase
 {
@@ -88,7 +89,7 @@ final class NavbarTest extends TestCase
     {
         $navbar = $this->createNavbar();
 
-        $reflection = new \ReflectionClass($navbar);
+        $reflection = new ReflectionClass($navbar);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

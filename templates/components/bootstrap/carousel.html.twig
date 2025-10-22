@@ -10,10 +10,19 @@
     
     {# Indicators #}
     {% if o.indicators %}
-      <div class="carousel-indicators">
+      <div class="carousel-indicators" data-carousel-indicators>
         {% if has_slot %}
-          {# Indicators will be populated by JavaScript or manually #}
-          {% block indicators %}{% endblock %}
+          {# Auto-generate indicators by counting carousel-item elements #}
+          {% set item_count = slot_content|split('carousel-item')|length - 1 %}
+          {% for index in 0..(item_count - 1) %}
+            <button 
+              type="button" 
+              data-bs-target="#{{ o.id }}" 
+              data-bs-slide-to="{{ index }}"
+              {% if index == 0 %}class="active" aria-current="true"{% endif %}
+              aria-label="Slide {{ index + 1 }}">
+            </button>
+          {% endfor %}
         {% else %}
           {% for index, item in o.items %}
             <button 

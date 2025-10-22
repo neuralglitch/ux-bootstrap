@@ -205,5 +205,53 @@ export default class extends Controller {
             this.hideAlert(alert)
         }
     }
+
+    /**
+     * Convenience method to add a success alert
+     */
+    addSuccess() {
+        this.addAlert({
+            message: '<strong>Success!</strong> Operation completed successfully.',
+            variant: 'success',
+            dismissible: true,
+            autoHide: true
+        })
+    }
+
+    /**
+     * Convenience method to add an error alert
+     */
+    addError() {
+        this.addAlert({
+            message: '<strong>Error!</strong> Something went wrong. Please try again.',
+            variant: 'danger',
+            dismissible: true,
+            autoHide: true
+        })
+    }
+
+    /**
+     * Convenience method to add a warning alert
+     */
+    addWarning() {
+        this.addAlert({
+            message: '<strong>Warning!</strong> Please review your changes before continuing.',
+            variant: 'warning',
+            dismissible: true,
+            autoHide: true
+        })
+    }
+
+    /**
+     * Convenience method to add an info alert
+     */
+    addInfo() {
+        this.addAlert({
+            message: '<strong>Info:</strong> Here is some important information.',
+            variant: 'info',
+            dismissible: true,
+            autoHide: true
+        })
+    }
 }
 

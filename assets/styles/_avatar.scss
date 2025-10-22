@@ -68,6 +68,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  overflow: hidden;
 }
 
 // Avatar initials (fallback)
@@ -80,6 +81,8 @@
   font-weight: 600;
   text-transform: uppercase;
   user-select: none;
+  overflow: hidden;
+  border-radius: inherit;
   
   span {
     line-height: 1;

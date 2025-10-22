@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 
+use DateTime;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\CommentThread;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CommentThreadTest extends TestCase
 {
@@ -15,7 +17,7 @@ final class CommentThreadTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'comment_thread' => [
+            'comment-thread' => [
                 'max_depth' => 3,
                 'show_reply' => true,
                 'show_edit' => true,
@@ -134,7 +136,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'relative';
         $component->mount();
 
-        $timestamp = new \DateTime('-2 hours');
+        $timestamp = new DateTime('-2 hours');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('hour', $formatted);
@@ -147,7 +149,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'absolute';
         $component->mount();
 
-        $timestamp = new \DateTime('2024-01-15 14:30:00');
+        $timestamp = new DateTime('2024-01-15 14:30:00');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('Jan', $formatted);
@@ -160,7 +162,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'both';
         $component->mount();
 
-        $timestamp = new \DateTime('-2 hours');
+        $timestamp = new DateTime('-2 hours');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('ago', $formatted);
@@ -403,7 +405,7 @@ final class CommentThreadTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'comment_thread' => [
+            'comment-thread' => [
                 'max_depth' => 5,
                 'date_format' => 'absolute',
                 'avatar_size' => 'lg',
@@ -426,10 +428,10 @@ final class CommentThreadTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new CommentThread($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('comment_thread', $method->invoke($component));
+        $this->assertSame('comment-thread', $method->invoke($component));
     }
 
     public function testRelativeTimeFormatJustNow(): void
@@ -438,7 +440,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'relative';
         $component->mount();
 
-        $timestamp = new \DateTime('now');
+        $timestamp = new DateTime('now');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertSame('just now', $formatted);
@@ -450,7 +452,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'relative';
         $component->mount();
 
-        $timestamp = new \DateTime('-15 minutes');
+        $timestamp = new DateTime('-15 minutes');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('minute', $formatted);
@@ -463,7 +465,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'relative';
         $component->mount();
 
-        $timestamp = new \DateTime('-3 days');
+        $timestamp = new DateTime('-3 days');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('day', $formatted);
@@ -476,7 +478,7 @@ final class CommentThreadTest extends TestCase
         $component->dateFormat = 'relative';
         $component->mount();
 
-        $timestamp = new \DateTime('-2 years');
+        $timestamp = new DateTime('-2 years');
         $formatted = $component->formatDate($timestamp);
 
         $this->assertStringContainsString('year', $formatted);

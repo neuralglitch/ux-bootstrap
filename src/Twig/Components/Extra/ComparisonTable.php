@@ -39,7 +39,7 @@ final class ComparisonTable extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('comparison_table');
+        $d = $this->config->for('comparison-table');
 
         $this->applyStimulusDefaults($d);
 
@@ -61,16 +61,15 @@ final class ComparisonTable extends AbstractStimulus
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
+        }
 
-        
         // Initialize controller with default
         $this->initializeController();
-    }
     }
 
     protected function getComponentName(): string
     {
-        return 'comparison_table';
+        return 'comparison-table';
     }
 
     /**
@@ -87,8 +86,7 @@ final class ComparisonTable extends AbstractStimulus
             ['table'],
             $this->variant === 'striped' ? ['table-striped'] : [],
             $this->variant === 'bordered' ? ['table-bordered'] : [],
-            $this->hover && $this->variant !== 'cards' ? ['table-hover'] : [],
-            $this->centered ? ['text-center'] : []
+            $this->hover && $this->variant !== 'cards' ? ['table-hover'] : []
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);

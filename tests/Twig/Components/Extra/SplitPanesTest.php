@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\SplitPanes;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class SplitPanesTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class SplitPanesTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'split_panes' => [
+            'split-panes' => [
                 'orientation' => 'horizontal',
                 'initial_size' => '50%',
                 'min_size' => '10%',
@@ -197,7 +198,7 @@ final class SplitPanesTest extends TestCase
         $component->mount();
         $options = $component->options();
 
-        $this->assertSame('bs-split_panes', $options['attrs']['data-controller']);
+        $this->assertSame('bs-split-panes', $options['attrs']['data-controller']);
 
         $this->assertIsArray($options);
     }
@@ -234,7 +235,7 @@ final class SplitPanesTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $customConfig = new Config([
-            'split_panes' => [
+            'split-panes' => [
                 'orientation' => 'vertical',
                 'initial_size' => '40%',
                 'min_size' => '10%',
@@ -267,10 +268,10 @@ final class SplitPanesTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new SplitPanes($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('split_panes', $method->invoke($component));
+        $this->assertSame('split-panes', $method->invoke($component));
     }
 
     public function testCombinedOptions(): void

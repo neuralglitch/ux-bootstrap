@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:nav', template: '@NeuralGlitchUxBootstrap/components/bootstrap/nav.html.twig')]
 final class Nav extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-nav';
+
     /**
      * Nav style variant: null, 'tabs', 'pills', or 'underline'
      */

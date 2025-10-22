@@ -13,7 +13,7 @@ final class TooltipTraitTest extends TestCase
     {
         return new class {
             use TooltipTrait;
-            
+
             /**
              * @param array<string, mixed> $defaults
              */
@@ -21,7 +21,7 @@ final class TooltipTraitTest extends TestCase
             {
                 $this->applyTooltipDefaults($defaults);
             }
-            
+
             /**
              * @return array<string, mixed>
              */

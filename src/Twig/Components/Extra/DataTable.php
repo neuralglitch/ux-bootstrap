@@ -10,10 +10,13 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:data-table', template: '@NeuralGlitchUxBootstrap/components/extra/data-table.html.twig')]
 final class DataTable extends AbstractStimulus
 {
+    // Stimulus controller
+    public string $stimulusController = 'bs-data-table';
+
     // Data
     /** @var array<int, array<string, mixed>> */
     public array $rows = [];
-    
+
     /** @var array<int, array<string, mixed>> */
     public array $columns = [];
 
@@ -65,7 +68,7 @@ final class DataTable extends AbstractStimulus
 
     public function mount(): void
     {
-        $d = $this->config->for('data_table');
+        $d = $this->config->for('data-table');
 
         $this->applyStimulusDefaults($d);
 
@@ -92,27 +95,26 @@ final class DataTable extends AbstractStimulus
         $this->selectAll = $this->selectAll || ($d['select_all'] ?? false);
 
         $this->showActions = $this->showActions || ($d['show_actions'] ?? false);
-        
+
         // Only override actionsLabel if it's still the default value
         if ($this->actionsLabel === 'Actions' && isset($d['actions_label'])) {
             $this->actionsLabel = $d['actions_label'];
+        }
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
-        
         $this->actionsPosition ??= $d['actions_position'] ?? 'end';
 
         // Only override emptyMessage if it's still the default value
         if ($this->emptyMessage === 'No data available' && isset($d['empty_message'])) {
             $this->emptyMessage = $d['empty_message'];
         }
-        
+
         $this->showEmptyState = $this->showEmptyState && ($d['show_empty_state'] ?? true);
 
         $this->container ??= $d['container'] ?? 'container-fluid';
         $this->cardWrapper = $this->cardWrapper || ($d['card_wrapper'] ?? false);
+
+        // Initialize controller
+        $this->initializeController();
 
         $this->applyClassDefaults($d);
 
@@ -124,7 +126,7 @@ final class DataTable extends AbstractStimulus
 
     protected function getComponentName(): string
     {
-        return 'data_table';
+        return 'data-table';
     }
 
     /**
@@ -142,13 +144,13 @@ final class DataTable extends AbstractStimulus
             $this->variant ? ["table-{$this->variant}"] : []
         );
 
-        $responsiveClass = $this->responsive 
+        $responsiveClass = $this->responsive
             ? ($this->responsiveBreakpoint ? "table-responsive-{$this->responsiveBreakpoint}" : 'table-responsive')
             : null;
 
         $theadClass = $this->thead ? "table-{$this->thead}" : null;
 
-        $containerClasses = $this->container 
+        $containerClasses = $this->container
             ? $this->buildClasses([$this->container])
             : null;
 
@@ -156,11 +158,16 @@ final class DataTable extends AbstractStimulus
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
+        // Build controller wrapper attributes (for Stimulus)
+        $controllerAttrs = [
+            'data-controller' => $this->stimulusController,
+        ];
+
         $attrs = $this->mergeAttributes([], $this->attr);
 
         // Process columns for rendering
         $processedColumns = $this->processColumns();
-        
+
         // Check if table has data
         $isEmpty = empty($this->rows);
 
@@ -172,6 +179,7 @@ final class DataTable extends AbstractStimulus
             'theadClass' => $theadClass,
             'containerClasses' => $containerClasses,
             'wrapperClasses' => $wrapperClasses,
+            'controllerAttrs' => $controllerAttrs,
             'attrs' => $attrs,
             'captionText' => $this->captionText,
             'captionPosition' => $this->captionPosition,
@@ -197,7 +205,7 @@ final class DataTable extends AbstractStimulus
 
     /**
      * Process columns for rendering - ensure they have required fields
-     * 
+     *
      * @return array<int, array<string, mixed>>
      */
     private function processColumns(): array
@@ -207,7 +215,7 @@ final class DataTable extends AbstractStimulus
         foreach ($this->columns as $column) {
             $processed[] = [
                 'key' => $column['key'] ?? '',
-                'label' => $column['label'] ?? ucfirst((string) ($column['key'] ?? '')),
+                'label' => $column['label'] ?? ucfirst((string)($column['key'] ?? '')),
                 'sortable' => $column['sortable'] ?? true,
                 'class' => $column['class'] ?? null,
                 'headerClass' => $column['headerClass'] ?? null,

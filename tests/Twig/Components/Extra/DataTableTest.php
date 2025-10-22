@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\DataTable;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class DataTableTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class DataTableTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'data_table' => [
+            'data-table' => [
                 'striped' => true,
                 'bordered' => false,
                 'borderless' => false,
@@ -363,10 +364,10 @@ final class DataTableTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new DataTable($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('data_table', $method->invoke($component));
+        $this->assertSame('data-table', $method->invoke($component));
     }
 
     public function testCombinedOptions(): void
@@ -396,7 +397,7 @@ final class DataTableTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'data_table' => [
+            'data-table' => [
                 'striped' => false,
                 'bordered' => true,
                 'hover' => false,

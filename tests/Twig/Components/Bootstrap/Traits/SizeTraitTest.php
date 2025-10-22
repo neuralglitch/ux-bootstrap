@@ -13,7 +13,7 @@ final class SizeTraitTest extends TestCase
     {
         return new class {
             use SizeTrait;
-            
+
             /**
              * @param array<string, mixed> $defaults
              */
@@ -21,7 +21,7 @@ final class SizeTraitTest extends TestCase
             {
                 $this->applySizeDefaults($defaults);
             }
-            
+
             /**
              * @return array<int, string>
              */

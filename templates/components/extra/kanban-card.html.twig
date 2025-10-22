@@ -22,8 +22,8 @@
   
   <div class="card-body p-3">
     
-    {# Card Header (Badge, Icon, Drag Handle) #}
-    <div class="d-flex align-items-start justify-content-between mb-2">
+    {# Card Header (Title and Drag Handle on same line) #}
+    <div class="d-flex align-items-center justify-content-between mb-2">
       <div class="d-flex align-items-center gap-2">
         {% if o.icon %}
           <span class="kanban-card-icon">{{ o.icon|raw }}</span>
@@ -42,6 +42,15 @@
             {% else %}🟢{% endif %}
           </span>
         {% endif %}
+        
+        {# Title inline with badges/icons #}
+        {% if has_custom_content %}
+          {{ slot_content|raw }}
+        {% else %}
+          {% if o.title %}
+            <h6 class="card-title mb-0">{{ o.title }}</h6>
+          {% endif %}
+        {% endif %}
       </div>
       
       {% if o.show_drag_handle %}
@@ -51,16 +60,10 @@
       {% endif %}
     </div>
     
-    {# Card Content #}
-    {% if has_custom_content %}
-      {{ slot_content|raw }}
-    {% else %}
-      {% if o.title %}
-        <h6 class="card-title mb-2">{{ o.title }}</h6>
-      {% endif %}
-      
+    {# Card Description #}
+    {% if not has_custom_content %}
       {% if o.description %}
-        <p class="card-text small text-muted mb-2">{{ o.description }}</p>
+        <p class="card-text small text-muted mb-0">{{ o.description }}</p>
       {% elseif o.label %}
         <p class="card-text mb-0">{{ o.label }}</p>
       {% endif %}

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Hero;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class HeroTest extends TestCase
 {
@@ -84,7 +85,7 @@ final class HeroTest extends TestCase
     {
         $hero = $this->createHero();
 
-        $reflection = new \ReflectionClass($hero);
+        $reflection = new ReflectionClass($hero);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

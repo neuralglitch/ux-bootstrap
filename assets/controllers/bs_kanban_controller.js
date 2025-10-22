@@ -214,17 +214,104 @@ export default class extends Controller {
     addCard(event) {
         event.preventDefault();
 
-        // Dispatch custom event for external handling (e.g., show modal, create new card)
         const button = event.currentTarget;
-        const column = button.closest('[data-kanban-column]');
+        const column = button.closest('.kanban-column, [data-kanban-column]');
+        if (!column) return;
 
-        const customEvent = new CustomEvent('kanban:add-card', {
+        // Find template and drop zone
+        const template = column.querySelector('[data-kanban-card-template]');
+        const dropZone = column.querySelector('[data-kanban-drop-zone] > .d-flex');
+        
+        if (!template || !dropZone) return;
+
+        // Clone template content
+        const cardHtml = template.innerHTML;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = cardHtml;
+        const newCard = tempDiv.firstElementChild;
+
+        // Add to drop zone
+        dropZone.appendChild(newCard);
+
+        // Focus on title input
+        const titleInput = newCard.querySelector('[data-card-title]');
+        if (titleInput) {
+            titleInput.focus();
+        }
+
+        // Update counts
+        this.updateColumnCounts();
+    }
+
+    saveCard(event) {
+        event.preventDefault();
+
+        const button = event.currentTarget;
+        const editCard = button.closest('.kanban-card');
+        if (!editCard) return;
+
+        const titleInput = editCard.querySelector('[data-card-title]');
+        const descriptionTextarea = editCard.querySelector('[data-card-description]');
+
+        const title = titleInput?.value.trim() || 'Untitled';
+        const description = descriptionTextarea?.value.trim() || '';
+
+        if (!title) {
+            // Remove if empty
+            editCard.remove();
+            this.updateColumnCounts();
+            return;
+        }
+
+        // Generate unique ID
+        const cardId = 'kanban-card-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        
+        // Replace edit form with actual card (matching original template structure)
+        editCard.innerHTML = `
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h6 class="card-title mb-0">${this.escapeHtml(title)}</h6>
+                    <span class="kanban-card-drag-handle text-muted cursor-move" title="Drag to move">⋮⋮</span>
+                </div>
+                ${description ? `<p class="card-text small text-muted mb-0">${this.escapeHtml(description)}</p>` : ''}
+            </div>
+        `;
+
+        // Update classes to match original structure
+        editCard.className = 'kanban-card card shadow-sm kanban-card-hover';
+        editCard.id = cardId;
+        editCard.setAttribute('data-kanban-card', cardId);
+        editCard.setAttribute('draggable', 'true');
+
+        // Add drag listeners
+        this.addCardDragListeners(editCard);
+
+        // Dispatch event
+        this.dispatch('cardAdded', {
             detail: {
-                column: column?.dataset.kanbanColumn
-            },
-            bubbles: true
+                title,
+                description,
+                card: editCard
+            }
         });
-        this.element.dispatchEvent(customEvent);
+    }
+
+    cancelCard(event) {
+        event.preventDefault();
+
+        const button = event.currentTarget;
+        const editCard = button.closest('.kanban-card');
+        if (!editCard) return;
+
+        // Remove the edit card
+        editCard.remove();
+        this.updateColumnCounts();
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 }
 

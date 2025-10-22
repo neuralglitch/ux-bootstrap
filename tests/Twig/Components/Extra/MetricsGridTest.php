@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\MetricsGrid;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class MetricsGridTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class MetricsGridTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'metrics_grid' => [
+            'metrics-grid' => [
                 'columns' => 4,
                 'gap' => '4',
                 'equal_height' => true,
@@ -312,7 +313,7 @@ final class MetricsGridTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'metrics_grid' => [
+            'metrics-grid' => [
                 'columns' => 3,
                 'gap' => '5',
                 'card_variant' => 'success',
@@ -335,10 +336,10 @@ final class MetricsGridTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new MetricsGrid($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('metrics_grid', $method->invoke($component));
+        $this->assertSame('metrics-grid', $method->invoke($component));
     }
 
     public function testEmptyMetricsArray(): void
@@ -390,13 +391,13 @@ final class MetricsGridTest extends TestCase
     public function testColumnsRangeConstraints(): void
     {
         $component = new MetricsGrid($this->config);
-        
+
         // Test minimum constraint (should be 1)
         $component->columns = 0;
         $component->mount();
         $options = $component->options();
         $this->assertStringContainsString('col-lg-12', $options['colClasses']); // 12/1 = 12
-        
+
         // Test maximum constraint (should be 6)
         $component->columns = 7;
         $component->mount();

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Sidebar;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class SidebarTest extends TestCase
 {
@@ -388,7 +389,7 @@ final class SidebarTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Sidebar($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('sidebar', $method->invoke($component));

@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\Skeleton;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class SkeletonTest extends TestCase
 {
@@ -332,7 +333,7 @@ final class SkeletonTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new Skeleton($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('skeleton', $method->invoke($component));

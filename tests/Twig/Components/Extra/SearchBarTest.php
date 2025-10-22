@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\SearchBar;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class SearchBarTest extends TestCase
 {
@@ -72,7 +73,7 @@ final class SearchBarTest extends TestCase
     {
         $searchBar = $this->createSearchBar();
 
-        $reflection = new \ReflectionClass($searchBar);
+        $reflection = new ReflectionClass($searchBar);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 

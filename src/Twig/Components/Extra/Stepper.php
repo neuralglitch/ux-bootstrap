@@ -73,11 +73,10 @@ final class Stepper extends AbstractStimulus
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
+        }
 
-        
         // Initialize controller with default
         $this->initializeController();
-    }
     }
 
     protected function getComponentName(): string

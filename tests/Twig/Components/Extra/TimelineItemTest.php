@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\TimelineItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class TimelineItemTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class TimelineItemTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'timeline_item' => [
+            'timeline-item' => [
                 'time_position' => 'inline',
                 'variant' => null,
                 'state' => null,
@@ -280,7 +281,7 @@ final class TimelineItemTest extends TestCase
     public function testConfigDefaults(): void
     {
         $config = new Config([
-            'timeline_item' => [
+            'timeline-item' => [
                 'time_position' => 'below',
                 'variant' => 'primary',
                 'state' => 'active',
@@ -307,10 +308,10 @@ final class TimelineItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new TimelineItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('timeline_item', $method->invoke($component));
+        $this->assertSame('timeline-item', $method->invoke($component));
     }
 
     public function testStateOverridesVariant(): void

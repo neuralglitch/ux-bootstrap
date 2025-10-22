@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Breadcrumbs;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Route;
@@ -27,13 +28,13 @@ final class BreadcrumbsTest extends TestCase
     private function createBreadcrumbs(?Config $config = null): Breadcrumbs
     {
         $breadcrumbs = new Breadcrumbs($config ?? $this->createConfig());
-        
+
         // Create mock router
         $routes = new RouteCollection();
         $routes->add('default', new Route('/'));
         $routes->add('about', new Route('/about'));
         $routes->add('products', new Route('/products'));
-        
+
         $context = new RequestContext();
         $router = $this->createMock(Router::class);
         $router->method('generate')->willReturnCallback(function ($name, $params = []) {
@@ -45,22 +46,22 @@ final class BreadcrumbsTest extends TestCase
             return $map[$name] ?? '/';
         });
         $router->method('getRouteCollection')->willReturn($routes);
-        
+
         $breadcrumbs->setRouter($router);
-        
+
         // Create mock request stack
         $requestStack = new RequestStack();
         $request = Request::create('/');
         $requestStack->push($request);
         $breadcrumbs->setRequestStack($requestStack);
-        
+
         return $breadcrumbs;
     }
 
     public function testComponentHasCorrectDefaults(): void
     {
         $breadcrumbs = $this->createBreadcrumbs();
-        
+
         // Check property defaults before mount
         self::assertNull($breadcrumbs->items);
         self::assertTrue($breadcrumbs->autoGenerate);
@@ -73,11 +74,11 @@ final class BreadcrumbsTest extends TestCase
         self::assertSame(4, $breadcrumbs->collapseThreshold);
         self::assertSame('', $breadcrumbs->class);
         self::assertSame([], $breadcrumbs->attr);
-        
+
         // Mount() will auto-generate items and set controller
         $breadcrumbs->autoGenerate = false; // Disable to keep items null
         $breadcrumbs->mount();
-        
+
         // Controller not attached by default (only when autoCollapse=true)
         self::assertSame('', $breadcrumbs->controller);
     }
@@ -115,7 +116,7 @@ final class BreadcrumbsTest extends TestCase
             ['label' => 'About', 'url' => '/about'],
             ['label' => 'Contact', 'url' => null, 'active' => true],
         ];
-        
+
         $breadcrumbs->mount($items);
 
         self::assertSame($items, $breadcrumbs->items);
@@ -125,7 +126,7 @@ final class BreadcrumbsTest extends TestCase
     {
         $breadcrumbs = $this->createBreadcrumbs();
 
-        $reflection = new \ReflectionClass($breadcrumbs);
+        $reflection = new ReflectionClass($breadcrumbs);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
 
@@ -293,7 +294,7 @@ final class BreadcrumbsTest extends TestCase
         $breadcrumbs->autoGenerate = true;
         $breadcrumbs->showHome = true;
         $breadcrumbs->divider = '/';
-        
+
         $items = [['label' => 'Test', 'url' => '/test']];
         $breadcrumbs->mount(
             items: $items,

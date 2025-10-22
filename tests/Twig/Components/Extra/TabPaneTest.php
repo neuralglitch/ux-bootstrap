@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\TabPane;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class TabPaneTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class TabPaneTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'tab_pane' => [
+            'tab-pane' => [
                 'active' => false,
                 'fade' => true,
                 'class' => null,
@@ -149,7 +150,7 @@ final class TabPaneTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'tab_pane' => [
+            'tab-pane' => [
                 'active' => false,
                 'fade' => false,
                 'class' => 'default-class',
@@ -179,10 +180,10 @@ final class TabPaneTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new TabPane($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('tab_pane', $method->invoke($component));
+        $this->assertSame('tab-pane', $method->invoke($component));
     }
 
     public function testIdGenerationWithSpecialCharacters(): void
@@ -198,7 +199,7 @@ final class TabPaneTest extends TestCase
     public function testConfigEnablesActive(): void
     {
         $config = new Config([
-            'tab_pane' => [
+            'tab-pane' => [
                 'active' => true,
                 'fade' => true,
             ],
@@ -217,7 +218,7 @@ final class TabPaneTest extends TestCase
     public function testConfigDisablesFade(): void
     {
         $config = new Config([
-            'tab_pane' => [
+            'tab-pane' => [
                 'active' => false,
                 'fade' => false,
             ],

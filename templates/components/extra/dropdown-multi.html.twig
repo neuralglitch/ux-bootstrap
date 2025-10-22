@@ -58,13 +58,13 @@
 
       {# Options List #}
       <div 
-        class="px-2" 
+        class="px-3 py-2" 
         data-bs-dropdown-multi-target="optionsList"
         style="max-height: {{ o.maxHeight }}; overflow-y: auto;"
       >
         {% for option in o.options %}
           <div 
-            class="form-check px-2 py-1{% if option.disabled|default(false) %} opacity-50{% endif %}"
+            class="form-check{% if option.disabled|default(false) %} opacity-50{% endif %}"
             data-bs-dropdown-multi-target="option"
             data-option-value="{{ option.value }}"
             data-option-label="{{ option.label }}"

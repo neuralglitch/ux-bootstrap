@@ -12,6 +12,8 @@ final class Dropdown extends AbstractStimulus
     use Traits\VariantTrait;
     use Traits\SizeTrait;
 
+    public string $stimulusController = 'bs-dropdown';
+
     public ?string $label = null;
     public ?string $direction = null; // 'dropup' | 'dropend' | 'dropstart' | 'dropup-center' | 'dropdown-center'
     public ?string $menuAlign = null; // 'start' | 'end' | responsive like 'lg-end'
@@ -48,7 +50,7 @@ final class Dropdown extends AbstractStimulus
         $this->menuClass ??= $d['menu_class'] ?? null;
         $this->menuAttr = array_merge($d['menu_attr'] ?? [], $this->menuAttr);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

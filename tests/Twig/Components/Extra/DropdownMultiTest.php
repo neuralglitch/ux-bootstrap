@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\DropdownMulti;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class DropdownMultiTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class DropdownMultiTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'dropdown_multi' => [
+            'dropdown-multi' => [
                 'label' => 'Select options',
                 'placeholder' => null,
                 'variant' => 'secondary',
@@ -322,7 +323,7 @@ final class DropdownMultiTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'dropdown_multi' => [
+            'dropdown-multi' => [
                 'label' => 'Custom Default Label',
                 'variant' => 'success',
                 'searchable' => true,
@@ -345,10 +346,10 @@ final class DropdownMultiTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new DropdownMulti($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('dropdown_multi', $method->invoke($component));
+        $this->assertSame('dropdown-multi', $method->invoke($component));
     }
 
     public function testAutoCloseOption(): void

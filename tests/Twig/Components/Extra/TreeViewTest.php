@@ -15,7 +15,7 @@ final class TreeViewTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'tree_view' => [
+            'tree-view' => [
                 'selectable' => false,
                 'multi_select' => false,
                 'show_icons' => true,
@@ -268,7 +268,7 @@ final class TreeViewTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'tree_view' => [
+            'tree-view' => [
                 'selectable' => true,
                 'multi_select' => true,
                 'show_icons' => false,

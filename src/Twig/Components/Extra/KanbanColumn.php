@@ -15,33 +15,33 @@ final class KanbanColumn extends AbstractStimulus
     public ?string $description = null;
     public ?int $limit = null; // Maximum number of cards (WIP limit)
     public ?string $icon = null; // Icon HTML (emoji or SVG)
-    
+
     // Styling
     public ?string $variant = null; // null | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark'
     public ?string $bg = null; // Background color for column
     public bool $shadow = false;
     public bool $border = true;
-    
+
     // State
     public bool $collapsed = false; // Collapsed state
     public bool $collapsible = false; // Allow collapsing
     public bool $disabled = false; // Disable dropping
-    
+
     // Features
     public bool $show_count = true; // Show card count in header
     public bool $show_add_button = true; // Show "Add card" button
     public ?string $add_button_label = null; // Custom label for add button
-    
+
     // Identification
     public ?string $id = null;
     public ?string $column_key = null; // Unique identifier for this column (e.g., 'todo', 'in_progress', 'done')
-    
+
     public function mount(): void
     {
-        $d = $this->config->for('kanban_column');
+        $d = $this->config->for('kanban-column');
 
         $this->applyStimulusDefaults($d);
-        
+
         // Apply defaults - config takes precedence over component defaults
         $this->title = $d['title'] ?? $this->title;
         $this->description = $d['description'] ?? $this->description;
@@ -57,29 +57,28 @@ final class KanbanColumn extends AbstractStimulus
         $this->show_count = $d['show_count'] ?? $this->show_count;
         $this->show_add_button = $d['show_add_button'] ?? $this->show_add_button;
         $this->add_button_label = $d['add_button_label'] ?? $this->add_button_label;
-        
+
         // Generate ID if not provided
         if (!$this->id) {
             $this->id = 'kanban-col-' . uniqid();
+        }
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
-        
         $this->applyClassDefaults($d);
-        
+
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
-    
+
     protected function getComponentName(): string
     {
-        return 'kanban_column';
+        return 'kanban-column';
     }
-    
+
     /**
      * @return array<string, mixed>
      */
@@ -95,7 +94,7 @@ final class KanbanColumn extends AbstractStimulus
             $this->disabled ? ['disabled'] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
-        
+
         $attrs = $this->mergeAttributes(
             [
                 'id' => $this->id,
@@ -104,14 +103,15 @@ final class KanbanColumn extends AbstractStimulus
             ],
             $this->attr
         );
-        
+
         // Remove null attributes
         $attrs = array_filter($attrs, fn($value) => $value !== null);
-        
+
         return [
             'title' => $this->title,
             'description' => $this->description,
             'icon' => $this->icon,
+            'variant' => $this->variant,
             'limit' => $this->limit,
             'collapsible' => $this->collapsible,
             'collapsed' => $this->collapsed,

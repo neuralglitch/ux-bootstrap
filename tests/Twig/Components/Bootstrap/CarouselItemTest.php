@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\CarouselItem;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class CarouselItemTest extends TestCase
 {
@@ -217,7 +218,7 @@ final class CarouselItemTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new CarouselItem($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('carousel_item', $method->invoke($component));

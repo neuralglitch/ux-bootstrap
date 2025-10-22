@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\DropdownHeader;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class DropdownHeaderTest extends TestCase
 {
@@ -88,7 +89,7 @@ final class DropdownHeaderTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new DropdownHeader($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
         $this->assertSame('dropdown_header', $method->invoke($component));

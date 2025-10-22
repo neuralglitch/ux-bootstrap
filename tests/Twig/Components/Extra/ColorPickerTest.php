@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Extra;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Extra\ColorPicker;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class ColorPickerTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class ColorPickerTest extends TestCase
     protected function setUp(): void
     {
         $this->config = new Config([
-            'color_picker' => [
+            'color-picker' => [
                 'name' => 'color',
                 'value' => null,
                 'label' => null,
@@ -76,7 +77,7 @@ final class ColorPickerTest extends TestCase
 
         $this->assertSame('#FF0000', $options['value']);
         $this->assertArrayHasKey('value', $options['inputAttrs']);
-        $this->assertSame('#FF0000', $options['inputAttrs']['value']);
+        $this->assertSame('FF0000', $options['inputAttrs']['value']); // Text input strips # (input-group has # prefix)
     }
 
     public function testLabelOption(): void
@@ -297,7 +298,7 @@ final class ColorPickerTest extends TestCase
     public function testConfigDefaultsApplied(): void
     {
         $config = new Config([
-            'color_picker' => [
+            'color-picker' => [
                 'name' => 'theme_color',
                 'value' => '#0000FF',
                 'label' => 'Theme Color',
@@ -392,10 +393,10 @@ final class ColorPickerTest extends TestCase
     public function testGetComponentName(): void
     {
         $component = new ColorPicker($this->config);
-        $reflection = new \ReflectionClass($component);
+        $reflection = new ReflectionClass($component);
         $method = $reflection->getMethod('getComponentName');
 
-        $this->assertSame('color_picker', $method->invoke($component));
+        $this->assertSame('color-picker', $method->invoke($component));
     }
 
     public function testHexPatternInInput(): void
@@ -406,7 +407,10 @@ final class ColorPickerTest extends TestCase
         $options = $component->options();
 
         $this->assertArrayHasKey('pattern', $options['inputAttrs']);
-        $this->assertSame('^#[0-9A-Fa-f]{6}$', $options['inputAttrs']['pattern']);
+        $this->assertSame(
+            '[0-9A-Fa-f]{6}',
+            $options['inputAttrs']['pattern']
+        ); // Pattern without # (input-group has # prefix)
     }
 
     public function testNoHexPatternWhenHexDisabled(): void

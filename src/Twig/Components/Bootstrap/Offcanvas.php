@@ -9,6 +9,8 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:offcanvas', template: '@NeuralGlitchUxBootstrap/components/bootstrap/offcanvas.html.twig')]
 final class Offcanvas extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-offcanvas';
+
     public string $id;
     public ?string $title = null;
     public ?string $placement = null;
@@ -43,10 +45,10 @@ final class Offcanvas extends AbstractStimulus
         if (!isset($this->id)) {
             $this->id = 'offcanvas-' . uniqid();
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
     }
 
     protected function getComponentName(): string

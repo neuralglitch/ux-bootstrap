@@ -16,7 +16,7 @@ final class DropdownDivider extends AbstractStimulus
         $this->applyStimulusDefaults($d);
         $this->applyClassDefaults($d);
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

@@ -66,7 +66,7 @@ final class Card extends AbstractStimulus
         $this->width ??= $d['width'] ?? null;
         $this->id ??= $d['id'] ?? null;
 
-        
+
         // Initialize controller with default
         $this->initializeController();
     }

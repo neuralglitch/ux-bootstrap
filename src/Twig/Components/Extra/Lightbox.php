@@ -15,6 +15,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:lightbox', template: '@NeuralGlitchUxBootstrap/components/extra/lightbox.html.twig')]
 final class Lightbox extends AbstractStimulus
 {
+    // Stimulus controller
+    public string $stimulusController = 'bs-lightbox';
+
     /**
      * Array of images to display in the lightbox.
      * Each image should be an array with keys: 'src', 'alt', 'caption', 'thumbnail'
@@ -134,10 +137,10 @@ final class Lightbox extends AbstractStimulus
         if (!$this->id) {
             $this->id = 'lightbox-' . uniqid();
 
-        
-        // Initialize controller with default
-        $this->initializeController();
-    }
+
+            // Initialize controller with default
+            $this->initializeController();
+        }
 
         // Validate images array
         if (empty($this->images)) {
@@ -160,29 +163,30 @@ final class Lightbox extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['lightbox'],
-            $this->class ? explode(' ', trim($this->class)) : []
-        );
-
-        $attrs = $this->mergeAttributes([
+        // Controller wrapper attributes
+        $controllerAttrs = $this->mergeAttributes([
             'id' => $this->id,
-            'data-controller' => 'bs-lightbox',
-            'data-bs-lightbox-start-index-value' => (string) $this->startIndex,
+            'data-controller' => $this->stimulusController,
+            'data-bs-lightbox-start-index-value' => (string)$this->startIndex,
             'data-bs-lightbox-enable-zoom-value' => $this->enableZoom ? 'true' : 'false',
             'data-bs-lightbox-enable-keyboard-value' => $this->enableKeyboard ? 'true' : 'false',
             'data-bs-lightbox-enable-swipe-value' => $this->enableSwipe ? 'true' : 'false',
             'data-bs-lightbox-close-on-backdrop-value' => $this->closeOnBackdrop ? 'true' : 'false',
             'data-bs-lightbox-transition-value' => $this->transition,
-            'data-bs-lightbox-transition-duration-value' => (string) $this->transitionDuration,
+            'data-bs-lightbox-transition-duration-value' => (string)$this->transitionDuration,
             'data-bs-lightbox-autoplay-value' => $this->autoplay ? 'true' : 'false',
-            'data-bs-lightbox-autoplay-interval-value' => (string) $this->autoplayInterval,
+            'data-bs-lightbox-autoplay-interval-value' => (string)$this->autoplayInterval,
         ], $this->attr);
+
+        $classes = $this->buildClasses(
+            ['lightbox'],
+            $this->class ? explode(' ', trim($this->class)) : []
+        );
 
         return [
             'id' => $this->id,
             'classes' => $classes,
-            'attrs' => $attrs,
+            'attrs' => $controllerAttrs,
             'images' => $this->images,
             'showThumbnails' => $this->showThumbnails,
             'showCounter' => $this->showCounter,

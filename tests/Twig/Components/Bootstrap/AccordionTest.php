@@ -7,6 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Accordion;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AccordionTest extends TestCase
 {
@@ -105,11 +106,11 @@ final class AccordionTest extends TestCase
     public function testGetComponentName(): void
     {
         $accordion = $this->createAccordion();
-        
-        $reflection = new \ReflectionClass($accordion);
+
+        $reflection = new ReflectionClass($accordion);
         $method = $reflection->getMethod('getComponentName');
         $method->setAccessible(true);
-        
+
         self::assertSame('accordion', $method->invoke($accordion));
     }
 
@@ -276,7 +277,7 @@ final class AccordionTest extends TestCase
     {
         $accordion1 = $this->createAccordion();
         $accordion1->mount();
-        
+
         $accordion2 = $this->createAccordion();
         $accordion2->mount();
 
