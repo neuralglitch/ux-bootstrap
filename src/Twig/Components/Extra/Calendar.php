@@ -25,7 +25,7 @@ final class Calendar extends AbstractBootstrap
     public int $firstDayOfWeek;  // 0=Sunday, 1=Monday
 
     // Event configuration
-    /** @var array<string, mixed> */
+    /** @var array<int|string, mixed> */
     public array $events = [];  // Array of event objects
     public string $eventUrl;  // URL for AJAX event loading
     public bool $loadEventsAsync;

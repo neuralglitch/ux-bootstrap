@@ -4,7 +4,7 @@ parameters:
         - config/
         - src/
         - tests/
-    tmpDir: var/cache/phpstan
+    tmpDir: /tmp/phpstan
     ignoreErrors:
         # Ignore type assertions in tests that PHPStan already knows
         - identifier: staticMethod.alreadyNarrowedType

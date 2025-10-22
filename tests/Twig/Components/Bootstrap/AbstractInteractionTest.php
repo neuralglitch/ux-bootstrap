@@ -52,7 +52,7 @@ final class AbstractInteractionTest extends TestCase
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
-        $component->mount();
+        $component->mount(); // @phpstan-ignore-line method.notFound
 
         // After mount(), controller property should have default value
         self::assertSame('bs-test', $component->controller);

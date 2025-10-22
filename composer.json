@@ -32,24 +32,18 @@
         "twig/twig": "^3.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.0 || ^11.0",
+        "roave/security-advisories": "dev-latest",
         "symfony/asset-mapper": "^6.4 || ^7.0",
         "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/console": "^6.4 || ^7.0",
         "symfony/css-selector": "^6.4 || ^7.0",
-        "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",
         "symfony/framework-bundle": "^6.4 || ^7.0",
-        "symfony/maker-bundle": "^1.0",
-        "symfony/monolog-bundle": "^3.0",
         "symfony/phpunit-bridge": "^6.4 || ^7.0",
-        "symfony/runtime": "^6.4 || ^7.0",
         "symfony/stimulus-bundle": "^2.30",
-        "symfony/web-profiler-bundle": "^6.4 || ^7.0",
-        "symfony/yaml": "^6.4 || ^7.0",
-        "symfonycasts/sass-bundle": "^0.6"
+        "symfony/yaml": "^6.4 || ^7.0"
     },
     "suggest": {
         "twbs/bootstrap": "Bootstrap 5.3 CSS/JS library (REQUIRED - must be installed in consuming application)"
@@ -69,21 +63,14 @@
         "sort-packages": true,
         "allow-plugins": {
             "php-http/discovery": true,
-            "symfony/flex": false,
-            "symfony/runtime": true
+            "symfony/flex": false
         }
     },
     "scripts": {
-        "build": [
-            "@build-styles"
-        ],
-        "build-styles": "bin/build-styles",
         "test": "vendor/bin/phpunit",
         "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
     },
     "scripts-descriptions": {
-        "build": "Build all distributable assets (CSS, JS)",
-        "build-styles": "Compile SCSS to CSS for distribution",
         "test": "Run PHPUnit tests",
         "phpstan": "Run PHPStan static analysis"
     },
