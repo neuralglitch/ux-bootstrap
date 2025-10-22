@@ -1,6 +1,6 @@
 {
     "name": "neuralglitch/ux-bootstrap",
-    "description": "Reusable Bootstrap 5.3 Twig Components & Stimulus Controllers for Symfony 6.4/7.x. Requires Bootstrap 5.3 pre-installed.",
+    "description": "Reusable Bootstrap 5.3 Twig Components & Stimulus Controllers for Symfony 6.4/7.x with AssetMapper. Requires Bootstrap 5.3 pre-installed. Webpack Encore NOT supported.",
     "type": "symfony-bundle",
     "license": "MIT",
     "keywords": [
@@ -9,6 +9,7 @@
         "bootstrap",
         "twig-components",
         "stimulus",
+        "asset-mapper",
         "ui",
         "components",
         "bootstrap5"
@@ -45,7 +46,11 @@
         "symfony/stimulus-bundle": "^2.30",
         "symfony/yaml": "^6.4 || ^7.0"
     },
+    "conflict": {
+        "symfony/webpack-encore-bundle": "*"
+    },
     "suggest": {
+        "symfony/asset-mapper": "Required for asset management (Webpack Encore is NOT supported)",
         "twbs/bootstrap": "Bootstrap 5.3 CSS/JS library (REQUIRED - must be installed in consuming application)"
     },
     "autoload": {
