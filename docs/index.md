@@ -10,7 +10,7 @@ UX Bootstrap offers two types of components:
 - **Extra Components**: Custom, feature-rich components built on top of Bootstrap for common UI patterns
 
 All components are:
-- ✅ Fully typed with PHP 8.2+
+- ✅ Fully typed with PHP 8.1+
 - ✅ Configurable via YAML
 - ✅ Accessible and semantic
 - ✅ Thoroughly tested
@@ -160,7 +160,7 @@ neuralglitch_ux_bootstrap:
 ## Component Props
 
 Each component supports:
-- **Typed Properties**: All props are strongly typed (PHP 8.2+)
+- **Typed Properties**: All props are strongly typed (PHP 8.1+)
 - **Custom Classes**: Add custom CSS classes via `class` prop
 - **Custom Attributes**: Add HTML attributes via `attr` prop
 - **Configuration Defaults**: Set project-wide defaults via YAML

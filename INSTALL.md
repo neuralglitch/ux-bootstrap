@@ -21,7 +21,7 @@ The bundle provides Twig Components and Stimulus controllers for Bootstrap, but 
 
 ### System Requirements
 
-- **PHP**: 8.2 or higher
+- **PHP**: 8.1 or higher
 - **Composer**: 2.7 or higher
 - **Symfony**: 6.4 LTS or 7.x
 - **Bootstrap**: 5.3.x (must be pre-installed)
@@ -36,10 +36,12 @@ If missing, install them:
 
 ```bash
 # Ubuntu/Debian
-sudo apt-get install php8.2-ctype php8.2-iconv
+sudo apt-get install php8.1-ctype php8.1-iconv
+# Or for PHP 8.2+: sudo apt-get install php8.2-ctype php8.2-iconv
 
 # macOS (Homebrew)
-brew install php@8.2
+brew install php@8.1
+# Or for PHP 8.2+: brew install php@8.2
 ```
 
 ### Required Symfony Bundles

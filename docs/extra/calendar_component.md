@@ -585,5 +585,5 @@ If you're migrating from FullCalendar or similar:
 
 - Requires Symfony 6.4+ or 7.x
 - Requires Bootstrap 5.3+
-- Requires PHP 8.2+
+- Requires PHP 8.1+
 

@@ -23,7 +23,7 @@ This project follows the Symfony Code of Conduct. Be respectful, constructive, a
 
 ### Prerequisites
 
-- PHP 8.2+
+- PHP 8.1+
 - Composer 2.7+
 - Docker & Docker Compose (for local development)
 - Node.js 18+ (if working with JavaScript/Stimulus)
@@ -127,7 +127,7 @@ Examples:
 
 This project follows **Symfony Coding Standards**:
 
-- PHP 8.2+ strict typing: `declare(strict_types=1);`
+- PHP 8.1+ strict typing: `declare(strict_types=1);`
 - Public constructors, not final by default
 - Typed properties and parameters
 - Return type declarations

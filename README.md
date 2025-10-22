@@ -8,7 +8,7 @@
 [![Static Analysis](https://github.com/neuralglitch/ux-bootstrap/workflows/Static%20Analysis/badge.svg)](https://github.com/neuralglitch/ux-bootstrap/actions/workflows/static-analysis.yml)
 [![Build](https://github.com/neuralglitch/ux-bootstrap/workflows/Build/badge.svg)](https://github.com/neuralglitch/ux-bootstrap/actions/workflows/build.yml)
 
-[![php](https://img.shields.io/badge/PHP-8.2+-4F5B93.svg?style=flat-square)](https://www.php.net/)
+[![php](https://img.shields.io/badge/PHP-8.1+-4F5B93.svg?style=flat-square)](https://www.php.net/)
 [![symfony](https://img.shields.io/badge/Symfony-6.4%20%7C%207.x-1F2937.svg?style=flat-square)](https://www.symfony.com/)
 [![bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952b3.svg?style=flat-square)](https://getbootstrap.com/)
 [![license](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
@@ -35,7 +35,7 @@ A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus cont
 
 ## 📋 Requirements
 
-- **PHP 8.2+**
+- **PHP 8.1+**
 - **Symfony 6.4 LTS or 7.x**
 - **Bootstrap 5.3.x** - Must be already installed in your project
 - **Stimulus** (optional) - For interactive components
