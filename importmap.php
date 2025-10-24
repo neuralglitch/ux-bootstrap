@@ -89,9 +89,6 @@ return [
     '@neuralglitch/ux-bootstrap/controllers/bs_offcanvas_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_offcanvas_controller.js',
     ],
-    '@neuralglitch/ux-bootstrap/controllers/bs_popover_controller.js' => [
-        'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_popover_controller.js',
-    ],
     '@neuralglitch/ux-bootstrap/controllers/bs_progress_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_progress_controller.js',
     ],
@@ -112,9 +109,6 @@ return [
     ],
     '@neuralglitch/ux-bootstrap/controllers/bs_toast_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_toast_controller.js',
-    ],
-    '@neuralglitch/ux-bootstrap/controllers/bs_tooltip_controller.js' => [
-        'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_tooltip_controller.js',
     ],
     '@neuralglitch/ux-bootstrap/controllers/bs_tour_controller.js' => [
         'path' => './vendor/neuralglitch/ux-bootstrap/assets/controllers/bs_tour_controller.js',

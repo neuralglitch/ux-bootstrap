@@ -52,10 +52,22 @@ export default class extends Controller {
             const expandedIcon = toggle.querySelector('.tree-chevron-expanded');
             
             if (collapsedIcon) {
-                collapsedIcon.style.display = isExpanded ? 'none' : '';
+                if (isExpanded) {
+                    collapsedIcon.classList.add('d-none');
+                    collapsedIcon.classList.remove('d-block');
+                } else {
+                    collapsedIcon.classList.add('d-block');
+                    collapsedIcon.classList.remove('d-none');
+                }
             }
             if (expandedIcon) {
-                expandedIcon.style.display = isExpanded ? '' : 'none';
+                if (isExpanded) {
+                    expandedIcon.classList.add('d-block');
+                    expandedIcon.classList.remove('d-none');
+                } else {
+                    expandedIcon.classList.add('d-none');
+                    expandedIcon.classList.remove('d-block');
+                }
             }
         });
     }
@@ -92,13 +104,29 @@ export default class extends Controller {
      * Toggle node expansion
      */
     toggleNode(event) {
-        const button = event.currentTarget;
-        const item = button.closest('.tree-view-item');
+        // Stop if clicking on a file (no data-action attribute)
+        if (!event.currentTarget.hasAttribute('data-action')) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+        
+        // Stop event propagation to prevent double execution
+        event.stopPropagation();
+        
+        // Stop event bubbling if clicking on a child tree item
+        if (event.target !== event.currentTarget && event.target.closest('.tree-view-item') !== event.currentTarget) {
+            return;
+        }
+        
+        const item = event.currentTarget;
         const children = item.querySelector('.tree-view-children');
-        const collapsedIcon = button.querySelector('.tree-chevron-collapsed');
-        const expandedIcon = button.querySelector('.tree-chevron-expanded');
+        
+        // Always look for chevron icons in the item (not just in toggle button)
+        const collapsedIcon = item.querySelector('.tree-chevron-collapsed');
+        const expandedIcon = item.querySelector('.tree-chevron-expanded');
 
-        if (!children) return;
+        if (!children || children.children.length === 0) return;
 
         const isExpanded = children.style.display !== 'none';
 
@@ -108,8 +136,25 @@ export default class extends Controller {
             item.setAttribute('aria-expanded', 'false');
             
             // Toggle icons
-            if (collapsedIcon) collapsedIcon.style.display = '';
-            if (expandedIcon) expandedIcon.style.display = 'none';
+            if (collapsedIcon) {
+                collapsedIcon.classList.add('d-block');
+                collapsedIcon.classList.remove('d-none');
+            }
+            if (expandedIcon) {
+                expandedIcon.classList.add('d-none');
+                expandedIcon.classList.remove('d-block');
+            }
+
+            // Update folder icon visibility if present
+            const closedIcon = item.querySelector('.tree-folder-closed');
+            const openIcon = item.querySelector('.tree-folder-open');
+            if (closedIcon && openIcon && item.querySelector('.tree-view-children')) {
+                // Show closed icon, hide open icon
+                closedIcon.classList.remove('d-none');
+                closedIcon.classList.add('d-block');
+                openIcon.classList.add('d-none');
+                openIcon.classList.remove('d-block');
+            }
 
             // Fire callback
             if (this.hasOnCollapseValue) {
@@ -123,15 +168,24 @@ export default class extends Controller {
             item.setAttribute('aria-expanded', 'true');
             
             // Toggle icons
-            if (collapsedIcon) collapsedIcon.style.display = 'none';
-            if (expandedIcon) expandedIcon.style.display = '';
+            if (collapsedIcon) {
+                collapsedIcon.classList.add('d-none');
+                collapsedIcon.classList.remove('d-block');
+            }
+            if (expandedIcon) {
+                expandedIcon.classList.add('d-block');
+                expandedIcon.classList.remove('d-none');
+            }
 
-            // Update folder icon if present
-            const folderIcon = item.querySelector('.tree-view-icon i');
-            if (folderIcon && item.dataset.hasChildren) {
-                // Switch between folder and folder-open icons
-                folderIcon.classList.toggle('bi-folder');
-                folderIcon.classList.toggle('bi-folder-open');
+            // Update folder icon visibility if present
+            const closedIcon = item.querySelector('.tree-folder-closed');
+            const openIcon = item.querySelector('.tree-folder-open');
+            if (closedIcon && openIcon && item.querySelector('.tree-view-children')) {
+                // Show open icon, hide closed icon
+                closedIcon.classList.add('d-none');
+                closedIcon.classList.remove('d-block');
+                openIcon.classList.remove('d-none');
+                openIcon.classList.add('d-block');
             }
 
             // Fire callback

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 
-use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\SizeTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:button', template: '@NeuralGlitchUxBootstrap/components/bootstrap/button.html.twig')]
-final class Button extends AbstractInteraction
+final class Button extends AbstractInteractive
 {
     use SizeTrait;
 
@@ -22,11 +21,11 @@ final class Button extends AbstractInteraction
     {
         $d = $this->config->for('button');
 
-        $this->applyCommonDefaults($d);
+        $this->applyInteractiveDefaults($d);
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
 
-        // Initialize controller with default
+        // Initialize controller
         $this->initializeController();
     }
 
@@ -42,61 +41,11 @@ final class Button extends AbstractInteraction
 
     /**
      * Override to conditionally attach controllers
-     * Button attaches:
-     * - bs-button: When explicitly enabled OR for enhanced features
-     * - bs-tooltip: When tooltip is configured
-     * - bs-popover: When popover is configured
+     * Button only attaches bs-button controller (no tooltip/popover controllers needed)
      */
     protected function shouldAttachController(): bool
     {
-        // Button can attach its own controller OR tooltip/popover controllers
         return $this->controllerEnabled;
-    }
-
-    /**
-     * Override to attach appropriate controllers
-     */
-    protected function buildStimulusAttributes(): array
-    {
-        $attrs = [];
-
-        // Build list of controllers to attach
-        $controllers = [];
-
-        // Add button controller if explicitly requested
-        if ($this->controller !== '' && str_contains($this->controller, 'bs-button')) {
-            $controllers[] = 'bs-button';
-        }
-
-        // Add tooltip controller if tooltip is configured
-        if ($this->tooltip !== null) {
-            $controllers[] = 'bs-tooltip';
-        }
-
-        // Add popover controller if popover is configured
-        if ($this->popover !== null) {
-            $controllers[] = 'bs-popover';
-        }
-
-        // Add any additional custom controllers from the controller property
-        if ($this->controller !== '') {
-            // Split and filter out bs-button/bs-tooltip/bs-popover (already added)
-            $customControllers = array_filter(
-                explode(' ', $this->controller),
-                fn($c) => !in_array($c, ['bs-button', 'bs-tooltip', 'bs-popover'], true)
-            );
-            $controllers = array_merge($controllers, $customControllers);
-        }
-
-        // Build data-controller attribute if we have controllers
-        if (!empty($controllers)) {
-            $attrs['data-controller'] = implode(' ', array_unique($controllers));
-        }
-
-        // No component-specific values needed for now
-        // bs-button controller can be enhanced later with values
-
-        return $attrs;
     }
 
     /**
@@ -114,7 +63,7 @@ final class Button extends AbstractInteraction
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->buildCommonAttributes($isAnchor);
+        $attrs = $this->buildInteractiveAttributes($isAnchor);
 
         $iconSpace = $this->iconSpacingClasses('button');
 

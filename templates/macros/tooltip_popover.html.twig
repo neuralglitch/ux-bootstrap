@@ -1,0 +1,73 @@
+{#
+  Universal Tooltip/Popover Macro
+  
+  Converts Twig component attributes to Bootstrap data attributes.
+  No Stimulus controllers needed - uses Bootstrap's native JavaScript.
+  
+  Usage:
+  {% import 'macros/tooltip_popover.html.twig' as tp %}
+  
+  {# Tooltip #}
+  <button {{ tp.tooltip('Click me', placement='top') }}>Button</button>
+  
+  {# Popover #}
+  <button {{ tp.popover('Title', 'Content', placement='right') }}>Button</button>
+  
+  {# Combined with component attributes #}
+  <twig:bs:button 
+    variant="primary" 
+    {{ tp.tooltip('Save changes', placement='bottom') }}
+  >
+    Save
+  </twig:bs:button>
+#}
+
+{% macro tooltip(text, placement='top', trigger='hover', html=false, container=null, delay=null, animation=true) %}
+  data-bs-toggle="tooltip"
+  data-bs-title="{{ text|e }}"
+  data-bs-placement="{{ placement }}"
+  data-bs-trigger="{{ trigger }}"
+  {% if html %}data-bs-html="true"{% endif %}
+  {% if container %}data-bs-container="{{ container|e }}"{% endif %}
+  {% if delay %}data-bs-delay="{{ delay }}"{% endif %}
+  {% if not animation %}data-bs-animation="false"{% endif %}
+{% endmacro %}
+
+{% macro popover(title, content, placement='top', trigger='click', html=false, container=null, delay=null, animation=true) %}
+  data-bs-toggle="popover"
+  data-bs-title="{{ title|e }}"
+  data-bs-content="{{ content|e }}"
+  data-bs-placement="{{ placement }}"
+  data-bs-trigger="{{ trigger }}"
+  {% if html %}data-bs-html="true"{% endif %}
+  {% if container %}data-bs-container="{{ container|e }}"{% endif %}
+  {% if delay %}data-bs-delay="{{ delay }}"{% endif %}
+  {% if not animation %}data-bs-animation="false"{% endif %}
+{% endmacro %}
+
+{#
+  Advanced macro for complex tooltip/popover configurations
+  Accepts array of options for maximum flexibility
+#}
+{% macro tooltip_advanced(options) %}
+  data-bs-toggle="tooltip"
+  data-bs-title="{{ options.text|default('')|e }}"
+  {% if options.placement %}data-bs-placement="{{ options.placement }}"{% endif %}
+  {% if options.trigger %}data-bs-trigger="{{ options.trigger }}"{% endif %}
+  {% if options.html %}data-bs-html="true"{% endif %}
+  {% if options.container %}data-bs-container="{{ options.container|e }}"{% endif %}
+  {% if options.delay %}data-bs-delay="{{ options.delay }}"{% endif %}
+  {% if options.animation is defined and not options.animation %}data-bs-animation="false"{% endif %}
+{% endmacro %}
+
+{% macro popover_advanced(options) %}
+  data-bs-toggle="popover"
+  data-bs-title="{{ options.title|default('')|e }}"
+  data-bs-content="{{ options.content|default('')|e }}"
+  {% if options.placement %}data-bs-placement="{{ options.placement }}"{% endif %}
+  {% if options.trigger %}data-bs-trigger="{{ options.trigger }}"{% endif %}
+  {% if options.html %}data-bs-html="true"{% endif %}
+  {% if options.container %}data-bs-container="{{ options.container|e }}"{% endif %}
+  {% if options.delay %}data-bs-delay="{{ options.delay }}"{% endif %}
+  {% if options.animation is defined and not options.animation %}data-bs-animation="false"{% endif %}
+{% endmacro %}

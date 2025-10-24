@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:list-group-item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/list-group-item.html.twig')]
-final class ListGroupItem extends AbstractStimulus
+final class ListGroupItem extends AbstractInteractive
 {
     use Traits\VariantTrait;
 
@@ -26,9 +26,7 @@ final class ListGroupItem extends AbstractStimulus
     {
         $d = $this->config->for('list_group_item');
 
-        $this->applyStimulusDefaults($d);
-
-        $this->applyVariantDefaults($d);
+        $this->applyInteractiveDefaults($d);
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -62,6 +60,11 @@ final class ListGroupItem extends AbstractStimulus
         if ($this->active && null === $this->ariaCurrent) {
             $this->ariaCurrent = 'true';
         }
+    }
+
+    protected function getComponentType(): string
+    {
+        return 'list-group-item';
     }
 
     protected function getComponentName(): string
@@ -122,7 +125,7 @@ final class ListGroupItem extends AbstractStimulus
             $attrs['aria-label'] = $this->ariaLabel;
         }
 
-        $attrs = $this->mergeAttributes($attrs, $this->attr);
+        $attrs = $this->mergeAttributes($attrs, $this->buildInteractiveAttributes($this->tag === 'a' || $this->tag === 'button'));
 
         return [
             'tag' => $this->tag,

@@ -140,11 +140,6 @@
             "fetch": "eager",
             "enabled": true
         },
-        "bs-popover": {
-            "main": "controllers/bs_popover_controller.js",
-            "fetch": "eager",
-            "enabled": true
-        },
         "bs-progress": {
             "main": "controllers/bs_progress_controller.js",
             "fetch": "eager",
@@ -177,11 +172,6 @@
         },
         "bs-toast": {
             "main": "controllers/bs_toast_controller.js",
-            "fetch": "eager",
-            "enabled": true
-        },
-        "bs-tooltip": {
-            "main": "controllers/bs_tooltip_controller.js",
             "fetch": "eager",
             "enabled": true
         },

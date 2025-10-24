@@ -1,4 +1,7 @@
 **/.DS_Store
+/.idea/
+/_tmp/
+/.phpunit.cache/
 
 ###> symfony/framework-bundle ###
 /.env

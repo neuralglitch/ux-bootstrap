@@ -37,6 +37,11 @@ final class ButtonTest extends TestCase
         self::assertFalse($button->active);
         self::assertSame('', $button->class);
         self::assertSame([], $button->attr);
+        
+        // Tooltip/Popover defaults
+        self::assertNull($button->tooltip);
+        self::assertNull($button->popover);
+        self::assertNull($button->popoverTitle);
     }
 
     public function testMountAppliesConfigDefaults(): void
@@ -302,6 +307,111 @@ final class ButtonTest extends TestCase
         self::assertSame('a', $options['tag']);
         self::assertSame('https://example.com', $options['href']);
         self::assertStringContainsString('btn', $options['classes']);
+    }
+
+    public function testTooltipIntegration(): void
+    {
+        $button = $this->createButton();
+        $button->tooltip = 'Save document';
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('tooltip', $attrs['data-bs-toggle']);
+        self::assertSame('Save document', $attrs['data-bs-title']);
+        self::assertSame('top', $attrs['data-bs-placement']);
+        self::assertSame('hover', $attrs['data-bs-trigger']);
+    }
+
+    public function testPopoverIntegration(): void
+    {
+        $button = $this->createButton();
+        $button->popover = 'Are you sure you want to delete this item?';
+        $button->popoverTitle = 'Confirm Delete';
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('popover', $attrs['data-bs-toggle']);
+        self::assertSame('Are you sure you want to delete this item?', $attrs['data-bs-content']);
+        self::assertSame('Confirm Delete', $attrs['data-bs-title']);
+        self::assertSame('top', $attrs['data-bs-placement']);
+        self::assertSame('click', $attrs['data-bs-trigger']);
+    }
+
+    public function testTooltipArrayValue(): void
+    {
+        $button = $this->createButton();
+        $button->tooltip = ['text' => 'Array tooltip'];
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('tooltip', $attrs['data-bs-toggle']);
+        self::assertSame('Array tooltip', $attrs['data-bs-title']);
+    }
+
+    public function testPopoverArrayValue(): void
+    {
+        $button = $this->createButton();
+        $button->popover = ['content' => 'Array popover content'];
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('popover', $attrs['data-bs-toggle']);
+        self::assertSame('Array popover content', $attrs['data-bs-content']);
+    }
+
+    public function testCustomTooltipPlacementAndTrigger(): void
+    {
+        $button = $this->createButton();
+        $button->tooltip = 'Custom tooltip';
+        $button->tooltipPlacement = 'bottom';
+        $button->tooltipTrigger = 'click';
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('tooltip', $attrs['data-bs-toggle']);
+        self::assertSame('Custom tooltip', $attrs['data-bs-title']);
+        self::assertSame('bottom', $attrs['data-bs-placement']);
+        self::assertSame('click', $attrs['data-bs-trigger']);
+    }
+
+    public function testTooltipHtmlDetection(): void
+    {
+        $button = $this->createButton();
+        $button->tooltip = '<strong>Bold text</strong>';
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('tooltip', $attrs['data-bs-toggle']);
+        self::assertSame('<strong>Bold text</strong>', $attrs['data-bs-title']);
+        // HTML detection should set data-bs-html to true when HTML tags are present
+        self::assertSame('true', $attrs['data-bs-html']);
+    }
+
+    public function testTooltipHtmlOverride(): void
+    {
+        $button = $this->createButton();
+        $button->tooltip = 'Plain text';
+        $button->tooltipHtml = false;
+        $button->mount();
+
+        $options = $button->options();
+        $attrs = $options['attrs'];
+
+        self::assertSame('tooltip', $attrs['data-bs-toggle']);
+        self::assertSame('Plain text', $attrs['data-bs-title']);
+        self::assertSame('false', $attrs['data-bs-html']);
     }
 }
 

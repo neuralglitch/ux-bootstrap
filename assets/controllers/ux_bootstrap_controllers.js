@@ -29,7 +29,6 @@ import BsNavbarStickyController from '@neuralglitch/ux-bootstrap/controllers/bs_
 import BsNavController from '@neuralglitch/ux-bootstrap/controllers/bs_nav_controller.js';
 import BsNotificationCenterController from '@neuralglitch/ux-bootstrap/controllers/bs_notification_center_controller.js';
 import BsOffcanvasController from '@neuralglitch/ux-bootstrap/controllers/bs_offcanvas_controller.js';
-import BsPopoverController from '@neuralglitch/ux-bootstrap/controllers/bs_popover_controller.js';
 import BsProgressController from '@neuralglitch/ux-bootstrap/controllers/bs_progress_controller.js';
 import BsSearchController from '@neuralglitch/ux-bootstrap/controllers/bs_search_controller.js';
 import BsSidebarController from '@neuralglitch/ux-bootstrap/controllers/bs_sidebar_controller.js';
@@ -37,7 +36,6 @@ import BsSplitPanesController from '@neuralglitch/ux-bootstrap/controllers/bs_sp
 import BsTabController from '@neuralglitch/ux-bootstrap/controllers/bs_tab_controller.js';
 import BsThemeController from '@neuralglitch/ux-bootstrap/controllers/bs_theme_controller.js';
 import BsToastController from '@neuralglitch/ux-bootstrap/controllers/bs_toast_controller.js';
-import BsTooltipController from '@neuralglitch/ux-bootstrap/controllers/bs_tooltip_controller.js';
 import BsTourController from '@neuralglitch/ux-bootstrap/controllers/bs_tour_controller.js';
 import BsTreeViewController from '@neuralglitch/ux-bootstrap/controllers/bs_tree_view_controller.js';
 
@@ -70,7 +68,6 @@ export function registerUxBootstrapControllers(app) {
     app.register('bs-nav', BsNavController);
     app.register('bs-notification-center', BsNotificationCenterController);
     app.register('bs-offcanvas', BsOffcanvasController);
-    app.register('bs-popover', BsPopoverController);
     app.register('bs-progress', BsProgressController);
     app.register('bs-search', BsSearchController);
     app.register('bs-sidebar', BsSidebarController);
@@ -78,7 +75,6 @@ export function registerUxBootstrapControllers(app) {
     app.register('bs-tab', BsTabController);
     app.register('bs-theme', BsThemeController);
     app.register('bs-toast', BsToastController);
-    app.register('bs-tooltip', BsTooltipController);
     app.register('bs-tour', BsTourController);
     app.register('bs-tree-view', BsTreeViewController);
 }

@@ -66,19 +66,18 @@ neuralglitch_ux_bootstrap:
 
     stimulus_controller: 'bs-link'
 
-    tooltip:
-      text: null
-      placement: 'bottom'
-      trigger: 'hover'
-      container: null
-      html: null
-    popover:
-      title: null
-      content: null
-      placement: 'bottom'
-      trigger: 'hover focus'
-      boundary: 'clippingParents'
-      html: null
+    tooltip: null
+    tooltip_placement: 'bottom'
+    tooltip_trigger: 'hover'
+    tooltip_container: null
+    tooltip_html: null
+    popover: null
+    popover_title: null
+    popover_content: null
+    popover_placement: 'bottom'
+    popover_trigger: 'hover focus'
+    popover_boundary: 'clippingParents'
+    popover_html: null
 
     icon_only: false
     icon_gap: 2
@@ -181,20 +180,19 @@ neuralglitch_ux_bootstrap:
 
     stimulus_controller: 'bs-link'
 
-    tooltip:
-      text: null
-      placement: 'bottom'
-      trigger: 'hover'
-      container: null
-      html: null
+    tooltip: null
+    tooltip_placement: 'bottom'
+    tooltip_trigger: 'hover'
+    tooltip_container: null
+    tooltip_html: null
 
-    popover:
-      title: null
-      content: null
-      placement: 'bottom'
-      trigger: 'hover focus'
-      boundary: 'clippingParents'
-      html: null
+    popover: null
+    popover_title: null
+    popover_content: null
+    popover_placement: 'bottom'
+    popover_trigger: 'hover focus'
+    popover_boundary: 'clippingParents'
+    popover_html: null
 
     icon_only: false
     icon_gap: 2

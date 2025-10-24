@@ -1,24 +1,61 @@
 {% apply spaceless -%}
 
 {% set o = this.options() %}
+<!-- DEBUG: TreeView template rendered -->
+<!-- DEBUG: items count = {{ o.items|length }} -->
 
 {% macro renderItem(item, level, options) %}
-    <li class="tree-view-item" data-tree-item-id="{{ item.id }}" data-item-id="{{ item.id }}" {% if item.expanded is defined and item.expanded %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
-        <div class="tree-view-node d-flex align-items-center gap-2 py-1 px-2">
-            <span class="tree-toggle-wrapper" style="width: 1.5rem; display: inline-flex; align-items: center; justify-content: center;">
-                {% if item.children is defined and item.children is not empty %}
-                    <button type="button" class="btn btn-sm btn-link p-0 tree-toggle text-body" data-action="click->bs-tree-view#toggle" style="width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                        <twig:ux:icon name="bi:chevron-right" class="tree-chevron tree-chevron-collapsed" style="width: 12px; height: 12px; display: none;" />
-                        <twig:ux:icon name="bi:chevron-down" class="tree-chevron tree-chevron-expanded" style="width: 12px; height: 12px; display: none;" />
+    <li class="tree-view-item" data-tree-item-id="{{ item.id }}" data-item-id="{{ item.id }}" aria-expanded="{% if item.expanded is defined and item.expanded %}true{% else %}false{% endif %}" {% if item.type is defined and item.type  == 'directory' %}data-action="click->bs-tree-view#toggle"{% endif %}>
+        <div class="tree-view-node d-flex align-items-center gap-2 p-0 py-1">
+            {% if options.showExpandIcons and item.children is defined and item.children is not empty %}
+                <span class="tree-toggle-wrapper">
+                    <button type="button" class="tree-toggle">
+                        {% if item.expanded is defined and item.expanded %}
+                            <twig:ux:icon name="bi:chevron-right" class="tree-chevron tree-chevron-collapsed d-none" />
+                            <twig:ux:icon name="bi:chevron-down" class="tree-chevron tree-chevron-expanded d-block" />
+                        {% else %}
+                            <twig:ux:icon name="bi:chevron-right" class="tree-chevron tree-chevron-collapsed d-block" />
+                            <twig:ux:icon name="bi:chevron-down" class="tree-chevron tree-chevron-expanded d-none" />
+                        {% endif %}
                     </button>
-                {% endif %}
-            </span>
+                </span>
+            {% endif %}
             
             {% if options.showIcons and item.icon is defined %}
-                <twig:ux:icon :name="item.icon" />
+                {% if item.type is defined and item.type == 'directory' %}
+                    {# Directory icons - different for empty vs non-empty folders #}
+                    {% if item.children is defined and item.children is not empty %}
+                        {# Non-empty folder - use filled icons with open/closed states #}
+                        {% if item.expanded is defined and item.expanded %}
+                            <twig:ux:icon name="bi:folder-fill" class="tree-folder-icon tree-folder-closed d-none" />
+                            <twig:ux:icon name="bi:folder2-open" class="tree-folder-icon tree-folder-open d-block" />
+                        {% else %}
+                            <twig:ux:icon name="bi:folder-fill" class="tree-folder-icon tree-folder-closed d-block" />
+                            <twig:ux:icon name="bi:folder2-open" class="tree-folder-icon tree-folder-open d-none" />
+                        {% endif %}
+                    {% else %}
+                        {# Empty folder - always use bi:folder #}
+                        <twig:ux:icon name="bi:folder" class="tree-folder-icon" />
+                    {% endif %}
+                {% else %}
+                    {# Use the provided icon for files #}
+                    <twig:ux:icon :name="item.icon" />
+                {% endif %}
             {% endif %}
             
             <span class="flex-grow-1">{{ item.label }}</span>
+            
+            {% if options.showFileSizes and item.size is defined %}
+                <span class="text-body-secondary small">{{ item.size }}</span>
+            {% endif %}
+            
+            {% if options.showPermissions and item.permissions is defined %}
+                <span class="text-body-secondary small">{{ item.permissions }}</span>
+            {% endif %}
+            
+            {% if options.showModified and item.modified is defined %}
+                <span class="text-body-secondary small">{{ item.modified|date('Y-m-d H:i') }}</span>
+            {% endif %}
         </div>
         
         {% if item.children is defined and item.children is not empty %}

@@ -8,7 +8,7 @@ use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:badge', template: '@NeuralGlitchUxBootstrap/components/bootstrap/badge.html.twig')]
-final class Badge extends AbstractStimulus
+final class Badge extends AbstractInteractive
 {
     use VariantTrait;
 
@@ -49,8 +49,7 @@ final class Badge extends AbstractStimulus
     {
         $d = $this->config->for('badge');
 
-        $this->applyVariantDefaults($d);
-        $this->applyStimulusDefaults($d);
+        $this->applyInteractiveDefaults($d);
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
@@ -76,6 +75,11 @@ final class Badge extends AbstractStimulus
 
         // Initialize controller with default
         $this->initializeController();
+    }
+
+    protected function getComponentType(): string
+    {
+        return 'badge';
     }
 
     protected function getComponentName(): string

@@ -7,7 +7,7 @@ namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:nav-item', template: '@NeuralGlitchUxBootstrap/components/bootstrap/nav-item.html.twig')]
-final class NavItem extends AbstractStimulus
+final class NavItem extends AbstractInteractive
 {
     /**
      * Link label/text (alternative to content block)
@@ -59,7 +59,7 @@ final class NavItem extends AbstractStimulus
     {
         $d = $this->config->for('nav_item');
 
-        $this->applyStimulusDefaults($d);
+        $this->applyInteractiveDefaults($d);
 
         // Apply base class defaults
         $this->applyClassDefaults($d);
@@ -83,6 +83,11 @@ final class NavItem extends AbstractStimulus
             // Initialize controller with default
             $this->initializeController();
         }
+    }
+
+    protected function getComponentType(): string
+    {
+        return 'nav-item';
     }
 
     protected function getComponentName(): string
@@ -113,7 +118,7 @@ final class NavItem extends AbstractStimulus
                 'tabindex' => $this->disabled ? '-1' : null,
                 'type' => $this->tag === 'button' ? 'button' : null,
             ], fn($value) => $value !== null),
-            $this->attr
+            $this->buildInteractiveAttributes($this->tag === 'a')
         );
 
         return [

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 
-use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:link', template: '@NeuralGlitchUxBootstrap/components/bootstrap/link.html.twig')]
-final class Link extends AbstractInteraction
+final class Link extends AbstractInteractive
 {
     public string $href = '#';
     public ?string $target = '_self';
@@ -24,7 +23,7 @@ final class Link extends AbstractInteraction
     {
         $d = $this->config->for('link');
 
-        $this->applyCommonDefaults($d);
+        $this->applyInteractiveDefaults($d);
         $this->applyClassDefaults($d);
 
         $this->underline ??= $d['underline'] ?? null;
@@ -33,7 +32,7 @@ final class Link extends AbstractInteraction
         $this->offset ??= $d['offset'] ?? null;
         $this->stretched = $this->stretched || (bool)($d['stretched'] ?? false);
 
-        // Initialize controller with default
+        // Initialize controller
         $this->initializeController();
     }
 
@@ -48,49 +47,12 @@ final class Link extends AbstractInteraction
     }
 
     /**
-     * Override to conditionally attach tooltip/popover controllers
-     * Link component doesn't need its own controller - just delegates to bs-tooltip/bs-popover
+     * Override to conditionally attach controllers
+     * Link only attaches its own controller (no tooltip/popover controllers needed)
      */
     protected function shouldAttachController(): bool
     {
-        // Link attaches controllers when tooltip or popover is configured
-        return $this->controllerEnabled && $this->hasTooltipOrPopover();
-    }
-
-    /**
-     * Override to attach appropriate universal controllers
-     */
-    protected function buildStimulusAttributes(): array
-    {
-        $attrs = [];
-
-        // Build list of controllers to attach
-        $controllers = [];
-
-        // Add tooltip controller if tooltip is configured
-        if ($this->tooltip !== null) {
-            $controllers[] = 'bs-tooltip';
-        }
-
-        // Add popover controller if popover is configured
-        if ($this->popover !== null) {
-            $controllers[] = 'bs-popover';
-        }
-
-        // Add any additional controllers from the controller property
-        if ($this->controller !== '') {
-            // User explicitly set controllers - append or replace
-            $controllers[] = $this->controller;
-        }
-
-        // Build data-controller attribute if we have controllers
-        if (!empty($controllers)) {
-            $attrs['data-controller'] = implode(' ', array_unique($controllers));
-        }
-
-        // No component-specific values needed - tooltip/popover controllers handle everything
-
-        return $attrs;
+        return $this->controllerEnabled;
     }
 
     /**
@@ -106,7 +68,7 @@ final class Link extends AbstractInteraction
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->buildCommonAttributes(true);
+        $attrs = $this->buildInteractiveAttributes(true);
 
         // Add link-specific attributes
         if ($this->target) {

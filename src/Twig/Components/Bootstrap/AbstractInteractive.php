@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\IconTrait;
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StateTrait;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\TooltipPopoverTrait;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\VariantTrait;
-
-use function array_key_exists;
-use function is_int;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StateTrait;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\IconTrait;
 
 /**
- * Base class for interactive components (buttons, links, etc.)
- * that share common functionality like tooltips, popovers, icons, and state.
- *
- * Extends AbstractStimulus for automatic Stimulus controller management.
+ * Abstract base class for interactive components (buttons, links, etc.)
+ * that support tooltips, popovers, variants, state, and icons.
+ * 
+ * Uses Bootstrap's native JavaScript - no Stimulus controllers needed!
  */
-abstract class AbstractInteraction extends AbstractStimulus
+abstract class AbstractInteractive extends AbstractStimulus
 {
+    use TooltipPopoverTrait;
     use VariantTrait;
     use StateTrait;
     use IconTrait;
@@ -31,13 +30,14 @@ abstract class AbstractInteraction extends AbstractStimulus
      *
      * @param array<string, mixed> $defaults
      */
-    protected function applyCommonDefaults(array $defaults): void
+    protected function applyInteractiveDefaults(array $defaults): void
     {
         $this->applyVariantDefaults($defaults);
         $this->applyStateDefaults($defaults);
-        $this->applyStimulusDefaults($defaults);  // Use new pattern
-
-
+        $this->applyStimulusDefaults($defaults);
+        $this->applyTooltipPopoverDefaults($defaults);
+        
+        // Apply icon defaults
         if (array_key_exists('icon_only', $defaults)) {
             $this->iconOnly = $this->iconOnly || (bool)$defaults['icon_only'];
         }
@@ -52,22 +52,25 @@ abstract class AbstractInteraction extends AbstractStimulus
      *
      * @return array<string, mixed>
      */
-    protected function buildCommonAttributes(bool $isAnchor = true): array
+    protected function buildInteractiveAttributes(bool $isAnchor = true): array
     {
         $attrs = [];
 
+        // Aria attributes
         if ($this->ariaLabel) {
             $attrs['aria-label'] = $this->ariaLabel;
         }
 
+        // Tooltip/Popover attributes (Bootstrap native)
+        $attrs = $this->mergeAttributes($attrs, $this->buildTooltipPopoverAttributes());
 
-        // Add Stimulus controller attributes using new pattern
+        // Stimulus controller attributes
         $attrs = $this->mergeAttributes($attrs, $this->buildStimulusAttributes());
 
-        // Add state attributes
+        // State attributes
         $attrs = $this->mergeAttributes($attrs, $this->stateAttributesFor($this->getComponentType(), $isAnchor));
 
-        // Apply icon-only aria attributes
+        // Icon-only aria attributes
         $attrs = $this->applyIconOnlyAria($attrs, $this->label, $this->ariaLabel);
 
         // Merge custom attributes
@@ -76,10 +79,8 @@ abstract class AbstractInteraction extends AbstractStimulus
         return $attrs;
     }
 
-
     /**
      * Get component type for CSS class generation (e.g., 'button', 'link')
      */
     abstract protected function getComponentType(): string;
 }
-

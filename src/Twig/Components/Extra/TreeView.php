@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
+use NeuralGlitch\UxBootstrap\Service\FilesystemAdapter;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
@@ -128,9 +129,93 @@ final class TreeView extends AbstractStimulus
      */
     public array $selectedIds = [];
 
-    public function mount(): void
-    {
-        $d = $this->config->for('tree-view');
+    /**
+     * Filesystem integration
+     * @var string|null
+     */
+    public ?string $filesystemPath = null;
+    
+    /**
+     * Filesystem path (alternative property name for Twig binding)
+     * @var string|null
+     */
+    public ?string $path = null;
+    
+    /**
+     * Simple path property for testing
+     * @var string|null
+     */
+    public ?string $src = null;
+
+    /**
+     * Directories to exclude from filesystem tree
+     *
+     * @var array<string>
+     */
+    public array $excludeDirs = ['.git', 'node_modules', 'vendor', '.idea', '.vscode'];
+
+    /**
+     * Files to exclude from filesystem tree
+     *
+     * @var array<string>
+     */
+    public array $excludeFiles = ['.DS_Store', 'Thumbs.db', '.gitignore'];
+
+    /**
+     * Maximum directory depth for filesystem tree (0 = unlimited)
+     */
+    public int $maxDepth = 0;
+
+    /**
+     * Show file sizes in filesystem tree
+     */
+    public bool $showFileSizes = false;
+
+    /**
+     * Show file permissions in filesystem tree
+     */
+    public bool $showPermissions = false;
+
+    /**
+     * Show file modification dates in filesystem tree
+     */
+    public bool $showModified = false;
+
+    public function mount(
+        ?string $filesystemPath = null,
+        ?string $path = null,
+        ?string $src = null,
+        ?array $excludeDirs = null,
+        ?array $excludeFiles = null,
+        ?int $maxDepth = null,
+    ): void {
+        // Override properties with mount parameters if provided
+        if ($filesystemPath !== null) {
+            $this->filesystemPath = $filesystemPath;
+        }
+        if ($path !== null) {
+            $this->path = $path;
+        }
+        if ($src !== null) {
+            $this->src = $src;
+        }
+        if ($excludeDirs !== null) {
+            $this->excludeDirs = $excludeDirs;
+        }
+        if ($excludeFiles !== null) {
+            $this->excludeFiles = $excludeFiles;
+        }
+        if ($maxDepth !== null) {
+            $this->maxDepth = $maxDepth;
+        }
+
+        // Debug: Check if filesystemPath is set from template
+        dump('TreeView mount() called');
+        dump('TreeView: filesystemPath after mount = ' . var_export($this->filesystemPath, true));
+        dump('TreeView: path after mount = ' . var_export($this->path, true));
+        dump('TreeView: src after mount = ' . var_export($this->src, true));
+        
+        $d = $this->config->for('tree_view');
 
         $this->applyStimulusDefaults($d);
 
@@ -172,8 +257,33 @@ final class TreeView extends AbstractStimulus
         $this->compact = $this->compact || ($d['compact'] ?? false);
         $this->hoverable = $this->hoverable && ($d['hoverable'] ?? true);
 
-        // Process items to add default expanded state
-        $this->items = $this->processItems($this->items);
+        // Handle filesystem integration
+        dump('TreeView mount() called');
+        dump('TreeView: filesystemPath = ' . var_export($this->filesystemPath, true));
+        dump('TreeView: path = ' . var_export($this->path, true));
+        dump('TreeView: excludeDirs = ' . var_export($this->excludeDirs, true));
+        dump('TreeView: excludeFiles = ' . var_export($this->excludeFiles, true));
+        dump('TreeView: maxDepth = ' . var_export($this->maxDepth, true));
+        
+        // Use either filesystemPath, path, or src property
+        $path = $this->filesystemPath ?? $this->path ?? $this->src;
+        
+        // Hardcode path for testing
+        if (!$path) {
+            $path = 'vendor/neuralglitch/ux-bootstrap';
+            dump('TreeView: Using hardcoded path for testing: ' . $path);
+        }
+        
+        if ($path) {
+            dump('TreeView: Loading filesystem tree from: ' . $path);
+            $this->loadFilesystemTreeFromPath($path);
+            dump('TreeView: Loaded ' . count($this->items) . ' items');
+        } else {
+            dump('TreeView: No path provided, items count = ' . count($this->items));
+            // Process items to add default expanded state
+            $this->items = $this->processItems($this->items);
+        }
+        dump($this->items);
     }
 
     protected function getComponentName(): string
@@ -241,6 +351,9 @@ final class TreeView extends AbstractStimulus
             'collapseIcon' => $this->collapseIcon,
             'selectable' => $this->selectable,
             'selectedIds' => $this->selectedIds,
+            'showFileSizes' => $this->showFileSizes,
+            'showPermissions' => $this->showPermissions,
+            'showModified' => $this->showModified,
         ];
     }
 
@@ -268,6 +381,80 @@ final class TreeView extends AbstractStimulus
             // Process children recursively
             if (isset($item['children']) && is_array($item['children'])) {
                 $item['children'] = $this->processItems($item['children']);
+            }
+
+            return $item;
+        }, $items);
+    }
+
+    /**
+     * Load tree structure from filesystem
+     */
+    private function loadFilesystemTree(): void
+    {
+        $adapter = new FilesystemAdapter();
+        $treeData = $adapter->buildTree(
+            $this->filesystemPath,
+            $this->excludeDirs,
+            $this->excludeFiles,
+            $this->maxDepth
+        );
+
+        // Process filesystem data to match tree view format
+        $this->items = $this->processFilesystemItems($treeData);
+    }
+
+    /**
+     * Load filesystem tree from a specific path
+     */
+    private function loadFilesystemTreeFromPath(string $path): void
+    {
+        $adapter = new FilesystemAdapter();
+        $treeData = $adapter->buildTree(
+            $path,
+            $this->excludeDirs,
+            $this->excludeFiles,
+            $this->maxDepth
+        );
+
+        // Process filesystem data to match tree view format
+        $this->items = $this->processFilesystemItems($treeData);
+    }
+
+    /**
+     * Process filesystem items to match tree view format
+     *
+     * @param array<int, array<string, mixed>> $items
+     * @return array<int, array<string, mixed>>
+     */
+    private function processFilesystemItems(array $items): array
+    {
+        $adapter = new FilesystemAdapter();
+        
+        return array_map(function (array $item) use ($adapter): array {
+            // Set expanded state
+            if (!isset($item['expanded'])) {
+                $item['expanded'] = $this->expandAll;
+            }
+
+            // Add file metadata as separate fields
+            if ($item['type'] === 'file' && ($this->showFileSizes || $this->showPermissions || $this->showModified)) {
+                if ($this->showFileSizes) {
+                    $item['size'] = $adapter->formatFileSize($item['size']);
+                }
+                
+                if ($this->showPermissions) {
+                    $item['permissions'] = $item['permissions'];
+                }
+                
+                if ($this->showModified && $item['modified']) {
+                    $item['modified'] = $item['modified']->format('Y-m-d H:i');
+                }
+            }
+
+            // Process children recursively
+            if (isset($item['children']) && is_array($item['children'])) {
+                $item['children'] = $this->processFilesystemItems($item['children']);
             }
 
             return $item;
