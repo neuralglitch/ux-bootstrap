@@ -51,6 +51,7 @@
     },
     "suggest": {
         "symfony/asset-mapper": "Required for asset management (Webpack Encore is NOT supported)",
+        "symfonycasts/sass-bundle": "Recommended for compiling component SCSS styles (optional)",
         "twbs/bootstrap": "Bootstrap 5.3 CSS/JS library (REQUIRED - must be installed in consuming application)"
     },
     "autoload": {

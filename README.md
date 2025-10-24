@@ -106,6 +106,34 @@ For interactive features (tooltips, popovers, auto-hide alerts):
 php bin/console importmap:require @hotwired/stimulus
 ```
 
+### Enable Theme Support
+
+**Option 1: Automatic Installation (Recommended)**
+
+Run the installation command to automatically patch your base template:
+
+```bash
+php bin/console ux-bootstrap:install
+```
+
+This will add theme support to `templates/base.html.twig` automatically.
+
+**Option 2: Manual Installation**
+
+Add theme detection to your base template (`templates/base.html.twig`):
+
+**Before:**
+```twig
+<html lang="en">
+```
+
+**After:**
+```twig
+<html lang="en" {{ ux_bootstrap_html_attrs() }}>
+```
+
+This adds `data-bs-theme` and `color-scheme` attributes for automatic light/dark mode support. The `ux_bootstrap_html_attrs()` function works with any existing HTML tag attributes.
+
 **That's it!** Start using components immediately.
 
 ---
@@ -328,45 +356,47 @@ Interactive behavior powered by Stimulus, alphabetically organized:
 
 ## 🎨 Component Styles
 
-The bundle includes pre-compiled CSS for component enhancements (~30KB).
+The bundle provides SCSS partials for component enhancements. These are automatically available via AssetMapper.
 
-### Installation
+### Using Component Styles (Optional)
 
-After installing the bundle, make the CSS available:
+If you want to use the bundle's component styles, import them in your SCSS:
 
-```bash
-php bin/console assets:install
+```scss
+// assets/styles/app.scss
+
+// Import Bootstrap first
+@import "~bootstrap/scss/bootstrap";
+
+// Import UX Bootstrap component styles
+@import "~@neuralglitch/ux-bootstrap/styles/app";
 ```
 
-### Include in Your Template
+Or import individual components:
 
-```twig
-{# templates/base.html.twig #}
-<head>
-    {# Bootstrap (required - must be loaded first) #}
-    {{ importmap('bootstrap') }}
-    
-    {# Bundle component enhancements #}
-    <link href="{{ asset('bundles/neuralglitchuxbootstrap/ux_bootstrap.css') }}" rel="stylesheet">
-</head>
+```scss
+// Import only what you need
+@import "~@neuralglitch/ux-bootstrap/styles/navbar";
+@import "~@neuralglitch/ux-bootstrap/styles/search";
 ```
-
-**Important:** Bootstrap must be loaded **before** the bundle's CSS.
 
 ### What's Included
 
-The CSS provides enhancements for:
+The SCSS partials provide enhancements for:
 - **SearchBar** - Styled search input with results dropdown
 - **Navbar** - Multiple collapse types, behaviors (sticky, auto-hide, fullscreen, etc.)
+- **Calendar** - Event calendar styling
+- **Kanban** - Drag-and-drop board styles
+- And more...
 
-The CSS uses Bootstrap's CSS custom properties (`var(--bs-*)`) and works seamlessly with light/dark themes.
+The styles use Bootstrap's CSS custom properties (`var(--bs-*)`) and work seamlessly with light/dark themes.
 
 ### Customization
 
-You can override the bundled styles in your own CSS:
+Override component styles in your own SCSS:
 
-```css
-/* assets/styles/custom.css */
+```scss
+// assets/styles/custom.scss
 .search-container {
     /* Override search styles */
 }

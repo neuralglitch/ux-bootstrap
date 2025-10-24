@@ -1,11 +1,10 @@
 {% apply spaceless -%}
   {% set o = this.options() %}
 
-  {# Tour container - hidden by default, controlled by Stimulus #}
+  {# Tour container - always visible, child elements controlled by Stimulus #}
   <div
     class="{{ o.classes }}"
     {{ this.renderHtmlAttributes(o.attrs) | raw }}
-    style="display: none;"
   >
     {# Backdrop overlay #}
     <div

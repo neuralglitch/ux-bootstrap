@@ -1,317 +1,359 @@
-import {Controller} from '@hotwired/stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 /**
  * Kanban Board Controller
- *
- * Manages drag-and-drop functionality for kanban boards
- *
- * Usage:
- *   <div data-controller="bs-kanban" data-bs-kanban-draggable-value="true">
- *     ...kanban columns and cards...
- *   </div>
+ * Handles drag and drop functionality with mode switching
  */
 export default class extends Controller {
+    static targets = ['column', 'card'];
     static values = {
-        draggable: {type: Boolean, default: true},
-        crossColumn: {type: Boolean, default: true}
+        allowCrossColumn: { type: Boolean, default: true },
+        allowReorder: { type: Boolean, default: true }
     };
 
-    static targets = ['card', 'column'];
-
     connect() {
-        if (this.draggableValue) {
-            this.initializeDragAndDrop();
-        }
-        this.updateColumnCounts();
+        console.debug('🎯 Kanban controller connected');
+        console.debug('🎯 Controller element:', this.element);
+        console.debug('🎯 Column targets:', this.columnTargets);
+        console.debug('🎯 Card targets:', this.cardTargets);
+        console.debug('🎯 Allow cross column:', this.allowCrossColumnValue);
+        console.debug('🎯 Allow reorder:', this.allowReorderValue);
+        
+        // Use setTimeout to ensure DOM is fully rendered
+        setTimeout(() => {
+            this.setupDragAndDrop();
+        }, 100);
     }
 
-    disconnect() {
-        this.removeDragAndDropListeners();
-    }
-
-    initializeDragAndDrop() {
-        // Find all kanban cards
+    setupDragAndDrop() {
+        console.debug('🎯 Setting up drag and drop');
+        
+        // Find cards and columns using direct DOM queries instead of targets
         const cards = this.element.querySelectorAll('[data-kanban-card]');
-        cards.forEach(card => {
-            if (card.getAttribute('draggable') === 'true') {
-                this.addCardDragListeners(card);
+        const columns = this.element.querySelectorAll('[data-kanban-column]');
+        
+        console.debug('🎯 Found cards:', cards.length);
+        console.debug('🎯 Found columns:', columns.length);
+        console.debug('🎯 Cards:', cards);
+        console.debug('🎯 Columns:', columns);
+        
+        // Make all cards draggable
+        cards.forEach((card, index) => {
+            console.debug(`🎯 Setting up card ${index}:`, card);
+            card.draggable = true;
+            card.addEventListener('dragstart', this.handleDragStart.bind(this));
+            card.addEventListener('dragend', this.handleDragEnd.bind(this));
+            console.debug(`🎯 Card ${index} draggable:`, card.draggable);
+        });
+
+        // Setup drop zones
+        columns.forEach((column, index) => {
+            console.debug(`🎯 Setting up column ${index}:`, column);
+            const dropZone = column.querySelector('[data-kanban-drop-zone]');
+            console.debug(`🎯 Column ${index} drop zone:`, dropZone);
+            if (dropZone) {
+                dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                dropZone.addEventListener('drop', this.handleDrop.bind(this));
+                dropZone.addEventListener('dragenter', this.handleDragEnter.bind(this));
+                dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                console.debug(`🎯 Column ${index} drop zone listeners added`);
+            } else {
+                console.warn(`🎯 No drop zone found in column ${index}`);
             }
-        });
-
-        // Find all drop zones (column bodies)
-        const dropZones = this.element.querySelectorAll('[data-kanban-drop-zone]');
-        dropZones.forEach(dropZone => {
-            this.addDropZoneListeners(dropZone);
-        });
-    }
-
-    addCardDragListeners(card) {
-        card.addEventListener('dragstart', this.handleDragStart.bind(this));
-        card.addEventListener('dragend', this.handleDragEnd.bind(this));
-    }
-
-    addDropZoneListeners(dropZone) {
-        dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
-        dropZone.addEventListener('dragenter', this.handleDragEnter.bind(this));
-        dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
-        dropZone.addEventListener('drop', this.handleDrop.bind(this));
-    }
-
-    removeDragAndDropListeners() {
-        const cards = this.element.querySelectorAll('[data-kanban-card]');
-        cards.forEach(card => {
-            card.removeEventListener('dragstart', this.handleDragStart);
-            card.removeEventListener('dragend', this.handleDragEnd);
-        });
-
-        const dropZones = this.element.querySelectorAll('[data-kanban-drop-zone]');
-        dropZones.forEach(dropZone => {
-            dropZone.removeEventListener('dragover', this.handleDragOver);
-            dropZone.removeEventListener('dragenter', this.handleDragEnter);
-            dropZone.removeEventListener('dragleave', this.handleDragLeave);
-            dropZone.removeEventListener('drop', this.handleDrop);
         });
     }
 
     handleDragStart(event) {
+        console.debug('🎯 Drag start event triggered');
+        console.debug('🎯 Event target:', event.target);
+        console.debug('🎯 Event currentTarget:', event.currentTarget);
+        
         const card = event.target.closest('[data-kanban-card]');
-        if (!card) return;
-
-        card.classList.add('dragging');
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text/html', card.innerHTML);
-        event.dataTransfer.setData('card-id', card.dataset.kanbanCard);
-
-        // Store the source column
-        const sourceColumn = card.closest('[data-kanban-column]');
-        if (sourceColumn) {
-            event.dataTransfer.setData('source-column', sourceColumn.dataset.kanbanColumn);
+        console.debug('🎯 Found card:', card);
+        if (!card) {
+            console.warn('🎯 No card found for drag start');
+            return;
         }
+
+        const cardId = card.dataset.kanbanCard;
+        console.debug('🎯 Card ID:', cardId);
+        
+        event.dataTransfer.setData('text/plain', cardId);
+        event.dataTransfer.effectAllowed = 'move';
+        console.debug('🎯 Data transfer set:', event.dataTransfer.getData('text/plain'));
+        
+        // Add dragging class
+        card.classList.add('kanban-card-dragging');
+        console.debug('🎯 Added dragging class to card');
+        
+        // Store original column for mode switching
+        this.draggedCard = card;
+        this.originalColumn = card.closest('[data-kanban-column]');
+        console.debug('🎯 Original column:', this.originalColumn);
+        console.debug('🎯 Dragged card stored:', this.draggedCard);
     }
 
     handleDragEnd(event) {
+        console.debug('🎯 Drag end event triggered');
+        console.debug('🎯 Event target:', event.target);
+        
         const card = event.target.closest('[data-kanban-card]');
-        if (!card) return;
-
-        card.classList.remove('dragging');
-
-        // Remove all drop zone highlights
-        const dropZones = this.element.querySelectorAll('[data-kanban-drop-zone]');
-        dropZones.forEach(zone => {
-            zone.classList.remove('drag-over');
-        });
+        console.debug('🎯 Found card for drag end:', card);
+        if (card) {
+            card.classList.remove('kanban-card-dragging');
+            console.debug('🎯 Removed dragging class from card');
+        }
+        
+        this.draggedCard = null;
+        this.originalColumn = null;
+        console.debug('🎯 Cleared dragged card and original column');
     }
 
     handleDragOver(event) {
+        console.debug('🎯 Drag over event triggered');
+        console.debug('🎯 Event target:', event.target);
+        console.debug('🎯 Event currentTarget:', event.currentTarget);
+        
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
+        console.debug('🎯 Drag over prevented default and set drop effect to move');
     }
 
     handleDragEnter(event) {
-        const dropZone = event.target.closest('[data-kanban-drop-zone]');
-        if (!dropZone) return;
-
-        // Check if cross-column dragging is allowed
-        if (!this.crossColumnValue) {
-            const sourceColumn = event.dataTransfer.getData('source-column');
-            const targetColumn = dropZone.closest('[data-kanban-column]')?.dataset.kanbanColumn;
-            if (sourceColumn !== targetColumn) {
-                return;
-            }
+        console.debug('🎯 Drag enter event triggered');
+        console.debug('🎯 Event target:', event.target);
+        
+        event.preventDefault();
+        const column = event.target.closest('[data-kanban-column]');
+        console.debug('🎯 Found column for drag enter:', column);
+        if (column) {
+            column.classList.add('kanban-column-drag-over');
+            console.debug('🎯 Added drag over class to column');
         }
-
-        dropZone.classList.add('drag-over');
     }
 
     handleDragLeave(event) {
-        const dropZone = event.target.closest('[data-kanban-drop-zone]');
-        if (!dropZone) return;
-
-        // Only remove highlight if we're actually leaving the drop zone
-        const rect = dropZone.getBoundingClientRect();
-        const x = event.clientX;
-        const y = event.clientY;
-
-        if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) {
-            dropZone.classList.remove('drag-over');
+        console.debug('🎯 Drag leave event triggered');
+        console.debug('🎯 Event target:', event.target);
+        console.debug('🎯 Event relatedTarget:', event.relatedTarget);
+        
+        const column = event.target.closest('[data-kanban-column]');
+        console.debug('🎯 Found column for drag leave:', column);
+        if (column && !column.contains(event.relatedTarget)) {
+            column.classList.remove('kanban-column-drag-over');
+            console.debug('🎯 Removed drag over class from column');
         }
     }
 
     handleDrop(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const dropZone = event.target.closest('[data-kanban-drop-zone]');
-        if (!dropZone) return;
-
-        dropZone.classList.remove('drag-over');
-
-        const draggingCard = this.element.querySelector('.dragging');
-        if (!draggingCard) return;
-
-        // Check WIP limit
-        const column = dropZone.closest('[data-kanban-column]');
-        const limit = column?.dataset.kanbanLimit;
-        if (limit) {
-            const currentCount = dropZone.querySelectorAll('[data-kanban-card]').length;
-            if (currentCount >= parseInt(limit)) {
-                // Show error or prevent drop
-                console.warn('Column has reached its WIP limit');
-                return;
-            }
-        }
-
-        // Get the container div inside the drop zone
-        const container = dropZone.querySelector('.d-flex');
-        if (container) {
-            // Append the card to the new column
-            container.appendChild(draggingCard);
-
-            // Update column counts
-            this.updateColumnCounts();
-
-            // Dispatch custom event for external handling
-            this.dispatchCardMoved(draggingCard, column);
-        }
-    }
-
-    updateColumnCounts() {
-        const columns = this.element.querySelectorAll('[data-kanban-column]');
-        columns.forEach(column => {
-            const dropZone = column.querySelector('[data-kanban-drop-zone]');
-            if (!dropZone) return;
-
-            const count = dropZone.querySelectorAll('[data-kanban-card]').length;
-            const countBadges = column.querySelectorAll('[data-kanban-count]');
-            countBadges.forEach(badge => {
-                badge.textContent = count;
-            });
-
-            // Show/hide empty state
-            const emptyState = dropZone.querySelector('[data-kanban-empty]');
-            if (emptyState) {
-                if (count === 0) {
-                    emptyState.classList.remove('d-none');
-                } else {
-                    emptyState.classList.add('d-none');
-                }
-            }
-        });
-    }
-
-    dispatchCardMoved(card, targetColumn) {
-        const event = new CustomEvent('kanban:card-moved', {
-            detail: {
-                cardId: card.dataset.kanbanCard,
-                targetColumn: targetColumn?.dataset.kanbanColumn,
-                card: card
-            },
-            bubbles: true
-        });
-        this.element.dispatchEvent(event);
-    }
-
-    addCard(event) {
-        event.preventDefault();
-
-        const button = event.currentTarget;
-        const column = button.closest('.kanban-column, [data-kanban-column]');
-        if (!column) return;
-
-        // Find template and drop zone
-        const template = column.querySelector('[data-kanban-card-template]');
-        const dropZone = column.querySelector('[data-kanban-drop-zone] > .d-flex');
+        console.debug('🎯 Drop event triggered');
+        console.debug('🎯 Event target:', event.target);
+        console.debug('🎯 Event currentTarget:', event.currentTarget);
         
-        if (!template || !dropZone) return;
-
-        // Clone template content
-        const cardHtml = template.innerHTML;
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = cardHtml;
-        const newCard = tempDiv.firstElementChild;
-
-        // Add to drop zone
-        dropZone.appendChild(newCard);
-
-        // Focus on title input
-        const titleInput = newCard.querySelector('[data-card-title]');
-        if (titleInput) {
-            titleInput.focus();
+        event.preventDefault();
+        const column = event.target.closest('[data-kanban-column]');
+        console.debug('🎯 Found column for drop:', column);
+        if (!column) {
+            console.warn('🎯 No column found for drop');
+                return;
         }
 
-        // Update counts
-        this.updateColumnCounts();
-    }
-
-    saveCard(event) {
-        event.preventDefault();
-
-        const button = event.currentTarget;
-        const editCard = button.closest('.kanban-card');
-        if (!editCard) return;
-
-        const titleInput = editCard.querySelector('[data-card-title]');
-        const descriptionTextarea = editCard.querySelector('[data-card-description]');
-
-        const title = titleInput?.value.trim() || 'Untitled';
-        const description = descriptionTextarea?.value.trim() || '';
-
-        if (!title) {
-            // Remove if empty
-            editCard.remove();
-            this.updateColumnCounts();
+        const cardId = event.dataTransfer.getData('text/plain');
+        console.debug('🎯 Card ID from data transfer:', cardId);
+        const card = this.element.querySelector(`[data-kanban-card="${cardId}"]`);
+        console.debug('🎯 Found card for drop:', card);
+        if (!card) {
+            console.warn('🎯 No card found for drop');
             return;
         }
 
-        // Generate unique ID
-        const cardId = 'kanban-card-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        // Remove drag over styling
+        column.classList.remove('kanban-column-drag-over');
+        console.debug('🎯 Removed drag over class from column');
+
+        // Move card to new column
+            const dropZone = column.querySelector('[data-kanban-drop-zone]');
+        console.debug('🎯 Found drop zone:', dropZone);
+        if (dropZone) {
+            dropZone.appendChild(card);
+            console.debug('🎯 Moved card to drop zone');
+                } else {
+            console.warn('🎯 No drop zone found in column');
+        }
+
+        // Switch card mode based on column
+        console.debug('🎯 Switching card mode');
+        this.switchCardMode(card, column);
         
-        // Replace edit form with actual card (matching original template structure)
-        editCard.innerHTML = `
+        // Update column counts
+        console.debug('🎯 Updating column counts');
+        this.updateColumnCounts();
+        
+        console.debug('🎯 Drop completed successfully');
+    }
+
+    switchCardMode(card, targetColumn) {
+        console.debug('🎯 Switching card mode');
+        console.debug('🎯 Card:', card);
+        console.debug('🎯 Target column:', targetColumn);
+        
+        const columnId = targetColumn.dataset.kanbanColumn;
+        const isBacklog = columnId === 'backlog';
+        console.debug('🎯 Column ID:', columnId);
+        console.debug('🎯 Is backlog:', isBacklog);
+        
+        // Get card data
+        const cardId = card.dataset.kanbanCard;
+        const title = card.querySelector('.card-title')?.textContent || '';
+        const description = card.querySelector('.card-text')?.textContent || '';
+        const badge = card.querySelector('.badge')?.textContent || '';
+        const badgeVariant = this.getBadgeVariant(card);
+        
+        console.debug('🎯 Card data:', { cardId, title, description, badge, badgeVariant });
+        
+        // Clear existing content
+        card.innerHTML = '';
+        console.debug('🎯 Cleared card content');
+        
+        if (isBacklog) {
+            // Simple mode for Backlog
+            console.debug('🎯 Creating simple card for backlog');
+            this.createSimpleCard(card, cardId, title, description, badge, badgeVariant);
+        } else {
+            // Verbose mode for other columns
+            console.debug('🎯 Creating verbose card for column:', columnId);
+            this.createVerboseCard(card, cardId, title, description, badge, badgeVariant, columnId);
+        }
+    }
+
+    createSimpleCard(card, cardId, title, description, badge, badgeVariant) {
+        console.debug('🎯 Creating simple card with data:', { cardId, title, description, badge, badgeVariant });
+        card.innerHTML = `
             <div class="card-body p-3">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h6 class="card-title mb-0">${this.escapeHtml(title)}</h6>
+                    <div class="d-flex align-items-center gap-2">
+                        ${badge ? `<span class="badge text-bg-${badgeVariant}">${badge}</span>` : ''}
+                        <h6 class="card-title mb-0">${title}</h6>
+                    </div>
                     <span class="kanban-card-drag-handle text-muted cursor-move" title="Drag to move">⋮⋮</span>
                 </div>
-                ${description ? `<p class="card-text small text-muted mb-0">${this.escapeHtml(description)}</p>` : ''}
+                ${description ? `<p class="card-text small text-muted mb-0">${description}</p>` : ''}
+                <div class="d-flex align-items-center gap-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle text-primary me-1" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <small>Assignee</small>
+                    </div>
+                    <small class="text-body-secondary ms-auto">#${cardId}</small>
+                </div>
             </div>
         `;
+        console.debug('🎯 Simple card created successfully');
+    }
 
-        // Update classes to match original structure
-        editCard.className = 'kanban-card card shadow-sm kanban-card-hover';
-        editCard.id = cardId;
-        editCard.setAttribute('data-kanban-card', cardId);
-        editCard.setAttribute('draggable', 'true');
+    createVerboseCard(card, cardId, title, description, badge, badgeVariant, columnId) {
+        console.debug('🎯 Creating verbose card with data:', { cardId, title, description, badge, badgeVariant, columnId });
+        let verboseContent = '';
+        
+        if (columnId === 'todo') {
+            verboseContent = `
+                <div class="d-flex align-items-center gap-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle text-info me-1" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <small>Emma</small>
+                    </div>
+                    <small class="text-body-secondary ms-auto">2/5 done</small>
+                </div>
+            `;
+        } else if (columnId === 'in-progress') {
+            verboseContent = `
+                <div class="progress mb-2" style="height: 6px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-circle text-warning me-1" style="width: 1.25rem; height: 1.25rem;"></i>
+                            <small>Taylor</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock text-body-secondary me-1" style="width: 1rem; height: 1rem;"></i>
+                            <small class="text-body-secondary">5h</small>
+                        </div>
+                    </div>
+                    <small class="text-body-secondary">65%</small>
+                </div>
+            `;
+        } else if (columnId === 'review') {
+            verboseContent = `
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-github text-body-secondary" style="width: 1rem; height: 1rem;"></i>
+                    <small class="text-body-secondary">PR #42</small>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle text-primary me-1" style="width: 1.25rem; height: 1.25rem;"></i>
+                        <small>Sam</small>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check2-circle text-success me-1" style="width: 1rem; height: 1rem;"></i>
+                        <small class="text-success">2 approvals</small>
+                    </div>
+                </div>
+            `;
+        } else if (columnId === 'done') {
+            verboseContent = `
+                <div class="d-flex align-items-center gap-2 mt-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-1" style="width: 1rem; height: 1rem;"></i>
+                        <small class="text-success">Completed</small>
+                    </div>
+                </div>
+            `;
+        }
 
-        // Add drag listeners
-        this.addCardDragListeners(editCard);
+        card.innerHTML = `
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center gap-2 flex-grow-1">
+                        ${badge ? `<span class="badge text-bg-${badgeVariant}">${badge}</span>` : ''}
+                        <h6 class="card-title mb-0">${title}</h6>
+                    </div>
+                    <span class="kanban-card-drag-handle text-muted cursor-move flex-shrink-0" title="Drag to move">⋮⋮</span>
+                </div>
+                ${description ? `<p class="card-text small text-muted mb-0">${description}</p>` : ''}
+                ${verboseContent}
+            </div>
+        `;
+        console.debug('🎯 Verbose card created successfully');
+    }
 
-        // Dispatch event
-        this.dispatch('cardAdded', {
-            detail: {
-                title,
-                description,
-                card: editCard
+    getBadgeVariant(card) {
+        const badge = card.querySelector('.badge');
+        if (!badge) return 'secondary';
+        
+        const classes = badge.className;
+        if (classes.includes('text-bg-info')) return 'info';
+        if (classes.includes('text-bg-success')) return 'success';
+        if (classes.includes('text-bg-warning')) return 'warning';
+        if (classes.includes('text-bg-danger')) return 'danger';
+        if (classes.includes('text-bg-primary')) return 'primary';
+        return 'secondary';
+    }
+
+    updateColumnCounts() {
+        console.debug('🎯 Updating column counts');
+        const columns = this.element.querySelectorAll('[data-kanban-column]');
+        columns.forEach((column, index) => {
+            const countElement = column.querySelector('[data-kanban-count]');
+            console.debug(`🎯 Column ${index} count element:`, countElement);
+            if (countElement) {
+                const cards = column.querySelectorAll('[data-kanban-card]');
+                const count = cards.length;
+                countElement.textContent = count;
+                console.debug(`🎯 Column ${index} count updated to:`, count);
+            } else {
+                console.warn(`🎯 No count element found in column ${index}`);
             }
         });
     }
-
-    cancelCard(event) {
-        event.preventDefault();
-
-        const button = event.currentTarget;
-        const editCard = button.closest('.kanban-card');
-        if (!editCard) return;
-
-        // Remove the edit card
-        editCard.remove();
-        this.updateColumnCounts();
-    }
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
 }
-

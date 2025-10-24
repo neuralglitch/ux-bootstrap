@@ -20,6 +20,7 @@ final class Kanban extends AbstractStimulus
     // Drag and drop
     public bool $draggable = true;
     public bool $allow_cross_column = true; // Allow cards to be dragged between columns
+    public bool $allow_reorder = true; // Allow cards to be reordered within columns
     public ?string $drop_zone_class = null; // Custom class for drop zones
 
     // Container
@@ -52,6 +53,7 @@ final class Kanban extends AbstractStimulus
         $this->height = $d['height'] ?? $this->height;
         $this->draggable = $d['draggable'] ?? $this->draggable;
         $this->allow_cross_column = $d['allow_cross_column'] ?? $this->allow_cross_column;
+        $this->allow_reorder = $d['allow_reorder'] ?? $this->allow_reorder;
         $this->drop_zone_class = $d['drop_zone_class'] ?? $this->drop_zone_class;
         $this->container = $d['container'] ?? $this->container;
         $this->responsive = $d['responsive'] ?? $this->responsive;
@@ -102,6 +104,8 @@ final class Kanban extends AbstractStimulus
             'height' => $this->height,
             'gap' => $this->gap,
             'show_column_count' => $this->show_column_count,
+            'allow_cross_column' => $this->allow_cross_column,
+            'allow_reorder' => $this->allow_reorder,
             'classes' => $classes,
             'attrs' => $attrs,
         ];

@@ -137,6 +137,7 @@ final class KanbanCard extends AbstractStimulus
             'href' => $this->href,
             'priority' => $this->priority,
             'status' => $this->status,
+            'card_id' => $this->card_id,
             'classes' => $classes,
             'attrs' => $attrs,
         ];

@@ -8,7 +8,7 @@
 {# Capture cards content slot #}
 {% set slot_content %}{% block content %}{% endblock %}{% endset %}
 
-<div class="{{ o.classes }} flex-shrink-0" {{ this.renderHtmlAttributes(o.attrs) | raw }} style="min-width: 300px; max-width: 400px;">
+<div class="{{ o.classes }} flex-shrink-0" data-kanban-column="{{ o.attrs.id }}" {{ this.renderHtmlAttributes(o.attrs) | raw }} style="min-width: 300px; flex: 1;">
   
   {# Column Header #}
   <div class="kanban-column-header d-flex align-items-center justify-content-between p-3 {% if o.variant %}bg-{{ o.variant }} bg-opacity-10{% endif %} rounded-top">
@@ -53,7 +53,7 @@
   {# Column Body (Cards Container) #}
   <div 
     id="{{ o.attrs.id }}-body"
-    class="kanban-column-body p-3 {% if o.collapsible %}collapse{% if not o.collapsed %} show{% endif %}{% endif %}"
+    class="kanban-column-body py-3 {% if o.collapsible %}collapse{% if not o.collapsed %} show{% endif %}{% endif %}"
     data-kanban-drop-zone
     style="min-height: 100px; max-height: 70vh; overflow-y: auto;">
     
@@ -82,10 +82,20 @@
   
   {# Hidden template card for dynamic addition #}
   <template class="d-none" data-kanban-card-template>
-    <div class="card mb-2 kanban-card shadow-sm">
+    <div class="card mb-2 kanban-card shadow-sm kanban-card-hover">
       <div class="card-body p-3">
-        <input type="text" class="form-control form-control-sm mb-2" placeholder="Card title..." data-card-title>
+        {# Header with drag handle placeholder #}
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <input type="text" class="form-control form-control-sm" placeholder="Card title..." data-card-title>
+          </div>
+          <span class="kanban-card-drag-handle text-muted cursor-move" title="Drag to move">⋮⋮</span>
+        </div>
+        
+        {# Description #}
         <textarea class="form-control form-control-sm mb-3" rows="2" placeholder="Description (optional)..." data-card-description></textarea>
+        
+        {# Action buttons #}
         <div class="d-flex gap-2">
           <button class="btn btn-sm btn-success" data-action="click->bs-kanban#saveCard">Save</button>
           <button class="btn btn-sm btn-secondary" data-action="click->bs-kanban#cancelCard">Cancel</button>

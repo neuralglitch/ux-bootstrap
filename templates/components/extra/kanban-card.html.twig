@@ -16,6 +16,7 @@
 
 <{{ wrapper_tag }}
   class="{{ o.classes }}"
+  data-kanban-card="{{ o.card_id }}"
   {{ this.renderHtmlAttributes(o.attrs) | raw }}
   {% if o.clickable and o.href %}href="{{ o.href }}"{% endif %}
   {% if o.clickable and o.href %}role="button"{% endif %}>
@@ -24,7 +25,7 @@
     
     {# Card Header (Title and Drag Handle on same line) #}
     <div class="d-flex align-items-center justify-content-between mb-2">
-      <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-2 flex-grow-1">
         {% if o.icon %}
           <span class="kanban-card-icon">{{ o.icon|raw }}</span>
         {% endif %}
@@ -43,18 +44,14 @@
           </span>
         {% endif %}
         
-        {# Title inline with badges/icons #}
-        {% if has_custom_content %}
-          {{ slot_content|raw }}
-        {% else %}
-          {% if o.title %}
-            <h6 class="card-title mb-0">{{ o.title }}</h6>
-          {% endif %}
+        {# Title always shows on the left #}
+        {% if o.title %}
+          <h6 class="card-title mb-0">{{ o.title }}</h6>
         {% endif %}
       </div>
       
       {% if o.show_drag_handle %}
-        <span class="kanban-card-drag-handle text-muted cursor-move" title="Drag to move">
+        <span class="kanban-card-drag-handle text-muted cursor-move flex-shrink-0" title="Drag to move">
           ⋮⋮
         </span>
       {% endif %}
@@ -67,6 +64,9 @@
       {% elseif o.label %}
         <p class="card-text mb-0">{{ o.label }}</p>
       {% endif %}
+    {% else %}
+      {# Custom content goes in the body section #}
+      {{ slot_content|raw }}
     {% endif %}
     
     {# Card Footer (Avatar, Metadata) #}

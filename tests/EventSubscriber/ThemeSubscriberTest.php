@@ -46,6 +46,7 @@ final class ThemeSubscriberTest extends TestCase
 
         self::assertTrue($request->attributes->has('theme'));
         self::assertSame('dark', $request->attributes->get('theme'));
+        self::assertSame('dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithLightThemeCookie(): void
@@ -60,6 +61,7 @@ final class ThemeSubscriberTest extends TestCase
 
         self::assertTrue($request->attributes->has('theme'));
         self::assertSame('light', $request->attributes->get('theme'));
+        self::assertSame('light', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithInvalidThemeCookie(): void
@@ -73,7 +75,8 @@ final class ThemeSubscriberTest extends TestCase
         $subscriber->onRequest($event);
 
         self::assertTrue($request->attributes->has('theme'));
-        self::assertNull($request->attributes->get('theme'));
+        self::assertSame('auto', $request->attributes->get('theme')); // Falls back to default
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithoutThemeCookie(): void
@@ -86,7 +89,8 @@ final class ThemeSubscriberTest extends TestCase
         $subscriber->onRequest($event);
 
         self::assertTrue($request->attributes->has('theme'));
-        self::assertNull($request->attributes->get('theme'));
+        self::assertSame('auto', $request->attributes->get('theme')); // Defaults to auto
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithEmptyThemeCookie(): void
@@ -100,7 +104,8 @@ final class ThemeSubscriberTest extends TestCase
         $subscriber->onRequest($event);
 
         self::assertTrue($request->attributes->has('theme'));
-        self::assertNull($request->attributes->get('theme'));
+        self::assertSame('auto', $request->attributes->get('theme')); // Falls back to default
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithAutoThemeCookie(): void
@@ -113,9 +118,10 @@ final class ThemeSubscriberTest extends TestCase
 
         $subscriber->onRequest($event);
 
-        // 'auto' is not a valid theme value, should be null
+        // 'auto' is now a valid theme value
         self::assertTrue($request->attributes->has('theme'));
-        self::assertNull($request->attributes->get('theme'));
+        self::assertSame('auto', $request->attributes->get('theme'));
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestDoesNotOverrideExistingAttribute(): void
@@ -177,8 +183,9 @@ final class ThemeSubscriberTest extends TestCase
 
         $subscriber->onRequest($event);
 
-        // Should be case-sensitive, 'Dark' is invalid
-        self::assertNull($request->attributes->get('theme'));
+        // Should be case-sensitive, 'Dark' is invalid, falls back to default
+        self::assertSame('auto', $request->attributes->get('theme'));
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 
     public function testOnRequestWithNumericThemeValue(): void
@@ -191,8 +198,9 @@ final class ThemeSubscriberTest extends TestCase
 
         $subscriber->onRequest($event);
 
-        // Numeric values should be invalid
-        self::assertNull($request->attributes->get('theme'));
+        // Numeric values should be invalid, falls back to default
+        self::assertSame('auto', $request->attributes->get('theme'));
+        self::assertSame('light dark', $request->attributes->get('color_scheme'));
     }
 }
 

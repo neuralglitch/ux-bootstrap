@@ -66,6 +66,9 @@ export default class extends Controller {
         this.isActive = true;
         this.currentStepIndex = -1;
 
+        // Prevent body scroll
+        document.body.classList.add('tour-active');
+
         // Show backdrop if enabled
         if (this.backdropValue && this.hasBackdropTarget) {
             this.backdropTarget.style.display = 'block';
@@ -126,6 +129,9 @@ export default class extends Controller {
 
         this.isActive = false;
         this.currentStepIndex = -1;
+
+        // Restore body scroll
+        document.body.classList.remove('tour-active');
 
         // Hide all elements
         if (this.hasPopoverTarget) this.popoverTarget.style.display = 'none';
@@ -250,9 +256,9 @@ export default class extends Controller {
 
         // Use Popper.js for positioning
         const middleware = [
-            offset(10),
+            offset(20), // Increased from 10 to 20px for more distance
             flip(),
-            shift({padding: 5})
+            shift({padding: 10}) // Increased padding for better spacing
         ];
 
         if (this.hasArrowTarget) {
@@ -293,12 +299,52 @@ export default class extends Controller {
                 left: 'right'
             }[finalPlacement.split('-')[0]];
 
+            // Set arrow border color based on placement
+            // Use popover header background color for better visual consistency
+            const headerElement = this.popoverTarget.querySelector('.popover-header');
+            let borderColor = '#fff'; // Default fallback
+            
+            if (headerElement) {
+                const headerBg = getComputedStyle(headerElement).backgroundColor;
+                borderColor = headerBg !== 'rgba(0, 0, 0, 0)' ? headerBg : '#fff';
+            } else {
+                const popoverBg = getComputedStyle(this.popoverTarget).backgroundColor;
+                borderColor = popoverBg !== 'rgba(0, 0, 0, 0)' ? popoverBg : '#fff';
+            }
+            const placement = finalPlacement.split('-')[0];
+            
+            // Reset all borders first
+            this.arrowTarget.style.border = '8px solid transparent';
+            this.arrowTarget.style.borderTop = 'none';
+            this.arrowTarget.style.borderRight = 'none';
+            this.arrowTarget.style.borderBottom = 'none';
+            this.arrowTarget.style.borderLeft = 'none';
+
+            // Set the correct border color based on placement
+            if (placement === 'top') {
+                this.arrowTarget.style.borderTopColor = borderColor;
+            } else if (placement === 'right') {
+                this.arrowTarget.style.borderRightColor = borderColor;
+            } else if (placement === 'bottom') {
+                this.arrowTarget.style.borderBottomColor = borderColor;
+            } else if (placement === 'left') {
+                this.arrowTarget.style.borderLeftColor = borderColor;
+            }
+
+            // Adjust positioning based on placement for better visual alignment
+            const positioning = {
+                top: { bottom: '-11px' }, // Top arrows: 1px more up
+                right: { left: '-8px' },
+                bottom: { top: '-10px' }, // Bottom arrows: 1px more up
+                left: { right: '-8px' }
+            }[placement] || { [staticSide]: '-8px' };
+
             Object.assign(this.arrowTarget.style, {
                 left: arrowX != null ? `${arrowX}px` : '',
                 top: arrowY != null ? `${arrowY}px` : '',
                 right: '',
                 bottom: '',
-                [staticSide]: '-4px'
+                ...positioning
             });
         }
     }
@@ -311,23 +357,29 @@ export default class extends Controller {
 
         Object.assign(this.highlightTarget.style, {
             display: 'block',
-            position: 'absolute',
-            top: `${window.scrollY + rect.top - padding}px`,
-            left: `${window.scrollX + rect.left - padding}px`,
+            position: 'fixed', // Changed from absolute to fixed
+            top: `${rect.top - padding}px`, // Removed window.scrollY
+            left: `${rect.left - padding}px`, // Removed window.scrollX
             width: `${rect.width + padding * 2}px`,
             height: `${rect.height + padding * 2}px`,
             borderRadius: `${this.highlightBorderRadiusValue}px`,
             pointerEvents: 'none',
-            zIndex: '1049'
+            zIndex: '10001' // Very high z-index
         });
     }
 
     scrollToTarget(element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center'
-        });
+        // Only scroll if element is not visible in viewport
+        const rect = element.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        
+        if (!isVisible) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center'
+            });
+        }
     }
 
     // --- Event Handlers -------------------------------------------------------

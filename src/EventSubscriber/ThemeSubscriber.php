@@ -10,6 +10,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class ThemeSubscriber implements EventSubscriberInterface
 {
+    private const DEFAULT_THEME = 'auto'; // or 'light' if you prefer
+
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::REQUEST => 'onRequest'];
@@ -19,10 +21,15 @@ final class ThemeSubscriber implements EventSubscriberInterface
     {
         $req = $event->getRequest();
         $cookie = $req->cookies->get('theme');
-        $theme = null;
-        if ($cookie === 'dark' || $cookie === 'light') {
+        
+        // Default to 'auto' if no valid theme cookie is set
+        $theme = self::DEFAULT_THEME;
+        
+        if ($cookie === 'dark' || $cookie === 'light' || $cookie === 'auto') {
             $theme = $cookie;
         }
+        
         $req->attributes->set('theme', $theme);
+        $req->attributes->set('color_scheme', $theme === 'auto' ? 'light dark' : $theme);
     }
 }

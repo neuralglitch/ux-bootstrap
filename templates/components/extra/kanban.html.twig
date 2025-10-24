@@ -20,6 +20,9 @@
   <div class="{{ o.container }}">
     <div 
       class="{{ o.classes }} d-flex gap-{{ o.gap }} {% if o.variant == 'horizontal' %}flex-row overflow-x-auto{% else %}flex-column{% endif %}"
+      data-controller="bs-kanban"
+      data-bs-kanban-allow-cross-column-value="{{ o.allow_cross_column ? 'true' : 'false' }}"
+      data-bs-kanban-allow-reorder-value="{{ o.allow_reorder ? 'true' : 'false' }}"
       {{ this.renderHtmlAttributes(o.attrs) | raw }}
       {% if o.height %}style="height: {{ o.height }};"{% endif %}>
       
