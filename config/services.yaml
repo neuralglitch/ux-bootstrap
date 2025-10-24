@@ -31,3 +31,12 @@ services:
     # Auto-register all Extra components
     NeuralGlitch\UxBootstrap\Twig\Components\Extra\:
         resource: '../src/Twig/Components/Extra/'
+
+    # Auto-register Twig extensions
+    NeuralGlitch\UxBootstrap\Twig\Extension\:
+        resource: '../src/Twig/Extension/'
+        tags: ['twig.extension']
+
+    # Auto-register Twig runtimes
+    NeuralGlitch\UxBootstrap\Twig\Runtime\:
+        resource: '../src/Twig/Runtime/'
