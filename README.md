@@ -23,7 +23,7 @@ A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus cont
 
 ## Features
 
-- **Complete Bootstrap Components** - Full coverage of Bootstrap 5.3 components, including Accordion, Alert, Badge, Breadcrumbs, Button, Card, Carousel, Dropdown, Modal, Nav, Navbar, Toast, and many more - organized alphabetically for easy reference
+- **Complete Bootstrap Components** - Full coverage of Bootstrap 5.3 components, including Accordion, Alert, Badge, Breadcrumbs, Button, Card, Carousel, Dropdown, Modal, Nav, Navbar, Toast, and many more
 - **Advanced UI Components** - Extended components for modern applications including Activity Feed, Alert Stack, Calendar, Command Palette, Data Table, Kanban, Lightbox, Notification Center, Search Bar, Sidebar, Theme Toggle, Timeline, Tour, Tree View, and more
 - **Powerful Stimulus Controllers** - Interactive behaviors for tooltips, popovers, theme switching, live search, drag-and-drop, notifications, and more
 - **Works with Your Bootstrap** - Integrates seamlessly with existing Bootstrap 5.3 installations
@@ -317,7 +317,7 @@ Configure component defaults globally in `config/packages/ux_bootstrap.yaml`:
 # config/packages/ux_bootstrap.yaml
 neuralglitch_ux_bootstrap:
   
-  # Bootstrap Core Components (alphabetically ordered)
+  # Bootstrap Core Components
   
   badge:
     variant: 'secondary'
@@ -338,7 +338,7 @@ neuralglitch_ux_bootstrap:
     fade: true
     auto_hide: false
   
-  # Extra Components (alphabetically ordered)
+  # Extra Components
   
   searchbar:
     placeholder: 'Search...'
