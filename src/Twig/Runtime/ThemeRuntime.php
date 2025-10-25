@@ -35,18 +35,12 @@ final class ThemeRuntime implements RuntimeExtensionInterface
         $colorScheme = $request->attributes->get('color_scheme');
         
         // Fallback to defaults if null or empty
-        if ($theme === null || $theme === '') {
+        if (!is_string($theme) || $theme === '') {
             $theme = 'auto';
-        } else {
-            // Convert to string if not already
-            $theme = (string) $theme;
         }
         
-        if ($colorScheme === null || $colorScheme === '') {
+        if (!is_string($colorScheme) || $colorScheme === '') {
             $colorScheme = 'light dark';
-        } else {
-            // Convert to string if not already
-            $colorScheme = (string) $colorScheme;
         }
 
         return sprintf(
