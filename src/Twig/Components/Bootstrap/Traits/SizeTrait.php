@@ -13,7 +13,7 @@ trait SizeTrait
      */
     protected function applySizeDefaults(array $defaults): void
     {
-        $this->size ??= $defaults['size'] ?? null;
+        $this->size ??= $this->configString($defaults, 'size');
     }
 
     /**

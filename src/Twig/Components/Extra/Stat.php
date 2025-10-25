@@ -41,19 +41,19 @@ final class Stat extends AbstractStimulus
         // Apply base class defaults
         $this->applyClassDefaults($d);
 
-        // Apply component-specific defaults
-        $this->value ??= $d['value'] ?? '0';
-        $this->label ??= $d['label'] ?? 'Statistic';
-        $this->variant ??= $d['variant'] ?? null;
-        $this->icon ??= $d['icon'] ?? null;
-        $this->iconPosition ??= $d['icon_position'] ?? 'start';
-        $this->trend ??= $d['trend'] ?? null;
-        $this->change ??= $d['change'] ?? null;
-        $this->description ??= $d['description'] ?? null;
-        $this->size ??= $d['size'] ?? 'default';
-        $this->border = $this->border || ($d['border'] ?? false);
-        $this->shadow = $this->shadow || ($d['shadow'] ?? false);
-        $this->textAlign ??= $d['text_align'] ?? 'start';
+        // Apply component-specific defaults (only if not already set)
+        $this->value = $this->value ?? $this->configStringWithFallback($d, 'value', '0');
+        $this->label = $this->label ?? $this->configStringWithFallback($d, 'label', 'Statistic');
+        $this->variant = $this->variant ?? $this->configString($d, 'variant');
+        $this->icon = $this->icon ?? $this->configString($d, 'icon');
+        $this->iconPosition = $this->iconPosition ?? $this->configStringWithFallback($d, 'icon_position', 'start');
+        $this->trend = $this->trend ?? $this->configString($d, 'trend');
+        $this->change = $this->change ?? $this->configString($d, 'change');
+        $this->description = $this->description ?? $this->configString($d, 'description');
+        $this->size = $this->size ?? $this->configStringWithFallback($d, 'size', 'default');
+        $this->border = $this->border || $this->configBoolWithFallback($d, 'border', false);
+        $this->shadow = $this->shadow || $this->configBoolWithFallback($d, 'shadow', false);
+        $this->textAlign = $this->textAlign ?? $this->configStringWithFallback($d, 'text_align', 'start');
 
         // Initialize controller with default
         $this->initializeController();
@@ -76,7 +76,7 @@ final class Stat extends AbstractStimulus
         $label = $this->label ?? 'Statistic';
 
         // Build card classes
-        $cardClasses = $this->buildClasses(
+        $cardClasses = $this->buildClassesFromArrays(
             ['card', 'stat-card'],
             $this->border ? ['border'] : ['border-0'],
             $this->shadow ? ['shadow-sm'] : [],
@@ -106,7 +106,7 @@ final class Stat extends AbstractStimulus
         );
 
         // Build icon classes
-        $iconClasses = [];
+        $iconClasses = '';
         if ($this->icon) {
             $iconClasses = $this->buildClasses(
                 ['stat-icon'],
@@ -120,7 +120,7 @@ final class Stat extends AbstractStimulus
         }
 
         // Build trend classes
-        $trendClasses = [];
+        $trendClasses = '';
         $trendIcon = null;
         if ($this->trend) {
             $trendVariant = match ($this->trend) {

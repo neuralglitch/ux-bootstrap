@@ -23,11 +23,11 @@ final class DropdownItem extends AbstractInteractive
         $this->applyInteractiveDefaults($d);
         $this->applyClassDefaults($d);
 
-        $this->label ??= $d['label'] ?? null;
-        $this->href ??= $d['href'] ?? null;
-        $this->target ??= $d['target'] ?? null;
-        $this->rel ??= $d['rel'] ?? null;
-        $this->tag ??= $d['tag'] ?? null;
+        $this->label ??= $this->configString($d, 'label');
+        $this->href ??= $this->configString($d, 'href');
+        $this->target ??= $this->configString($d, 'target');
+        $this->rel ??= $this->configString($d, 'rel');
+        $this->tag ??= $this->configString($d, 'tag');
 
         // Initialize controller
         $this->initializeController();

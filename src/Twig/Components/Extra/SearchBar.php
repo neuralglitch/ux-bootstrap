@@ -25,17 +25,16 @@ final class SearchBar extends AbstractStimulus
 
         $this->applyStimulusDefaults($d);
 
-        $this->placeholder ??= $d['placeholder'] ?? 'Search...';
-        $this->searchUrl ??= $d['search_url'] ?? '/search';
-        $this->minChars ??= $d['min_chars'] ?? 2;
-        $this->debounce ??= $d['debounce'] ?? 300;
-        $this->size ??= $d['size'] ?? 'default';
-        $this->showClear = $this->showClear && ($d['show_clear'] ?? true);
-        $this->autofocus = $this->autofocus || ($d['autofocus'] ?? false);
-        $this->name ??= $d['name'] ?? 'q';
+        $this->placeholder = $this->placeholder ?? $this->configStringWithFallback($d, 'placeholder', 'Search...');
+        $this->searchUrl = $this->searchUrl ?? $this->configStringWithFallback($d, 'search_url', '/search');
+        $this->minChars = $this->minChars ?? $this->configIntWithFallback($d, 'min_chars', 2);
+        $this->debounce = $this->debounce ?? $this->configIntWithFallback($d, 'debounce', 300);
+        $this->size = $this->size ?? $this->configStringWithFallback($d, 'size', 'default');
+        $this->showClear = $this->showClear && $this->configBoolWithFallback($d, 'show_clear', true);
+        $this->autofocus = $this->autofocus || $this->configBoolWithFallback($d, 'autofocus', false);
+        $this->name = $this->name ?? $this->configStringWithFallback($d, 'name', 'q');
 
         $this->applyClassDefaults($d);
-
 
         // Initialize controller with default
         $this->initializeController();

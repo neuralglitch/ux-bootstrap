@@ -38,9 +38,10 @@ final class SearchTestCommand extends Command
         $io->title('UX Bootstrap Search Service Test');
 
         $query = $input->getArgument('query');
-        $limit = (int)$input->getOption('limit');
+        $limitOption = $input->getOption('limit');
+        $limit = is_numeric($limitOption) ? (int)$limitOption : 10;
 
-        if ($query) {
+        if (is_string($query) && $query !== '') {
             // Test specific query
             $this->testQuery($io, $query, $limit);
         } else {

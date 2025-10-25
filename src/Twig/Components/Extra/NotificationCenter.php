@@ -74,51 +74,51 @@ final class NotificationCenter extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults
-        $this->variant ??= $d['variant'] ?? 'dropdown';
-        $this->title ??= $d['title'] ?? 'Notifications';
-        $this->emptyMessage ??= $d['empty_message'] ?? 'No notifications';
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'dropdown');
+        $this->title ??= $this->configStringWithFallback($d, 'title', 'Notifications');
+        $this->emptyMessage ??= $this->configStringWithFallback($d, 'empty_message', 'No notifications');
 
         // Badge
-        $this->showBadge = $this->showBadge && ($d['show_badge'] ?? true);
-        $this->unreadCount ??= $d['unread_count'] ?? 0;
-        $this->badgeVariant ??= $d['badge_variant'] ?? 'danger';
-        $this->badgePositioned = $this->badgePositioned || ($d['badge_positioned'] ?? true);
+        $this->showBadge = $this->showBadge && $this->configBoolWithFallback($d, 'show_badge', true);
+        $this->unreadCount ??= $this->configInt($d, 'unread_count');
+        $this->badgeVariant ??= $this->configStringWithFallback($d, 'badge_variant', 'danger');
+        $this->badgePositioned = $this->badgePositioned || $this->configBoolWithFallback($d, 'badge_positioned', true);
 
         // Trigger
-        $this->triggerVariant ??= $d['trigger_variant'] ?? 'link';
-        $this->triggerIcon ??= $d['trigger_icon'] ?? 'bi:bell-fill';
-        $this->triggerIconOnly = $this->triggerIconOnly && ($d['trigger_icon_only'] ?? true);
+        $this->triggerVariant ??= $this->configStringWithFallback($d, 'trigger_variant', 'link');
+        $this->triggerIcon ??= $this->configStringWithFallback($d, 'trigger_icon', 'bi:bell-fill');
+        $this->triggerIconOnly = $this->triggerIconOnly && $this->configBoolWithFallback($d, 'trigger_icon_only', true);
 
         // Offcanvas
-        $this->offcanvasPlacement ??= $d['offcanvas_placement'] ?? 'end';
-        $this->offcanvasBackdrop = $this->offcanvasBackdrop || ($d['offcanvas_backdrop'] ?? true);
-        $this->offcanvasScroll = $this->offcanvasScroll || ($d['offcanvas_scroll'] ?? false);
+        $this->offcanvasPlacement ??= $this->configStringWithFallback($d, 'offcanvas_placement', 'end');
+        $this->offcanvasBackdrop = $this->offcanvasBackdrop || $this->configBoolWithFallback($d, 'offcanvas_backdrop', true);
+        $this->offcanvasScroll = $this->offcanvasScroll || $this->configBoolWithFallback($d, 'offcanvas_scroll', false);
 
         // Modal
-        $this->modalSize ??= $d['modal_size'] ?? null;
-        $this->modalCentered = $this->modalCentered || ($d['modal_centered'] ?? false);
-        $this->modalScrollable = $this->modalScrollable || ($d['modal_scrollable'] ?? true);
+        $this->modalSize ??= $this->configString($d, 'modal_size');
+        $this->modalCentered = $this->modalCentered || $this->configBoolWithFallback($d, 'modal_centered', false);
+        $this->modalScrollable = $this->modalScrollable || $this->configBoolWithFallback($d, 'modal_scrollable', true);
 
         // Dropdown
-        $this->dropdownDirection ??= $d['dropdown_direction'] ?? 'dropdown';
-        $this->dropdownMenuAlign ??= $d['dropdown_menu_align'] ?? 'end';
-        $this->dropdownWidth ??= $d['dropdown_width'] ?? '350px';
-        $this->dropdownMaxHeight ??= $d['dropdown_max_height'] ?? '400px';
+        $this->dropdownDirection ??= $this->configStringWithFallback($d, 'dropdown_direction', 'dropdown');
+        $this->dropdownMenuAlign ??= $this->configStringWithFallback($d, 'dropdown_menu_align', 'end');
+        $this->dropdownWidth ??= $this->configStringWithFallback($d, 'dropdown_width', '350px');
+        $this->dropdownMaxHeight ??= $this->configStringWithFallback($d, 'dropdown_max_height', '400px');
 
         // Features
-        $this->grouped = $this->grouped || ($d['grouped'] ?? false);
-        $this->showTimestamps = $this->showTimestamps && ($d['show_timestamps'] ?? true);
-        $this->showAvatars = $this->showAvatars && ($d['show_avatars'] ?? true);
-        $this->showActions = $this->showActions && ($d['show_actions'] ?? true);
-        $this->showMarkAllRead = $this->showMarkAllRead && ($d['show_mark_all_read'] ?? true);
-        $this->showClearAll = $this->showClearAll && ($d['show_clear_all'] ?? true);
-        $this->showViewAll = $this->showViewAll && ($d['show_view_all'] ?? true);
-        $this->viewAllLabel ??= $d['view_all_label'] ?? 'View all notifications';
+        $this->grouped = $this->grouped || $this->configBoolWithFallback($d, 'grouped', false);
+        $this->showTimestamps = $this->showTimestamps && $this->configBoolWithFallback($d, 'show_timestamps', true);
+        $this->showAvatars = $this->showAvatars && $this->configBoolWithFallback($d, 'show_avatars', true);
+        $this->showActions = $this->showActions && $this->configBoolWithFallback($d, 'show_actions', true);
+        $this->showMarkAllRead = $this->showMarkAllRead && $this->configBoolWithFallback($d, 'show_mark_all_read', true);
+        $this->showClearAll = $this->showClearAll && $this->configBoolWithFallback($d, 'show_clear_all', true);
+        $this->showViewAll = $this->showViewAll && $this->configBoolWithFallback($d, 'show_view_all', true);
+        $this->viewAllLabel ??= $this->configStringWithFallback($d, 'view_all_label', 'View all notifications');
 
         // Behavior
-        $this->markReadOnClick = $this->markReadOnClick || ($d['mark_read_on_click'] ?? true);
-        $this->autoRefresh = $this->autoRefresh || ($d['auto_refresh'] ?? false);
-        $this->autoRefreshInterval ??= $d['auto_refresh_interval'] ?? 30000;
+        $this->markReadOnClick = $this->markReadOnClick || $this->configBoolWithFallback($d, 'mark_read_on_click', true);
+        $this->autoRefresh = $this->autoRefresh || $this->configBoolWithFallback($d, 'auto_refresh', false);
+        $this->autoRefreshInterval ??= $this->configInt($d, 'auto_refresh_interval');
 
         // Generate IDs if not provided
         if (!$this->id) {
@@ -153,14 +153,17 @@ final class NotificationCenter extends AbstractStimulus
     public function options(): array
     {
         // Container classes
-        $containerClasses = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $containerClasses = $this->buildClassesFromArrays(
             ['notification-center'],
-            $this->variant === 'inline' ? [] : [$this->variant],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $this->variant === 'inline' ? [] : ($this->variant ? [$this->variant] : []),
+            $classArray
         );
 
         // Trigger button classes
-        $triggerClasses = $this->buildClasses(
+        $triggerClasses = $this->buildClassesFromArrays(
             ['position-relative'],
             $this->triggerVariant === 'link' ? ['btn', 'btn-link', 'text-decoration-none'] : [
                 'btn',

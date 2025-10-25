@@ -14,8 +14,8 @@ trait VariantTrait
      */
     protected function applyVariantDefaults(array $defaults): void
     {
-        $this->variant ??= $defaults['variant'] ?? null;
-        $this->outline = $this->outline || ($defaults['outline'] ?? false);
+        $this->variant ??= $this->configString($defaults, 'variant');
+        $this->outline = $this->outline || $this->configBoolWithFallback($defaults, 'outline', false);
     }
 
     /**

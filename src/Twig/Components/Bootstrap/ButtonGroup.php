@@ -44,10 +44,10 @@ final class ButtonGroup extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->vertical = $this->vertical || ($d['vertical'] ?? false);
-        $this->role = $this->role ?: ($d['role'] ?? 'group');
-        $this->ariaLabel ??= $d['aria_label'] ?? null;
-        $this->ariaLabelledby ??= $d['aria_labelledby'] ?? null;
+        $this->vertical = $this->vertical || $this->configBoolWithFallback($d, 'vertical', false);
+        $this->role = $this->role ?: $this->configStringWithFallback($d, 'role', 'group');
+        $this->ariaLabel ??= $this->configString($d, 'aria_label');
+        $this->ariaLabelledby ??= $this->configString($d, 'aria_labelledby');
 
 
         // Initialize controller with default
@@ -66,15 +66,11 @@ final class ButtonGroup extends AbstractStimulus
     {
         $baseClass = $this->vertical ? 'btn-group-vertical' : 'btn-group';
 
-        $classes = $this->buildClasses(
-            [$baseClass],
-            $this->sizeClassesFor('btn-group'),
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays([$baseClass], $this->sizeClassesFor('btn-group'), $this->class ? explode(' ', trim($this->class)) : []
         );
 
         $attrs = [
-            'role' => $this->role,
-        ];
+            'role' => $this->role, ];
 
         // Add ARIA label if provided
         if ($this->ariaLabel) {

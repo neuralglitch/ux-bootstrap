@@ -62,46 +62,51 @@ final class CommandPalette extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Trigger configuration
-        $this->trigger ??= $d['trigger'] ?? 'Cmd+K';
-        $this->triggerKey ??= $d['trigger_key'] ?? 'k';
+        $this->trigger ??= $this->configStringWithFallback($d, 'trigger', 'Cmd+K');
+        $this->triggerKey ??= $this->configStringWithFallback($d, 'trigger_key', 'k');
         $this->triggerCtrl = $this->triggerCtrl || ($d['trigger_ctrl'] ?? false);
         $this->triggerMeta = $this->triggerMeta && ($d['trigger_meta'] ?? true);
         $this->triggerShift = $this->triggerShift || ($d['trigger_shift'] ?? false);
         $this->triggerAlt = $this->triggerAlt || ($d['trigger_alt'] ?? false);
 
         // Appearance
-        $this->placeholder ??= $d['placeholder'] ?? 'Type a command or search...';
-        $this->emptyMessage ??= $d['empty_message'] ?? 'No commands found';
+        $this->placeholder ??= $this->configStringWithFallback($d, 'placeholder', 'Type a command or search...');
+        $this->emptyMessage ??= $this->configStringWithFallback($d, 'empty_message', 'No commands found');
         $this->showShortcuts = $this->showShortcuts && ($d['show_shortcuts'] ?? true);
         $this->showIcons = $this->showIcons && ($d['show_icons'] ?? true);
         $this->showRecent = $this->showRecent && ($d['show_recent'] ?? true);
-        $this->maxRecent = $this->maxRecent ?: ($d['max_recent'] ?? 5);
+        $this->maxRecent = $this->maxRecent ?: $this->configIntWithFallback($d, 'max_recent', 5);
 
         // Behavior
-        $this->searchUrl ??= $d['search_url'] ?? '/command-palette';
-        $this->minChars = $this->minChars ?: ($d['min_chars'] ?? 0);
-        $this->debounce = $this->debounce ?: ($d['debounce'] ?? 150);
+        $this->searchUrl ??= $this->configStringWithFallback($d, 'search_url', '/command-palette');
+        $this->minChars = $this->minChars ?: $this->configIntWithFallback($d, 'min_chars', 0);
+        $this->debounce = $this->debounce ?: $this->configIntWithFallback($d, 'debounce', 150);
         $this->closeOnSelect = $this->closeOnSelect && ($d['close_on_select'] ?? true);
         $this->closeOnEscape = $this->closeOnEscape && ($d['close_on_escape'] ?? true);
         $this->closeOnBackdrop = $this->closeOnBackdrop && ($d['close_on_backdrop'] ?? true);
 
         // Modal styling
-        $this->size ??= $d['size'] ?? 'lg';
-        $this->placement ??= $d['placement'] ?? 'top';
+        $this->size ??= $this->configStringWithFallback($d, 'size', 'lg');
+        $this->placement ??= $this->configStringWithFallback($d, 'placement', 'top');
         $this->centered = $this->centered || ($d['centered'] ?? false);
         $this->scrollable = $this->scrollable || ($d['scrollable'] ?? false);
 
         // Animation
-        $this->animation ??= $d['animation'] ?? 'fade';
-        $this->animationDuration = $this->animationDuration ?: ($d['animation_duration'] ?? 200);
+        $this->animation ??= $this->configStringWithFallback($d, 'animation', 'fade');
+        $this->animationDuration = $this->animationDuration ?: $this->configIntWithFallback($d, 'animation_duration', 200);
 
         // Groups
         $this->grouped = $this->grouped && ($d['grouped'] ?? true);
-        $this->defaultGroups = !empty($this->defaultGroups) ? $this->defaultGroups : ($d['default_groups'] ?? [
-            'Quick Actions',
-            'Navigation',
-            'Admin'
-        ]);
+        $defaultGroups = $this->configArray($d, 'default_groups', []);
+        if ($defaultGroups === null) {
+            $defaultGroups = [
+                'Quick Actions',
+                'Navigation',
+                'Admin'
+            ];
+        }
+        /** @var array<int, string> $defaultGroups */
+        $this->defaultGroups = !empty($this->defaultGroups) ? $this->defaultGroups : $defaultGroups;
 
         $this->applyClassDefaults($d);
 

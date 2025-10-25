@@ -100,7 +100,7 @@ final class ProgressTest extends TestCase
         $component->value = 150; // Above max
         $component->mount();
 
-        $this->assertSame(100, $component->value);
+        $this->assertSame(100.0, $component->value);
     }
 
     public function testValueNormalizationBelowMin(): void
@@ -109,7 +109,7 @@ final class ProgressTest extends TestCase
         $component->value = -10; // Below min
         $component->mount();
 
-        $this->assertSame(0, $component->value);
+        $this->assertSame(0.0, $component->value);
     }
 
     public function testHeightOption(): void

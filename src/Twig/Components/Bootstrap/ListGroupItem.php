@@ -30,11 +30,11 @@ final class ListGroupItem extends AbstractInteractive
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->action = $this->action || ($d['action'] ?? false);
-        $this->active = $this->active || ($d['active'] ?? false);
-        $this->disabled = $this->disabled || ($d['disabled'] ?? false);
-        $this->target ??= $d['target'] ?? null;
-        $this->rel ??= $d['rel'] ?? null;
+        $this->action = $this->action || $this->configBoolWithFallback($d, 'action', false);
+        $this->active = $this->active || $this->configBoolWithFallback($d, 'active', false);
+        $this->disabled = $this->disabled || $this->configBoolWithFallback($d, 'disabled', false);
+        $this->target ??= $this->configString($d, 'target');
+        $this->rel ??= $this->configString($d, 'rel');
 
         // Auto-determine tag if not specified
         if (null === $this->tag) {
@@ -47,7 +47,7 @@ final class ListGroupItem extends AbstractInteractive
             } elseif ($this->action) {
                 $this->tag = 'button';
             } else {
-                $this->tag = $d['tag'] ?? 'li';
+                $this->tag = $this->configStringWithFallback($d, 'tag', 'li');
             }
         }
 
@@ -77,7 +77,7 @@ final class ListGroupItem extends AbstractInteractive
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['list-group-item'],
             $this->action ? ['list-group-item-action'] : [],
             $this->active ? ['active'] : [],

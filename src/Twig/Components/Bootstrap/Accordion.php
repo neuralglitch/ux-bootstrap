@@ -23,12 +23,12 @@ final class Accordion extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->flush = $this->flush || ($d['flush'] ?? false);
-        $this->alwaysOpen = $this->alwaysOpen || ($d['always_open'] ?? false);
+        $this->flush = $this->flush || $this->configBoolWithFallback($d, 'flush', false);
+        $this->alwaysOpen = $this->alwaysOpen || $this->configBoolWithFallback($d, 'always_open', false);
 
         // Generate unique ID if not provided
         if (null === $this->id) {
-            $this->id = $d['id'] ?? 'accordion-' . uniqid();
+            $this->id = $this->configStringWithFallback($d, 'id', 'accordion-' . uniqid());
         }
 
         // Initialize controller with default
@@ -45,15 +45,11 @@ final class Accordion extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['accordion'],
-            $this->flush ? ['accordion-flush'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays(['accordion'], $this->flush ? ['accordion-flush'] : [], $this->class ? explode(' ', trim($this->class)) : []
         );
 
         $attrs = [
-            'id' => $this->id,
-        ];
+            'id' => $this->id, ];
 
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 

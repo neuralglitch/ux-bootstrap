@@ -30,11 +30,11 @@ final class Faq extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'accordion';
-        $this->title ??= $d['title'] ?? null;
-        $this->lead ??= $d['lead'] ?? null;
-        $this->flush = $this->flush || ($d['flush'] ?? false);
-        $this->alwaysOpen = $this->alwaysOpen || ($d['always_open'] ?? false);
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'accordion');
+        $this->title ??= $this->configString($d, 'title');
+        $this->lead ??= $this->configString($d, 'lead');
+        $this->flush = $this->flush || $this->configBoolWithFallback($d, 'flush', false);
+        $this->alwaysOpen = $this->alwaysOpen || $this->configBoolWithFallback($d, 'always_open', false);
 
         // Generate accordion ID if not provided
         if ($this->accordionId === null) {

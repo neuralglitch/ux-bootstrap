@@ -45,19 +45,19 @@ final class Hero extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'centered';
-        $this->title ??= $d['title'] ?? 'Build something great';
-        $this->lead ??= $d['lead'] ?? null;
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'centered');
+        $this->title ??= $this->configStringWithFallback($d, 'title', 'Build something great');
+        $this->lead ??= $this->configString($d, 'lead');
 
         // CTA defaults
-        $this->ctaVariant ??= $d['cta_variant'] ?? 'primary';
-        $this->ctaSize ??= $d['cta_size'] ?? 'lg';
-        $this->secondaryCtaVariant ??= $d['secondary_cta_variant'] ?? 'outline-secondary';
-        $this->secondaryCtaSize ??= $d['secondary_cta_size'] ?? 'lg';
+        $this->ctaVariant ??= $this->configStringWithFallback($d, 'cta_variant', 'primary');
+        $this->ctaSize ??= $this->configStringWithFallback($d, 'cta_size', 'lg');
+        $this->secondaryCtaVariant ??= $this->configStringWithFallback($d, 'secondary_cta_variant', 'outline-secondary');
+        $this->secondaryCtaSize ??= $this->configStringWithFallback($d, 'secondary_cta_size', 'lg');
 
         // Layout defaults
-        $this->fullHeight = $this->fullHeight || ($d['full_height'] ?? false);
-        $this->container ??= $d['container'] ?? 'container';
+        $this->fullHeight = $this->fullHeight || $this->configBoolWithFallback($d, 'full_height', false);
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
 
         $this->applyClassDefaults($d);
 

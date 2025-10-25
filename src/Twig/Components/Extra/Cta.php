@@ -49,30 +49,30 @@ final class Cta extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'centered';
-        $this->title ??= $d['title'] ?? 'Ready to get started?';
-        $this->description ??= $d['description'] ?? null;
-        $this->icon ??= $d['icon'] ?? null;
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'centered');
+        $this->title ??= $this->configStringWithFallback($d, 'title', 'Ready to get started?');
+        $this->description ??= $this->configString($d, 'description');
+        $this->icon ??= $this->configString($d, 'icon');
 
         // CTA defaults
-        $this->ctaVariant ??= $d['cta_variant'] ?? 'primary';
-        $this->ctaSize ??= $d['cta_size'] ?? 'lg';
-        $this->ctaOutline = $this->ctaOutline || ($d['cta_outline'] ?? false);
+        $this->ctaVariant ??= $this->configStringWithFallback($d, 'cta_variant', 'primary');
+        $this->ctaSize ??= $this->configStringWithFallback($d, 'cta_size', 'lg');
+        $this->ctaOutline = $this->ctaOutline || $this->configBoolWithFallback($d, 'cta_outline', false);
 
         // Secondary CTA defaults
-        $this->secondaryCtaVariant ??= $d['secondary_cta_variant'] ?? 'outline-secondary';
-        $this->secondaryCtaSize ??= $d['secondary_cta_size'] ?? 'lg';
-        $this->secondaryCtaOutline = $this->secondaryCtaOutline || ($d['secondary_cta_outline'] ?? false);
+        $this->secondaryCtaVariant ??= $this->configStringWithFallback($d, 'secondary_cta_variant', 'outline-secondary');
+        $this->secondaryCtaSize ??= $this->configStringWithFallback($d, 'secondary_cta_size', 'lg');
+        $this->secondaryCtaOutline = $this->secondaryCtaOutline || $this->configBoolWithFallback($d, 'secondary_cta_outline', false);
 
         // Layout defaults
-        $this->alignment ??= $d['alignment'] ?? 'center';
-        $this->container ??= $d['container'] ?? 'container';
-        $this->bg ??= $d['bg'] ?? null;
-        $this->textColor ??= $d['text_color'] ?? null;
-        $this->border = $this->border || ($d['border'] ?? false);
-        $this->shadow = $this->shadow || ($d['shadow'] ?? false);
-        $this->rounded = $this->rounded && ($d['rounded'] ?? true);
-        $this->padding ??= $d['padding'] ?? 'py-5';
+        $this->alignment ??= $this->configStringWithFallback($d, 'alignment', 'center');
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
+        $this->bg ??= $this->configString($d, 'bg');
+        $this->textColor ??= $this->configString($d, 'text_color');
+        $this->border = $this->border || $this->configBoolWithFallback($d, 'border', false);
+        $this->shadow = $this->shadow || $this->configBoolWithFallback($d, 'shadow', false);
+        $this->rounded = $this->rounded && $this->configBoolWithFallback($d, 'rounded', true);
+        $this->padding ??= $this->configStringWithFallback($d, 'padding', 'py-5');
 
         $this->applyClassDefaults($d);
 
@@ -96,14 +96,19 @@ final class Cta extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            [$this->padding],
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $paddingArray = $this->padding ? [$this->padding] : [];
+        
+        $classes = $this->buildClassesFromArrays(
+            $paddingArray,
             $this->bg ? ["bg-{$this->bg}"] : [],
             $this->textColor ? ["text-{$this->textColor}"] : [],
             $this->border ? ['border'] : [],
             $this->shadow ? ['shadow'] : [],
             $this->rounded ? ['rounded-3'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);

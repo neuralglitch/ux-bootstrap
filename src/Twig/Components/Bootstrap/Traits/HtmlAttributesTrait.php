@@ -38,15 +38,21 @@ trait HtmlAttributesTrait
             $shouldEscape = true;
             if (str_starts_with($key, 'data-bs-') && in_array($key, ['data-bs-content', 'data-bs-title'])) {
                 // Check if the value contains HTML tags - if so, don't escape
-                if (preg_match('/<[^>]+>/', (string)$val)) {
+                /** @var string $valString */
+                $valString = is_string($val) ? $val : (is_scalar($val) ? (string)$val : '');
+                if (preg_match('/<[^>]+>/', $valString)) {
                     $shouldEscape = false;
                 }
             }
             
             if ($shouldEscape) {
-                $out .= ' ' . $key . '="' . htmlspecialchars((string)$val, ENT_QUOTES | ENT_SUBSTITUTE) . '"';
+                /** @var string $valString */
+                $valString = is_string($val) ? $val : (is_scalar($val) ? (string)$val : '');
+                $out .= ' ' . $key . '="' . htmlspecialchars($valString, ENT_QUOTES | ENT_SUBSTITUTE) . '"';
             } else {
-                $out .= ' ' . $key . '="' . (string)$val . '"';
+                /** @var string $valString */
+                $valString = is_string($val) ? $val : (is_scalar($val) ? (string)$val : '');
+                $out .= ' ' . $key . '="' . $valString . '"';
             }
         }
         return $out;

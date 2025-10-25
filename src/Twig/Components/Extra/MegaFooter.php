@@ -47,36 +47,37 @@ final class MegaFooter extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'default';
-        $this->brandName ??= $d['brand_name'] ?? null;
-        $this->brandLogo ??= $d['brand_logo'] ?? null;
-        $this->brandHref ??= $d['brand_href'] ?? '/';
-        $this->brandDescription ??= $d['brand_description'] ?? null;
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'default');
+        $this->brandName ??= $this->configString($d, 'brand_name');
+        $this->brandLogo ??= $this->configString($d, 'brand_logo');
+        $this->brandHref ??= $this->configStringWithFallback($d, 'brand_href', '/');
+        $this->brandDescription ??= $this->configString($d, 'brand_description');
 
         // Social links (merge with config defaults)
         if (empty($this->socialLinks) && isset($d['social_links']) && is_array($d['social_links'])) {
-            $this->socialLinks = $d['social_links'];
-
+            $socialLinks = $this->configArray($d, 'social_links', []) ?? [];
+            /** @var array<int, array<string, string>> $socialLinks */
+            $this->socialLinks = $socialLinks;
 
             // Initialize controller with default
             $this->initializeController();
         }
 
         // Copyright
-        $this->copyrightText ??= $d['copyright_text'] ?? null;
-        $this->showCopyright ??= $d['show_copyright'] ?? true;
+        $this->copyrightText ??= $this->configString($d, 'copyright_text');
+        $this->showCopyright ??= $this->configBool($d, 'show_copyright');
 
         // Newsletter
-        $this->showNewsletter ??= $d['show_newsletter'] ?? false;
-        $this->newsletterTitle ??= $d['newsletter_title'] ?? 'Subscribe to our newsletter';
-        $this->newsletterPlaceholder ??= $d['newsletter_placeholder'] ?? 'Email address';
-        $this->newsletterButtonText ??= $d['newsletter_button_text'] ?? 'Subscribe';
+        $this->showNewsletter ??= $this->configBool($d, 'show_newsletter');
+        $this->newsletterTitle ??= $this->configStringWithFallback($d, 'newsletter_title', 'Subscribe to our newsletter');
+        $this->newsletterPlaceholder ??= $this->configStringWithFallback($d, 'newsletter_placeholder', 'Email address');
+        $this->newsletterButtonText ??= $this->configStringWithFallback($d, 'newsletter_button_text', 'Subscribe');
 
         // Layout
-        $this->backgroundColor ??= $d['background_color'] ?? 'dark';
-        $this->textColor ??= $d['text_color'] ?? 'white';
-        $this->container ??= $d['container'] ?? 'container';
-        $this->showDivider ??= $d['show_divider'] ?? true;
+        $this->backgroundColor ??= $this->configStringWithFallback($d, 'background_color', 'dark');
+        $this->textColor ??= $this->configStringWithFallback($d, 'text_color', 'white');
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
+        $this->showDivider ??= $this->configBool($d, 'show_divider');
 
         $this->applyClassDefaults($d);
 
@@ -96,12 +97,15 @@ final class MegaFooter extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $classes = $this->buildClassesFromArrays(
             ['footer', 'mt-auto'],
             ["bg-{$this->backgroundColor}"],
             ["text-{$this->textColor}"],
             $this->showDivider ? ['border-top'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);

@@ -75,17 +75,11 @@ final class SplitPanes extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        // Apply defaults - component props take precedence
-        if ($this->orientation === 'horizontal' && isset($d['orientation'])) {
-            $this->orientation = $d['orientation'];
-
-
-            // Initialize controller with default
-            $this->initializeController();
-        }
-        $this->initialSize ??= $d['initial_size'] ?? null;
-        $this->minSize ??= $d['min_size'] ?? null;
-        $this->maxSize ??= $d['max_size'] ?? null;
+        // Apply defaults
+        $this->orientation = ($this->orientation !== 'horizontal') ? $this->orientation : $this->configStringWithFallback($d, 'orientation', 'horizontal');
+        $this->initialSize = $this->configString($d, 'initial_size');
+        $this->minSize = $this->configString($d, 'min_size');
+        $this->maxSize = $this->configString($d, 'max_size');
 
         // Boolean properties: config overrides default only if explicitly set
         if ($this->resizable === true && isset($d['resizable']) && $d['resizable'] === false) {
@@ -99,19 +93,18 @@ final class SplitPanes extends AbstractStimulus
         }
 
         // Integers: use config if default value
-        if ($this->dividerSize === 4 && isset($d['divider_size'])) {
-            $this->dividerSize = $d['divider_size'];
-        }
-        if ($this->snapThreshold === 50 && isset($d['snap_threshold'])) {
-            $this->snapThreshold = $d['snap_threshold'];
-        }
+        $this->dividerSize = ($this->dividerSize !== 4) ? $this->dividerSize : $this->configIntWithFallback($d, 'divider_size', 4);
+        $this->snapThreshold = ($this->snapThreshold !== 50) ? $this->snapThreshold : $this->configIntWithFallback($d, 'snap_threshold', 50);
 
-        $this->collapsed ??= $d['collapsed'] ?? null;
+        $this->collapsed = $this->configString($d, 'collapsed');
 
         // Generate ID if persistent and no ID provided
         if ($this->persistent && !$this->id) {
             $this->id = 'split-panes-' . uniqid();
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

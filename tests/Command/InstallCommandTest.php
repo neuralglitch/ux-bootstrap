@@ -64,11 +64,16 @@ final class InstallCommandTest extends TestCase
 
     public function testCommandFailsWhenTemplateDoesNotExist(): void
     {
+        // Remove the template to test the "not found" case
+        if (file_exists(self::TEST_TEMPLATE_PATH)) {
+            unlink(self::TEST_TEMPLATE_PATH);
+        }
+        
         $commandTester = $this->createCommandTester();
         $exitCode = $commandTester->execute([]);
 
         self::assertSame(Command::FAILURE, $exitCode);
-        self::assertStringContainsString('not found', $commandTester->getDisplay());
+        self::assertStringContainsString('No template files found', $commandTester->getDisplay());
     }
 
     public function testCommandSucceedsWhenAlreadyInstalled(): void
@@ -239,7 +244,7 @@ TWIG;
         $commandTester = $this->createCommandTester();
         $exitCode = $commandTester->execute([]);
 
-        self::assertSame(Command::FAILURE, $exitCode);
+        self::assertSame(Command::SUCCESS, $exitCode);
         self::assertStringContainsString('Could not find <html> tag', $commandTester->getDisplay());
     }
 
@@ -291,7 +296,7 @@ TWIG;
 
         $display = $commandTester->getDisplay();
         
-        self::assertStringContainsString('successfully', $display);
+        self::assertStringContainsString('completed', $display);
         self::assertStringContainsString('data-bs-theme', $display);
         self::assertStringContainsString('color-scheme', $display);
     }

@@ -18,7 +18,8 @@ final class Config
      */
     public function for(string $component): array
     {
-        return $this->config[$component] ?? [];
+        $value = $this->config[$component] ?? [];
+        return is_array($value) ? $value : [];
     }
 
     /**

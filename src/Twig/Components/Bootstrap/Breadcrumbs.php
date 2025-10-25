@@ -97,12 +97,12 @@ final class Breadcrumbs extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->autoGenerate = $this->autoGenerate && ($d['auto_generate'] ?? true);
-        $this->showHome = $this->showHome && ($d['show_home'] ?? true);
-        $this->homeLabel = $this->homeLabel ?? ($d['home_label'] ?? 'Home');
-        $this->homeRoute = $this->homeRoute ?? ($d['home_route'] ?? 'default');
-        $this->homeRouteParams = $this->homeRouteParams ?? ($d['home_route_params'] ?? []);
-        $this->divider = $this->divider ?: ($d['divider'] ?? '/');
+        $this->autoGenerate = $this->autoGenerate && $this->configBoolWithFallback($d, 'auto_generate', true);
+        $this->showHome = $this->showHome && $this->configBoolWithFallback($d, 'show_home', true);
+        $this->homeLabel = $this->homeLabel ?? $this->configStringWithFallback($d, 'home_label', 'Home');
+        $this->homeRoute = $this->homeRoute ?? $this->configStringWithFallback($d, 'home_route', 'default');
+        $this->homeRouteParams = $this->homeRouteParams ?? $this->configArray($d, 'home_route_params', []);
+        $this->divider = $this->divider ?: $this->configStringWithFallback($d, 'divider', '/');
 
         // Auto-generate breadcrumbs if enabled and no items provided
         if ($this->autoGenerate && $this->items === null) {
@@ -151,7 +151,7 @@ final class Breadcrumbs extends AbstractStimulus
         // Add home item if enabled
         if ($this->showHome) {
             try {
-                $homeUrl = $this->router->generate($this->homeRoute, $this->homeRouteParams);
+                $homeUrl = $this->router->generate($this->homeRoute ?? 'default', $this->homeRouteParams ?? []);
 
                 // Check if we're currently on the home page
                 $request = $this->requestStack->getCurrentRequest();
@@ -172,7 +172,7 @@ final class Breadcrumbs extends AbstractStimulus
         $request = $this->requestStack->getCurrentRequest();
         if ($request) {
             $currentRoute = $request->attributes->get('_route');
-            if ($currentRoute) {
+            if (is_string($currentRoute)) {
                 $this->addRouteBreadcrumbs($items, $currentRoute);
             }
         }
@@ -274,14 +274,11 @@ final class Breadcrumbs extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['breadcrumb'],
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays(['breadcrumb'], $this->class ? explode(' ', trim($this->class)) : []
         );
 
         $attrs = [
-            'aria-label' => 'breadcrumb',
-        ];
+            'aria-label' => 'breadcrumb', ];
 
         // Apply custom divider via CSS variable
         if ($this->divider && $this->divider !== '/') {

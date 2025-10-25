@@ -44,28 +44,27 @@ final class Carousel extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->indicators = $this->indicators || ($d['indicators'] ?? false);
-        $this->controls = $this->controls && ($d['controls'] ?? true);
-        $this->fade = $this->fade || ($d['fade'] ?? false);
-        $this->dark = $this->dark || ($d['dark'] ?? false);
+        $this->indicators = $this->indicators || $this->configBoolWithFallback($d, 'indicators', false);
+        $this->controls = $this->controls && $this->configBoolWithFallback($d, 'controls', true);
+        $this->fade = $this->fade || $this->configBoolWithFallback($d, 'fade', false);
+        $this->dark = $this->dark || $this->configBoolWithFallback($d, 'dark', false);
 
         // Behavior defaults
-        $this->ride = $this->ride !== false ? $this->ride : ($d['ride'] ?? false);
-        $this->interval ??= $d['interval'] ?? 5000;
-        $this->keyboard = $this->keyboard && ($d['keyboard'] ?? true);
+        $this->ride = $this->ride !== false ? $this->ride : $this->configStringWithFallback($d, 'ride', 'false');
+        $this->interval ??= $this->configIntWithFallback($d, 'interval', 5000);
+        $this->keyboard = $this->keyboard && $this->configBoolWithFallback($d, 'keyboard', true);
         // For pause, only apply default if it's still 'hover' (the default value)
         if ($this->pause === 'hover') {
-            $this->pause = $d['pause'] ?? 'hover';
-
-
-            // Initialize controller with default
-            $this->initializeController();
+            $this->pause = $this->configStringWithFallback($d, 'pause', 'hover');
         }
-        $this->touch = $this->touch && ($d['touch'] ?? true);
-        $this->wrap = $this->wrap && ($d['wrap'] ?? true);
+        $this->touch = $this->touch && $this->configBoolWithFallback($d, 'touch', true);
+        $this->wrap = $this->wrap && $this->configBoolWithFallback($d, 'wrap', true);
 
         // Generate ID if not provided
-        $this->id ??= $d['id'] ?? 'carousel-' . uniqid();
+        $this->id ??= $this->configStringWithFallback($d, 'id', 'carousel-' . uniqid());
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -78,11 +77,7 @@ final class Carousel extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['carousel', 'slide'],
-            $this->fade ? ['carousel-fade'] : [],
-            $this->dark ? ['carousel-dark'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays(['carousel', 'slide'], $this->fade ? ['carousel-fade'] : [], $this->dark ? ['carousel-dark'] : [], $this->class ? explode(' ', trim($this->class)) : []
         );
 
         // Build data attributes

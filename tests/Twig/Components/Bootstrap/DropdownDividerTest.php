@@ -30,6 +30,7 @@ final class DropdownDividerTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('dropdown-divider', $options['classes']);
+        $this->assertIsString($options['classes']);
         $this->assertIsArray($options['attrs']);
     }
 

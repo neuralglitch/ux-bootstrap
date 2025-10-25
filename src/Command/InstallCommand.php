@@ -192,6 +192,9 @@ final class InstallCommand extends Command
     /**
      * Find the main template file to modify
      */
+    /**
+     * @param array<string> $processedTemplates
+     */
     private function findMainTemplate(array $processedTemplates = []): ?string
     {
         // Check primary template first
@@ -211,6 +214,9 @@ final class InstallCommand extends Command
 
     /**
      * Find all available base template files in the templates directory
+     * 
+     * @param array<string> $processedTemplates
+     * @return array<string>
      */
     private function findAvailableTemplates(array $processedTemplates = []): array
     {
@@ -225,7 +231,7 @@ final class InstallCommand extends Command
         );
 
         foreach ($iterator as $file) {
-            if ($file->isFile() && $file->getExtension() === 'twig') {
+            if ($file instanceof \SplFileInfo && $file->isFile() && $file->getExtension() === 'twig') {
                 $path = $file->getPathname();
                 
                 // Skip already processed templates
@@ -323,7 +329,7 @@ final class InstallCommand extends Command
         );
 
         foreach ($iterator as $file) {
-            if ($file->isFile() && $file->getExtension() === 'twig') {
+            if ($file instanceof \SplFileInfo && $file->isFile() && $file->getExtension() === 'twig') {
                 $path = $file->getPathname();
                 
                 // Skip the template itself
@@ -350,6 +356,9 @@ final class InstallCommand extends Command
 
     /**
      * Let user select a template from available options
+     */
+    /**
+     * @param array<string> $templates
      */
     private function selectTemplate(SymfonyStyle $io, array $templates): ?string
     {
@@ -382,6 +391,9 @@ final class InstallCommand extends Command
     private function getTemplateDescription(string $templatePath): string
     {
         $content = file_get_contents($templatePath);
+        if ($content === false) {
+            return 'Template file';
+        }
         
         // Try to extract title or description from template
         if (preg_match('/{%\s*block\s+title\s*%}(.*?){%\s*endblock\s*%}/s', $content, $matches)) {

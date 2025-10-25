@@ -61,33 +61,32 @@ final class MetricsGrid extends AbstractStimulus
         // Apply component-specific defaults
         // For non-nullable properties, check against default value
         if ($this->columns === 4 && isset($d['columns'])) {
-            $this->columns = $d['columns'];
-
+            $this->columns = $this->configIntWithFallback($d, 'columns', 4);
 
             // Initialize controller with default
             $this->initializeController();
         }
         if ($this->gap === '4' && isset($d['gap'])) {
-            $this->gap = $d['gap'];
+            $this->gap = $this->configStringWithFallback($d, 'gap', '4');
         }
-        $this->equalHeight = $this->equalHeight && ($d['equal_height'] ?? true);
-        $this->cardVariant ??= $d['card_variant'] ?? null;
-        $this->cardBorder = $this->cardBorder || ($d['card_border'] ?? false);
-        $this->cardShadow = $this->cardShadow || ($d['card_shadow'] ?? false);
-        $this->size ??= $d['size'] ?? 'default';
-        $this->textAlign ??= $d['text_align'] ?? 'start';
-        $this->showSparklines = $this->showSparklines || ($d['show_sparklines'] ?? false);
-        $this->sparklineColor ??= $d['sparkline_color'] ?? 'primary';
+        $this->equalHeight = $this->equalHeight && $this->configBoolWithFallback($d, 'equal_height', true);
+        $this->cardVariant ??= $this->configString($d, 'card_variant');
+        $this->cardBorder = $this->cardBorder || $this->configBoolWithFallback($d, 'card_border', false);
+        $this->cardShadow = $this->cardShadow || $this->configBoolWithFallback($d, 'card_shadow', false);
+        $this->size ??= $this->configStringWithFallback($d, 'size', 'default');
+        $this->textAlign ??= $this->configStringWithFallback($d, 'text_align', 'start');
+        $this->showSparklines = $this->showSparklines || $this->configBoolWithFallback($d, 'show_sparklines', false);
+        $this->sparklineColor = $this->sparklineColor ?? $this->configStringWithFallback($d, 'sparkline_color', 'primary');
         if ($this->sparklineHeight === 40 && isset($d['sparkline_height'])) {
-            $this->sparklineHeight = $d['sparkline_height'];
+            $this->sparklineHeight = $this->configIntWithFallback($d, 'sparkline_height', 40);
         }
 
         // Responsive columns
-        $this->columnsSm ??= $d['columns_sm'] ?? null;
-        $this->columnsMd ??= $d['columns_md'] ?? null;
-        $this->columnsLg ??= $d['columns_lg'] ?? null;
-        $this->columnsXl ??= $d['columns_xl'] ?? null;
-        $this->columnsXxl ??= $d['columns_xxl'] ?? null;
+        $this->columnsSm ??= $this->configInt($d, 'columns_sm');
+        $this->columnsMd ??= $this->configInt($d, 'columns_md');
+        $this->columnsLg ??= $this->configInt($d, 'columns_lg');
+        $this->columnsXl ??= $this->configInt($d, 'columns_xl');
+        $this->columnsXxl ??= $this->configInt($d, 'columns_xxl');
     }
 
     protected function getComponentName(): string
@@ -159,7 +158,7 @@ final class MetricsGrid extends AbstractStimulus
         );
 
         // Build card classes (applied to all metric cards)
-        $cardClasses = $this->buildClasses(
+        $cardClasses = $this->buildClassesFromArrays(
             ['card', 'metric-card'],
             $this->equalHeight ? ['h-100'] : [],
             $this->cardBorder ? ['border'] : ['border-0'],
@@ -168,7 +167,7 @@ final class MetricsGrid extends AbstractStimulus
         );
 
         // Build card body classes
-        $bodyClasses = $this->buildClasses(
+        $bodyClasses = $this->buildClassesFromArrays(
             ['card-body'],
             $this->size === 'sm' ? ['p-3'] : ($this->size === 'lg' ? ['p-4'] : []),
             $this->textAlign !== 'start' ? ["text-{$this->textAlign}"] : []
@@ -218,14 +217,14 @@ final class MetricsGrid extends AbstractStimulus
         $sparkline = $metric['sparkline'] ?? null;
 
         // Build value classes
-        $valueClasses = $this->buildClasses(
+        $valueClasses = $this->buildClassesFromArrays(
             ['metric-value', 'fs-2', 'fw-bold', 'mb-1'],
-            $variant ? ["text-{$variant}"] : [],
+            $variant && is_string($variant) ? ["text-{$variant}"] : [],
             $this->size === 'sm' ? ['fs-4'] : ($this->size === 'lg' ? ['fs-1'] : [])
         );
 
         // Build label classes
-        $labelClasses = $this->buildClasses(
+        $labelClasses = $this->buildClassesFromArrays(
             ['metric-label', 'text-muted', 'mb-0'],
             $this->size === 'sm' ? ['small'] : []
         );
@@ -233,9 +232,9 @@ final class MetricsGrid extends AbstractStimulus
         // Build icon classes
         $iconClasses = [];
         if ($icon) {
-            $iconClasses = $this->buildClasses(
+            $iconClasses = $this->buildClassesFromArrays(
                 ['metric-icon'],
-                $variant ? ["text-{$variant}"] : ['text-muted'],
+                $variant && is_string($variant) ? ["text-{$variant}"] : ['text-muted'],
                 $iconPosition === 'top' ? ['mb-3', 'px-3'] : ($iconPosition === 'end' ? ['ms-3', 'px-2'] : [
                     'me-3',
                     'px-2'

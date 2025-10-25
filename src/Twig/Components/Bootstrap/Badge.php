@@ -53,25 +53,25 @@ final class Badge extends AbstractInteractive
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->pill = $this->pill || ($d['pill'] ?? false);
-        $this->href ??= $d['href'] ?? null;
-        $this->target ??= $d['target'] ?? null;
-        $this->rel ??= $d['rel'] ?? null;
-        $this->title ??= $d['title'] ?? null;
-        $this->id ??= $d['id'] ?? null;
-        $this->text ??= $d['text'] ?? null;
-        $this->positioned = $this->positioned || ($d['positioned'] ?? false);
-        $this->position ??= $d['position'] ?? null;
-        $this->translate = $this->translate && ($d['translate'] ?? true);
+        $this->pill = $this->pill || $this->configBoolWithFallback($d, 'pill', false);
+        $this->href ??= $this->configString($d, 'href');
+        $this->target ??= $this->configString($d, 'target');
+        $this->rel ??= $this->configString($d, 'rel');
+        $this->title ??= $this->configString($d, 'title');
+        $this->id ??= $this->configString($d, 'id');
+        $this->text ??= $this->configString($d, 'text');
+        $this->positioned = $this->positioned || $this->configBoolWithFallback($d, 'positioned', false);
+        $this->position ??= $this->configString($d, 'position');
+        $this->translate = $this->translate && $this->configBoolWithFallback($d, 'translate', true);
 
         // Stimulus controller properties
-        $this->count ??= $d['count'] ?? null;
-        $this->maxCount = $this->maxCount ?: ($d['max_count'] ?? 99);
-        $this->autoHide = $this->autoHide && ($d['auto_hide'] ?? true);
-        $this->status ??= $d['status'] ?? null;
-        $this->blinking = $this->blinking || ($d['blinking'] ?? false);
-        $this->hasCounter = $this->hasCounter || ($d['has_counter'] ?? false);
-        $this->hasIndicator = $this->hasIndicator || ($d['has_indicator'] ?? false);
+        $this->count ??= $this->configInt($d, 'count');
+        $this->maxCount = $this->maxCount ?: $this->configIntWithFallback($d, 'max_count', 99);
+        $this->autoHide = $this->autoHide && $this->configBoolWithFallback($d, 'auto_hide', true);
+        $this->status ??= $this->configString($d, 'status');
+        $this->blinking = $this->blinking || $this->configBoolWithFallback($d, 'blinking', false);
+        $this->hasCounter = $this->hasCounter || $this->configBoolWithFallback($d, 'has_counter', false);
+        $this->hasIndicator = $this->hasIndicator || $this->configBoolWithFallback($d, 'has_indicator', false);
 
         // Initialize controller with default
         $this->initializeController();
@@ -141,7 +141,7 @@ final class Badge extends AbstractInteractive
     {
         $isLink = $this->href !== null;
 
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['badge'],
             $this->variantClassesFor('badge'),  // text-bg-{variant}
             $this->pill ? ['rounded-pill'] : [],

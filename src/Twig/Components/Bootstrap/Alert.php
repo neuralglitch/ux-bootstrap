@@ -31,12 +31,12 @@ final class Alert extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->dismissible = $this->dismissible || ($d['dismissible'] ?? false);
-        $this->fade = $this->fade && ($d['fade'] ?? true);
-        $this->show = $this->show && ($d['show'] ?? true);
-        $this->autoHide = $this->autoHide || ($d['auto_hide'] ?? false);
-        $this->autoHideDelay = $this->autoHideDelay ?: ($d['auto_hide_delay'] ?? 5000);
-        $this->role = $this->role ?: ($d['role'] ?? 'alert');
+        $this->dismissible = $this->dismissible || $this->configBoolWithFallback($d, 'dismissible', false);
+        $this->fade = $this->fade && $this->configBoolWithFallback($d, 'fade', true);
+        $this->show = $this->show && $this->configBoolWithFallback($d, 'show', true);
+        $this->autoHide = $this->autoHide || $this->configBoolWithFallback($d, 'auto_hide', false);
+        $this->autoHideDelay = $this->autoHideDelay ?: $this->configIntWithFallback($d, 'auto_hide_delay', 5000);
+        $this->role = $this->role ?: $this->configStringWithFallback($d, 'role', 'alert');
 
         // Initialize controller with default
         $this->initializeController();
@@ -78,7 +78,7 @@ final class Alert extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['alert'],
             $this->variantClassesFor('alert'),  // alert-{variant}
             $this->dismissible ? ['alert-dismissible'] : [],

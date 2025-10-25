@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap;
 
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StimulusTrait;
+use NeuralGlitch\UxBootstrap\Twig\Components\AbstractComponent;
 
 /**
  * Base class for Bootstrap components with Stimulus controller support.
@@ -33,7 +34,7 @@ use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\StimulusTrait;
  *    <twig:bs:badge controller="bs-badge my-animation">Text</twig:bs:badge>
  *    // Renders: data-controller="bs-badge my-animation"
  */
-abstract class AbstractStimulus extends AbstractBootstrap
+abstract class AbstractStimulus extends AbstractComponent
 {
     use StimulusTrait;
 
@@ -45,11 +46,11 @@ abstract class AbstractStimulus extends AbstractBootstrap
     protected function applyStimulusDefaults(array $defaults): void
     {
         if (!empty($defaults['controller']) && $this->controller === '') {
-            $this->controller = (string)$defaults['controller'];
+            $this->controller = $this->configStringWithFallback($defaults, 'controller', '');
         }
 
         if (isset($defaults['controller_enabled'])) {
-            $this->controllerEnabled = (bool)$defaults['controller_enabled'];
+            $this->controllerEnabled = $this->configBoolWithFallback($defaults, 'controller_enabled', false);
         }
     }
 
@@ -63,6 +64,15 @@ abstract class AbstractStimulus extends AbstractBootstrap
         if ($this->controller === '' && $this->shouldAttachController()) {
             $this->controller = $this->getDefaultController();
         }
+    }
+
+    /**
+     * Get component name for default controller
+     */
+    protected function getComponentName(): string
+    {
+        // This should be implemented by the concrete component
+        return '';
     }
 }
 

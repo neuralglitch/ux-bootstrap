@@ -26,11 +26,11 @@ final class Link extends AbstractInteractive
         $this->applyInteractiveDefaults($d);
         $this->applyClassDefaults($d);
 
-        $this->underline ??= $d['underline'] ?? null;
-        $this->underlineOpacity ??= $d['underline_opacity'] ?? null;
-        $this->underlineOpacityHover ??= $d['underline_opacity_hover'] ?? null;
-        $this->offset ??= $d['offset'] ?? null;
-        $this->stretched = $this->stretched || (bool)($d['stretched'] ?? false);
+        $this->underline ??= $this->configString($d, 'underline');
+        $this->underlineOpacity ??= $this->configInt($d, 'underline_opacity');
+        $this->underlineOpacityHover ??= $this->configInt($d, 'underline_opacity_hover');
+        $this->offset ??= $this->configInt($d, 'offset');
+        $this->stretched = $this->stretched || $this->configBoolWithFallback($d, 'stretched', false);
 
         // Initialize controller
         $this->initializeController();

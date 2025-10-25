@@ -47,12 +47,12 @@ final class Avatar extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->size ??= $d['size'] ?? 'md';
-        $this->shape ??= $d['shape'] ?? 'circle';
-        $this->status ??= $d['status'] ?? null;
-        $this->border = $this->border || ($d['border'] ?? false);
-        $this->borderColor ??= $d['border_color'] ?? null;
-        $this->variant ??= $d['variant'] ?? null;
+        $this->size ??= $this->configStringWithFallback($d, 'size', 'md');
+        $this->shape ??= $this->configStringWithFallback($d, 'shape', 'circle');
+        $this->status ??= $this->configString($d, 'status');
+        $this->border = $this->border || $this->configBoolWithFallback($d, 'border', false);
+        $this->borderColor ??= $this->configString($d, 'border_color');
+        $this->variant ??= $this->configString($d, 'variant');
 
         // Generate alt text from initials if not provided
         if ($this->alt === null && $this->initials !== null) {
@@ -74,14 +74,17 @@ final class Avatar extends AbstractStimulus
     public function options(): array
     {
         // Build wrapper classes
-        $wrapperClasses = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $wrapperClasses = $this->buildClassesFromArrays(
             ['avatar'],
             $this->getSizeClasses(),
             $this->getShapeClasses(),
             $this->border ? ['avatar-border'] : [],
             $this->borderColor ? ["border-{$this->borderColor}"] : [],
             $this->href ? ['avatar-link'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         // Build image classes

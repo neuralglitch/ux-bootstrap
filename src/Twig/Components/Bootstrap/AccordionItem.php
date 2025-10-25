@@ -22,9 +22,9 @@ final class AccordionItem extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply config defaults
-        $this->show = $this->show || ($d['show'] ?? false);
-        $this->header ??= $d['header'] ?? null;
-        $this->targetId ??= $d['target_id'] ?? 'collapse-' . uniqid();
+        $this->show = $this->show || $this->configBoolWithFallback($d, 'show', false);
+        $this->header ??= $this->configString($d, 'header');
+        $this->targetId ??= $this->configStringWithFallback($d, 'target_id', 'collapse-' . uniqid());
 
         $this->initializeController();
     }
@@ -42,17 +42,17 @@ final class AccordionItem extends AbstractStimulus
         // Collapsed is ALWAYS the inverse of show (calculated dynamically)
         $collapsed = !$this->show;
 
-        $itemClasses = $this->buildClasses(
+        $itemClasses = $this->buildClassesFromArrays(
             ['accordion-item'],
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $buttonClasses = $this->buildClasses(
+        $buttonClasses = $this->buildClassesFromArrays(
             ['accordion-button'],
             $collapsed ? ['collapsed'] : []
         );
 
-        $collapseClasses = $this->buildClasses(
+        $collapseClasses = $this->buildClassesFromArrays(
             ['accordion-collapse', 'collapse'],
             $this->show ? ['show'] : []
         );

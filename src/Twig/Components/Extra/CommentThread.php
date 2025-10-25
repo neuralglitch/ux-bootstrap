@@ -104,19 +104,19 @@ final class CommentThread extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->maxDepth ??= $d['max_depth'] ?? 3;
-        $this->showReply ??= $d['show_reply'] ?? true;
-        $this->showEdit ??= $d['show_edit'] ?? true;
-        $this->showDelete ??= $d['show_delete'] ?? true;
-        $this->showLike ??= $d['show_like'] ?? true;
-        $this->dateFormat ??= $d['date_format'] ?? 'relative';
-        $this->avatarSize ??= $d['avatar_size'] ?? 'md';
-        $this->highlightAuthor ??= $d['highlight_author'] ?? false;
-        $this->compact ??= $d['compact'] ?? false;
-        $this->showThreadLines ??= $d['show_thread_lines'] ?? true;
-        $this->collapsible ??= $d['collapsible'] ?? true;
-        $this->defaultCollapsed ??= $d['default_collapsed'] ?? false;
-        $this->containerClass ??= $d['container_class'] ?? null;
+        $this->maxDepth ??= $this->configIntWithFallback($d, 'max_depth', 3);
+        $this->showReply ??= $this->configBoolWithFallback($d, 'show_reply', true);
+        $this->showEdit ??= $this->configBoolWithFallback($d, 'show_edit', true);
+        $this->showDelete ??= $this->configBoolWithFallback($d, 'show_delete', true);
+        $this->showLike ??= $this->configBoolWithFallback($d, 'show_like', true);
+        $this->dateFormat ??= $this->configStringWithFallback($d, 'date_format', 'relative');
+        $this->avatarSize ??= $this->configStringWithFallback($d, 'avatar_size', 'md');
+        $this->highlightAuthor ??= $this->configBoolWithFallback($d, 'highlight_author', false);
+        $this->compact ??= $this->configBoolWithFallback($d, 'compact', false);
+        $this->showThreadLines ??= $this->configBoolWithFallback($d, 'show_thread_lines', true);
+        $this->collapsible ??= $this->configBoolWithFallback($d, 'collapsible', true);
+        $this->defaultCollapsed ??= $this->configBoolWithFallback($d, 'default_collapsed', false);
+        $this->containerClass ??= $this->configString($d, 'container_class');
 
 
         // Initialize controller with default
@@ -137,13 +137,18 @@ final class CommentThread extends AbstractStimulus
         $showThreadLines = $this->showThreadLines ?? true;
         $collapsible = $this->collapsible ?? true;
 
-        $classes = $this->buildClasses(
+        $containerClassArray = $this->containerClass ? array_filter(explode(' ', trim($this->containerClass)), fn($v) => $v !== '') : [];
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $containerClassArray */
+        /** @var array<string> $classArray */
+        
+        $classes = $this->buildClassesFromArrays(
             ['comment-thread'],
             $compact ? ['comment-thread-compact'] : [],
             $showThreadLines ? ['comment-thread-lines'] : [],
             $collapsible ? ['comment-thread-collapsible'] : [],
-            $this->containerClass ? explode(' ', trim($this->containerClass)) : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $containerClassArray,
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);

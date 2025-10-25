@@ -916,6 +916,18 @@ final class Configuration implements ConfigurationInterface
             ->variableNode('attr')->defaultValue([])->end()
             ->end()
             ->end()
+
+            // ============================================================
+            // AbstractComponent Configuration
+            // ============================================================
+            ->arrayNode('abstract_component')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('build_classes_method')->defaultValue('buildClasses')->end()
+            ->scalarNode('build_classes_from_arrays_method')->defaultValue('buildClassesFromArrays')->end()
+            ->booleanNode('use_flexible_class_building')->defaultTrue()->end()
+            ->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

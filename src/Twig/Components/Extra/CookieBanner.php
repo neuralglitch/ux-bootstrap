@@ -58,32 +58,32 @@ final class CookieBanner extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->position ??= $d['position'] ?? 'bottom';
-        $this->title ??= $d['title'] ?? 'We use cookies';
-        $this->message ??= $d['message'] ?? 'We use cookies to ensure you get the best experience on our website.';
-        $this->privacyUrl ??= $d['privacy_url'] ?? null;
-        $this->privacyLinkText ??= $d['privacy_link_text'] ?? 'Privacy Policy';
-        $this->cookiePolicyUrl ??= $d['cookie_policy_url'] ?? null;
-        $this->cookiePolicyLinkText ??= $d['cookie_policy_link_text'] ?? 'Cookie Policy';
+        $this->position ??= $this->configStringWithFallback($d, 'position', 'bottom');
+        $this->title ??= $this->configStringWithFallback($d, 'title', 'We use cookies');
+        $this->message ??= $this->configStringWithFallback($d, 'message', 'We use cookies to ensure you get the best experience on our website.');
+        $this->privacyUrl ??= $this->configString($d, 'privacy_url');
+        $this->privacyLinkText ??= $this->configStringWithFallback($d, 'privacy_link_text', 'Privacy Policy');
+        $this->cookiePolicyUrl ??= $this->configString($d, 'cookie_policy_url');
+        $this->cookiePolicyLinkText ??= $this->configStringWithFallback($d, 'cookie_policy_link_text', 'Cookie Policy');
 
-        $this->acceptText ??= $d['accept_text'] ?? 'Accept';
-        $this->rejectText ??= $d['reject_text'] ?? 'Reject';
-        $this->customizeText ??= $d['customize_text'] ?? 'Customize';
-        $this->showReject ??= $d['show_reject'] ?? true;
-        $this->showCustomize ??= $d['show_customize'] ?? false;
+        $this->acceptText ??= $this->configStringWithFallback($d, 'accept_text', 'Accept');
+        $this->rejectText ??= $this->configStringWithFallback($d, 'reject_text', 'Reject');
+        $this->customizeText ??= $this->configStringWithFallback($d, 'customize_text', 'Customize');
+        $this->showReject ??= $this->configBoolWithFallback($d, 'show_reject', true);
+        $this->showCustomize ??= $this->configBoolWithFallback($d, 'show_customize', false);
 
-        $this->acceptVariant ??= $d['accept_variant'] ?? 'primary';
-        $this->rejectVariant ??= $d['reject_variant'] ?? 'secondary';
-        $this->customizeVariant ??= $d['customize_variant'] ?? 'outline-secondary';
+        $this->acceptVariant ??= $this->configStringWithFallback($d, 'accept_variant', 'primary');
+        $this->rejectVariant ??= $this->configStringWithFallback($d, 'reject_variant', 'secondary');
+        $this->customizeVariant ??= $this->configStringWithFallback($d, 'customize_variant', 'outline-secondary');
 
-        $this->cookieName ??= $d['cookie_name'] ?? 'cookie_consent';
-        $this->expiryDays ??= $d['expiry_days'] ?? 365;
+        $this->cookieName ??= $this->configStringWithFallback($d, 'cookie_name', 'cookie_consent');
+        $this->expiryDays ??= $this->configIntWithFallback($d, 'expiry_days', 365);
 
-        $this->dismissible ??= $d['dismissible'] ?? false;
-        $this->backdrop ??= $d['backdrop'] ?? false;
+        $this->dismissible ??= $this->configBoolWithFallback($d, 'dismissible', false);
+        $this->backdrop ??= $this->configBoolWithFallback($d, 'backdrop', false);
 
-        $this->variant ??= $d['variant'] ?? 'light';
-        $this->shadow ??= $d['shadow'] ?? 'shadow-lg';
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'light');
+        $this->shadow ??= $this->configStringWithFallback($d, 'shadow', 'shadow-lg');
 
 
         // Initialize controller with default
@@ -100,10 +100,18 @@ final class CookieBanner extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['cookie-banner', "bg-{$this->variant}", 'text-body', 'border-top', $this->shadow],
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $baseClasses = ['cookie-banner', "bg-{$this->variant}", 'text-body', 'border-top'];
+        if ($this->shadow) {
+            $baseClasses[] = $this->shadow;
+        }
+        
+        $classes = $this->buildClassesFromArrays(
+            $baseClasses,
             $this->getPositionClasses(),
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([

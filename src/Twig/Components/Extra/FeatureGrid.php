@@ -40,14 +40,14 @@ final class FeatureGrid extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->columns ??= $d['columns'] ?? 3;
-        $this->gap ??= $d['gap'] ?? '4';
-        $this->container ??= $d['container'] ?? 'container';
-        $this->variant ??= $d['variant'] ?? 'default';
-        $this->align ??= $d['align'] ?? 'start';
-        $this->centered = $this->centered || ($d['centered'] ?? false);
-        $this->headingTag ??= $d['heading_tag'] ?? 'h2';
-        $this->headingAlign ??= $d['heading_align'] ?? 'center';
+        $this->columns ??= $this->configIntWithFallback($d, 'columns', 3);
+        $this->gap ??= $this->configStringWithFallback($d, 'gap', '4');
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'default');
+        $this->align ??= $this->configStringWithFallback($d, 'align', 'start');
+        $this->centered = $this->centered || $this->configBoolWithFallback($d, 'centered', false);
+        $this->headingTag ??= $this->configStringWithFallback($d, 'heading_tag', 'h2');
+        $this->headingAlign ??= $this->configStringWithFallback($d, 'heading_align', 'center');
 
         $this->applyClassDefaults($d);
 

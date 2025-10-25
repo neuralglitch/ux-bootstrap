@@ -77,40 +77,40 @@ final class DropdownMulti extends AbstractStimulus
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
 
-        $this->label ??= $d['label'] ?? 'Select options';
-        $this->placeholder ??= $d['placeholder'] ?? null;
-        $this->direction ??= $d['direction'] ?? null;
-        $this->menuAlign ??= $d['menu_align'] ?? null;
+        $this->label ??= $this->configStringWithFallback($d, 'label', 'Select options');
+        $this->placeholder ??= $this->configString($d, 'placeholder');
+        $this->direction ??= $this->configString($d, 'direction');
+        $this->menuAlign ??= $this->configString($d, 'menu_align');
         $this->dark = $this->dark || ($d['dark'] ?? false);
-        $this->autoClose ??= $d['auto_close'] ?? 'outside';
+        $this->autoClose ??= $this->configStringWithFallback($d, 'auto_close', 'outside');
 
         $this->searchable = $this->searchable || ($d['searchable'] ?? false);
-        $this->searchPlaceholder ??= $d['search_placeholder'] ?? 'Search...';
-        $this->searchMinChars = $this->searchMinChars ?: ($d['search_min_chars'] ?? 0);
+        $this->searchPlaceholder ??= $this->configStringWithFallback($d, 'search_placeholder', 'Search...');
+        $this->searchMinChars = $this->searchMinChars ?: $this->configIntWithFallback($d, 'search_min_chars', 0);
 
         $this->showSelectAll = $this->showSelectAll && ($d['show_select_all'] ?? true);
         $this->showClear = $this->showClear && ($d['show_clear'] ?? true);
         $this->showApply = $this->showApply || ($d['show_apply'] ?? false);
-        $this->selectAllLabel ??= $d['select_all_label'] ?? 'Select All';
-        $this->clearLabel ??= $d['clear_label'] ?? 'Clear';
-        $this->applyLabel ??= $d['apply_label'] ?? 'Apply';
+        $this->selectAllLabel ??= $this->configStringWithFallback($d, 'select_all_label', 'Select All');
+        $this->clearLabel ??= $this->configStringWithFallback($d, 'clear_label', 'Clear');
+        $this->applyLabel ??= $this->configStringWithFallback($d, 'apply_label', 'Apply');
 
         $this->showCount = $this->showCount && ($d['show_count'] ?? true);
-        $this->countFormat ??= $d['count_format'] ?? '{count} selected';
+        $this->countFormat ??= $this->configStringWithFallback($d, 'count_format', '{count} selected');
         $this->showChecks = $this->showChecks && ($d['show_checks'] ?? true);
 
         // Only apply default if not explicitly set
         if ($this->maxDisplay === 3) {
-            $this->maxDisplay = $d['max_display'] ?? 3;
+            $this->maxDisplay = $this->configIntWithFallback($d, 'max_display', 3);
         }
 
-        $this->name ??= $d['name'] ?? null;
+        $this->name ??= $this->configString($d, 'name');
         $this->required = $this->required || ($d['required'] ?? false);
 
-        $this->toggleClass ??= $d['toggle_class'] ?? null;
-        $this->menuClass ??= $d['menu_class'] ?? null;
-        $this->maxHeight ??= $d['max_height'] ?? '300px';
-        $this->menuAttr = array_merge($d['menu_attr'] ?? [], $this->menuAttr);
+        $this->toggleClass ??= $this->configString($d, 'toggle_class');
+        $this->menuClass ??= $this->configString($d, 'menu_class');
+        $this->maxHeight ??= $this->configStringWithFallback($d, 'max_height', '300px');
+        $this->menuAttr = array_merge($this->configArray($d, 'menu_attr', []) ?? [], $this->menuAttr);
 
         // Initialize controller with default
         $this->initializeController();
@@ -180,7 +180,8 @@ final class DropdownMulti extends AbstractStimulus
 
         // Menu style for max height
         if ($this->maxHeight) {
-            $menuAttrs['style'] = ($menuAttrs['style'] ?? '') . ' max-height: ' . $this->maxHeight . '; overflow-y: auto;';
+            $existingStyle = is_string($menuAttrs['style'] ?? null) ? $menuAttrs['style'] : '';
+            $menuAttrs['style'] = $existingStyle . ' max-height: ' . $this->maxHeight . '; overflow-y: auto;';
         }
 
         return [

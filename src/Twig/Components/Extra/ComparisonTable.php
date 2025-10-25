@@ -44,17 +44,17 @@ final class ComparisonTable extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults
-        $this->variant ??= $d['variant'] ?? 'default';
-        $this->responsive = $this->responsive && ($d['responsive'] ?? true);
-        $this->container ??= $d['container'] ?? 'container';
-        $this->highlightColumn = $this->highlightColumn !== -1 ? $this->highlightColumn : ($d['highlight_column'] ?? -1);
-        $this->showCheckmarks = $this->showCheckmarks && ($d['show_checkmarks'] ?? true);
-        $this->checkIcon ??= $d['check_icon'] ?? '✓';
-        $this->uncheckIcon ??= $d['uncheck_icon'] ?? '✗';
-        $this->sticky = $this->sticky || ($d['sticky'] ?? false);
-        $this->centered = $this->centered && ($d['centered'] ?? true);
-        $this->hover = $this->hover && ($d['hover'] ?? true);
-        $this->emptyText ??= $d['empty_text'] ?? '—';
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'default');
+        $this->responsive = $this->responsive && $this->configBoolWithFallback($d, 'responsive', true);
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
+        $this->highlightColumn = $this->highlightColumn !== -1 ? $this->highlightColumn : $this->configIntWithFallback($d, 'highlight_column', -1);
+        $this->showCheckmarks = $this->showCheckmarks && $this->configBoolWithFallback($d, 'show_checkmarks', true);
+        $this->checkIcon ??= $this->configStringWithFallback($d, 'check_icon', '✓');
+        $this->uncheckIcon ??= $this->configStringWithFallback($d, 'uncheck_icon', '✗');
+        $this->sticky = $this->sticky || $this->configBoolWithFallback($d, 'sticky', false);
+        $this->centered = $this->centered && $this->configBoolWithFallback($d, 'centered', true);
+        $this->hover = $this->hover && $this->configBoolWithFallback($d, 'hover', true);
+        $this->emptyText ??= $this->configStringWithFallback($d, 'empty_text', '—');
 
         $this->applyClassDefaults($d);
 

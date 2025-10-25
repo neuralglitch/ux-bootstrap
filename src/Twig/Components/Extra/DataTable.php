@@ -78,39 +78,39 @@ final class DataTable extends AbstractStimulus
         $this->borderless = $this->borderless || ($d['borderless'] ?? false);
         $this->hover = $this->hover && ($d['hover'] ?? true);
         $this->small = $this->small || ($d['small'] ?? false);
-        $this->variant ??= $d['variant'] ?? null;
+        $this->variant ??= $this->configString($d, 'variant');
 
         $this->responsive = $this->responsive && ($d['responsive'] ?? true);
-        $this->responsiveBreakpoint ??= $d['responsive_breakpoint'] ?? null;
+        $this->responsiveBreakpoint ??= $this->configString($d, 'responsive_breakpoint');
 
-        $this->captionPosition ??= $d['caption_position'] ?? 'top';
-        $this->thead ??= $d['thead'] ?? null;
+        $this->captionPosition ??= $this->configStringWithFallback($d, 'caption_position', 'top');
+        $this->thead ??= $this->configString($d, 'thead');
         $this->divider = $this->divider || ($d['divider'] ?? false);
 
         $this->sortable = $this->sortable || ($d['sortable'] ?? false);
-        $this->sortDirection ??= $d['sort_direction'] ?? 'asc';
+        $this->sortDirection ??= $this->configStringWithFallback($d, 'sort_direction', 'asc');
 
         $this->selectable = $this->selectable || ($d['selectable'] ?? false);
-        $this->selectName ??= $d['select_name'] ?? 'selected[]';
+        $this->selectName ??= $this->configStringWithFallback($d, 'select_name', 'selected[]');
         $this->selectAll = $this->selectAll || ($d['select_all'] ?? false);
 
         $this->showActions = $this->showActions || ($d['show_actions'] ?? false);
 
         // Only override actionsLabel if it's still the default value
         if ($this->actionsLabel === 'Actions' && isset($d['actions_label'])) {
-            $this->actionsLabel = $d['actions_label'];
+            $this->actionsLabel = $this->configStringWithFallback($d, 'actions_label', 'Actions');
         }
 
-        $this->actionsPosition ??= $d['actions_position'] ?? 'end';
+        $this->actionsPosition ??= $this->configStringWithFallback($d, 'actions_position', 'end');
 
         // Only override emptyMessage if it's still the default value
         if ($this->emptyMessage === 'No data available' && isset($d['empty_message'])) {
-            $this->emptyMessage = $d['empty_message'];
+            $this->emptyMessage = $this->configStringWithFallback($d, 'empty_message', 'No data available');
         }
 
         $this->showEmptyState = $this->showEmptyState && ($d['show_empty_state'] ?? true);
 
-        $this->container ??= $d['container'] ?? 'container-fluid';
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container-fluid');
         $this->cardWrapper = $this->cardWrapper || ($d['card_wrapper'] ?? false);
 
         // Initialize controller
@@ -134,7 +134,7 @@ final class DataTable extends AbstractStimulus
      */
     public function options(): array
     {
-        $tableClasses = $this->buildClasses(
+        $tableClasses = $this->buildClassesFromArrays(
             ['table'],
             $this->striped ? ['table-striped'] : [],
             $this->bordered ? ['table-bordered'] : [],
@@ -215,7 +215,7 @@ final class DataTable extends AbstractStimulus
         foreach ($this->columns as $column) {
             $processed[] = [
                 'key' => $column['key'] ?? '',
-                'label' => $column['label'] ?? ucfirst((string)($column['key'] ?? '')),
+                'label' => $column['label'] ?? ucfirst($this->configStringWithFallback($column, 'key')),
                 'sortable' => $column['sortable'] ?? true,
                 'class' => $column['class'] ?? null,
                 'headerClass' => $column['headerClass'] ?? null,

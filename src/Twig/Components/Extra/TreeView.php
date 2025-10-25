@@ -181,6 +181,10 @@ final class TreeView extends AbstractStimulus
      */
     public bool $showModified = false;
 
+    /**
+     * @param array<string>|null $excludeDirs
+     * @param array<string>|null $excludeFiles
+     */
     public function mount(
         ?string $filesystemPath = null,
         ?string $path = null,
@@ -210,80 +214,75 @@ final class TreeView extends AbstractStimulus
         }
 
         // Debug: Check if filesystemPath is set from template
-        dump('TreeView mount() called');
-        dump('TreeView: filesystemPath after mount = ' . var_export($this->filesystemPath, true));
-        dump('TreeView: path after mount = ' . var_export($this->path, true));
-        dump('TreeView: src after mount = ' . var_export($this->src, true));
         
-        $d = $this->config->for('tree_view');
+        $d = $this->config->for('tree-view');
 
         $this->applyStimulusDefaults($d);
 
         $this->applyClassDefaults($d);
 
-        $this->selectable = $this->selectable || ($d['selectable'] ?? false);
-        $this->multiSelect = $this->multiSelect || ($d['multi_select'] ?? false);
-        $this->showIcons = $this->showIcons && ($d['show_icons'] ?? true);
+        // Apply boolean config - only if not already set manually
+        if (isset($d['selectable']) && $this->selectable === false) {
+            $this->selectable = $this->configBoolWithFallback($d, 'selectable', false);
+        }
+        if (isset($d['multi_select']) && $this->multiSelect === false) {
+            $this->multiSelect = $this->configBoolWithFallback($d, 'multi_select', false);
+        }
+        if (isset($d['show_icons']) && $this->showIcons === true) {
+            $this->showIcons = $this->configBoolWithFallback($d, 'show_icons', true);
+        }
 
         // Use null coalescing for icon properties to respect component-level changes
         if ($this->defaultIcon === 'bi-file-earmark') {
-            $this->defaultIcon = $d['default_icon'] ?? $this->defaultIcon;
-
-
-            // Initialize controller with default
-            $this->initializeController();
+            $this->defaultIcon = $this->configStringWithFallback($d, 'default_icon', 'bi-file-earmark');
         }
         if ($this->folderIcon === 'bi-folder') {
-            $this->folderIcon = $d['folder_icon'] ?? $this->folderIcon;
+            $this->folderIcon = $this->configStringWithFallback($d, 'folder_icon', 'bi-folder');
         }
         if ($this->folderOpenIcon === 'bi-folder-open') {
-            $this->folderOpenIcon = $d['folder_open_icon'] ?? $this->folderOpenIcon;
+            $this->folderOpenIcon = $this->configStringWithFallback($d, 'folder_open_icon', 'bi-folder-open');
         }
 
         $this->showExpandIcons = $this->showExpandIcons && ($d['show_expand_icons'] ?? true);
 
         // Use null coalescing for expand/collapse icon properties
         if ($this->expandIcon === 'bi-chevron-right') {
-            $this->expandIcon = $d['expand_icon'] ?? $this->expandIcon;
+            $this->expandIcon = $this->configStringWithFallback($d, 'expand_icon', 'bi-chevron-right');
         }
         if ($this->collapseIcon === 'bi-chevron-down') {
-            $this->collapseIcon = $d['collapse_icon'] ?? $this->collapseIcon;
+            $this->collapseIcon = $this->configStringWithFallback($d, 'collapse_icon', 'bi-chevron-down');
         }
 
-        $this->expandAll = $this->expandAll || ($d['expand_all'] ?? false);
-        $this->collapseAll = $this->collapseAll || ($d['collapse_all'] ?? false);
-        $this->keyboard = $this->keyboard && ($d['keyboard'] ?? true);
-        $this->showLines = $this->showLines || ($d['show_lines'] ?? false);
-        $this->compact = $this->compact || ($d['compact'] ?? false);
-        $this->hoverable = $this->hoverable && ($d['hoverable'] ?? true);
+        // Apply other boolean configs - only if not already set manually
+        if (isset($d['expand_all']) && $this->expandAll === false) {
+            $this->expandAll = $this->configBoolWithFallback($d, 'expand_all', false);
+        }
+        if (isset($d['collapse_all']) && $this->collapseAll === false) {
+            $this->collapseAll = $this->configBoolWithFallback($d, 'collapse_all', false);
+        }
+        if (isset($d['keyboard']) && $this->keyboard === true) {
+            $this->keyboard = $this->configBoolWithFallback($d, 'keyboard', true);
+        }
+        if (isset($d['show_lines']) && $this->showLines === false) {
+            $this->showLines = $this->configBoolWithFallback($d, 'show_lines', false);
+        }
+        if (isset($d['compact']) && $this->compact === false) {
+            $this->compact = $this->configBoolWithFallback($d, 'compact', false);
+        }
+        if (isset($d['hoverable']) && $this->hoverable === true) {
+            $this->hoverable = $this->configBoolWithFallback($d, 'hoverable', true);
+        }
 
         // Handle filesystem integration
-        dump('TreeView mount() called');
-        dump('TreeView: filesystemPath = ' . var_export($this->filesystemPath, true));
-        dump('TreeView: path = ' . var_export($this->path, true));
-        dump('TreeView: excludeDirs = ' . var_export($this->excludeDirs, true));
-        dump('TreeView: excludeFiles = ' . var_export($this->excludeFiles, true));
-        dump('TreeView: maxDepth = ' . var_export($this->maxDepth, true));
-        
         // Use either filesystemPath, path, or src property
         $path = $this->filesystemPath ?? $this->path ?? $this->src;
         
-        // Hardcode path for testing
-        if (!$path) {
-            $path = 'vendor/neuralglitch/ux-bootstrap';
-            dump('TreeView: Using hardcoded path for testing: ' . $path);
-        }
-        
         if ($path) {
-            dump('TreeView: Loading filesystem tree from: ' . $path);
             $this->loadFilesystemTreeFromPath($path);
-            dump('TreeView: Loaded ' . count($this->items) . ' items');
         } else {
-            dump('TreeView: No path provided, items count = ' . count($this->items));
             // Process items to add default expanded state
             $this->items = $this->processItems($this->items);
         }
-        dump($this->items);
     }
 
     protected function getComponentName(): string
@@ -296,13 +295,14 @@ final class TreeView extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = array_merge(
             ['tree-view'],
             $this->showLines ? ['tree-view-lines'] : [],
             $this->compact ? ['tree-view-compact'] : [],
             $this->hoverable ? ['tree-view-hoverable'] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
+        $classes = implode(' ', array_filter($classes));
 
         $attrs = $this->mergeAttributes(
             [
@@ -380,28 +380,13 @@ final class TreeView extends AbstractStimulus
 
             // Process children recursively
             if (isset($item['children']) && is_array($item['children'])) {
-                $item['children'] = $this->processItems($item['children']);
+                /** @var array<int, array<string, mixed>> $children */
+                $children = $item['children'];
+                $item['children'] = $this->processItems($children);
             }
 
             return $item;
         }, $items);
-    }
-
-    /**
-     * Load tree structure from filesystem
-     */
-    private function loadFilesystemTree(): void
-    {
-        $adapter = new FilesystemAdapter();
-        $treeData = $adapter->buildTree(
-            $this->filesystemPath,
-            $this->excludeDirs,
-            $this->excludeFiles,
-            $this->maxDepth
-        );
-
-        // Process filesystem data to match tree view format
-        $this->items = $this->processFilesystemItems($treeData);
     }
 
     /**
@@ -418,7 +403,15 @@ final class TreeView extends AbstractStimulus
         );
 
         // Process filesystem data to match tree view format
-        $this->items = $this->processFilesystemItems($treeData);
+        // buildTree returns array with root item, we need to get its children
+        $rootItem = $treeData[0] ?? null;
+        if ($rootItem && isset($rootItem['children'])) {
+            /** @var array<int, array<string, mixed>> $children */
+            $children = $rootItem['children'];
+            $this->items = $this->processFilesystemItems($children);
+        } else {
+            $this->items = [];
+        }
     }
 
     /**
@@ -439,7 +432,7 @@ final class TreeView extends AbstractStimulus
 
             // Add file metadata as separate fields
             if ($item['type'] === 'file' && ($this->showFileSizes || $this->showPermissions || $this->showModified)) {
-                if ($this->showFileSizes) {
+                if ($this->showFileSizes && is_int($item['size'])) {
                     $item['size'] = $adapter->formatFileSize($item['size']);
                 }
                 
@@ -447,14 +440,16 @@ final class TreeView extends AbstractStimulus
                     $item['permissions'] = $item['permissions'];
                 }
                 
-                if ($this->showModified && $item['modified']) {
+                if ($this->showModified && $item['modified'] instanceof \DateTime) {
                     $item['modified'] = $item['modified']->format('Y-m-d H:i');
                 }
             }
 
             // Process children recursively
             if (isset($item['children']) && is_array($item['children'])) {
-                $item['children'] = $this->processFilesystemItems($item['children']);
+                /** @var array<int, array<string, mixed>> $children */
+                $children = $item['children'];
+                $item['children'] = $this->processFilesystemItems($children);
             }
 
             return $item;

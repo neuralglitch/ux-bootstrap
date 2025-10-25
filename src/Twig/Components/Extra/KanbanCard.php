@@ -49,24 +49,24 @@ final class KanbanCard extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults - config takes precedence over component defaults
-        $this->title = $d['title'] ?? $this->title;
-        $this->description = $d['description'] ?? $this->description;
-        $this->label = $d['label'] ?? $this->label;
-        $this->badge = $d['badge'] ?? $this->badge;
-        $this->badge_variant = $d['badge_variant'] ?? $this->badge_variant;
-        $this->avatar_src = $d['avatar_src'] ?? $this->avatar_src;
-        $this->avatar_alt = $d['avatar_alt'] ?? $this->avatar_alt;
-        $this->footer_text = $d['footer_text'] ?? $this->footer_text;
-        $this->icon = $d['icon'] ?? $this->icon;
-        $this->variant = $d['variant'] ?? $this->variant;
-        $this->shadow = $d['shadow'] ?? $this->shadow;
-        $this->hover_effect = $d['hover_effect'] ?? $this->hover_effect;
-        $this->clickable = $d['clickable'] ?? $this->clickable;
-        $this->href = $d['href'] ?? $this->href;
-        $this->show_drag_handle = $d['show_drag_handle'] ?? $this->show_drag_handle;
-        $this->draggable = $d['draggable'] ?? $this->draggable;
-        $this->priority = $d['priority'] ?? $this->priority;
-        $this->status = $d['status'] ?? $this->status;
+        $this->title ??= $this->configString($d, 'title');
+        $this->description ??= $this->configString($d, 'description');
+        $this->label ??= $this->configString($d, 'label');
+        $this->badge ??= $this->configString($d, 'badge');
+        $this->badge_variant ??= $this->configString($d, 'badge_variant');
+        $this->avatar_src ??= $this->configString($d, 'avatar_src');
+        $this->avatar_alt ??= $this->configString($d, 'avatar_alt');
+        $this->footer_text ??= $this->configString($d, 'footer_text');
+        $this->icon ??= $this->configString($d, 'icon');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->shadow = isset($d['shadow']) ? $this->configBoolWithFallback($d, 'shadow', true) : $this->shadow;
+        $this->hover_effect = isset($d['hover_effect']) ? $this->configBoolWithFallback($d, 'hover_effect', true) : $this->hover_effect;
+        $this->clickable = isset($d['clickable']) ? $this->configBoolWithFallback($d, 'clickable', false) : $this->clickable;
+        $this->href ??= $this->configString($d, 'href');
+        $this->show_drag_handle = $this->show_drag_handle || $this->configBoolWithFallback($d, 'show_drag_handle', false);
+        $this->draggable = $this->draggable || $this->configBoolWithFallback($d, 'draggable', false);
+        $this->priority ??= $this->configString($d, 'priority');
+        $this->status ??= $this->configString($d, 'status');
 
         // Generate ID if not provided
         if (!$this->id) {
@@ -99,14 +99,17 @@ final class KanbanCard extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $classes = $this->buildClassesFromArrays(
             ['kanban-card', 'card'],
             $this->variant ? ["border-{$this->variant}"] : [],
             $this->shadow ? ['shadow-sm'] : [],
             $this->hover_effect ? ['kanban-card-hover'] : [],
             $this->clickable ? ['kanban-card-clickable', 'cursor-pointer'] : [],
             $this->priority ? ["kanban-card-priority-{$this->priority}"] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes(

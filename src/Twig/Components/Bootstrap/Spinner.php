@@ -23,11 +23,11 @@ final class Spinner extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->type ??= $d['type'] ?? 'border';
-        $this->variant ??= $d['variant'] ?? null;
-        $this->size ??= $d['size'] ?? null;
-        $this->label ??= $d['label'] ?? 'Loading...';
-        $this->role ??= $d['role'] ?? 'status';
+        $this->type ??= $this->configStringWithFallback($d, 'type', 'border');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->size ??= $this->configString($d, 'size');
+        $this->label ??= $this->configStringWithFallback($d, 'label', 'Loading...');
+        $this->role ??= $this->configStringWithFallback($d, 'role', 'status');
 
 
         // Initialize controller with default
@@ -48,16 +48,11 @@ final class Spinner extends AbstractStimulus
         $sizeClass = $this->size === 'sm' ? "{$baseClass}-sm" : null;
         $variantClass = $this->variant ? "text-{$this->variant}" : null;
 
-        $classes = $this->buildClasses(
-            [$baseClass],
-            $sizeClass ? [$sizeClass] : [],
-            $variantClass ? [$variantClass] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays([$baseClass], $sizeClass ? [$sizeClass] : [], $variantClass ? [$variantClass] : [], $this->class ? explode(' ', trim($this->class)) : []
         );
 
         $attrs = $this->mergeAttributes(
-            ['role' => $this->role ?? 'status'],
-            $this->attr
+            ['role' => $this->role ?? 'status'], $this->attr
         );
 
         return [

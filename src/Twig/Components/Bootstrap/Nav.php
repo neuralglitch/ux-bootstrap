@@ -9,47 +9,14 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:nav', template: '@NeuralGlitchUxBootstrap/components/bootstrap/nav.html.twig')]
 final class Nav extends AbstractStimulus
 {
-    public string $stimulusController = 'bs-nav';
-
-    /**
-     * Nav style variant: null, 'tabs', 'pills', or 'underline'
-     */
-    public ?string $variant = null;
-
-    /**
-     * Fill available space equally
-     */
+    public ?string $variant = null; // 'tabs' | 'pills' | 'underline'
     public bool $fill = false;
-
-    /**
-     * Justify items to fill available space with equal widths
-     */
     public bool $justified = false;
-
-    /**
-     * Stack navigation vertically
-     * Can be: false, true, or responsive breakpoint ('sm', 'md', 'lg', 'xl', 'xxl')
-     */
-    public string|bool $vertical = false;
-
-    /**
-     * Horizontal alignment: null, 'start', 'center', or 'end'
-     */
-    public ?string $align = null;
-
-    /**
-     * HTML tag to use: 'ul', 'nav', 'ol', or 'div'
-     */
-    public string $tag = 'ul';
-
-    /**
-     * Optional ID attribute
-     */
+    public bool|string|null $vertical = false;
+    public string|bool|null $verticalResponsive = null; // null | true (always) | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    public ?string $align = null; // 'start' | 'center' | 'end'
+    public ?string $tag = null; // 'ul' | 'nav' | 'div' | 'ol'
     public ?string $id = null;
-
-    /**
-     * ARIA role (automatically set based on tag)
-     */
     public ?string $role = null;
 
     public function mount(): void
@@ -57,28 +24,18 @@ final class Nav extends AbstractStimulus
         $d = $this->config->for('nav');
 
         $this->applyStimulusDefaults($d);
-
-        // Apply base class defaults
         $this->applyClassDefaults($d);
 
-        // Apply component-specific defaults
-        $this->variant ??= $d['variant'] ?? null;
-        $this->fill = $this->fill || ($d['fill'] ?? false);
-        $this->justified = $this->justified || ($d['justified'] ?? false);
-        $this->vertical = $this->vertical !== false ? $this->vertical : ($d['vertical'] ?? false);
-        $this->align ??= $d['align'] ?? null;
-        $this->tag = $this->tag !== 'ul' ? $this->tag : ($d['tag'] ?? 'ul');
-        $this->id ??= $d['id'] ?? null;
-        $this->role ??= $d['role'] ?? null;
-
-        // Auto-detect role if not explicitly set
-        if ($this->role === null) {
-            $this->role = match ($this->tag) {
-                'nav' => 'navigation',
-                'ul', 'ol' => 'list',
-                default => null,
-            };
-        }
+        // Apply defaults from config
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->fill = $this->fill || $this->configBoolWithFallback($d, 'fill', false);
+        $this->justified = $this->justified || $this->configBoolWithFallback($d, 'justified', false);
+        $this->vertical = $this->vertical ?: $this->configString($d, 'vertical') ?: false;
+        $this->verticalResponsive ??= $this->configString($d, 'vertical_responsive');
+        $this->align ??= $this->configString($d, 'align');
+        $this->tag ??= $this->configStringWithFallback($d, 'tag', 'ul');
+        $this->id ??= $this->configString($d, 'id');
+        $this->role ??= $this->configStringWithFallback($d, 'role', $this->tag === 'ol' ? 'list' : 'navigation');
 
         // Initialize controller with default
         $this->initializeController();
@@ -94,68 +51,35 @@ final class Nav extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['nav'],
-            $this->variant ? ["nav-{$this->variant}"] : [],
+            $this->variant ? ['nav-' . $this->variant] : [],
             $this->fill ? ['nav-fill'] : [],
             $this->justified ? ['nav-justified'] : [],
-            $this->buildVerticalClasses(),
-            $this->buildAlignClasses(),
+            ($this->vertical === true || $this->vertical === 'true') ? ['flex-column'] : [],
+            $this->verticalResponsive ? ['flex-' . ($this->verticalResponsive !== true ? $this->verticalResponsive . '-column' : 'column')] : [],
+            ($this->vertical && $this->vertical !== true && $this->vertical !== 'true') ? ['flex-' . $this->vertical . '-column'] : [],
+            $this->align ? ['justify-content-' . $this->align] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $attrs = $this->mergeAttributes(
-            array_filter([
-                'id' => $this->id,
-                'role' => $this->role,
-            ]),
-            $this->attr
-        );
+        $attrs = [];
+
+        if ($this->id) {
+            $attrs['id'] = $this->id;
+        }
+
+        if ($this->role) {
+            $attrs['role'] = $this->role;
+        }
+
+        $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         return [
             'tag' => $this->tag,
             'classes' => $classes,
             'attrs' => $attrs,
-            'isListTag' => in_array($this->tag, ['ul', 'ol'], true),
+            'isListTag' => $this->tag === 'ul' || $this->tag === 'ol',
         ];
     }
-
-    /**
-     * Build vertical orientation classes
-     *
-     * @return array<string>
-     */
-    private function buildVerticalClasses(): array
-    {
-        if ($this->vertical === false) {
-            return [];
-        }
-
-        if ($this->vertical === true) {
-            return ['flex-column'];
-        }
-
-        // Responsive vertical: 'sm', 'md', 'lg', 'xl', 'xxl'
-        return ["flex-{$this->vertical}-column"];
-    }
-
-    /**
-     * Build horizontal alignment classes
-     *
-     * @return array<string>
-     */
-    private function buildAlignClasses(): array
-    {
-        if (!$this->align) {
-            return [];
-        }
-
-        return match ($this->align) {
-            'center' => ['justify-content-center'],
-            'end' => ['justify-content-end'],
-            'start' => ['justify-content-start'],
-            default => [],
-        };
-    }
 }
-

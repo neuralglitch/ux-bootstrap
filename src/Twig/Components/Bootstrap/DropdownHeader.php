@@ -18,7 +18,7 @@ final class DropdownHeader extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         $this->applyClassDefaults($d);
-        $this->label ??= $d['label'] ?? null;
+        $this->label ??= $this->configString($d, 'label');
 
 
         // Initialize controller with default
@@ -35,7 +35,7 @@ final class DropdownHeader extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['dropdown-header'],
             $this->class ? explode(' ', trim($this->class)) : []
         );

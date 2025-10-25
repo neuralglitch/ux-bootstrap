@@ -48,24 +48,24 @@ final class EmptyState extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->title ??= $d['title'] ?? 'No items found';
-        $this->description ??= $d['description'] ?? null;
-        $this->icon ??= $d['icon'] ?? null;
-        $this->iconClass ??= $d['icon_class'] ?? null;
-        $this->imageSrc ??= $d['image_src'] ?? null;
-        $this->imageAlt ??= $d['image_alt'] ?? null;
-        $this->ctaLabel ??= $d['cta_label'] ?? null;
-        $this->ctaHref ??= $d['cta_href'] ?? null;
-        $this->ctaVariant ??= $d['cta_variant'] ?? 'primary';
-        $this->ctaSize ??= $d['cta_size'] ?? null;
-        $this->secondaryCtaLabel ??= $d['secondary_cta_label'] ?? null;
-        $this->secondaryCtaHref ??= $d['secondary_cta_href'] ?? null;
-        $this->secondaryCtaVariant ??= $d['secondary_cta_variant'] ?? 'outline-secondary';
-        $this->secondaryCtaSize ??= $d['secondary_cta_size'] ?? null;
-        $this->variant ??= $d['variant'] ?? null;
-        $this->size ??= $d['size'] ?? null;
-        $this->container ??= $d['container'] ?? 'container';
-        $this->centered = $this->centered && ($d['centered'] ?? true);
+        $this->title ??= $this->configStringWithFallback($d, 'title', 'No items found');
+        $this->description ??= $this->configString($d, 'description');
+        $this->icon ??= $this->configString($d, 'icon');
+        $this->iconClass ??= $this->configString($d, 'icon_class');
+        $this->imageSrc ??= $this->configString($d, 'image_src');
+        $this->imageAlt ??= $this->configString($d, 'image_alt');
+        $this->ctaLabel ??= $this->configString($d, 'cta_label');
+        $this->ctaHref ??= $this->configString($d, 'cta_href');
+        $this->ctaVariant ??= $this->configStringWithFallback($d, 'cta_variant', 'primary');
+        $this->ctaSize ??= $this->configString($d, 'cta_size');
+        $this->secondaryCtaLabel ??= $this->configString($d, 'secondary_cta_label');
+        $this->secondaryCtaHref ??= $this->configString($d, 'secondary_cta_href');
+        $this->secondaryCtaVariant ??= $this->configStringWithFallback($d, 'secondary_cta_variant', 'outline-secondary');
+        $this->secondaryCtaSize ??= $this->configString($d, 'secondary_cta_size');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->size ??= $this->configString($d, 'size');
+        $this->container ??= $this->configStringWithFallback($d, 'container', 'container');
+        $this->centered = $this->centered && $this->configBoolWithFallback($d, 'centered', true);
 
 
         // Initialize controller with default
@@ -82,27 +82,30 @@ final class EmptyState extends AbstractStimulus
      */
     public function options(): array
     {
-        $containerClasses = $this->buildClasses(
+        $containerClasses = $this->buildClassesFromArrays(
             [$this->container],
             $this->centered ? ['text-center'] : [],
             ['py-5']
         );
 
-        $wrapperClasses = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $wrapperClasses = $this->buildClassesFromArrays(
             ['empty-state'],
             $this->size === 'sm' ? ['empty-state-sm'] : [],
             $this->size === 'lg' ? ['empty-state-lg'] : [],
             $this->variant ? ["empty-state-{$this->variant}"] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
-        $iconClasses = $this->buildClasses(
+        $iconClasses = $this->buildClassesFromArrays(
             ['empty-state-icon'],
             $this->size === 'sm' ? ['fs-1'] : [],
             $this->size === 'lg' ? ['fs-display-1'] : ['fs-2'],
             $this->variant ? ["text-{$this->variant}"] : ['text-muted'],
             ['mb-3'],
-            $this->iconClass ? explode(' ', trim($this->iconClass)) : []
+            $this->iconClass ? array_filter(explode(' ', trim($this->iconClass)), fn($v) => $v !== '') : []
         );
 
         $titleClasses = $this->buildClasses(

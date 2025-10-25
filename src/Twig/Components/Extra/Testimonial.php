@@ -39,17 +39,17 @@ final class Testimonial extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'single';
-        $this->quote ??= $d['quote'] ?? null;
-        $this->author ??= $d['author'] ?? null;
-        $this->role ??= $d['role'] ?? null;
-        $this->company ??= $d['company'] ?? null;
-        $this->avatarSrc ??= $d['avatar_src'] ?? null;
-        $this->avatarAlt ??= $d['avatar_alt'] ?? null;
-        $this->rating ??= $d['rating'] ?? null;
-        $this->container ??= $d['container'] ?? 'container';
-        $this->alignment ??= $d['alignment'] ?? 'left';
-        $this->columns ??= $d['columns'] ?? 3;
+        $this->variant = $this->variant ?? $this->configStringWithFallback($d, 'variant', 'single');
+        $this->quote = $this->quote ?? $this->configString($d, 'quote');
+        $this->author = $this->author ?? $this->configString($d, 'author');
+        $this->role = $this->role ?? $this->configString($d, 'role');
+        $this->company = $this->company ?? $this->configString($d, 'company');
+        $this->avatarSrc = $this->avatarSrc ?? $this->configString($d, 'avatar_src');
+        $this->avatarAlt = $this->avatarAlt ?? $this->configString($d, 'avatar_alt');
+        $this->rating = $this->rating ?? $this->configInt($d, 'rating');
+        $this->container = $this->container ?? $this->configStringWithFallback($d, 'container', 'container');
+        $this->alignment = $this->alignment ?? $this->configStringWithFallback($d, 'alignment', 'left');
+        $this->columns = $this->columns ?? $this->configIntWithFallback($d, 'columns', 3);
 
         $this->applyClassDefaults($d);
 

@@ -73,13 +73,13 @@ final class ActivityFeed extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->mode ??= $d['mode'] ?? 'default';
-        $this->showTimestamps ??= $d['show_timestamps'] ?? true;
-        $this->showIcons ??= $d['show_icons'] ?? true;
+        $this->mode ??= $this->configStringWithFallback($d, 'mode', 'default');
+        $this->showTimestamps ??= $this->configBoolWithFallback($d, 'show_timestamps', true);
+        $this->showIcons ??= $this->configBoolWithFallback($d, 'show_icons', true);
 
         // Handle border: if explicitly set in config (even to null), use that value
         if ($this->border === null && array_key_exists('border', $d)) {
-            $this->border = $d['border'];
+            $this->border = $this->configString($d, 'border');
 
 
             // Initialize controller with default
@@ -88,9 +88,9 @@ final class ActivityFeed extends AbstractStimulus
             $this->border = 'start';
         }
 
-        $this->groupByDate ??= $d['group_by_date'] ?? false;
-        $this->maxHeight ??= $d['max_height'] ?? null;
-        $this->tag ??= $d['tag'] ?? 'div';
+        $this->groupByDate ??= $this->configBoolWithFallback($d, 'group_by_date', false);
+        $this->maxHeight ??= $this->configString($d, 'max_height');
+        $this->tag ??= $this->configStringWithFallback($d, 'tag', 'div');
     }
 
     protected function getComponentName(): string
@@ -103,19 +103,24 @@ final class ActivityFeed extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $classes = $this->buildClassesFromArrays(
             ['activity-feed'],
             $this->mode === 'compact' ? ['activity-feed-compact'] : [],
             $this->border === 'start' ? ['border-start', 'border-3'] : [],
             $this->border === 'end' ? ['border-end', 'border-3'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);
 
         // Add inline styles for maxHeight if set
         if ($this->maxHeight) {
-            $style = ($attrs['style'] ?? '') . " max-height: {$this->maxHeight}; overflow-y: auto;";
+            $existingStyle = $attrs['style'] ?? '';
+            $existingStyle = is_string($existingStyle) ? $existingStyle : '';
+            $style = $existingStyle . " max-height: {$this->maxHeight}; overflow-y: auto;";
             $attrs['style'] = trim($style);
         }
 

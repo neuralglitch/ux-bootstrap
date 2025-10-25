@@ -34,15 +34,14 @@ final class CarouselItem extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->active = $this->active || ($d['active'] ?? false);
+        $this->active = $this->active || $this->configBoolWithFallback($d, 'active', false);
         // For imgClass, only apply default if it's still 'd-block w-100' (the default value)
         if ($this->imgClass === 'd-block w-100') {
-            $this->imgClass = $d['img_class'] ?? 'd-block w-100';
-
-
-            // Initialize controller with default
-            $this->initializeController();
+            $this->imgClass = $this->configStringWithFallback($d, 'img_class', 'd-block w-100');
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -55,10 +54,7 @@ final class CarouselItem extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
-            ['carousel-item'],
-            $this->active ? ['active'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+        $classes = $this->buildClassesFromArrays(['carousel-item'], $this->active ? ['active'] : [], $this->class ? explode(' ', trim($this->class)) : []
         );
 
         $attrs = [];

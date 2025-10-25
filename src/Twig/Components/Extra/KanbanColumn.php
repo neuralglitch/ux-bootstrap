@@ -43,20 +43,20 @@ final class KanbanColumn extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults - config takes precedence over component defaults
-        $this->title = $d['title'] ?? $this->title;
-        $this->description = $d['description'] ?? $this->description;
-        $this->limit = $d['limit'] ?? $this->limit;
-        $this->icon = $d['icon'] ?? $this->icon;
-        $this->variant = $d['variant'] ?? $this->variant;
-        $this->bg = $d['bg'] ?? $this->bg;
-        $this->shadow = $d['shadow'] ?? $this->shadow;
-        $this->border = $d['border'] ?? $this->border;
-        $this->collapsed = $d['collapsed'] ?? $this->collapsed;
-        $this->collapsible = $d['collapsible'] ?? $this->collapsible;
-        $this->disabled = $d['disabled'] ?? $this->disabled;
-        $this->show_count = $d['show_count'] ?? $this->show_count;
-        $this->show_add_button = $d['show_add_button'] ?? $this->show_add_button;
-        $this->add_button_label = $d['add_button_label'] ?? $this->add_button_label;
+        $this->title = $this->configStringWithFallback($d, 'title', $this->title);
+        $this->description ??= $this->configString($d, 'description');
+        $this->limit ??= $this->configInt($d, 'limit');
+        $this->icon ??= $this->configString($d, 'icon');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->bg ??= $this->configString($d, 'bg');
+        $this->shadow = $this->shadow || $this->configBoolWithFallback($d, 'shadow', false);
+        $this->border = $this->border || $this->configBoolWithFallback($d, 'border', false);
+        $this->collapsed = $this->collapsed || $this->configBoolWithFallback($d, 'collapsed', false);
+        $this->collapsible = $this->collapsible || $this->configBoolWithFallback($d, 'collapsible', false);
+        $this->disabled = $this->disabled || $this->configBoolWithFallback($d, 'disabled', false);
+        $this->show_count = $this->show_count || $this->configBoolWithFallback($d, 'show_count', false);
+        $this->show_add_button = $this->show_add_button || $this->configBoolWithFallback($d, 'show_add_button', false);
+        $this->add_button_label ??= $this->configString($d, 'add_button_label');
 
         // Generate ID if not provided
         if (!$this->id) {
@@ -84,7 +84,10 @@ final class KanbanColumn extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $classes = $this->buildClassesFromArrays(
             ['kanban-column'],
             $this->variant ? ["kanban-column-{$this->variant}"] : [],
             $this->bg ? ["bg-{$this->bg}"] : [],
@@ -92,7 +95,7 @@ final class KanbanColumn extends AbstractStimulus
             $this->border ? ['border'] : [],
             $this->collapsed ? ['collapsed'] : [],
             $this->disabled ? ['disabled'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes(

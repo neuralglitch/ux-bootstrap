@@ -24,23 +24,22 @@ final class ListGroup extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->flush = $this->flush || ($d['flush'] ?? false);
-        $this->numbered = $this->numbered || ($d['numbered'] ?? false);
-        $this->horizontal ??= $d['horizontal'] ?? null;
+        $this->flush = $this->flush || $this->configBoolWithFallback($d, 'flush', false);
+        $this->numbered = $this->numbered || $this->configBoolWithFallback($d, 'numbered', false);
+        $this->horizontal ??= $this->configString($d, 'horizontal');
 
         // Auto-determine tag if not specified
         if (null === $this->tag) {
-            $this->tag = $this->numbered ? 'ol' : ($d['tag'] ?? 'ul');
-
-
-            // Initialize controller with default
-            $this->initializeController();
+            $this->tag = $this->numbered ? 'ol' : $this->configStringWithFallback($d, 'tag', 'ul');
         }
 
         // Generate unique ID if not provided
         if (null === $this->id) {
-            $this->id = $d['id'] ?? null;
+            $this->id = $this->configString($d, 'id');
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -53,7 +52,7 @@ final class ListGroup extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['list-group'],
             $this->flush ? ['list-group-flush'] : [],
             $this->numbered ? ['list-group-numbered'] : [],

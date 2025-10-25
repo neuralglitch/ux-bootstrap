@@ -52,32 +52,31 @@ final class Modal extends AbstractStimulus
         // Apply defaults
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
-        $this->fullscreen = $this->fullscreen !== false ? $this->fullscreen : ($d['fullscreen'] ?? false);
-        $this->centered = $this->centered || ($d['centered'] ?? false);
-        $this->scrollable = $this->scrollable || ($d['scrollable'] ?? false);
+        $this->fullscreen = $this->fullscreen !== false ? $this->fullscreen : $this->configBoolWithFallback($d, 'fullscreen', false);
+        $this->centered = $this->centered || $this->configBoolWithFallback($d, 'centered', false);
+        $this->scrollable = $this->scrollable || $this->configBoolWithFallback($d, 'scrollable', false);
 
         // Behavior
         if ($this->backdrop === true) {
-            $this->backdrop = $d['backdrop'] ?? true;
-
-
-            // Initialize controller with default
-            $this->initializeController();
+            $this->backdrop = $this->configBoolWithFallback($d, 'backdrop', true);
         }
-        $this->keyboard = $this->keyboard && ($d['keyboard'] ?? true);
-        $this->focus = $this->focus && ($d['focus'] ?? true);
+        $this->keyboard = $this->keyboard && $this->configBoolWithFallback($d, 'keyboard', true);
+        $this->focus = $this->focus && $this->configBoolWithFallback($d, 'focus', true);
 
         // Animation
-        $this->animation = $this->animation && ($d['animation'] ?? true);
+        $this->animation = $this->animation && $this->configBoolWithFallback($d, 'animation', true);
 
         // Visibility
-        $this->showHeader = $this->showHeader && ($d['show_header'] ?? true);
-        $this->showFooter = $this->showFooter && ($d['show_footer'] ?? true);
-        $this->showCloseButton = $this->showCloseButton && ($d['show_close_button'] ?? true);
+        $this->showHeader = $this->showHeader && $this->configBoolWithFallback($d, 'show_header', true);
+        $this->showFooter = $this->showFooter && $this->configBoolWithFallback($d, 'show_footer', true);
+        $this->showCloseButton = $this->showCloseButton && $this->configBoolWithFallback($d, 'show_close_button', true);
 
         // Labels
-        $this->closeLabel ??= $d['close_label'] ?? 'Close';
-        $this->saveLabel ??= $d['save_label'] ?? 'Save changes';
+        $this->closeLabel ??= $this->configStringWithFallback($d, 'close_label', 'Close');
+        $this->saveLabel ??= $this->configStringWithFallback($d, 'save_label', 'Save changes');
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

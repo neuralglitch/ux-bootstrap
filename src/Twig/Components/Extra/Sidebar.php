@@ -58,57 +58,43 @@ final class Sidebar extends AbstractStimulus
 
         $this->applyStimulusDefaults($d);
 
-        // Apply defaults from config (use explicit check for non-nullable properties with defaults)
-        if ($this->variant === 'fixed' && isset($d['variant'])) {
-            $this->variant = $d['variant'];
-
-
-            // Initialize controller with default
-            $this->initializeController();
-        }
-        if ($this->position === 'left' && isset($d['position'])) {
-            $this->position = $d['position'];
-        }
-        $this->width ??= $d['width'] ?? '280px';
-        $this->miniWidth ??= $d['mini_width'] ?? '80px';
+        // Apply defaults from config
+        $this->variant = ($this->variant !== 'fixed') ? $this->variant : $this->configStringWithFallback($d, 'variant', 'fixed');
+        $this->position = ($this->position !== 'left') ? $this->position : $this->configStringWithFallback($d, 'position', 'left');
+        $this->width = $this->width ?? $this->configStringWithFallback($d, 'width', '280px');
+        $this->miniWidth = $this->miniWidth ?? $this->configStringWithFallback($d, 'mini_width', '80px');
 
         // Behavior defaults
-        $this->collapsed = $this->collapsed || ($d['collapsed'] ?? false);
-        $this->collapsible = $this->collapsible && ($d['collapsible'] ?? true);
-        $this->overlay = $this->overlay || ($d['overlay'] ?? false);
-        $this->backdropClose = $this->backdropClose && ($d['backdrop_close'] ?? true);
+        $this->collapsed = $this->collapsed || $this->configBoolWithFallback($d, 'collapsed', false);
+        $this->collapsible = $this->collapsible && $this->configBoolWithFallback($d, 'collapsible', true);
+        $this->overlay = $this->overlay || $this->configBoolWithFallback($d, 'overlay', false);
+        $this->backdropClose = $this->backdropClose && $this->configBoolWithFallback($d, 'backdrop_close', true);
 
         // Mobile defaults
-        $this->mobileBreakpoint ??= $d['mobile_breakpoint'] ?? 'lg';
-        $this->mobileBehavior ??= $d['mobile_behavior'] ?? 'overlay';
+        $this->mobileBreakpoint = ($this->mobileBreakpoint !== 'lg') ? $this->mobileBreakpoint : $this->configStringWithFallback($d, 'mobile_breakpoint', 'lg');
+        $this->mobileBehavior = ($this->mobileBehavior !== 'overlay') ? $this->mobileBehavior : $this->configStringWithFallback($d, 'mobile_behavior', 'overlay');
 
         // Header/footer defaults
-        $this->showHeader = $this->showHeader || ($d['show_header'] ?? false);
-        $this->headerTitle ??= $d['header_title'] ?? null;
-        $this->showToggle = $this->showToggle && ($d['show_toggle'] ?? true);
-        $this->showFooter = $this->showFooter || ($d['show_footer'] ?? false);
+        $this->showHeader = $this->showHeader || $this->configBoolWithFallback($d, 'show_header', false);
+        $this->headerTitle = $this->headerTitle ?? $this->configString($d, 'header_title');
+        $this->showToggle = $this->showToggle && $this->configBoolWithFallback($d, 'show_toggle', true);
+        $this->showFooter = $this->showFooter || $this->configBoolWithFallback($d, 'show_footer', false);
 
         // Styling defaults
-        $this->bg ??= $d['bg'] ?? null;
-        $this->textColor ??= $d['text_color'] ?? null;
-        $this->border = $this->border || ($d['border'] ?? false);
-        $this->shadow = $this->shadow || ($d['shadow'] ?? false);
+        $this->bg = isset($d['bg']) ? $this->configString($d, 'bg') : $this->bg;
+        $this->textColor = isset($d['text_color']) ? $this->configString($d, 'text_color') : $this->textColor;
+        $this->border = $this->border || $this->configBoolWithFallback($d, 'border', false);
+        $this->shadow = $this->shadow || $this->configBoolWithFallback($d, 'shadow', false);
 
         // Scrolling
-        $this->scrollable = $this->scrollable && ($d['scrollable'] ?? true);
+        $this->scrollable = $this->scrollable && $this->configBoolWithFallback($d, 'scrollable', true);
 
-        // Z-index (use explicit check)
-        if ($this->zIndex === 1040 && isset($d['z_index'])) {
-            $this->zIndex = $d['z_index'];
-        }
+        // Z-index
+        $this->zIndex = ($this->zIndex !== 1040) ? $this->zIndex : $this->configIntWithFallback($d, 'z_index', 1040);
 
         // Animation
-        if ($this->transition === 'slide' && isset($d['transition'])) {
-            $this->transition = $d['transition'];
-        }
-        if ($this->transitionDuration === 300 && isset($d['transition_duration'])) {
-            $this->transitionDuration = $d['transition_duration'];
-        }
+        $this->transition = ($this->transition !== 'slide') ? $this->transition : $this->configStringWithFallback($d, 'transition', 'slide');
+        $this->transitionDuration = ($this->transitionDuration !== 300) ? $this->transitionDuration : $this->configIntWithFallback($d, 'transition_duration', 300);
 
         // Apply Stimulus defaults
         $this->applyStimulusDefaults($d);
@@ -134,7 +120,7 @@ final class Sidebar extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['ux-sidebar'],
             ["ux-sidebar--{$this->variant}"],
             ["ux-sidebar--{$this->position}"],

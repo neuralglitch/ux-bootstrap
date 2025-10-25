@@ -14,12 +14,22 @@ final class SizeTraitTest extends TestCase
         return new class {
             use SizeTrait;
 
+            public ?string $size = null;
+
             /**
              * @param array<string, mixed> $defaults
              */
             public function testApplySizeDefaults(array $defaults): void
             {
                 $this->applySizeDefaults($defaults);
+            }
+
+            /**
+             * Mock configString method for testing
+             */
+            protected function configString(array $config, string $key): ?string
+            {
+                return $config[$key] ?? null;
             }
 
             /**

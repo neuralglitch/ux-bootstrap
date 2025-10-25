@@ -54,39 +54,47 @@ final class PricingCard extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Plan details
-        $this->plan ??= $d['plan'] ?? 'Free';
-        $this->planDescription ??= $d['plan_description'] ?? null;
+        $this->plan ??= $this->configStringWithFallback($d, 'plan', 'Free');
+        $this->planDescription ??= $this->configString($d, 'plan_description');
 
         // Pricing
-        $this->price ??= $d['price'] ?? '0';
-        $this->currency ??= $d['currency'] ?? '$';
-        $this->period ??= $d['period'] ?? 'month';
-        $this->showPeriod ??= $d['show_period'] ?? true;
+        $this->price ??= $this->configStringWithFallback($d, 'price', '0');
+        $this->currency ??= $this->configStringWithFallback($d, 'currency', '$');
+        $this->period ??= $this->configStringWithFallback($d, 'period', 'month');
+        $this->showPeriod ??= $this->configBoolWithFallback($d, 'show_period', true);
 
         // Badge
-        $this->badge ??= $d['badge'] ?? null;
-        $this->badgeVariant ??= $d['badge_variant'] ?? 'primary';
+        $this->badge ??= $this->configString($d, 'badge');
+        $this->badgeVariant ??= $this->configStringWithFallback($d, 'badge_variant', 'primary');
 
         // Features
-        if (empty($this->features) && isset($d['features']) && is_array($d['features'])) {
-            $this->features = $d['features'];
+        if (empty($this->features)) {
+            $features = $this->configArray($d, 'features');
+            if ($features !== null) {
+                $this->features = [];
+                foreach ($features as $item) {
+                    if (is_string($item)) {
+                        $this->features[] = $item;
+                    }
+                }
+            }
         }
-        $this->showCheckmarks ??= $d['show_checkmarks'] ?? true;
+        $this->showCheckmarks ??= $this->configBoolWithFallback($d, 'show_checkmarks', true);
 
         // CTA
-        $this->ctaLabel ??= $d['cta_label'] ?? 'Get Started';
-        $this->ctaHref ??= $d['cta_href'] ?? null;
-        $this->ctaVariant ??= $d['cta_variant'] ?? 'primary';
-        $this->ctaSize ??= $d['cta_size'] ?? 'lg';
-        $this->ctaOutline ??= $d['cta_outline'] ?? false;
-        $this->ctaBlock ??= $d['cta_block'] ?? true;
+        $this->ctaLabel ??= $this->configStringWithFallback($d, 'cta_label', 'Get Started');
+        $this->ctaHref ??= $this->configString($d, 'cta_href');
+        $this->ctaVariant ??= $this->configStringWithFallback($d, 'cta_variant', 'primary');
+        $this->ctaSize ??= $this->configStringWithFallback($d, 'cta_size', 'lg');
+        $this->ctaOutline ??= $this->configBoolWithFallback($d, 'cta_outline', false);
+        $this->ctaBlock ??= $this->configBoolWithFallback($d, 'cta_block', true);
 
         // Styling
-        $this->featured ??= $d['featured'] ?? false;
-        $this->shadow ??= $d['shadow'] ?? false;
-        $this->variant ??= $d['variant'] ?? null;
-        $this->border ??= $d['border'] ?? true;
-        $this->textAlign ??= $d['text_align'] ?? 'center';
+        $this->featured ??= $this->configBoolWithFallback($d, 'featured', false);
+        $this->shadow ??= $this->configBoolWithFallback($d, 'shadow', false);
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->border ??= $this->configBoolWithFallback($d, 'border', true);
+        $this->textAlign ??= $this->configStringWithFallback($d, 'text_align', 'center');
 
         // Merge attr defaults
         if (isset($d['attr']) && is_array($d['attr'])) {
@@ -107,7 +115,7 @@ final class PricingCard extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['card', 'h-100'],
             $this->featured ? ['border-primary', 'border-3'] : [],
             $this->shadow ? ['shadow-lg'] : [],

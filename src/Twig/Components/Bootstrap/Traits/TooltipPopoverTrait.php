@@ -36,28 +36,33 @@ trait TooltipPopoverTrait
         $tooltipValue = $defaults['tooltip'] ?? null;
         if (is_string($tooltipValue)) {
             $this->tooltip ??= $tooltipValue;
-        } elseif (is_array($tooltipValue) && isset($tooltipValue['text'])) {
-            $this->tooltip ??= (string)$tooltipValue['text'];
+        } elseif (is_array($tooltipValue) && isset($tooltipValue['text']) && is_string($tooltipValue['text'])) {
+            $this->tooltip ??= $tooltipValue['text'];
         }
-        $this->tooltipPlacement = $this->tooltipPlacement ?: ($defaults['tooltip_placement'] ?? 'top');
-        $this->tooltipTrigger = $this->tooltipTrigger ?: ($defaults['tooltip_trigger'] ?? 'hover');
-        $this->tooltipHtml = $this->tooltipHtml || ($defaults['tooltip_html'] ?? false);
-        $this->tooltipDelay ??= $defaults['tooltip_delay'] ?? null;
-        $this->tooltipContainer ??= $defaults['tooltip_container'] ?? null;
+        $this->tooltipPlacement = $this->tooltipPlacement ?: $this->configStringWithFallback($defaults, 'tooltip_placement', 'top');
+        $this->tooltipTrigger = $this->tooltipTrigger ?: $this->configStringWithFallback($defaults, 'tooltip_trigger', 'hover');
+        $this->tooltipHtml ??= $this->configBool($defaults, 'tooltip_html');
+        $this->tooltipDelay ??= $this->configInt($defaults, 'tooltip_delay');
+        $this->tooltipContainer ??= $this->configString($defaults, 'tooltip_container');
 
         // Popover defaults - convert arrays to strings if needed
         $popoverValue = $defaults['popover'] ?? null;
         if (is_string($popoverValue)) {
             $this->popover ??= $popoverValue;
-        } elseif (is_array($popoverValue) && isset($popoverValue['content'])) {
-            $this->popover ??= (string)$popoverValue['content'];
+        } elseif (is_array($popoverValue)) {
+            if (isset($popoverValue['content']) && is_string($popoverValue['content'])) {
+                $this->popover ??= $popoverValue['content'];
+            }
+            if (isset($popoverValue['title']) && is_string($popoverValue['title'])) {
+                $this->popoverTitle ??= $popoverValue['title'];
+            }
         }
-        $this->popoverTitle ??= $defaults['popover_title'] ?? null;
-        $this->popoverPlacement = $this->popoverPlacement ?: ($defaults['popover_placement'] ?? 'top');
-        $this->popoverTrigger = $this->popoverTrigger ?: ($defaults['popover_trigger'] ?? 'click');
-        $this->popoverHtml = $this->popoverHtml || ($defaults['popover_html'] ?? false);
-        $this->popoverDelay ??= $defaults['popover_delay'] ?? null;
-        $this->popoverContainer ??= $defaults['popover_container'] ?? null;
+        $this->popoverTitle ??= $this->configString($defaults, 'popover_title');
+        $this->popoverPlacement = $this->popoverPlacement ?: $this->configStringWithFallback($defaults, 'popover_placement', 'top');
+        $this->popoverTrigger = $this->popoverTrigger ?: $this->configStringWithFallback($defaults, 'popover_trigger', 'click');
+        $this->popoverHtml ??= $this->configBool($defaults, 'popover_html');
+        $this->popoverDelay ??= $this->configInt($defaults, 'popover_delay');
+        $this->popoverContainer ??= $this->configString($defaults, 'popover_container');
     }
 
     /**
@@ -71,47 +76,55 @@ trait TooltipPopoverTrait
 
         // Tooltip attributes (priority over popover if both are set)
         if ($this->tooltip) {
-            $attrs['data-bs-toggle'] = 'tooltip';
             $tooltipText = $this->convertToString($this->tooltip);
-            $attrs['data-bs-title'] = $tooltipText;
-            $attrs['data-bs-placement'] = $this->tooltipPlacement;
-            $attrs['data-bs-trigger'] = $this->tooltipTrigger;
             
-            $html = $this->tooltipHtml;
-            if ($html === null) {
-                $html = (bool)preg_match('/<[^>]+>/', $tooltipText);
-            }
-            $attrs['data-bs-html'] = $html ? 'true' : 'false';
-            if ($this->tooltipDelay !== null) {
-                $attrs['data-bs-delay'] = (string)$this->tooltipDelay;
-            }
-            if ($this->tooltipContainer) {
-                $attrs['data-bs-container'] = $this->tooltipContainer;
+            // Only set tooltip attributes if there's actual content
+            if (!empty(trim($tooltipText))) {
+                $attrs['data-bs-toggle'] = 'tooltip';
+                $attrs['data-bs-title'] = $tooltipText;
+                $attrs['data-bs-placement'] = $this->tooltipPlacement;
+                $attrs['data-bs-trigger'] = $this->tooltipTrigger;
+                
+                $html = $this->tooltipHtml;
+                if ($html === null) {
+                    $html = (bool)preg_match('/<[^>]+>/', $tooltipText);
+                }
+                $attrs['data-bs-html'] = $html ? 'true' : 'false';
+                if ($this->tooltipDelay !== null) {
+                    $attrs['data-bs-delay'] = (string)$this->tooltipDelay;
+                }
+                if ($this->tooltipContainer) {
+                    $attrs['data-bs-container'] = $this->tooltipContainer;
+                }
             }
         }
         // Popover attributes (only if no tooltip)
         elseif ($this->popover) {
-            $attrs['data-bs-toggle'] = 'popover';
             $popoverContent = $this->convertToString($this->popover);
-            $attrs['data-bs-content'] = $popoverContent;
-            $attrs['data-bs-placement'] = $this->popoverPlacement;
-            $attrs['data-bs-trigger'] = $this->popoverTrigger;
             
-            if ($this->popoverTitle) {
-                $attrs['data-bs-title'] = $this->popoverTitle;
-            }
-            
-            $html = $this->popoverHtml;
-            if ($html === null) {
-                $html = (bool)preg_match('/<[^>]+>/', $popoverContent);
-            }
-            $attrs['data-bs-html'] = $html ? 'true' : 'false';
-            
-            if ($this->popoverDelay !== null) {
-                $attrs['data-bs-delay'] = (string)$this->popoverDelay;
-            }
-            if ($this->popoverContainer) {
-                $attrs['data-bs-container'] = $this->popoverContainer;
+            // Only set popover attributes if there's actual content
+            if (!empty(trim($popoverContent))) {
+                $attrs['data-bs-toggle'] = 'popover';
+                $attrs['data-bs-content'] = $popoverContent;
+                $attrs['data-bs-placement'] = $this->popoverPlacement;
+                $attrs['data-bs-trigger'] = $this->popoverTrigger;
+                
+                if ($this->popoverTitle) {
+                    $attrs['data-bs-title'] = $this->popoverTitle;
+                }
+                
+                $html = $this->popoverHtml;
+                if ($html === null) {
+                    $html = (bool)preg_match('/<[^>]+>/', $popoverContent);
+                }
+                $attrs['data-bs-html'] = $html ? 'true' : 'false';
+                
+                if ($this->popoverDelay !== null) {
+                    $attrs['data-bs-delay'] = (string)$this->popoverDelay;
+                }
+                if ($this->popoverContainer) {
+                    $attrs['data-bs-container'] = $this->popoverContainer;
+                }
             }
         }
 
@@ -134,12 +147,12 @@ trait TooltipPopoverTrait
         if (is_string($value)) {
             return $value;
         }
-        if (is_array($value) && isset($value['text'])) {
-            return (string)$value['text'];
+        if (is_array($value) && isset($value['text']) && is_string($value['text'])) {
+            return $value['text'];
         }
-        if (is_array($value) && isset($value['content'])) {
-            return (string)$value['content'];
+        if (is_array($value) && isset($value['content']) && is_string($value['content'])) {
+            return $value['content'];
         }
-        return (string)$value;
+        return is_scalar($value) ? (string)$value : '';
     }
 }

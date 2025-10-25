@@ -9,39 +9,12 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent(name: 'bs:placeholder', template: '@NeuralGlitchUxBootstrap/components/bootstrap/placeholder.html.twig')]
 final class Placeholder extends AbstractStimulus
 {
-    /**
-     * Grid column class for width (e.g., '6' for 'col-6', '12' for 'col-12')
-     */
-    public ?string $col = null;
-
-    /**
-     * Size modifier: 'lg', 'sm', 'xs', or null for default
-     */
-    public ?string $size = null;
-
-    /**
-     * Animation type: 'glow', 'wave', or null
-     */
-    public ?string $animation = null;
-
-    /**
-     * Color variant for background (e.g., 'primary', 'secondary', etc.)
-     */
-    public ?string $variant = null;
-
-    /**
-     * Custom width (e.g., '75%', '100px')
-     */
-    public ?string $width = null;
-
-    /**
-     * HTML tag to use (default: 'span')
-     */
-    public string $tag = 'span';
-
-    /**
-     * ARIA hidden attribute (default: true for accessibility)
-     */
+    public int|string|null $col = null; // Bootstrap grid column (1-12)
+    public ?string $size = null; // 'sm' | 'lg' | 'xs'
+    public ?string $animation = null; // 'glow' | 'wave'
+    public ?string $variant = null; // Bootstrap color variant
+    public ?string $width = null; // Custom width (e.g., '75%', '200px')
+    public ?string $tag = null; // HTML tag (default: 'div')
     public bool $ariaHidden = true;
 
     public function mount(): void
@@ -49,17 +22,16 @@ final class Placeholder extends AbstractStimulus
         $d = $this->config->for('placeholder');
 
         $this->applyStimulusDefaults($d);
-
         $this->applyClassDefaults($d);
 
-        $this->col ??= $d['col'] ?? null;
-        $this->size ??= $d['size'] ?? null;
-        $this->animation ??= $d['animation'] ?? null;
-        $this->variant ??= $d['variant'] ?? null;
-        $this->width ??= $d['width'] ?? null;
-        $this->tag = $this->tag !== 'span' ? $this->tag : ($d['tag'] ?? 'span');
-        $this->ariaHidden = $this->ariaHidden !== true ? $this->ariaHidden : ($d['aria_hidden'] ?? true);
-
+        // Apply defaults from config
+        $this->col ??= $this->configString($d, 'col');
+        $this->size ??= $this->configString($d, 'size');
+        $this->animation ??= $this->configString($d, 'animation');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->width ??= $this->configString($d, 'width');
+        $this->tag ??= $this->configStringWithFallback($d, 'tag', 'div');
+        $this->ariaHidden = $this->ariaHidden && $this->configBoolWithFallback($d, 'aria_hidden', true);
 
         // Initialize controller with default
         $this->initializeController();
@@ -75,12 +47,12 @@ final class Placeholder extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['placeholder'],
-            $this->col ? ["col-{$this->col}"] : [],
-            $this->size ? ["placeholder-{$this->size}"] : [],
-            $this->variant ? ["bg-{$this->variant}"] : [],
-            $this->animation ? ["placeholder-{$this->animation}"] : [],
+            $this->col ? ['col-' . (string)$this->col] : [],
+            $this->size ? ['placeholder-' . $this->size] : [],
+            $this->animation ? ['placeholder-' . $this->animation] : [],
+            $this->variant ? ['bg-' . $this->variant] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
@@ -91,7 +63,7 @@ final class Placeholder extends AbstractStimulus
         }
 
         if ($this->width) {
-            $attrs['style'] = "width: {$this->width}";
+            $attrs['style'] = 'width: ' . $this->width;
         }
 
         $attrs = $this->mergeAttributes($attrs, $this->attr);
@@ -100,7 +72,7 @@ final class Placeholder extends AbstractStimulus
             'tag' => $this->tag,
             'classes' => $classes,
             'attrs' => $attrs,
+            'width' => $this->width,
         ];
     }
 }
-

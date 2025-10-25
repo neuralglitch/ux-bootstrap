@@ -28,7 +28,9 @@ final class NeuralGlitchUxBootstrapBundle extends Bundle
             $this->extension = new NeuralGlitchUxBootstrapExtension();
         }
 
-        return $this->extension;
+        /** @var ExtensionInterface $extension */
+        $extension = $this->extension;
+        return $extension;
     }
 }
 

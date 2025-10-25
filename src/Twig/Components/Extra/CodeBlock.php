@@ -31,16 +31,16 @@ final class CodeBlock extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->language ??= $d['language'] ?? null;
-        $this->title ??= $d['title'] ?? null;
-        $this->filename ??= $d['filename'] ?? null;
-        $this->lineNumbers = $this->lineNumbers || ($d['line_numbers'] ?? false);
-        $this->copyButton = $this->copyButton && ($d['copy_button'] ?? true);
-        $this->highlightLines ??= $d['highlight_lines'] ?? null;
-        $this->theme ??= $d['theme'] ?? null;
-        $this->maxHeight = $this->maxHeight ?: ($d['max_height'] ?? 0);
-        $this->wrapLines = $this->wrapLines || ($d['wrap_lines'] ?? false);
-        $this->code ??= $d['code'] ?? null;
+        $this->language ??= $this->configString($d, 'language');
+        $this->title ??= $this->configString($d, 'title');
+        $this->filename ??= $this->configString($d, 'filename');
+        $this->lineNumbers = $this->lineNumbers || $this->configBoolWithFallback($d, 'line_numbers', false);
+        $this->copyButton = $this->copyButton && $this->configBoolWithFallback($d, 'copy_button', true);
+        $this->highlightLines ??= $this->configString($d, 'highlight_lines');
+        $this->theme ??= $this->configString($d, 'theme');
+        $this->maxHeight = $this->maxHeight ?: $this->configIntWithFallback($d, 'max_height', 0);
+        $this->wrapLines = $this->wrapLines || $this->configBoolWithFallback($d, 'wrap_lines', false);
+        $this->code ??= $this->configString($d, 'code');
 
 
         // Initialize controller with default
@@ -57,12 +57,15 @@ final class CodeBlock extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $classes = $this->buildClassesFromArrays(
             ['code-block'],
             $this->theme ? ["code-block-{$this->theme}"] : [],
             $this->lineNumbers ? ['code-block-line-numbers'] : [],
             $this->wrapLines ? ['code-block-wrap'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $preClasses = $this->buildClasses(

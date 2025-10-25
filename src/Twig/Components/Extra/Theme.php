@@ -28,7 +28,9 @@ final class Theme extends AbstractStimulus
 
         // Apply mode default if not explicitly set
         if ($this->mode === null && isset($d['mode'])) {
-            $this->mode = (string)$d['mode'];
+            if (is_string($d['mode'])) {
+                $this->mode = $d['mode'];
+            }
         }
 
         // Initialize controller with default

@@ -37,16 +37,22 @@ final class ThemeRuntime implements RuntimeExtensionInterface
         // Fallback to defaults if null or empty
         if ($theme === null || $theme === '') {
             $theme = 'auto';
+        } else {
+            // Convert to string if not already
+            $theme = (string) $theme;
         }
         
         if ($colorScheme === null || $colorScheme === '') {
             $colorScheme = 'light dark';
+        } else {
+            // Convert to string if not already
+            $colorScheme = (string) $colorScheme;
         }
 
         return sprintf(
             'data-bs-theme="%s" style="color-scheme: %s;"',
-            htmlspecialchars((string) $theme, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
-            htmlspecialchars((string) $colorScheme, ENT_QUOTES | ENT_HTML5, 'UTF-8')
+            htmlspecialchars($theme, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            htmlspecialchars($colorScheme, ENT_QUOTES | ENT_HTML5, 'UTF-8')
         );
     }
 }

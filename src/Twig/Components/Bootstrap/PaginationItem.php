@@ -25,9 +25,9 @@ final class PaginationItem extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->active = $this->active || ($d['active'] ?? false);
-        $this->disabled = $this->disabled || ($d['disabled'] ?? false);
-        $this->ariaCurrent ??= $d['aria_current'] ?? 'page';
+        $this->active = $this->active || $this->configBoolWithFallback($d, 'active', false);
+        $this->disabled = $this->disabled || $this->configBoolWithFallback($d, 'disabled', false);
+        $this->ariaCurrent ??= $this->configStringWithFallback($d, 'aria_current', 'page');
 
 
         // Initialize controller with default
@@ -44,7 +44,7 @@ final class PaginationItem extends AbstractStimulus
      */
     public function options(): array
     {
-        $itemClasses = $this->buildClasses(
+        $itemClasses = $this->buildClassesFromArrays(
             ['page-item'],
             $this->active ? ['active'] : [],
             $this->disabled ? ['disabled'] : [],

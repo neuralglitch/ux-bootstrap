@@ -77,11 +77,11 @@ final class TimelineItem extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->timePosition = $this->timePosition ?? ($d['time_position'] ?? 'inline');
-        $this->variant = $this->variant ?? ($d['variant'] ?? null);
-        $this->state = $this->state ?? ($d['state'] ?? null);
-        $this->showLine = $this->showLine ?? ($d['show_line'] ?? true);
-        $this->markerSize = $this->markerSize ?? ($d['marker_size'] ?? null);
+        $this->timePosition = $this->timePosition ?? $this->configStringWithFallback($d, 'time_position', 'inline');
+        $this->variant = $this->variant ?? $this->configString($d, 'variant');
+        $this->state = $this->state ?? $this->configString($d, 'state');
+        $this->showLine = $this->showLine ?? $this->configBoolWithFallback($d, 'show_line', true);
+        $this->markerSize = $this->markerSize ?? $this->configString($d, 'marker_size');
 
         $this->applyClassDefaults($d);
 
@@ -112,7 +112,7 @@ final class TimelineItem extends AbstractStimulus
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
-        $markerClasses = $this->buildClasses(
+        $markerClasses = $this->buildClassesFromArrays(
             ['timeline-marker'],
             $this->variant && !$this->state ? ["bg-{$this->variant}"] : [],
             $this->state === 'completed' ? ['bg-success'] : [],

@@ -6,6 +6,7 @@ namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractInteraction;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\Traits\TooltipPopoverTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -14,6 +15,8 @@ final class AbstractInteractionTest extends TestCase
     private function createTestComponent(Config $config): AbstractInteraction
     {
         return new class($config) extends AbstractInteraction {
+            use TooltipPopoverTrait;
+            
             protected function getComponentType(): string
             {
                 return 'test';
@@ -115,7 +118,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
 
         $reflection = new ReflectionClass($component);
-        $method = $reflection->getMethod('applyCommonDefaults');
+        $method = $reflection->getMethod('applyTooltipPopoverDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
             'tooltip' => [
@@ -134,7 +137,7 @@ final class AbstractInteractionTest extends TestCase
         $component = $this->createTestComponent($config);
 
         $reflection = new ReflectionClass($component);
-        $method = $reflection->getMethod('applyCommonDefaults');
+        $method = $reflection->getMethod('applyTooltipPopoverDefaults');
         $method->setAccessible(true);
         $method->invoke($component, [
             'popover' => [
@@ -144,7 +147,7 @@ final class AbstractInteractionTest extends TestCase
         ]);
 
         self::assertSame('Popover Title', $component->popoverTitle);
-        self::assertSame('Popover content', $component->popoverContent);
+        self::assertSame('Popover content', $component->popover);
     }
 
     public function testApplyCommonDefaultsWithController(): void
@@ -229,9 +232,9 @@ final class AbstractInteractionTest extends TestCase
         $component->tooltip = 'Tooltip text';
 
         $reflection = new ReflectionClass($component);
-        $method = $reflection->getMethod('buildCommonAttributes');
+        $method = $reflection->getMethod('buildTooltipPopoverAttributes');
         $method->setAccessible(true);
-        $attrs = $method->invoke($component, false);
+        $attrs = $method->invoke($component);
 
         self::assertArrayHasKey('data-bs-toggle', $attrs);
         self::assertSame('tooltip', $attrs['data-bs-toggle']);

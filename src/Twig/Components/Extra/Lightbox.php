@@ -124,14 +124,14 @@ final class Lightbox extends AbstractStimulus
         $this->enableKeyboard = $this->enableKeyboard && ($d['enable_keyboard'] ?? true);
         $this->enableSwipe = $this->enableSwipe && ($d['enable_swipe'] ?? true);
         $this->closeOnBackdrop = $this->closeOnBackdrop && ($d['close_on_backdrop'] ?? true);
-        $this->transition ??= $d['transition'] ?? 'fade';
-        $this->transitionDuration = $this->transitionDuration ?: ($d['transition_duration'] ?? 300);
-        $this->autoplay = $this->autoplay || ($d['autoplay'] ?? false);
-        $this->autoplayInterval = $this->autoplayInterval ?: ($d['autoplay_interval'] ?? 3000);
-        $this->showDownload = $this->showDownload || ($d['show_download'] ?? false);
-        $this->showFullscreen = $this->showFullscreen && ($d['show_fullscreen'] ?? true);
-        $this->showClose = $this->showClose && ($d['show_close'] ?? true);
-        $this->id ??= $d['id'] ?? null;
+        $this->transition ??= $this->configStringWithFallback($d, 'transition', 'fade');
+        $this->transitionDuration = $this->transitionDuration ?: $this->configIntWithFallback($d, 'transition_duration', 300);
+        $this->autoplay = $this->autoplay || $this->configBoolWithFallback($d, 'autoplay', false);
+        $this->autoplayInterval = $this->autoplayInterval ?: $this->configIntWithFallback($d, 'autoplay_interval', 3000);
+        $this->showDownload = $this->showDownload || $this->configBoolWithFallback($d, 'show_download', false);
+        $this->showFullscreen = $this->showFullscreen && $this->configBoolWithFallback($d, 'show_fullscreen', true);
+        $this->showClose = $this->showClose && $this->configBoolWithFallback($d, 'show_close', true);
+        $this->id ??= $this->configString($d, 'id');
 
         // Generate ID if not provided
         if (!$this->id) {
@@ -144,7 +144,9 @@ final class Lightbox extends AbstractStimulus
 
         // Validate images array
         if (empty($this->images)) {
-            $this->images = $d['images'] ?? [];
+            $images = $this->configArray($d, 'images', []) ?? [];
+            /** @var array<int, array{src: string, alt?: string, caption?: string, thumbnail?: string}> $images */
+            $this->images = $images;
         }
 
         // Ensure startIndex is within bounds

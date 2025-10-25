@@ -32,6 +32,11 @@ final class FilesystemAdapter
      * @param int $maxDepth Maximum directory depth (0 = unlimited)
      * @return array<string, mixed>
      */
+    /**
+     * @param array<string> $excludeDirs
+     * @param array<string> $excludeFiles
+     * @return array<int, array<string, mixed>>
+     */
     public function buildTree(
         string $rootPath,
         array $excludeDirs = [],
@@ -46,7 +51,12 @@ final class FilesystemAdapter
         // Make path absolute if it's relative
         if (!str_starts_with($rootPath, '/')) {
             // In Docker, we need to go up from /var/www/public to the project root
-            $projectRoot = dirname(getcwd());
+            $cwd = getcwd();
+            if ($cwd === false) {
+                dump('FilesystemAdapter: Cannot get current working directory');
+                return [];
+            }
+            $projectRoot = dirname($cwd);
             $rootPath = $projectRoot . '/' . $rootPath;
             dump('FilesystemAdapter: Made path absolute: ' . $rootPath);
         }
@@ -155,7 +165,7 @@ final class FilesystemAdapter
 
         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, 2) . ' ' . $units[$pow];
+        return round($bytes, 2) . ' ' . $units[(int)$pow];
     }
 
     /**
@@ -189,16 +199,18 @@ final class FilesystemAdapter
         }
 
         $timestamp = filemtime($path);
+        if ($timestamp === false) {
+            return null;
+        }
         return (new \DateTime())->setTimestamp($timestamp);
     }
 
     /**
      * Build tree structure recursively
      *
-     * @param Finder $finder
-     * @param string $currentPath
-     * @param array<string, mixed> $tree
+     * @param array<string> $excludeDirs
      * @param array<string> $excludeFiles
+     * @return array<int, array<string, mixed>>
      */
     private function buildTreeRecursive(
         string $path,
@@ -280,18 +292,4 @@ final class FilesystemAdapter
         return $items;
     }
 
-    /**
-     * Check if directory has subdirectories
-     */
-    private function hasSubdirectories(string $path): bool
-    {
-        if (!$this->isDirectory($path)) {
-            return false;
-        }
-
-        $finder = new Finder();
-        $finder->in($path)->directories()->depth(0);
-
-        return $finder->count() > 0;
-    }
 }

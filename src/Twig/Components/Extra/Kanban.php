@@ -48,21 +48,21 @@ final class Kanban extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults - config takes precedence over component defaults
-        $this->variant = $d['variant'] ?? $this->variant;
-        $this->scrollable = $d['scrollable'] ?? $this->scrollable;
-        $this->height = $d['height'] ?? $this->height;
-        $this->draggable = $d['draggable'] ?? $this->draggable;
-        $this->allow_cross_column = $d['allow_cross_column'] ?? $this->allow_cross_column;
-        $this->allow_reorder = $d['allow_reorder'] ?? $this->allow_reorder;
-        $this->drop_zone_class = $d['drop_zone_class'] ?? $this->drop_zone_class;
-        $this->container = $d['container'] ?? $this->container;
-        $this->responsive = $d['responsive'] ?? $this->responsive;
-        $this->mobile_breakpoint = $d['mobile_breakpoint'] ?? $this->mobile_breakpoint;
-        $this->card_wrapper = $d['card_wrapper'] ?? $this->card_wrapper;
-        $this->gap = $d['gap'] ?? $this->gap;
-        $this->show_column_count = $d['show_column_count'] ?? $this->show_column_count;
-        $this->compact_mode = $d['compact_mode'] ?? $this->compact_mode;
-        $this->stimulus_controller = $d['stimulus_controller'] ?? $this->stimulus_controller;
+        $this->variant = $this->configStringWithFallback($d, 'variant', $this->variant);
+        $this->scrollable = $this->configBoolWithFallback($d, 'scrollable', $this->scrollable);
+        $this->height = $this->configString($d, 'height') ?? $this->height;
+        $this->draggable = $this->configBoolWithFallback($d, 'draggable', $this->draggable);
+        $this->allow_cross_column = $this->configBoolWithFallback($d, 'allow_cross_column', $this->allow_cross_column);
+        $this->allow_reorder = $this->configBoolWithFallback($d, 'allow_reorder', $this->allow_reorder);
+        $this->drop_zone_class = $this->configString($d, 'drop_zone_class') ?? $this->drop_zone_class;
+        $this->container = $this->configStringWithFallback($d, 'container', $this->container);
+        $this->responsive = $this->configBoolWithFallback($d, 'responsive', $this->responsive);
+        $this->mobile_breakpoint = $this->configStringWithFallback($d, 'mobile_breakpoint', $this->mobile_breakpoint);
+        $this->card_wrapper = $this->configBoolWithFallback($d, 'card_wrapper', $this->card_wrapper);
+        $this->gap = $this->configString($d, 'gap') ?? $this->gap;
+        $this->show_column_count = $this->configBoolWithFallback($d, 'show_column_count', $this->show_column_count);
+        $this->compact_mode = $this->configBoolWithFallback($d, 'compact_mode', $this->compact_mode);
+        $this->stimulus_controller = $this->configString($d, 'stimulus_controller') ?? $this->stimulus_controller;
 
         $this->applyClassDefaults($d);
 
@@ -85,13 +85,16 @@ final class Kanban extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+        
+        $classes = $this->buildClassesFromArrays(
             ['kanban-board'],
             $this->variant === 'compact' ? ['kanban-compact'] : [],
             $this->scrollable ? ['kanban-scrollable'] : [],
             $this->responsive ? ["kanban-responsive-{$this->mobile_breakpoint}"] : [],
             $this->compact_mode ? ['kanban-cards-compact'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->buildStimulusAttributes();

@@ -54,31 +54,33 @@ final class ColorPicker extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults
-        $this->name ??= $d['name'] ?? 'color';
-        $this->value ??= $d['value'] ?? null;
-        $this->label ??= $d['label'] ?? null;
-        $this->required = $this->required || ($d['required'] ?? false);
-        $this->disabled = $this->disabled || ($d['disabled'] ?? false);
+        $this->name ??= $this->configStringWithFallback($d, 'name', 'color');
+        $this->value ??= $this->configString($d, 'value');
+        $this->label ??= $this->configString($d, 'label');
+        $this->required = $this->required || $this->configBoolWithFallback($d, 'required', false);
+        $this->disabled = $this->disabled || $this->configBoolWithFallback($d, 'disabled', false);
 
         if (empty($this->presets) && isset($d['presets']) && is_array($d['presets'])) {
-            $this->presets = $d['presets'];
+            $presets = $this->configArray($d, 'presets', []) ?? [];
+            /** @var array<string> $presets */
+            $this->presets = $presets;
         }
 
-        $this->showPresets = $this->showPresets && ($d['show_presets'] ?? true);
-        $this->showInput = $this->showInput && ($d['show_input'] ?? true);
-        $this->showHex = $this->showHex && ($d['show_hex'] ?? true);
-        $this->allowCustom = $this->allowCustom && ($d['allow_custom'] ?? true);
+        $this->showPresets = $this->showPresets && $this->configBoolWithFallback($d, 'show_presets', true);
+        $this->showInput = $this->showInput && $this->configBoolWithFallback($d, 'show_input', true);
+        $this->showHex = $this->showHex && $this->configBoolWithFallback($d, 'show_hex', true);
+        $this->allowCustom = $this->allowCustom && $this->configBoolWithFallback($d, 'allow_custom', true);
 
-        $this->size ??= $d['size'] ?? 'default';
-        $this->swatchSize ??= $d['swatch_size'] ?? 'default';
-        $this->columns = $this->columns ?: ($d['columns'] ?? 6);
+        $this->size ??= $this->configStringWithFallback($d, 'size', 'default');
+        $this->swatchSize ??= $this->configStringWithFallback($d, 'swatch_size', 'default');
+        $this->columns = $this->columns ?: $this->configIntWithFallback($d, 'columns', 6);
 
-        $this->placeholder ??= $d['placeholder'] ?? null;
-        $this->helpText ??= $d['help_text'] ?? null;
-        $this->inline = $this->inline || ($d['inline'] ?? false);
+        $this->placeholder ??= $this->configString($d, 'placeholder');
+        $this->helpText ??= $this->configString($d, 'help_text');
+        $this->inline = $this->inline || $this->configBoolWithFallback($d, 'inline', false);
 
         if (empty($this->inputAttr) && isset($d['input_attr']) && is_array($d['input_attr'])) {
-            $this->inputAttr = $d['input_attr'];
+            $this->inputAttr = $this->configArray($d, 'input_attr', []) ?? [];
         }
 
         // Ensure value is properly formatted

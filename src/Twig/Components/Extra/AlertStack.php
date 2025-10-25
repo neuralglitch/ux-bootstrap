@@ -103,20 +103,20 @@ final class AlertStack extends AbstractStimulus
 
         // Apply defaults from config - only if not explicitly set (check against initial defaults)
         if ($this->position === 'top-end' && isset($d['position'])) {
-            $this->position = $d['position'];
+            $this->position = $this->configStringWithFallback($d, 'position', 'top-end');
         }
 
-        $this->maxAlerts = $this->maxAlerts ?: ($d['max_alerts'] ?? 0);
+        $this->maxAlerts = $this->maxAlerts ?: $this->configIntWithFallback($d, 'max_alerts', 0);
         if ($this->defaultVariant === 'info' && isset($d['default_variant'])) {
-            $this->defaultVariant = $d['default_variant'];
+            $this->defaultVariant = $this->configStringWithFallback($d, 'default_variant', 'info');
         }
-        $this->autoHide = $this->autoHide || ($d['auto_hide'] ?? false);
-        $this->autoHideDelay = $this->autoHideDelay === 5000 ? ($d['auto_hide_delay'] ?? 5000) : $this->autoHideDelay;
-        $this->fade = $this->fade && ($d['fade'] ?? true);
-        $this->dismissible = $this->dismissible && ($d['dismissible'] ?? true);
-        $this->zIndex = $this->zIndex === 1080 ? ($d['z_index'] ?? 1080) : $this->zIndex;
-        $this->gap = $this->gap === 0.75 ? ($d['gap'] ?? 0.75) : $this->gap;
-        $this->autoLoadFlashMessages = $this->autoLoadFlashMessages || ($d['auto_load_flash_messages'] ?? false);
+        $this->autoHide = $this->autoHide || $this->configBoolWithFallback($d, 'auto_hide', false);
+        $this->autoHideDelay = $this->autoHideDelay === 5000 ? $this->configIntWithFallback($d, 'auto_hide_delay', 5000) : $this->autoHideDelay;
+        $this->fade = $this->fade && $this->configBoolWithFallback($d, 'fade', true);
+        $this->dismissible = $this->dismissible && $this->configBoolWithFallback($d, 'dismissible', true);
+        $this->zIndex = $this->zIndex === 1080 ? $this->configIntWithFallback($d, 'z_index', 1080) : $this->zIndex;
+        $this->gap = $this->gap === 0.75 ? $this->configFloatWithFallback($d, 'gap', 0.75) : $this->gap;
+        $this->autoLoadFlashMessages = $this->autoLoadFlashMessages || $this->configBoolWithFallback($d, 'auto_load_flash_messages', false);
 
         // Initialize controller with default
         $this->initializeController();

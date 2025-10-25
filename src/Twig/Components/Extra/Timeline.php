@@ -60,12 +60,12 @@ final class Timeline extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant = $this->variant ?? ($d['variant'] ?? 'vertical');
-        $this->align = $this->align ?? ($d['align'] ?? 'start');
-        $this->showLine = $this->showLine ?? ($d['show_line'] ?? true);
-        $this->lineStyle = $this->lineStyle ?? ($d['line_style'] ?? 'solid');
-        $this->lineVariant = $this->lineVariant ?? ($d['line_variant'] ?? null);
-        $this->size = $this->size ?? ($d['size'] ?? null);
+        $this->variant = $this->variant ?? $this->configStringWithFallback($d, 'variant', 'vertical');
+        $this->align = $this->align ?? $this->configStringWithFallback($d, 'align', 'start');
+        $this->showLine = $this->showLine ?? $this->configBoolWithFallback($d, 'show_line', true);
+        $this->lineStyle = $this->lineStyle ?? $this->configStringWithFallback($d, 'line_style', 'solid');
+        $this->lineVariant = $this->lineVariant ?? $this->configString($d, 'line_variant');
+        $this->size = $this->size ?? $this->configString($d, 'size');
 
         $this->applyClassDefaults($d);
 
@@ -89,7 +89,7 @@ final class Timeline extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['timeline'],
             ["timeline-{$this->variant}"],
             $this->align && $this->variant === 'vertical' ? ["timeline-align-{$this->align}"] : [],

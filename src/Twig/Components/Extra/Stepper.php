@@ -52,21 +52,21 @@ final class Stepper extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config
-        $this->variant ??= $d['variant'] ?? 'horizontal';
-        $this->style ??= $d['style'] ?? 'default';
-        $this->currentStep ??= $d['current_step'] ?? 1;
-        $this->clickableCompleted ??= $d['clickable_completed'] ?? true;
-        $this->showLabels ??= $d['show_labels'] ?? true;
-        $this->showDescriptions ??= $d['show_descriptions'] ?? false;
-        $this->showProgressBar ??= $d['show_progress_bar'] ?? false;
-        $this->completedIcon ??= $d['completed_icon'] ?? null;
-        $this->activeIcon ??= $d['active_icon'] ?? null;
-        $this->pendingIcon ??= $d['pending_icon'] ?? null;
-        $this->completedVariant ??= $d['completed_variant'] ?? 'success';
-        $this->activeVariant ??= $d['active_variant'] ?? 'primary';
-        $this->pendingVariant ??= $d['pending_variant'] ?? 'secondary';
-        $this->size ??= $d['size'] ?? 'default';
-        $this->responsive ??= $d['responsive'] ?? true;
+        $this->variant = $this->variant ?? $this->configStringWithFallback($d, 'variant', 'horizontal');
+        $this->style = $this->style ?? $this->configStringWithFallback($d, 'style', 'default');
+        $this->currentStep = $this->currentStep ?? $this->configIntWithFallback($d, 'current_step', 1);
+        $this->clickableCompleted = $this->clickableCompleted ?? $this->configBoolWithFallback($d, 'clickable_completed', true);
+        $this->showLabels = $this->showLabels ?? $this->configBoolWithFallback($d, 'show_labels', true);
+        $this->showDescriptions = $this->showDescriptions ?? $this->configBoolWithFallback($d, 'show_descriptions', false);
+        $this->showProgressBar = $this->showProgressBar ?? $this->configBoolWithFallback($d, 'show_progress_bar', false);
+        $this->completedIcon = $this->completedIcon ?? $this->configString($d, 'completed_icon');
+        $this->activeIcon = $this->activeIcon ?? $this->configString($d, 'active_icon');
+        $this->pendingIcon = $this->pendingIcon ?? $this->configString($d, 'pending_icon');
+        $this->completedVariant = $this->completedVariant ?? $this->configStringWithFallback($d, 'completed_variant', 'success');
+        $this->activeVariant = $this->activeVariant ?? $this->configStringWithFallback($d, 'active_variant', 'primary');
+        $this->pendingVariant = $this->pendingVariant ?? $this->configStringWithFallback($d, 'pending_variant', 'secondary');
+        $this->size = $this->size ?? $this->configStringWithFallback($d, 'size', 'default');
+        $this->responsive = $this->responsive ?? $this->configBoolWithFallback($d, 'responsive', true);
 
         $this->applyClassDefaults($d);
 
@@ -89,7 +89,7 @@ final class Stepper extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['stepper'],
             ["stepper--{$this->variant}"],
             ["stepper--{$this->style}"],

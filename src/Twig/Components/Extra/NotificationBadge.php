@@ -75,15 +75,15 @@ final class NotificationBadge extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults
-        $this->variant ??= $d['variant'] ?? 'danger';
-        $this->position ??= $d['position'] ?? 'top-end';
-        $this->size ??= $d['size'] ?? 'md';
-        $this->dot = $this->dot || ($d['dot'] ?? false);
-        $this->pulse = $this->pulse || ($d['pulse'] ?? false);
-        $this->bordered = $this->bordered && ($d['bordered'] ?? true);
-        $this->pill = $this->pill && ($d['pill'] ?? true);
-        $this->max ??= $d['max'] ?? null;
-        $this->inline = $this->inline || ($d['inline'] ?? false);
+        $this->variant ??= $this->configStringWithFallback($d, 'variant', 'danger');
+        $this->position ??= $this->configStringWithFallback($d, 'position', 'top-end');
+        $this->size ??= $this->configStringWithFallback($d, 'size', 'md');
+        $this->dot = $this->dot || $this->configBoolWithFallback($d, 'dot', false);
+        $this->pulse = $this->pulse || $this->configBoolWithFallback($d, 'pulse', false);
+        $this->bordered = $this->bordered && $this->configBoolWithFallback($d, 'bordered', true);
+        $this->pill = $this->pill && $this->configBoolWithFallback($d, 'pill', true);
+        $this->max ??= $this->configInt($d, 'max');
+        $this->inline = $this->inline || $this->configBoolWithFallback($d, 'inline', false);
 
 
         // Initialize controller with default
@@ -108,7 +108,10 @@ final class NotificationBadge extends AbstractStimulus
         $position = $this->position ?? 'top-end';
 
         // Build classes
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $classes = $this->buildClassesFromArrays(
             ['badge', "text-bg-{$variant}"],
             $this->pill ? ['rounded-pill'] : [],
             $this->dot ? ['p-1'] : [],
@@ -116,7 +119,7 @@ final class NotificationBadge extends AbstractStimulus
             $this->bordered ? ['border', 'border-light'] : [],
             [$this->getSizeClass()],
             $this->pulse ? ['badge-pulse'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         // Build attributes

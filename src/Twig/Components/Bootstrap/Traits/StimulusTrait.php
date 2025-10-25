@@ -121,7 +121,7 @@ trait StimulusTrait
     protected function toKebabCase(string $propertyName): string
     {
         // Convert camelCase to kebab-case
-        $kebab = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $propertyName));
+        $kebab = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $propertyName) ?? '');
         // Convert snake_case to kebab-case
         return str_replace('_', '-', $kebab);
     }
@@ -144,7 +144,9 @@ trait StimulusTrait
             is_bool($value) => $value ? 'true' : 'false',
             is_array($value) => json_encode($value, JSON_THROW_ON_ERROR),
             is_object($value) => json_encode($value, JSON_THROW_ON_ERROR),
-            default => (string)$value,
+            is_string($value) => $value,
+            is_scalar($value) => (string)$value,
+            default => '',
         };
 
         return [$attrName => $attrValue];

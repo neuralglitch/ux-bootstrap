@@ -39,16 +39,16 @@ final class Dropdown extends AbstractStimulus
         $this->applySizeDefaults($d);
         $this->applyClassDefaults($d);
 
-        $this->label ??= $d['label'] ?? 'Dropdown';
-        $this->direction ??= $d['direction'] ?? null;
-        $this->menuAlign ??= $d['menu_align'] ?? null;
-        $this->dark = $this->dark || ($d['dark'] ?? false);
-        $this->split = $this->split || ($d['split'] ?? false);
-        $this->splitLabel ??= $d['split_label'] ?? null;
-        $this->autoClose ??= $d['auto_close'] ?? null;
-        $this->toggleClass ??= $d['toggle_class'] ?? null;
-        $this->menuClass ??= $d['menu_class'] ?? null;
-        $this->menuAttr = array_merge($d['menu_attr'] ?? [], $this->menuAttr);
+        $this->label ??= $this->configStringWithFallback($d, 'label', 'Dropdown');
+        $this->direction ??= $this->configString($d, 'direction');
+        $this->menuAlign ??= $this->configString($d, 'menu_align');
+        $this->dark = $this->dark || $this->configBoolWithFallback($d, 'dark', false);
+        $this->split = $this->split || $this->configBoolWithFallback($d, 'split', false);
+        $this->splitLabel ??= $this->configString($d, 'split_label');
+        $this->autoClose ??= $this->configString($d, 'auto_close');
+        $this->toggleClass ??= $this->configString($d, 'toggle_class');
+        $this->menuClass ??= $this->configString($d, 'menu_class');
+        $this->menuAttr = array_merge($this->configArray($d, 'menu_attr', []) ?? [], $this->menuAttr);
 
 
         // Initialize controller with default
@@ -66,14 +66,14 @@ final class Dropdown extends AbstractStimulus
     public function options(): array
     {
         // Wrapper classes
-        $wrapperClasses = $this->buildClasses(
+        $wrapperClasses = array_merge(
             [$this->split ? 'btn-group' : 'dropdown'],
             $this->direction ? [$this->direction] : [],
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
         // Toggle button classes
-        $toggleClasses = $this->buildClasses(
+        $toggleClasses = array_merge(
             ['btn', 'dropdown-toggle'],
             $this->variant ? ($this->outline ? ["btn-outline-{$this->variant}"] : ["btn-{$this->variant}"]) : ['btn-secondary'],
             $this->sizeClassesFor('button'),
@@ -82,7 +82,7 @@ final class Dropdown extends AbstractStimulus
         );
 
         // Menu classes
-        $menuClasses = $this->buildClasses(
+        $menuClasses = array_merge(
             ['dropdown-menu'],
             $this->dark ? ['dropdown-menu-dark'] : [],
             $this->menuAlign ? ["dropdown-menu-{$this->menuAlign}"] : [],
@@ -110,9 +110,9 @@ final class Dropdown extends AbstractStimulus
             'label' => $this->label,
             'split' => $this->split,
             'splitLabel' => $this->splitLabel ?? $this->label,
-            'wrapperClasses' => $wrapperClasses,
-            'toggleClasses' => $toggleClasses,
-            'menuClasses' => $menuClasses,
+            'wrapperClasses' => implode(' ', array_filter($wrapperClasses)),
+            'toggleClasses' => implode(' ', array_filter($toggleClasses)),
+            'menuClasses' => implode(' ', array_filter($menuClasses)),
             'wrapperAttrs' => $wrapperAttrs,
             'toggleAttrs' => $toggleAttrs,
             'menuAttrs' => $menuAttrs,

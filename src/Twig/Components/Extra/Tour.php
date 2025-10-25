@@ -69,15 +69,15 @@ final class Tour extends AbstractStimulus
         // to their declared defaults, we just keep the current values.
 
         // Apply label defaults (only if not set)
-        $this->nextLabel ??= $d['next_label'] ?? 'Next';
-        $this->prevLabel ??= $d['prev_label'] ?? 'Previous';
-        $this->skipLabel ??= $d['skip_label'] ?? 'Skip Tour';
-        $this->finishLabel ??= $d['finish_label'] ?? 'Finish';
-        $this->closeLabel ??= $d['close_label'] ?? 'Close';
+        $this->nextLabel = $this->nextLabel ?? $this->configStringWithFallback($d, 'next_label', 'Next');
+        $this->prevLabel = $this->prevLabel ?? $this->configStringWithFallback($d, 'prev_label', 'Previous');
+        $this->skipLabel = $this->skipLabel ?? $this->configStringWithFallback($d, 'skip_label', 'Skip Tour');
+        $this->finishLabel = $this->finishLabel ?? $this->configStringWithFallback($d, 'finish_label', 'Finish');
+        $this->closeLabel = $this->closeLabel ?? $this->configStringWithFallback($d, 'close_label', 'Close');
 
         // Apply styling defaults (only if not set)
-        $this->popoverVariant ??= $d['popover_variant'] ?? 'light';
-        $this->popoverPlacement ??= $d['popover_placement'] ?? 'auto';
+        $this->popoverVariant = $this->popoverVariant ?? $this->configStringWithFallback($d, 'popover_variant', 'light');
+        $this->popoverPlacement = $this->popoverPlacement ?? $this->configStringWithFallback($d, 'popover_placement', 'auto');
 
         $this->applyClassDefaults($d);
 

@@ -24,8 +24,8 @@ final class Pagination extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->ariaLabel ??= $d['aria_label'] ?? 'Page navigation';
-        $this->alignment ??= $d['alignment'] ?? null;
+        $this->ariaLabel ??= $this->configStringWithFallback($d, 'aria_label', 'Page navigation');
+        $this->alignment ??= $this->configString($d, 'alignment');
 
 
         // Initialize controller with default
@@ -42,7 +42,7 @@ final class Pagination extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['pagination'],
             $this->sizeClassesFor('pagination'),
             $this->alignment === 'center' ? ['justify-content-center'] : [],

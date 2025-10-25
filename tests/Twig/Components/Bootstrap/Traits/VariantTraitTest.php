@@ -14,12 +14,31 @@ final class VariantTraitTest extends TestCase
         return new class {
             use VariantTrait;
 
+            public ?string $variant = null;
+            public bool $outline = false;
+
             /**
              * @param array<string, mixed> $defaults
              */
             public function testApplyVariantDefaults(array $defaults): void
             {
                 $this->applyVariantDefaults($defaults);
+            }
+
+            /**
+             * Mock configString method for testing
+             */
+            protected function configString(array $defaults, string $key): ?string
+            {
+                return $defaults[$key] ?? null;
+            }
+
+            /**
+             * Mock configBoolWithFallback method for testing
+             */
+            protected function configBoolWithFallback(array $defaults, string $key, bool $fallback): bool
+            {
+                return $defaults[$key] ?? $fallback;
             }
 
             /**

@@ -101,19 +101,21 @@ final class ActivityFeedItem extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->icon ??= $d['icon'] ?? null;
-        $this->avatar ??= $d['avatar'] ?? null;
-        $this->iconVariant ??= $d['icon_variant'] ?? 'primary';
-        $this->title ??= $d['title'] ?? null;
-        $this->description ??= $d['description'] ?? null;
-        $this->timestamp ??= $d['timestamp'] ?? null;
-        $this->metadata = $this->metadata ?: ($d['metadata'] ?? []);
-        $this->href ??= $d['href'] ?? null;
-        $this->actionLabel ??= $d['action_label'] ?? null;
-        $this->actionHref ??= $d['action_href'] ?? null;
-        $this->highlighted ??= $d['highlighted'] ?? false;
-        $this->unread ??= $d['unread'] ?? false;
-        $this->type ??= $d['type'] ?? null;
+        $this->icon ??= $this->configString($d, 'icon');
+        $this->avatar ??= $this->configString($d, 'avatar');
+        $this->iconVariant ??= $this->configStringWithFallback($d, 'icon_variant', 'primary');
+        $this->title ??= $this->configString($d, 'title');
+        $this->description ??= $this->configString($d, 'description');
+        $this->timestamp ??= $this->configString($d, 'timestamp');
+        $metadata = $this->configArray($d, 'metadata', []) ?? [];
+        /** @var array<string> $metadata */
+        $this->metadata = $this->metadata ?: $metadata;
+        $this->href ??= $this->configString($d, 'href');
+        $this->actionLabel ??= $this->configString($d, 'action_label');
+        $this->actionHref ??= $this->configString($d, 'action_href');
+        $this->highlighted ??= $this->configBool($d, 'highlighted');
+        $this->unread ??= $this->configBool($d, 'unread');
+        $this->type ??= $this->configString($d, 'type');
 
 
         // Initialize controller with default
@@ -130,12 +132,15 @@ final class ActivityFeedItem extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classArray = $this->class ? array_filter(explode(' ', trim($this->class)), fn($v) => $v !== '') : [];
+        /** @var array<string> $classArray */
+
+        $classes = $this->buildClassesFromArrays(
             ['activity-feed-item', 'd-flex', 'gap-3', 'py-3'],
             $this->highlighted ? ['bg-light'] : [],
             $this->unread ? ['activity-feed-item-unread'] : [],
             $this->href ? ['activity-feed-item-link'] : [],
-            $this->class ? explode(' ', trim($this->class)) : []
+            $classArray
         );
 
         $attrs = $this->mergeAttributes([], $this->attr);

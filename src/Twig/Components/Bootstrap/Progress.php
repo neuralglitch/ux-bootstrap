@@ -50,15 +50,15 @@ final class Progress extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->value ??= $d['value'] ?? 0;
-        $this->min ??= $d['min'] ?? 0;
-        $this->max ??= $d['max'] ?? 100;
-        $this->showLabel = $this->showLabel || ($d['show_label'] ?? false);
-        $this->height ??= $d['height'] ?? null;
-        $this->variant ??= $d['variant'] ?? null;
-        $this->striped = $this->striped || ($d['striped'] ?? false);
-        $this->animated = $this->animated || ($d['animated'] ?? false);
-        $this->ariaLabel ??= $d['aria_label'] ?? null;
+        $this->value ??= $this->configFloatWithFallback($d, 'value', 0.0);
+        $this->min ??= $this->configFloatWithFallback($d, 'min', 0.0);
+        $this->max ??= $this->configFloatWithFallback($d, 'max', 100.0);
+        $this->showLabel = $this->showLabel || $this->configBoolWithFallback($d, 'show_label', false);
+        $this->height ??= $this->configString($d, 'height');
+        $this->variant ??= $this->configString($d, 'variant');
+        $this->striped = $this->striped || $this->configBoolWithFallback($d, 'striped', false);
+        $this->animated = $this->animated || $this->configBoolWithFallback($d, 'animated', false);
+        $this->ariaLabel ??= $this->configString($d, 'aria_label');
 
         // Normalize value to be within min-max range
         $this->value = max($this->min, min($this->max, $this->value));
@@ -86,13 +86,13 @@ final class Progress extends AbstractStimulus
         $displayLabel = $this->label ?? ($this->showLabel ? round($percentage) . '%' : null);
 
         // Progress wrapper classes
-        $wrapperClasses = $this->buildClasses(
+        $wrapperClasses = $this->buildClassesFromArrays(
             ['progress'],
             $this->class ? explode(' ', trim($this->class)) : []
         );
 
         // Progress bar classes
-        $barClasses = $this->buildClasses(
+        $barClasses = $this->buildClassesFromArrays(
             ['progress-bar'],
             $this->variant ? ["bg-{$this->variant}"] : [],
             $this->striped ? ['progress-bar-striped'] : [],

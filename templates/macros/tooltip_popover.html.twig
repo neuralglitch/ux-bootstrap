@@ -5,7 +5,7 @@
   No Stimulus controllers needed - uses Bootstrap's native JavaScript.
   
   Usage:
-  {% import 'macros/tooltip_popover.html.twig' as tp %}
+  {% import '@NeuralGlitchUxBootstrap/macros/tooltip_popover.html.twig' as tp %}
   
   {# Tooltip #}
   <button {{ tp.tooltip('Click me', placement='top') }}>Button</button>
@@ -24,7 +24,7 @@
 
 {% macro tooltip(text, placement='top', trigger='hover', html=false, container=null, delay=null, animation=true) %}
   data-bs-toggle="tooltip"
-  data-bs-title="{{ text|e }}"
+  data-bs-title="{{ html ? text|raw : text|e }}"
   data-bs-placement="{{ placement }}"
   data-bs-trigger="{{ trigger }}"
   {% if html %}data-bs-html="true"{% endif %}
@@ -35,8 +35,8 @@
 
 {% macro popover(title, content, placement='top', trigger='click', html=false, container=null, delay=null, animation=true) %}
   data-bs-toggle="popover"
-  data-bs-title="{{ title|e }}"
-  data-bs-content="{{ content|e }}"
+  data-bs-title="{{ html ? title|raw : title|e }}"
+  data-bs-content="{{ html ? content|raw : content|e }}"
   data-bs-placement="{{ placement }}"
   data-bs-trigger="{{ trigger }}"
   {% if html %}data-bs-html="true"{% endif %}
@@ -51,7 +51,7 @@
 #}
 {% macro tooltip_advanced(options) %}
   data-bs-toggle="tooltip"
-  data-bs-title="{{ options.text|default('')|e }}"
+  data-bs-title="{{ options.html ? options.text|default('')|raw : options.text|default('')|e }}"
   {% if options.placement %}data-bs-placement="{{ options.placement }}"{% endif %}
   {% if options.trigger %}data-bs-trigger="{{ options.trigger }}"{% endif %}
   {% if options.html %}data-bs-html="true"{% endif %}
@@ -62,8 +62,8 @@
 
 {% macro popover_advanced(options) %}
   data-bs-toggle="popover"
-  data-bs-title="{{ options.title|default('')|e }}"
-  data-bs-content="{{ options.content|default('')|e }}"
+  data-bs-title="{{ options.html ? options.title|default('')|raw : options.title|default('')|e }}"
+  data-bs-content="{{ options.html ? options.content|default('')|raw : options.content|default('')|e }}"
   {% if options.placement %}data-bs-placement="{{ options.placement }}"{% endif %}
   {% if options.trigger %}data-bs-trigger="{{ options.trigger }}"{% endif %}
   {% if options.html %}data-bs-html="true"{% endif %}

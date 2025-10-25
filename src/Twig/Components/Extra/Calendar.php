@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace NeuralGlitch\UxBootstrap\Twig\Components\Extra;
 
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent(name: 'bs:calendar', template: '@NeuralGlitchUxBootstrap/components/extra/calendar.html.twig')]
-final class Calendar extends AbstractBootstrap
+final class Calendar extends AbstractStimulus
 {
+    public string $stimulusController = 'bs-calendar';
+
     // View configuration
     public string $view;  // 'month' | 'week' | 'day' | 'list'
     public string $locale;
@@ -64,90 +66,90 @@ final class Calendar extends AbstractBootstrap
 
         // View configuration - use config if not explicitly set by component usage
         if (!isset($this->view)) {
-            $this->view = $d['view'] ?? 'month';
+            $this->view = $this->configStringWithFallback($d, 'view', 'month');
         }
         if (!isset($this->locale)) {
-            $this->locale = $d['locale'] ?? 'en';
+            $this->locale = $this->configStringWithFallback($d, 'locale', 'en');
         }
         if (!isset($this->showWeekNumbers)) {
-            $this->showWeekNumbers = $d['show_week_numbers'] ?? false;
+            $this->showWeekNumbers = $this->configBoolWithFallback($d, 'show_week_numbers', false);
         }
 
         // Navigation
         if (!isset($this->showNavigation)) {
-            $this->showNavigation = $d['show_navigation'] ?? true;
+            $this->showNavigation = $this->configBoolWithFallback($d, 'show_navigation', true);
         }
         if (!isset($this->showTodayButton)) {
-            $this->showTodayButton = $d['show_today_button'] ?? true;
+            $this->showTodayButton = $this->configBoolWithFallback($d, 'show_today_button', true);
         }
         if (!isset($this->showViewSwitcher)) {
-            $this->showViewSwitcher = $d['show_view_switcher'] ?? true;
+            $this->showViewSwitcher = $this->configBoolWithFallback($d, 'show_view_switcher', true);
         }
 
         // Date configuration
-        $this->initialDate ??= $d['initial_date'] ?? null;
+        $this->initialDate ??= $this->configString($d, 'initial_date');
         if (!isset($this->firstDayOfWeek)) {
-            $this->firstDayOfWeek = $d['first_day_of_week'] ?? 0;
+            $this->firstDayOfWeek = $this->configIntWithFallback($d, 'first_day_of_week', 0);
         }
 
         // Event configuration
         if (!isset($this->eventUrl)) {
-            $this->eventUrl = $d['event_url'] ?? '/calendar/events';
+            $this->eventUrl = $this->configStringWithFallback($d, 'event_url', '/calendar/events');
         }
         if (!isset($this->loadEventsAsync)) {
-            $this->loadEventsAsync = $d['load_events_async'] ?? false;
+            $this->loadEventsAsync = $this->configBoolWithFallback($d, 'load_events_async', false);
         }
 
         // Display options
         if (!isset($this->showHeader)) {
-            $this->showHeader = $d['show_header'] ?? true;
+            $this->showHeader = $this->configBoolWithFallback($d, 'show_header', true);
         }
         if (!isset($this->showWeekends)) {
-            $this->showWeekends = $d['show_weekends'] ?? true;
+            $this->showWeekends = $this->configBoolWithFallback($d, 'show_weekends', true);
         }
         if (!isset($this->eventLimit)) {
-            $this->eventLimit = $d['event_limit'] ?? 3;
+            $this->eventLimit = $this->configIntWithFallback($d, 'event_limit', 3);
         }
         if (!isset($this->showTimeGrid)) {
-            $this->showTimeGrid = $d['show_time_grid'] ?? true;
+            $this->showTimeGrid = $this->configBoolWithFallback($d, 'show_time_grid', true);
         }
         if (!isset($this->timeFormat)) {
-            $this->timeFormat = $d['time_format'] ?? '24h';
+            $this->timeFormat = $this->configStringWithFallback($d, 'time_format', '24h');
         }
         if (!isset($this->slotDuration)) {
-            $this->slotDuration = $d['slot_duration'] ?? '00:30:00';
+            $this->slotDuration = $this->configStringWithFallback($d, 'slot_duration', '00:30:00');
         }
         if (!isset($this->slotMinTime)) {
-            $this->slotMinTime = $d['slot_min_time'] ?? '00:00:00';
+            $this->slotMinTime = $this->configStringWithFallback($d, 'slot_min_time', '00:00:00');
         }
         if (!isset($this->slotMaxTime)) {
-            $this->slotMaxTime = $d['slot_max_time'] ?? '24:00:00';
+            $this->slotMaxTime = $this->configStringWithFallback($d, 'slot_max_time', '24:00:00');
         }
 
         // Event actions
         if (!isset($this->allowEventClick)) {
-            $this->allowEventClick = $d['allow_event_click'] ?? true;
+            $this->allowEventClick = $this->configBoolWithFallback($d, 'allow_event_click', true);
         }
         if (!isset($this->allowDateClick)) {
-            $this->allowDateClick = $d['allow_date_click'] ?? true;
+            $this->allowDateClick = $this->configBoolWithFallback($d, 'allow_date_click', true);
         }
-        $this->eventClickUrl ??= $d['event_click_url'] ?? null;
-        $this->dateClickUrl ??= $d['date_click_url'] ?? null;
+        $this->eventClickUrl ??= $this->configString($d, 'event_click_url');
+        $this->dateClickUrl ??= $this->configString($d, 'date_click_url');
 
         // Styling
         if (!isset($this->height)) {
-            $this->height = $d['height'] ?? 'auto';
+            $this->height = $this->configStringWithFallback($d, 'height', 'auto');
         }
         if (!isset($this->headerToolbar)) {
-            $this->headerToolbar = $d['header_toolbar'] ?? 'default';
+            $this->headerToolbar = $this->configStringWithFallback($d, 'header_toolbar', 'default');
         }
 
         // Advanced
         if (!isset($this->editable)) {
-            $this->editable = $d['editable'] ?? false;
+            $this->editable = $this->configBoolWithFallback($d, 'editable', false);
         }
         if (!isset($this->selectable)) {
-            $this->selectable = $d['selectable'] ?? false;
+            $this->selectable = $this->configBoolWithFallback($d, 'selectable', false);
         }
 
         $this->applyClassDefaults($d);
@@ -156,6 +158,9 @@ final class Calendar extends AbstractBootstrap
         if (isset($d['attr']) && is_array($d['attr'])) {
             $this->attr = array_merge($d['attr'], $this->attr);
         }
+
+        // Initialize Stimulus controller
+        $this->initializeController();
     }
 
     protected function getComponentName(): string

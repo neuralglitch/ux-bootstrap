@@ -58,13 +58,13 @@ final class Card extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->border = $this->border && ($d['border'] ?? true);
-        $this->imgPosition ??= $d['img_position'] ?? 'top';
-        $this->textAlign ??= $d['text_align'] ?? null;
-        $this->bg ??= $d['bg'] ?? null;
-        $this->textColor ??= $d['text_color'] ?? null;
-        $this->width ??= $d['width'] ?? null;
-        $this->id ??= $d['id'] ?? null;
+        $this->border = $this->border && $this->configBoolWithFallback($d, 'border', true);
+        $this->imgPosition ??= $this->configStringWithFallback($d, 'img_position', 'top');
+        $this->textAlign ??= $this->configString($d, 'text_align');
+        $this->bg ??= $this->configString($d, 'bg');
+        $this->textColor ??= $this->configString($d, 'text_color');
+        $this->width ??= $this->configString($d, 'width');
+        $this->id ??= $this->configString($d, 'id');
 
 
         // Initialize controller with default
@@ -111,7 +111,7 @@ final class Card extends AbstractStimulus
         }
 
         // Add custom classes
-        $classesString = $this->buildClasses(
+        $classesString = $this->buildClassesFromArrays(
             $classes,
             $this->class ? explode(' ', trim($this->class)) : []
         );

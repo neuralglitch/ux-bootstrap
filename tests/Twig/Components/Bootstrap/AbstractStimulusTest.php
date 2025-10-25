@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NeuralGlitch\UxBootstrap\Tests\Twig\Components\Bootstrap;
 
 use NeuralGlitch\UxBootstrap\Service\Bootstrap\Config;
-use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractBootstrap;
+use NeuralGlitch\UxBootstrap\Twig\Components\AbstractComponent;
 use NeuralGlitch\UxBootstrap\Twig\Components\Bootstrap\AbstractStimulus;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -123,13 +123,13 @@ final class AbstractStimulusTest extends TestCase
         self::assertFalse($component->controllerEnabled);
     }
 
-    public function testExtendsAbstractBootstrap(): void
+    public function testExtendsAbstractComponent(): void
     {
         $config = new Config([]);
         $component = $this->createTestComponent($config);
 
         self::assertInstanceOf(
-            AbstractBootstrap::class,
+            AbstractComponent::class,
             $component
         );
     }

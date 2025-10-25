@@ -31,6 +31,7 @@ final class DropdownHeaderTest extends TestCase
         $options = $component->options();
 
         $this->assertStringContainsString('dropdown-header', $options['classes']);
+        $this->assertIsString($options['classes']);
         $this->assertIsArray($options['attrs']);
     }
 

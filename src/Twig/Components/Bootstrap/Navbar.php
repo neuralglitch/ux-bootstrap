@@ -188,66 +188,66 @@ final class Navbar extends AbstractStimulus
         $this->applyStimulusDefaults($d);
 
         // Apply defaults from config - Basic properties
-        $this->brand ??= $d['brand'] ?? null;
-        $this->brandHref ??= $d['brand_href'] ?? '#';
-        $this->brandImg ??= $d['brand_img'] ?? null;
-        $this->brandImgAlt ??= $d['brand_img_alt'] ?? '';
-        $this->brandImgWidth ??= $d['brand_img_width'] ?? '30';
-        $this->brandImgHeight ??= $d['brand_img_height'] ?? '30';
-        $this->brandIcon ??= $d['brand_icon'] ?? null;
-        $this->brandIconWidth ??= $d['brand_icon_width'] ?? '32';
-        $this->brandIconHeight ??= $d['brand_icon_height'] ?? '32';
-        $this->bg ??= $d['bg'] ?? 'body-tertiary';
-        $this->theme ??= $d['theme'] ?? null;
-        $this->expand ??= $d['expand'] ?? 'lg';
-        $this->container = $this->container ?: ($d['container'] ?? 'container-fluid');
-        $this->placement ??= $d['placement'] ?? null;
-        $this->borderBottom = $this->borderBottom || ($d['border_bottom'] ?? false);
-        $this->collapseId = $this->collapseId ?: ($d['collapse_id'] ?? 'navbarSupportedContent');
-        $this->togglerLabel = $this->togglerLabel ?: ($d['toggler_label'] ?? 'Toggle navigation');
-        $this->showToggler = $this->showToggler && ($d['show_toggler'] ?? true);
-        $this->togglerIcon ??= $d['toggler_icon'] ?? 'bi:three-dots';
-        $this->togglerIconWidth = $this->togglerIconWidth ?: ($d['toggler_icon_width'] ?? '1.5em');
-        $this->togglerIconHeight = $this->togglerIconHeight ?: ($d['toggler_icon_height'] ?? '1.5em');
-        $this->id ??= $d['id'] ?? null;
+        $this->brand ??= $this->configString($d, 'brand');
+        $this->brandHref ??= $this->configStringWithFallback($d, 'brand_href', '#');
+        $this->brandImg ??= $this->configString($d, 'brand_img');
+        $this->brandImgAlt ??= $this->configStringWithFallback($d, 'brand_img_alt', '');
+        $this->brandImgWidth ??= $this->configStringWithFallback($d, 'brand_img_width', '30');
+        $this->brandImgHeight ??= $this->configStringWithFallback($d, 'brand_img_height', '30');
+        $this->brandIcon ??= $this->configString($d, 'brand_icon');
+        $this->brandIconWidth ??= $this->configStringWithFallback($d, 'brand_icon_width', '32');
+        $this->brandIconHeight ??= $this->configStringWithFallback($d, 'brand_icon_height', '32');
+        $this->bg ??= $this->configStringWithFallback($d, 'bg', 'body-tertiary');
+        $this->theme ??= $this->configString($d, 'theme');
+        $this->expand ??= $this->configStringWithFallback($d, 'expand', 'lg');
+        $this->container = $this->container ?: $this->configStringWithFallback($d, 'container', 'container-fluid');
+        $this->placement ??= $this->configString($d, 'placement');
+        $this->borderBottom = $this->borderBottom || $this->configBoolWithFallback($d, 'border_bottom', false);
+        $this->collapseId = $this->collapseId ?: $this->configStringWithFallback($d, 'collapse_id', 'navbarSupportedContent');
+        $this->togglerLabel = $this->togglerLabel ?: $this->configStringWithFallback($d, 'toggler_label', 'Toggle navigation');
+        $this->showToggler = $this->showToggler && $this->configBoolWithFallback($d, 'show_toggler', true);
+        $this->togglerIcon ??= $this->configStringWithFallback($d, 'toggler_icon', 'bi:three-dots');
+        $this->togglerIconWidth = $this->togglerIconWidth ?: $this->configStringWithFallback($d, 'toggler_icon_width', '1.5em');
+        $this->togglerIconHeight = $this->togglerIconHeight ?: $this->configStringWithFallback($d, 'toggler_icon_height', '1.5em');
+        $this->id ??= $this->configString($d, 'id');
 
         // Collapse type
-        $this->collapseType = $this->collapseType ?: ($d['collapse_type'] ?? 'standard');
+        $this->collapseType = $this->collapseType ?: $this->configStringWithFallback($d, 'collapse_type', 'standard');
 
         // Offcanvas configuration
-        $this->offcanvasPlacement = $this->offcanvasPlacement ?: ($d['offcanvas_placement'] ?? 'start');
-        $this->offcanvasBackdrop = $this->offcanvasBackdrop || ($d['offcanvas_backdrop'] ?? true);
-        $this->offcanvasScroll = $this->offcanvasScroll || ($d['offcanvas_scroll'] ?? false);
-        $this->offcanvasTitle ??= $d['offcanvas_title'] ?? null;
+        $this->offcanvasPlacement = $this->offcanvasPlacement ?: $this->configStringWithFallback($d, 'offcanvas_placement', 'start');
+        $this->offcanvasBackdrop = $this->offcanvasBackdrop || $this->configBoolWithFallback($d, 'offcanvas_backdrop', true);
+        $this->offcanvasScroll = $this->offcanvasScroll || $this->configBoolWithFallback($d, 'offcanvas_scroll', false);
+        $this->offcanvasTitle ??= $this->configString($d, 'offcanvas_title');
 
         // Fullscreen configuration
-        $this->fullscreenAnimation = $this->fullscreenAnimation ?: ($d['fullscreen_animation'] ?? 'fade');
-        $this->fullscreenBg = $this->fullscreenBg ?: ($d['fullscreen_bg'] ?? 'var(--bs-body-bg)');
-        $this->fullscreenCentered = $this->fullscreenCentered || ($d['fullscreen_centered'] ?? true);
+        $this->fullscreenAnimation = $this->fullscreenAnimation ?: $this->configStringWithFallback($d, 'fullscreen_animation', 'fade');
+        $this->fullscreenBg = $this->fullscreenBg ?: $this->configStringWithFallback($d, 'fullscreen_bg', 'var(--bs-body-bg)');
+        $this->fullscreenCentered = $this->fullscreenCentered || $this->configBoolWithFallback($d, 'fullscreen_centered', true);
 
         // Sticky/Scroll behavior
-        $this->stickyBehavior = $this->stickyBehavior || ($d['sticky_behavior'] ?? false);
-        $this->shrinkOnScroll = $this->shrinkOnScroll || ($d['shrink_on_scroll'] ?? false);
-        $this->autoHide = $this->autoHide || ($d['auto_hide'] ?? false);
-        $this->shadowOnScroll = $this->shadowOnScroll || ($d['shadow_on_scroll'] ?? false);
-        $this->transparentUntilScroll = $this->transparentUntilScroll || ($d['transparent_until_scroll'] ?? false);
+        $this->stickyBehavior = $this->stickyBehavior || $this->configBoolWithFallback($d, 'sticky_behavior', false);
+        $this->shrinkOnScroll = $this->shrinkOnScroll || $this->configBoolWithFallback($d, 'shrink_on_scroll', false);
+        $this->autoHide = $this->autoHide || $this->configBoolWithFallback($d, 'auto_hide', false);
+        $this->shadowOnScroll = $this->shadowOnScroll || $this->configBoolWithFallback($d, 'shadow_on_scroll', false);
+        $this->transparentUntilScroll = $this->transparentUntilScroll || $this->configBoolWithFallback($d, 'transparent_until_scroll', false);
 
         // Centered split configuration
-        $this->centeredBrand = $this->centeredBrand || ($d['centered_brand'] ?? false);
+        $this->centeredBrand = $this->centeredBrand || $this->configBoolWithFallback($d, 'centered_brand', false);
 
         // Double navbar configuration
-        $this->doubleRow = $this->doubleRow || ($d['double_row'] ?? false);
-        $this->topRowBg ??= $d['top_row_bg'] ?? null;
+        $this->doubleRow = $this->doubleRow || $this->configBoolWithFallback($d, 'double_row', false);
+        $this->topRowBg ??= $this->configString($d, 'top_row_bg');
 
         // Sidebar configuration
-        $this->sidebarWidth = $this->sidebarWidth ?: ($d['sidebar_width'] ?? '250px');
-        $this->sidebarPosition = $this->sidebarPosition ?: ($d['sidebar_position'] ?? 'left');
-        $this->sidebarCollapsible = $this->sidebarCollapsible || ($d['sidebar_collapsible'] ?? true);
+        $this->sidebarWidth = $this->sidebarWidth ?: $this->configStringWithFallback($d, 'sidebar_width', '250px');
+        $this->sidebarPosition = $this->sidebarPosition ?: $this->configStringWithFallback($d, 'sidebar_position', 'left');
+        $this->sidebarCollapsible = $this->sidebarCollapsible || $this->configBoolWithFallback($d, 'sidebar_collapsible', true);
 
         // Mega menu configuration
-        $this->megaMenu = $this->megaMenu || ($d['mega_menu'] ?? false);
-        $this->megaMenuWidth = $this->megaMenuWidth ?: ($d['mega_menu_width'] ?? 'full');
-        $this->megaMenuColumns = $this->megaMenuColumns ?: ($d['mega_menu_columns'] ?? 4);
+        $this->megaMenu = $this->megaMenu || $this->configBoolWithFallback($d, 'mega_menu', false);
+        $this->megaMenuWidth = $this->megaMenuWidth ?: $this->configStringWithFallback($d, 'mega_menu_width', 'full');
+        $this->megaMenuColumns = $this->megaMenuColumns ?: $this->configIntWithFallback($d, 'mega_menu_columns', 4);
 
         $this->applyClassDefaults($d);
 

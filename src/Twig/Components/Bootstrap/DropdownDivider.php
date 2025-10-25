@@ -31,7 +31,7 @@ final class DropdownDivider extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['dropdown-divider'],
             $this->class ? explode(' ', trim($this->class)) : []
         );

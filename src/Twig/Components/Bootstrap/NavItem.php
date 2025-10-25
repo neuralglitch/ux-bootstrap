@@ -65,15 +65,15 @@ final class NavItem extends AbstractInteractive
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->label ??= $d['label'] ?? null;
-        $this->href ??= $d['href'] ?? null;
-        $this->active = $this->active || ($d['active'] ?? false);
-        $this->disabled = $this->disabled || ($d['disabled'] ?? false);
-        $this->tag = $this->tag !== 'a' ? $this->tag : ($d['tag'] ?? 'a');
-        $this->id ??= $d['id'] ?? null;
-        $this->target ??= $d['target'] ?? null;
-        $this->ariaCurrent = $this->ariaCurrent !== 'page' ? $this->ariaCurrent : ($d['aria_current'] ?? 'page');
-        $this->wrapper = $this->wrapper !== true ? $this->wrapper : ($d['wrapper'] ?? true);
+        $this->label ??= $this->configString($d, 'label');
+        $this->href ??= $this->configString($d, 'href');
+        $this->active = $this->active || $this->configBoolWithFallback($d, 'active', false);
+        $this->disabled = $this->disabled || $this->configBoolWithFallback($d, 'disabled', false);
+        $this->tag = $this->tag !== 'a' ? $this->tag : $this->configStringWithFallback($d, 'tag', 'a');
+        $this->id ??= $this->configString($d, 'id');
+        $this->target ??= $this->configString($d, 'target');
+        $this->ariaCurrent = $this->ariaCurrent !== 'page' ? $this->ariaCurrent : $this->configStringWithFallback($d, 'aria_current', 'page');
+        $this->wrapper = $this->wrapper !== true ? $this->wrapper : $this->configBoolWithFallback($d, 'wrapper', true);
 
         // Auto-detect tag if not explicitly set
         if ($this->tag === 'a' && $this->href === null && !$this->disabled) {

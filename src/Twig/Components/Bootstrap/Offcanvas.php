@@ -32,23 +32,22 @@ final class Offcanvas extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply component-specific defaults
-        $this->placement ??= $d['placement'] ?? 'start';
-        $this->backdrop ??= $d['backdrop'] ?? true;
-        $this->scroll ??= $d['scroll'] ?? false;
-        $this->keyboard ??= $d['keyboard'] ?? true;
-        $this->show ??= $d['show'] ?? false;
-        $this->bodyClass ??= $d['body_class'] ?? null;
-        $this->headerClass ??= $d['header_class'] ?? null;
-        $this->showCloseButton ??= $d['show_close_button'] ?? true;
+        $this->placement ??= $this->configStringWithFallback($d, 'placement', 'start');
+        $this->backdrop ??= $this->configBoolWithFallback($d, 'backdrop', true);
+        $this->scroll ??= $this->configBoolWithFallback($d, 'scroll', false);
+        $this->keyboard ??= $this->configBoolWithFallback($d, 'keyboard', true);
+        $this->show ??= $this->configBoolWithFallback($d, 'show', false);
+        $this->bodyClass ??= $this->configString($d, 'body_class');
+        $this->headerClass ??= $this->configString($d, 'header_class');
+        $this->showCloseButton ??= $this->configBoolWithFallback($d, 'show_close_button', true);
 
         // Generate unique ID if not provided
         if (!isset($this->id)) {
             $this->id = 'offcanvas-' . uniqid();
-
-
-            // Initialize controller with default
-            $this->initializeController();
         }
+
+        // Initialize controller with default
+        $this->initializeController();
     }
 
     protected function getComponentName(): string
@@ -61,7 +60,7 @@ final class Offcanvas extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = array_merge(
             ['offcanvas', "offcanvas-{$this->placement}"],
             $this->show ? ['show'] : [],
             $this->class ? explode(' ', trim($this->class)) : []
@@ -90,13 +89,13 @@ final class Offcanvas extends AbstractStimulus
         $attrs = $this->mergeAttributes($attrs, $this->attr);
 
         // Body classes
-        $bodyClasses = $this->buildClasses(
+        $bodyClasses = array_merge(
             ['offcanvas-body'],
             $this->bodyClass ? explode(' ', trim($this->bodyClass)) : []
         );
 
         // Header classes
-        $headerClasses = $this->buildClasses(
+        $headerClasses = array_merge(
             ['offcanvas-header'],
             $this->headerClass ? explode(' ', trim($this->headerClass)) : []
         );
@@ -104,10 +103,10 @@ final class Offcanvas extends AbstractStimulus
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'classes' => $classes,
+            'classes' => implode(' ', array_filter($classes)),
             'attrs' => $attrs,
-            'bodyClasses' => $bodyClasses,
-            'headerClasses' => $headerClasses,
+            'bodyClasses' => implode(' ', array_filter($bodyClasses)),
+            'headerClasses' => implode(' ', array_filter($headerClasses)),
             'showCloseButton' => $this->showCloseButton,
         ];
     }

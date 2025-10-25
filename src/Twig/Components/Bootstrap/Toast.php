@@ -32,13 +32,13 @@ final class Toast extends AbstractStimulus
         $this->applyClassDefaults($d);
 
         // Apply defaults from config
-        $this->title = $this->title ?: ($d['title'] ?? null);
-        $this->header = $this->header && ($d['header'] ?? true);
-        $this->body = $this->body && ($d['body'] ?? true);
-        $this->autohide = $this->autohide && ($d['autohide'] ?? true);
-        $this->delay = $this->delay ?: ($d['delay'] ?? 5000);
-        $this->animation = $this->animation && ($d['animation'] ?? true);
-        $this->position = $this->position ?: ($d['position'] ?? 'top-0 end-0');
+        $this->title = $this->title ?: $this->configString($d, 'title');
+        $this->header = $this->header && $this->configBoolWithFallback($d, 'header', true);
+        $this->body = $this->body && $this->configBoolWithFallback($d, 'body', true);
+        $this->autohide = $this->autohide && $this->configBoolWithFallback($d, 'autohide', true);
+        $this->delay = $this->delay ?: $this->configIntWithFallback($d, 'delay', 5000);
+        $this->animation = $this->animation && $this->configBoolWithFallback($d, 'animation', true);
+        $this->position = $this->position ?: $this->configStringWithFallback($d, 'position', 'top-0 end-0');
 
         // Initialize controller with default (Toast always has a controller)
         $this->initializeController();

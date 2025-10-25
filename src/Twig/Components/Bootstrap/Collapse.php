@@ -24,9 +24,9 @@ final class Collapse extends AbstractStimulus
 
         $this->applyClassDefaults($d);
 
-        $this->show ??= $d['show'] ?? false;
-        $this->horizontal ??= $d['horizontal'] ?? false;
-        $this->parent ??= $d['parent'] ?? null;
+        $this->show ??= $this->configBool($d, 'show');
+        $this->horizontal ??= $this->configBool($d, 'horizontal');
+        $this->parent ??= $this->configString($d, 'parent');
 
 
         // Initialize controller with default
@@ -43,7 +43,7 @@ final class Collapse extends AbstractStimulus
      */
     public function options(): array
     {
-        $classes = $this->buildClasses(
+        $classes = $this->buildClassesFromArrays(
             ['collapse'],
             $this->show ? ['show'] : [],
             $this->horizontal ? ['collapse-horizontal'] : [],
