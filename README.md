@@ -21,19 +21,19 @@ A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus cont
 
 ---
 
-## ✨ Features
+## Features
 
-- ** Complete Bootstrap Components** - Full coverage of Bootstrap 5.3 components, including Accordion, Alert, Badge, Breadcrumbs, Button, Card, Carousel, Dropdown, Modal, Nav, Navbar, Toast, and many more - organized alphabetically for easy reference
-- ** Advanced UI Components** - Extended components for modern applications including Activity Feed, Alert Stack, Calendar, Command Palette, Data Table, Kanban, Lightbox, Notification Center, Search Bar, Sidebar, Theme Toggle, Timeline, Tour, Tree View, and more
-- ** Powerful Stimulus Controllers** - Interactive behaviors for tooltips, popovers, theme switching, live search, drag-and-drop, notifications, and more
-- ** Works with Your Bootstrap** - Integrates seamlessly with existing Bootstrap 5.3 installations
-- **️ Highly Configurable** - YAML-based defaults for every component
-- ** Simple Installation** - Nearly zero-config: `composer require neuralglitch/ux-bootstrap`
-- ** Production Ready** - Type-safe, tested, documented
+- **Complete Bootstrap Components** - Full coverage of Bootstrap 5.3 components, including Accordion, Alert, Badge, Breadcrumbs, Button, Card, Carousel, Dropdown, Modal, Nav, Navbar, Toast, and many more - organized alphabetically for easy reference
+- **Advanced UI Components** - Extended components for modern applications including Activity Feed, Alert Stack, Calendar, Command Palette, Data Table, Kanban, Lightbox, Notification Center, Search Bar, Sidebar, Theme Toggle, Timeline, Tour, Tree View, and more
+- **Powerful Stimulus Controllers** - Interactive behaviors for tooltips, popovers, theme switching, live search, drag-and-drop, notifications, and more
+- **Works with Your Bootstrap** - Integrates seamlessly with existing Bootstrap 5.3 installations
+- **️Highly Configurable** - YAML-based defaults for every component
+- **Simple Installation** - Nearly zero-config: `composer require neuralglitch/ux-bootstrap`
+- **Production Ready** - Type-safe, tested, documented
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 - **PHP 8.1+**
 - **Symfony 6.4 LTS or 7.x**
@@ -42,7 +42,7 @@ A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus cont
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 
@@ -138,7 +138,7 @@ This adds `data-bs-theme` and `color-scheme` attributes for automatic light/dark
 
 ---
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Basic Components
 
@@ -237,7 +237,7 @@ This adds `data-bs-theme` and `color-scheme` attributes for automatic light/dark
 
 ---
 
-## 🧩 Components
+## Components
 
 ### Bootstrap Core Components
 
@@ -253,7 +253,7 @@ Interactive behavior powered by Stimulus.
 
 ---
 
-## 🎨 Component Styles
+## Component Styles
 
 The bundle provides SCSS partials for component enhancements. These are automatically available via AssetMapper.
 
@@ -309,7 +309,7 @@ Or override component templates (see Customization section below).
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Configure component defaults globally in `config/packages/ux_bootstrap.yaml`:
 
@@ -363,7 +363,7 @@ All components respect these defaults but can be overridden per instance:
 
 ---
 
-## 🎨 Customization
+## Customization
 
 ### Override Component Templates
 
@@ -399,7 +399,7 @@ class CustomSearchService extends BaseSearchService
 
 ---
 
-## 🧪 Local Development & Testing
+## Local Development & Testing
 
 Want to test the bundle in your project **before** it's published? Use Composer's path repository feature.
 
@@ -506,7 +506,7 @@ If you still have issues, the bundle will work but you'll need to manually creat
 
 ---
 
-## 📖 Documentation
+## Documentation
 
 ### Installation & Setup
 - [Installation Guide](INSTALL.md) - Detailed installation steps
@@ -529,13 +529,13 @@ If you still have issues, the bundle will work but you'll need to manually creat
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -551,8 +551,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Made with ❤️ by [neuralglit.ch](https://neuralglit.ch)**
+**Made with ❤ by [neuralglit.ch](https://neuralglit.ch)**
 
-[⭐ Star on GitHub](https://github.com/neuralglitch/ux-bootstrap) • [📦 View on Packagist](https://packagist.org/packages/neuralglitch/ux-bootstrap)
+[Star on GitHub](https://github.com/neuralglitch/ux-bootstrap) • [View on Packagist](https://packagist.org/packages/neuralglitch/ux-bootstrap)
 
 </div>
