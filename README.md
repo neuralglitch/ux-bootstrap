@@ -1,6 +1,6 @@
 <div align="center">
 
-# Symfony UX Bootstrap
+# UX Bootstrap
 
 ### Reusable Bootstrap 5.3 Twig Components for Symfony
 
@@ -15,7 +15,7 @@
 
 A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus controllers for Symfony applications. Transform your Bootstrap HTML into clean, reusable Twig components.
 
-[Documentation](#-documentation) • [Installation](#-installation) • [Components](#-components)
+[Documentation](#-documentation) • [Installation](#-installation) • [Quick Start](#-quick-start)
 
 </div>
 
@@ -23,13 +23,13 @@ A production-ready collection of Bootstrap 5.3 Twig Components and Stimulus cont
 
 ## ✨ Features
 
-- **🧩 29 Bootstrap Core Components** - Complete coverage of Bootstrap 5.3 components (alphabetically organized): Accordion, Alert, Badge, Breadcrumbs, Button, Button Group, Card, Carousel, Collapse, Dropdown, Link, List Group, Modal, Nav, Navbar, Offcanvas, Pagination, Placeholder, Progress, Spinner, Toast, and all their sub-components
-- **✨ 41 Extra Components** - Advanced UI components built on Bootstrap (alphabetically organized): ActivityFeed, AlertStack, Avatar, Calendar, CodeBlock, ColorPicker, CommandPalette, CommentThread, ComparisonTable, CookieBanner, CTA, DataTable, DropdownMulti, EmptyState, FAQ, FeatureGrid, Hero, Kanban, Lightbox, MegaFooter, MetricsGrid, NotificationBadge, NotificationCenter, PricingCard, Rating, SearchBar, Sidebar, Skeleton, SplitPanes, Stat, Stepper, TabPane, Testimonial, ThemeToggle, Timeline, Tour, TreeView
-- **⚡ 20 Stimulus Controllers** - Interactive features for tooltips, popovers, theme switching, live search, drag-and-drop, and more
-- **🎨 Works with Your Bootstrap** - Integrates seamlessly with existing Bootstrap 5.3 installations
-- **⚙️ Highly Configurable** - YAML-based defaults for every component
-- **📦 Simple Installation** - Nearly zero-config: `composer require neuralglitch/ux-bootstrap`
-- **✅ Production Ready** - Type-safe, tested, documented
+- ** Complete Bootstrap Components** - Full coverage of Bootstrap 5.3 components, including Accordion, Alert, Badge, Breadcrumbs, Button, Card, Carousel, Dropdown, Modal, Nav, Navbar, Toast, and many more - organized alphabetically for easy reference
+- ** Advanced UI Components** - Extended components for modern applications including Activity Feed, Alert Stack, Calendar, Command Palette, Data Table, Kanban, Lightbox, Notification Center, Search Bar, Sidebar, Theme Toggle, Timeline, Tour, Tree View, and more
+- ** Powerful Stimulus Controllers** - Interactive behaviors for tooltips, popovers, theme switching, live search, drag-and-drop, notifications, and more
+- ** Works with Your Bootstrap** - Integrates seamlessly with existing Bootstrap 5.3 installations
+- **️ Highly Configurable** - YAML-based defaults for every component
+- ** Simple Installation** - Nearly zero-config: `composer require neuralglitch/ux-bootstrap`
+- ** Production Ready** - Type-safe, tested, documented
 
 ---
 
@@ -239,118 +239,17 @@ This adds `data-bs-theme` and `color-scheme` attributes for automatic light/dark
 
 ## 🧩 Components
 
-### Bootstrap Core Components (29)
+### Bootstrap Core Components
 
-Complete Twig component coverage of Bootstrap 5.3, alphabetically organized:
+Complete Twig component coverage of Bootstrap 5.3.
 
-| Component | Tag | Description |
-|-----------|-----|-------------|
-| **Accordion** | `bs:accordion` | Collapsible content panels with flush variant |
-| **Accordion Item** | `bs:accordion-item` | Individual accordion panel item |
-| **Alert** | `bs:alert` | Dismissible alerts with auto-hide and Stimulus integration |
-| **Badge** | `bs:badge` | Badges with pill style, positioning, and link support |
-| **Breadcrumbs** | `bs:breadcrumbs` | Auto-generated breadcrumb navigation from routes |
-| **Button** | `bs:button` | Buttons with icons, tooltips, popovers, and all Bootstrap variants |
-| **Button Group** | `bs:button-group` | Grouped buttons with vertical layout and sizing |
-| **Card** | `bs:card` | Content cards with header/body/footer blocks and image positions |
-| **Carousel** | `bs:carousel` | Image/content slideshow with indicators, controls, and transitions |
-| **Carousel Item** | `bs:carousel-item` | Individual carousel slide |
-| **Collapse** | `bs:collapse` | Toggle visibility with smooth animations |
-| **Dropdown** | `bs:dropdown` | Dropdown menus with split buttons, directions, and auto-close options |
-| **Dropdown Divider** | `bs:dropdown-divider` | Horizontal divider for dropdown menus |
-| **Dropdown Header** | `bs:dropdown-header` | Header text for dropdown sections |
-| **Dropdown Item** | `bs:dropdown-item` | Individual dropdown menu item |
-| **Link** | `bs:link` | Enhanced links with icons, tooltips, popovers, and underline control |
-| **List Group** | `bs:list-group` | Flexible lists with actions, variants, horizontal layout, and tabs |
-| **List Group Item** | `bs:list-group-item` | Individual list item with variants and states |
-| **Modal** | `bs:modal` | Dialog windows with sizes, fullscreen modes, centering, and scrollable content |
-| **Nav** | `bs:nav` | Navigation with tabs, pills, underline, vertical, and justified layouts |
-| **Nav Item** | `bs:nav-item` | Individual navigation item |
-| **Navbar** | `bs:navbar` | Responsive navigation bars with 8 collapse types and sticky behaviors |
-| **Offcanvas** | `bs:offcanvas` | Slideable sidebars from any edge with backdrop and scroll options |
-| **Pagination** | `bs:pagination` | Page navigation with sizing and alignment |
-| **Pagination Item** | `bs:pagination-item` | Individual pagination page item |
-| **Placeholder** | `bs:placeholder` | Loading state placeholders with wave/glow animations |
-| **Progress** | `bs:progress` | Progress bars with labels, variants, striped, and animated options |
-| **Spinner** | `bs:spinner` | Loading indicators with border/grow types |
-| **Toast** | `bs:toast` | Toast notifications with auto-hide and positioning |
+### Extra Components
 
-### Extra Components (41)
+Advanced UI components built on Bootstrap.
 
-Advanced UI components built on Bootstrap, alphabetically organized:
+### Stimulus Controllers
 
-| Component | Tag | Use Cases |
-|-----------|-----|-----------|
-| **ActivityFeed** | `bs:activity-feed` | Social feeds, audit logs, team activity, system events |
-| **ActivityFeedItem** | `bs:activity-feed-item` | Individual activity feed item |
-| **AlertStack** | `bs:alert-stack` | Flash messages, bulk notifications, toast management |
-| **Avatar** | `bs:avatar` | User profiles, team members, contact lists |
-| **Calendar** | `bs:calendar` | Event management, scheduling, meeting planners |
-| **CodeBlock** | `bs:code-block` | Documentation, tutorials, API examples |
-| **ColorPicker** | `bs:color-picker` | Theme customization, branding, design tools |
-| **CommandPalette** | `bs:command-palette` | Quick actions, navigation shortcuts, admin commands |
-| **CommentThread** | `bs:comment-thread` | Blog comments, discussions, feedback |
-| **ComparisonTable** | `bs:comparison-table` | Pricing pages, feature comparisons, product specs |
-| **CookieBanner** | `bs:cookie-banner` | GDPR/CCPA compliance, consent management |
-| **CTA** | `bs:cta` | Marketing pages, landing pages, call-to-actions |
-| **DataTable** | `bs:data-table` | Admin panels, reports, dashboards, user management |
-| **DropdownMulti** | `bs:dropdown-multi` | Filters, permissions, categories, tags |
-| **EmptyState** | `bs:empty-state` | Empty tables, no results, new user onboarding |
-| **FAQ** | `bs:faq` | Help pages, documentation, support |
-| **FeatureGrid** | `bs:feature-grid` | Landing pages, product features, service listings |
-| **Hero** | `bs:hero` | Landing pages, home pages, marketing sections |
-| **Kanban** | `bs:kanban` | Task management, project boards, workflow tracking |
-| **KanbanCard** | `bs:kanban-card` | Individual kanban board card |
-| **KanbanColumn** | `bs:kanban-column` | Kanban board column/lane |
-| **Lightbox** | `bs:lightbox` | Image galleries, portfolios, product photos |
-| **MegaFooter** | `bs:mega-footer` | Site-wide footers with multiple columns and sections |
-| **MetricsGrid** | `bs:metrics-grid` | Dashboards, analytics, KPI displays |
-| **NotificationBadge** | `bs:notification-badge` | Unread counts, status indicators, alerts |
-| **NotificationCenter** | `bs:notification-center` | User notifications, inbox, activity alerts |
-| **PricingCard** | `bs:pricing-card` | Subscription plans, pricing pages |
-| **Rating** | `bs:rating` | Reviews, feedback, skill levels |
-| **SearchBar** | `bs:searchbar` | Site search, documentation search |
-| **Sidebar** | `bs:sidebar` | Admin panels, documentation, settings |
-| **Skeleton** | `bs:skeleton` | Loading states, content placeholders |
-| **SplitPanes** | `bs:split-panes` | Code editors, email clients, resizable layouts |
-| **Stat** | `bs:stat` | Statistics, KPIs, metrics cards |
-| **Stepper** | `bs:stepper` | Multi-step forms, wizards, onboarding flows |
-| **TabPane** | `bs:tab-pane` | Tabbed content, settings panels |
-| **Testimonial** | `bs:testimonial` | Customer reviews, social proof |
-| **ThemeToggle** | `bs:theme-toggle` | Dark/light mode toggle with multiple display modes |
-| **Timeline** | `bs:timeline` | Order tracking, activity logs, milestones |
-| **TimelineItem** | `bs:timeline-item` | Individual timeline event item |
-| **Tour** | `bs:tour` | Product tours, feature announcements, training |
-| **TreeView** | `bs:tree-view` | File browsers, category trees, navigation structures |
-
----
-
-### Stimulus Controllers (20)
-
-Interactive behavior powered by Stimulus, alphabetically organized:
-
-| Controller | Stimulus Tag | Description |
-|------------|--------------|-------------|
-| **Alert** | `bs-alert` | Alert auto-hide & dismissal |
-| **AlertStack** | `bs-alert-stack` | Alert stack management with dynamic add/remove |
-| **Calendar** | `bs-calendar` | Event calendar with view switching, navigation, and event management |
-| **CodeBlock** | `bs-code-block` | Code block copy-to-clipboard functionality |
-| **ColorPicker** | `bs-color-picker` | Color picker with preset swatches and custom color input synchronization |
-| **CookieBanner** | `bs-cookie-banner` | Cookie consent banner with localStorage/cookie persistence and consent events |
-| **DropdownMulti** | `bs-dropdown-multi` | Multi-select dropdown with search, filters, and bulk actions |
-| **Kanban** | `bs-kanban` | Kanban board drag-and-drop with WIP limits and column management |
-| **Lightbox** | `bs-lightbox` | Image gallery lightbox with zoom, keyboard, and touch support |
-| **Link** | `bs-link` | Tooltip/popover initialization and management |
-| **Navbar Fullscreen** | `bs-navbar-fullscreen` | Fullscreen overlay navbar with fade/slide animations |
-| **Navbar Mega Menu** | `bs-navbar-mega-menu` | Mega menu navigation with multi-column dropdowns |
-| **Navbar Sticky** | `bs-navbar-sticky` | Sticky navbar with scroll behaviors (shrink, auto-hide, shadow) |
-| **NotificationCenter** | `bs-notification-center` | Notification center with mark as read, auto-refresh, and badge management |
-| **Search** | `bs-search` | Live search with debouncing and keyboard navigation |
-| **Sidebar** | `bs-sidebar` | Sidebar toggle, collapse, and responsive behavior |
-| **SplitPanes** | `bs-split-panes` | Split panes resize, collapse, and keyboard navigation |
-| **Theme** | `bs-theme` | Dark/light mode theme switching with persistence |
-| **Toast** | `bs-toast` | Toast notification management and auto-hide |
-| **Tour** | `bs-tour` | Guided product tour with step navigation, element highlighting, and progress tracking |
+Interactive behavior powered by Stimulus.
 
 ---
 
@@ -418,19 +317,13 @@ Configure component defaults globally in `config/packages/ux_bootstrap.yaml`:
 # config/packages/ux_bootstrap.yaml
 neuralglitch_ux_bootstrap:
   
-  # ============================================================
   # Bootstrap Core Components (alphabetically ordered)
-  # ============================================================
   
-  # Badge defaults
   badge:
     variant: 'secondary'
     pill: false
-    href: null
     class: null
-    attr: {  }
   
-  # Button defaults
   button:
     variant: 'primary'
     outline: false
@@ -438,46 +331,27 @@ neuralglitch_ux_bootstrap:
     tooltip:
       text: null
       placement: 'bottom'
-    popover:
-      title: null
-      content: null
-    icon_gap: 2
   
-  # Alert defaults
   alert:
     variant: 'primary'
     dismissible: false
     fade: true
     auto_hide: false
-    auto_hide_delay: 5000
   
-  # Modal defaults
-  modal:
-    size: null
-    centered: false
-    backdrop: true
-    keyboard: true
-  
-  # ============================================================
   # Extra Components (alphabetically ordered)
-  # ============================================================
   
-  # SearchBar defaults
   searchbar:
     placeholder: 'Search...'
     search_url: '/search'
     min_chars: 2
-    debounce: 300
   
-  # Hero defaults
   hero:
     variant: 'centered'
     title: 'Build something great'
     cta_variant: 'primary'
-    cta_size: 'lg'
 ```
 
-All components respect these defaults, but can be overridden per instance:
+All components respect these defaults but can be overridden per instance:
 
 ```twig
 {# Uses global default (primary) #}
@@ -485,12 +359,6 @@ All components respect these defaults, but can be overridden per instance:
 
 {# Overrides with danger #}
 <twig:bs:button variant="danger">Danger Button</twig:bs:button>
-
-{# Uses searchbar defaults #}
-<twig:bs:searchbar />
-
-{# Overrides with custom settings #}
-<twig:bs:searchbar placeholder="Search docs..." :minChars="1" />
 ```
 
 ---
